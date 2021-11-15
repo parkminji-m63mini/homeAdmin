@@ -1,0 +1,21 @@
+.tb{
+	border: 1px solid black;
+	width: 100%;
+}
+
+/*공과금 인풋(수정용) */
+.manageI{
+	width: 75px; 
+}
+
+/* 버튼기본 */
+.btn_brown{
+	background-color: #8f7662;
+    color: white;
+    border: 1px;
+ 	solid white;
+    border-radius: 13%;
+    width: 12%;
+    margin-top: 1%;
+    float: right;
+}

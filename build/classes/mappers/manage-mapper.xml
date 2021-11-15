@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="manageMapper">
+
+	<resultMap id="manageResultSet" type="Manage" >
+		
+		<id property="idx" column="IDX"/>
+		<result property="yyyy" column="YYYY"/>
+		<result property="mm" column="MM"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="uId" column="U_ID"/>
+		<result property="gasM" column="GAS_M"/>
+		<result property="elM" column="EL_M"/>
+		<result property="wtM" column="WT_M"/>
+		<result property="itM" column="IT_M"/>
+	</resultMap>
+
+
+	<!-- 회원상태와 이메일인증 확인 검사함 -->
+	<select id="manageList" parameterType="Manage" resultMap="manageResultSet">
+		SELECT * FROM MANAGE_MA WHERE U_ID= #{uId}		
+	</select>
+	
+	<!-- 공과금 데이터 insert(당월) -->
+	<insert id="insertMAll" parameterType="Manage">
+		INSERT INTO MANAGE_MA VALUES(MN_SEQ.NEXTVAL,#{yyyy}, #{mm}, SYSDATE, SYSDATE, #{uId}, 
+		#{gasM},#{elM},#{wtM},#{itM})
+	</insert>
+
+	<!-- 공과금 데이터 update (기본값만) -->
+	<update id="updateMAll" parameterType="Manage">
+		UPDATE MANAGE_MA SET EDT=SYSDATE, GAS_M=#{gasM}, EL_M=#{elM}, WT_M=#{wtM}, IT_M=#{itM}
+		WHERE U_ID=#{uId} AND YYYY=#{yyyy} AND MM=#{mm}
+	</update>
+</mapper>
