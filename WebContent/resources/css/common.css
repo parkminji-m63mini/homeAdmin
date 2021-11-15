@@ -1,8 +1,13 @@
 .tb{
 	border: 1px solid black;
 	width: 100%;
+	text-align: center;
+    height: 93px;
 }
 
+.boder-black{
+	border: 1px solid black;
+}
 /*공과금 인풋(수정용) */
 .manageI{
 	width: 75px; 
