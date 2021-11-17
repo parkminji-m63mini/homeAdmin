@@ -60,6 +60,18 @@ public class ManageMController
         String mm2= "" +(LocalDate.now().getMonthValue()-1);
         vo.setMm2(mm2);
         
+        
+        String yyyy2 = "";
+        
+        // 전월이 12월 일 때는 전년도로 변경
+        if(mm2.equals("12")) {
+        	 yyyy2 = ""+ (LocalDate.now().getYear()- 1);
+        	
+        	
+        }else {
+        	yyyy2 = yyyy;
+        }
+        vo.setYyyy2(yyyy2);
         List<ManageM> arrViewPast = ms.manageNP(vo);
         
         

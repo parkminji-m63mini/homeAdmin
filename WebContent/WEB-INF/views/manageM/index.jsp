@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
 <!DOCTYPE html>
 <html lang="kn">
 
@@ -12,10 +13,16 @@
 </head>
 
 <!--  차트 -->
-<script src="${contextPath}/resources/css/chart/highcharts.js"></script>
-
+<%-- <script src="${contextPath}/resources/css/chart/highcharts.js"></script> --%>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+ <link href="${contextPath}/resources/css/chart/chart.css" rel="stylesheet">
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
 	
 <body>
 
@@ -84,99 +91,154 @@ function reload() { (location || window.location || document.location).reload();
 
 
 
-// 차트
+// 총합 6개월 총 지출 금액 차트
 var chart;
 $(document).ready(function() {
 	
-	chart = new Highcharts.Chart({
-		// 색상 출력 (순서대로)
-		colors: ['#FF6347', '#FFFF00', '#7FFF00', '#4682B4'],
-		chart: {
-			renderTo: 'graphCon',
-			type: 'column', 
-			margin:[50,20,45,40],  
-			marginBottom: 100 	//차트 아래 margin
-		},
-		        title: {
-		            text: ' - '
-// 		            	text: ''
-		            ,align:'left'
-		            ,y:12
-		        },
-		        subtitle: {
-		            text: ''
-		        },
-		        xAxis: [{
-					categories: ['참여인원', '소요예산', '만족도 점수' ,'목표달성율'],
-					labels: {
-						rotation: 0, 
-						align: 'center',
-						style: { 
-							 font: 'normal 12px 돋움,dutum,Verdana, sans-serif' 
-						}
-					}
-				}],
-		        yAxis: {
-		            min: 0,
-		            max:100,
-		            title:{
-		                text:''
-		            }
-		        },
-		        tooltip: {
-		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-		                '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
-		            footerFormat: '</table>',
-		            shared: true,
-		            useHTML: true
-		        },
-		        plotOptions: {
-		            column: {
-		            	showInLegend: true,
-		            	dataLabels: {
-						enabled: true
-						
-				    },
-		                pointPadding: 0.2,
-		                borderWidth: 0
-		            }
-		        }, 
-		        legend: {
-					verticalAlign: 'bottom',
-					align: 'center', 
-					x: 2, 
-					y: 12 
-				},
-		        series: [
-		        	// 여기부터 다시
-		        	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
-					<c:if test='${st.index ne fn:length(arrViewPast)}'>		                 
-	    			{
-	    			name : '${arrC2.mm}',
-	    			data : [0, 1, 2, 3],
-	    		//	data : [${arr.gasM}, ${arr.elM}, ${arr.wtM}, ${arr.itM}],
-	    		//	color : '#0072bc'
-	    			},
-					</c:if>
-					<c:if test='${st.index eq fn:length(arrViewPast)}'>		                 
-	    				
-	    					{	name : '${arrC2.mm}',
-	    					//	data : [${arr.gasM}, ${arr.elM}, ${arr.wtM}, ${arr.itM}]
-	    						data : [1, 2, 3, 4]
-	    			//			color : '#0072bc'
-	    						}
-						</c:if>   					
-	    					
-					</c:forEach>
-		        ]
-		});
+	chart = new Highcharts.chart('container', {
+
+	    title: {
+	        text: '공과금 비교 (최근 6개월)'
+	    },
+
+	    subtitle: {
+	        text: '(당월) 00년도 00월 | (전월) 00년도 00월'
+	    },
+
+	    yAxis: {
+	        title: {
+	            text: '금액(원)'
+	        }
+	    },
+
+	    xAxis: {
+	        accessibility: {
+	            rangeDescription: '??? 잘모르겠음 Range: 2010 to 2017'
+	        }
+	    },
+
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	            pointStart: 2010
+	        }
+	    },
+
+	    series: [{
+	        name: 'Installation',
+	        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+	    }, {
+	        name: 'Manufacturing',
+	        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+	    }, {
+	        name: 'Sales & Distribution',
+	        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+	    }, {
+	        name: 'Project Development',
+	        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+	    }, {
+	        name: 'Other',
+	        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+	    }],
+
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+
+	});
 });
 
 
+//전월,당월 막대 그래프 비교 차트
+var chart2;
+$(document).ready(function() {
+	
+	chart = new Highcharts.chart('container2', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: '공과금 세부 비교 (전월)'
+	    },
+	    subtitle: {
+	        text: '(당월) ${arrViewPast[0].yyyy}년도 ${arrViewPast[0].mm}월 | (전월) ${arrViewPast[1].yyyy}년도 ${arrViewPast[1].mm}월'
+	    },
+	    xAxis: {
+	        categories: [
+	            '가스',
+	            '전기',
+	            '수도',
+	            '인터넷'
+	        ],
+	        crosshair: true
+	    },
+	    yAxis: {
+	        min: 0,
+	       	//max: 50000,
+	        title: {
+	            text: '금액(원)'
+	        }
+	    },
+	    tooltip: {
+	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	            '<td style="padding:0"><b>{point.y:.0f} 원</b></td></tr>',
+	        footerFormat: '</table>',
+	        shared: true,
+	        useHTML: true
+	    },
+	    plotOptions: {
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
+	        }
+	    },
+	    series: [
+	    	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
+	    	 	{
+	        name: '${arrC2.mm}월',
+	        data : [${arrC2.gasM}, ${arrC2.elM}, ${arrC2.wtM}, ${arrC2.itM}]
 
+	    },
+	    </c:forEach>
+	   ]
+	    
+	    
+	//	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
+	//	<c:if test='${st.index ne fn:length(arrViewPast)}'>		                 
+	//	{
+	//	name : '${arrC2.mm}',
+		//data : [0, 1, 2, 3],
+	//	data : [${arr.gasM}, ${arr.elM}, ${arr.wtM}, ${arr.itM}],
+	//	color : '#0072bc'
+	//	}
+	//		</c:if>   					
+				
+	//	</c:forEach>
+	    
+	    
 
-
+	});
+});
 
 
 </script>
@@ -295,7 +357,7 @@ $(document).ready(function() {
               
               <br><br>
               <div class="swiper-slide">
-               <h3>이번달엔 얼마나 줄였을까?</h3>
+               <h3>이번달엔 얼마나 줄였을까? </h3>
       		<table class="tb">
       		<tbody>
       			<tr>
@@ -349,9 +411,28 @@ $(document).ready(function() {
       		<c:set var='avg' value="${gas+el+wt+it}" ></c:set>
 			<h4><fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
       		
-      		<div class="clearfix" style="text-align: center;">
-			<div id="graphCon" style="width:550px;height:350px; top:2px; left:8px;display: inline-block;"></div>
-			
+      		
+      		<!-- 전원 당월 막대그래프 비교 -->
+      		<figure class="highcharts-figure">
+		    <div id="container2"></div>
+		    <p class="highcharts-description">
+		        Basic line chart showing trends in a dataset. This chart includes the
+		        <code>series-label</code> module, which adds a label to each line for
+		        enhanced readability.
+		    </p>
+			</figure>
+      		
+      		
+      		<!-- 6개월간 총 지출 금액 차트 -->
+      		<figure class="highcharts-figure">
+		    <div id="container"></div>
+		    <p class="highcharts-description">
+		        Basic line chart showing trends in a dataset. This chart includes the
+		        <code>series-label</code> module, which adds a label to each line for
+		        enhanced readability.
+		    </p>
+			</figure>
+
 			
               </div>
             </div>

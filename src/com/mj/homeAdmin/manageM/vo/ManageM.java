@@ -133,10 +133,22 @@ public class ManageM
         this.mm2 = mm2;
     }
     
+   
+    public String getYyyy2() {
+		return yyyy2;
+	}
+
+	public void setYyyy2(String yyyy2) {
+		this.yyyy2 = yyyy2;
+	}
+
     
     private int idx;
     private String yyyy;
-    private String mm;
+    private String yyyy2;
+   
+
+	private String mm;
     private String mm2;
     private Date wdt;
     private Date edt;

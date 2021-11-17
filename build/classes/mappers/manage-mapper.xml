@@ -25,7 +25,7 @@
 	<!-- 공과금 전체 페이지 당월,전월 비교 데이터 -->
 	<select id="manageNP" parameterType="Manage" resultMap="manageResultSet">
 		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M
-		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND (MM IN (#{mm}, #{mm2}))	
+		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2}) 	
 	</select>
 	
 	<!-- 공과금 데이터 insert(당월) -->
