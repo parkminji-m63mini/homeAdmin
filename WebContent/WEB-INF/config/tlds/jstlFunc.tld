@@ -5,147 +5,147 @@
 	<uri>myFunc</uri>
 	<function>
 		<name>transData</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String transData(java.lang.String, java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>isDateCompare</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String isDateCompare(java.lang.String, java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getNow</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getNow(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getBirth</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getBirth(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getTransDT</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getTransDT(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getTransDT2</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getTransDT2(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>replace</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String replace(java.lang.String, java.lang.String, java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getNullZero</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getNullZero(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getNullChk</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getNullChk(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getNVL</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getNVL(java.lang.String, java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getComma</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getComma(java.lang.String)</function-signature>
 	</function>	
 		<function>
 		<name>replaceBR</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String replaceBR(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>afterMonth</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String afterMonth(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>beforMonth</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String beforMonth(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>indexOF</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String indexOF(java.lang.String, java.lang.String)</function-signature>
 	</function>
 		<function>
 		<name>ellipsis</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String ellipsis(java.lang.String, int)</function-signature>
 	</function>
 	<function>
 		<name>NVL</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String NVL(java.lang.String,java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>getDate</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String getDate(int, int, int, int)</function-signature>
 	</function>
 	<function>
 		<name>getDateDay</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String getDateDay(int, int, int, int)</function-signature>
 	</function>
 	<function>
 		<name>getDateTP</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String getDateTP(int, int, int, int)</function-signature>
 	</function>
 	<function>
 		<name>getDateTP2</name> 
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String getDateTP2(int, int, int, int)</function-signature>
 	</function>
 	<function>
 		<name>moneyFormValue</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String moneyFormValue(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>strEnc</name>
-		<function-class>egovframework.cmmn.JavaUtil</function-class>
+		<function-class>com.mj.homeAdmin.comm.JavaUtil</function-class>
 		<function-signature>String strEnc(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>strEnc2</name>
-		<function-class>egovframework.cmmn.JavaUtil</function-class>
+		<function-class>com.mj.homeAdmin.comm.JavaUtil</function-class>
 		<function-signature>String strEnc2(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>unxss</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String unxss(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>fmtDate</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String fmtDate(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<name>encodeURIComponent</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>String encodeURIComponent(java.lang.String)</function-signature>
 	</function>	
 	<function> 
 		<name>random</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String random()</function-signature>
 	</function>
 	<function> 
 		<name>getAfterDate</name>
-		<function-class>egovframework.cmmn.JstlFunc</function-class>
+		<function-class>com.mj.homeAdmin.comm.JstlFunc</function-class>
 		<function-signature>java.lang.String getAfterDate(java.lang.String, int)</function-signature>
 	</function>
 </taglib>

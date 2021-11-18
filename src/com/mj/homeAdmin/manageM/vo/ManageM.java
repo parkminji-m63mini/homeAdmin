@@ -142,15 +142,41 @@ public class ManageM
 		this.yyyy2 = yyyy2;
 	}
 
-    
-    private int idx;
+	 public String getMm3() {
+			return mm3;
+		}
+
+		public void setMm3(String mm3) {
+			this.mm3 = mm3;
+		}
+
+		public String getYyyy3() {
+			return yyyy3;
+		}
+
+		public void setYyyy3(String yyyy3) {
+			this.yyyy3 = yyyy3;
+		}
+	
+		
+    public int getJidx() {
+			return jidx;
+		}
+
+		public void setJidx(int jidx) {
+			this.jidx = jidx;
+		}
+
+
+	private int idx;
+    private int jidx;
     private String yyyy;
     private String yyyy2;
-   
-
+    private String yyyy3;
 	private String mm;
     private String mm2;
-    private Date wdt;
+    private String mm3;
+	private Date wdt;
     private Date edt;
     private String uId;
     private String gasM;

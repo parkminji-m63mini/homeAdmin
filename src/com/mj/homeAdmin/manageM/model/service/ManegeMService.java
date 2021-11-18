@@ -17,10 +17,17 @@ public interface ManegeMService
     
     public abstract  List<ManageM> manageNP(ManageM managem)
     		throws Exception;
+    
+    public abstract  List<ManageM> manageListP3(ManageM managem)
+    		throws Exception;
 
     public abstract void insertMAll(ManageM managem)
         throws Exception;
 
     public abstract void updateMAll(ManageM managem, HttpServletResponse httpservletresponse)
         throws Exception;
+    
+    public abstract void insertMGAS(ManageM managem)
+    		throws Exception;
+    
 }

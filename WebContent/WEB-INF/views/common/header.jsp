@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" uri="myFunc"%> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,9 +61,10 @@
             <li class="dropdown"><a href="#"><span>공과금</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="${contextPath}/manageM/index.do">전체</a></li>
+              <li><a href="${contextPath}/manageM/gas.do">가스</a></li>
               <li><a href="${contextPath}/manageM/electric.do">전기</a></li>
               <li><a href="${contextPath}/manageM/water.do">수도</a></li>
-              <li><a href="${contextPath}/manageM/gas.do">가스</a></li>
+              <li><a href="${contextPath}/manageM/it.do">인터넷</a></li>
               <!-- -<li><a href="#">관리비</a></li> -->
             </ul>
           </li>

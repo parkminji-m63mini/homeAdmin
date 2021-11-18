@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="my" uri="myFunc"%> 
 
 
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title> 
+<title>공과금 전체</title> 
 </head>
 
 <!--  차트 -->
@@ -91,18 +92,21 @@ function reload() { (location || window.location || document.location).reload();
 
 
 
-// 총합 6개월 총 지출 금액 차트
+// 총합 3개월 총 지출 금액 차트
 var chart;
 $(document).ready(function() {
+	
+	// 전월, 전전월 데이터 없을 때 0으로 채워주기
+	//<c:set var='mode' value='i'/>
 	
 	chart = new Highcharts.chart('container', {
 
 	    title: {
-	        text: '공과금 비교 (최근 6개월)'
+	        text: '공과금 비교 (최근 3개월)'
 	    },
 
 	    subtitle: {
-	        text: '(당월) 00년도 00월 | (전월) 00년도 00월'
+	        text: '${my:NVL(arrViewPast3[2].yyyy, 0)}년도 ${my:NVL(arrViewPast3[2].yyyy, 0)}월 ~${arrViewPast3[0].yyyy}년도 ${arrViewPast3[0].mm}월 '
 	    },
 
 	    yAxis: {
@@ -128,26 +132,30 @@ $(document).ready(function() {
 	            label: {
 	                connectorAllowed: false
 	            },
-	            pointStart: 2010
+	            pointStart: ${arrViewPast3[0].mm-2}
 	        }
 	    },
 
 	    series: [{
-	        name: 'Installation',
-	        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-	    }, {
-	        name: 'Manufacturing',
-	        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-	    }, {
-	        name: 'Sales & Distribution',
-	        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-	    }, {
-	        name: 'Project Development',
-	        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-	    }, {
-	        name: 'Other',
-	        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-	    }],
+		        name: '가스',
+		        data : [${my:NVL(arrViewPast3[2].gasM,0)},${my:NVL(arrViewPast3[1].gasM,0)}, ${arrViewPast3[0].gasM}]
+		    },
+		    {
+		        name: '전기',
+		        data : [${my:NVL(arrViewPast3[2].elM,0)}, ${my:NVL(arrViewPast3[1].elM,0)}, ${arrViewPast3[0].elM}]
+		
+		    },
+		    {
+		        name: '수도',
+		        data : [${my:NVL(arrViewPast3[2].wtM,0)}, ${my:NVL(arrViewPast3[1].wtM,0)},${arrViewPast3[0].wtM}]
+		
+		    },
+		    {
+		        name: '인터넷',
+		        data : [${my:NVL(arrViewPast3[2].itM,0)}, ${my:NVL(arrViewPast3[1].itM,0)}, ${arrViewPast3[0].itM}]
+		
+		    },
+	     ],
 
 	    responsive: {
 	        rules: [{
@@ -262,16 +270,16 @@ $(document).ready(function() {
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
 
-        <div class="row gy-4">
+        <div class="">
 
-          <div class="col-lg-8">
+          <div class="">
             <div class="portfolio-info">
               <div class="swiper-wrapper align-items-center">
 
 					<%--이번달 요금 --%>
                 <div class="swiper-slide">
                 	<c:forEach var='arr' items='${arrViewNow}' varStatus="st">
-                	<!-- 이건 나중에 고지서 보고 컬럼 더 만들어야함 -->
+                	<!-- !!이건 나중에 고지서 보고 컬럼 더 만들어야함 -->
                 	 <span style="float: right;" ><a href="#" > >> 자세히 보러가기</a></span>
                 	 <h3>${arr.yyyy}년도 ${arr.mm}월 공과금</h3>
 				<form name="frmReg${st.index}" meth  class='boder-black'od="post">
@@ -407,29 +415,51 @@ $(document).ready(function() {
       				<th class='boder-black'><fmt:formatNumber value="${it}" type="number"/>원</th>
       			</tr>	    
       		</tbody>
-      		</table>
+     		</table>
+     		
+     		<br><br>
+     		
       		<c:set var='avg' value="${gas+el+wt+it}" ></c:set>
-			<h4><fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
+			<c:choose>
+			<c:when test="${avg >= 0}">
+			<div style="text-align: center;">
+			<h4>
+			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
+			<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
+			</div>
+			
+			</c:when>
+			<c:when test="${avg < 0}">
+			<div style="text-align: center;">
+			<h4>
+			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
+			<fmt:formatNumber value="${avg}" type="number"/>원 이라니..홀리...마마</h4>
+			</div>
+			</c:when>
+			</c:choose>
       		
+      		<br>
+      		<hr>
+      		<br>
       		
+      		<h3>한눈에 보는 내 공과금</h3>
+      		<br>
       		<!-- 전원 당월 막대그래프 비교 -->
       		<figure class="highcharts-figure">
 		    <div id="container2"></div>
 		    <p class="highcharts-description">
-		        Basic line chart showing trends in a dataset. This chart includes the
-		        <code>series-label</code> module, which adds a label to each line for
-		        enhanced readability.
+		      
 		    </p>
 			</figure>
+			
+			<br><br>
       		
       		
-      		<!-- 6개월간 총 지출 금액 차트 -->
+      		<!-- 3개월간 총 지출 금액 차트 -->
       		<figure class="highcharts-figure">
 		    <div id="container"></div>
 		    <p class="highcharts-description">
-		        Basic line chart showing trends in a dataset. This chart includes the
-		        <code>series-label</code> module, which adds a label to each line for
-		        enhanced readability.
+		        
 		    </p>
 			</figure>
 
@@ -437,7 +467,7 @@ $(document).ready(function() {
               </div>
             </div>
           </div>
-
+<%-- 
           <div class="col-lg-4">
             <div class="portfolio-info">
               <h3>Project information</h3>
@@ -460,8 +490,10 @@ $(document).ready(function() {
 
       </div>
     </section><!-- End Portfolio Details Section -->
-
+--%>
   </main><!-- End #main -->
 
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

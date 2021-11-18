@@ -28,6 +28,12 @@
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2}) 	
 	</select>
 	
+	<!-- 공과금 전체 페이지 3개월 비교 데이터 -->
+	<select id="manageListP3" parameterType="Manage" resultMap="manageResultSet">
+		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M
+		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2} or YYYY =#{yyyy3} AND MM = #{mm3}) 	
+	</select>
+	
 	<!-- 공과금 데이터 insert(당월) -->
 	<insert id="insertMAll" parameterType="Manage">
 		INSERT INTO MANAGE_MA VALUES(MN_SEQ.NEXTVAL,#{yyyy}, #{mm}, SYSDATE, SYSDATE, #{uId}, 
@@ -39,4 +45,16 @@
 		UPDATE MANAGE_MA SET EDT=SYSDATE, GAS_M=#{gasM}, EL_M=#{elM}, WT_M=#{wtM}, IT_M=#{itM}
 		WHERE U_ID=#{uId} AND YYYY=#{yyyy} AND MM=#{mm}
 	</update>
+	
+	<!-- 공과금 상세 데이터 insert(당월) -->
+	<insert id="insertMGAS" parameterType="Manage">
+		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID) VALUES (MG_SEQ.NEXTVAL,${jidx}, #{uId});
+	</insert>
+	
+	
+	<select id="manageIndex" parameterType="_int" resultType="_int">
+			SELECT IDX
+		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
+	</select>
+	
 </mapper>

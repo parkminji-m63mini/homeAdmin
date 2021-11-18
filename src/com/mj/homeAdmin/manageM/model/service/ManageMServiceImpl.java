@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,9 +43,26 @@ public class ManageMServiceImpl
     	
     	 List<ManageM> arrList = dao.manageList(vo);
     	 
+    	 
+    	 // 여기부터 데이터 값 받는거 확인!
+    	 System.out.println();
+    	 
     	 // 당월 데이터가 없다면 새로 생성
     	 if(arrList.isEmpty()) {
     		 dao.insertMAll(vo);
+    		 
+    		 //가스비 상세 데이터 생성 하기 ------------------
+    		 
+    		 // 조인idx 가져옴 (새로만든 MANAGE_MA 의 IDX)
+    		 int jidx = dao.manageIndex(vo);
+    		 vo.setJidx(jidx);
+    		 
+    		 System.out.println("jidx : " + jidx);
+    		 //가스비 상세 데이터 생성
+    		 dao.insertMGAS(vo);
+    		 //------------------------
+    		 
+    		 // 다시 불러오기
     		  arrList = dao.manageList(vo);
     	 }
         System.out.println((new StringBuilder()).append(arrList).append(" : arrList").toString());
@@ -57,6 +75,8 @@ public class ManageMServiceImpl
     	return arrList;
     }
 
+    
+    // 공과금 테이블 데이터 INSRT (MANAGE_MA)
     @Transactional(rollbackFor=Exception.class)
     @Override
     public void insertMAll(ManageM vo)
@@ -72,6 +92,22 @@ public class ManageMServiceImpl
     {
         dao.updateMAll(vo);
     }
+
+    
+    // 공과금 상세 테이블 데이터 INSRT (MANAGE_GAS)
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public void insertMGAS(ManageM vo)
+        throws Exception
+    {
+        dao.insertMGAS(vo);
+    }
+    
+	public List<ManageM> manageListP3(ManageM vo) {
+		
+		List<ManageM> arrList = dao.manageListP3(vo);
+		return arrList;
+	}
 
 
 }

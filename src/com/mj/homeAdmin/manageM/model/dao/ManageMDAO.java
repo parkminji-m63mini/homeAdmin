@@ -41,4 +41,18 @@ public class ManageMDAO
 		return sqlSession.selectList("manageMapper.manageNP", vo);
 	}
 
+	public List<ManageM> manageListP3(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageListP3", vo);
+	}
+
+	public void insertMGAS(ManageM vo) {
+		sqlSession.insert("manageMapper.insertMGAS", vo);
+		
+	}
+
+	public int manageIndex(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.manageIndex", vo);
+		}
+	
+
 }
