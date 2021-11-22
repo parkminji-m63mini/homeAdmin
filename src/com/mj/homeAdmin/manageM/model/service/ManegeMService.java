@@ -33,4 +33,7 @@ public interface ManegeMService
     public abstract void insertMGAS(ManageM managem)
     		throws Exception;
     
+    public abstract void updateGas(ManageM managem, HttpServletResponse httpservletresponse)
+            throws Exception;
+    
 }

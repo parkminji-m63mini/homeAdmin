@@ -167,6 +167,161 @@ public class ManageM
 			this.jidx = jidx;
 		}
 
+		
+		
+
+	public String getDefM() {
+			return defM;
+		}
+
+		public void setDefM(String defM) {
+			this.defM = defM;
+		}
+
+		public String getcGm() {
+			return cGm;
+		}
+
+		public void setcGm(String cGm) {
+			this.cGm = cGm;
+		}
+
+		public String getuGm() {
+			return uGm;
+		}
+
+		public void setuGm(String uGm) {
+			this.uGm = uGm;
+		}
+
+		public String getaGm() {
+			return aGm;
+		}
+
+		public void setaGm(String aGm) {
+			this.aGm = aGm;
+		}
+
+		public String getsGm() {
+			return sGm;
+		}
+
+		public void setsGm(String sGm) {
+			this.sGm = sGm;
+		}
+
+		public String getmGm() {
+			return mGm;
+		}
+
+		public void setmGm(String mGm) {
+			this.mGm = mGm;
+		}
+
+		public String getAvgGm() {
+			return avgGm;
+		}
+
+		public void setAvgGm(String avgGm) {
+			this.avgGm = avgGm;
+		}
+
+		public String getJsGm() {
+			return jsGm;
+		}
+
+		public void setJsGm(String jsGm) {
+			this.jsGm = jsGm;
+		}
+
+		public String getEnGu() {
+			return enGu;
+		}
+
+		public void setEnGu(String enGu) {
+			this.enGu = enGu;
+		}
+
+		public String getMonGu() {
+			return monGu;
+		}
+
+		public void setMonGu(String monGu) {
+			this.monGu = monGu;
+		}
+
+		public String getUseG() {
+			return useG;
+		}
+
+		public void setUseG(String useG) {
+			this.useG = useG;
+		}
+
+		public String getUseB() {
+			return useB;
+		}
+
+		public void setUseB(String useB) {
+			this.useB = useB;
+		}
+
+		public String getgChk() {
+			return gChk;
+		}
+
+		public void setgChk(String gChk) {
+			this.gChk = gChk;
+		}
+
+		public String getAutoM() {
+			return autoM;
+		}
+
+		public void setAutoM(String autoM) {
+			this.autoM = autoM;
+		}
+
+		public String getAutoHow() {
+			return autoHow;
+		}
+
+		public void setAutoHow(String autoHow) {
+			this.autoHow = autoHow;
+		}
+
+		public String getAutoWhen() {
+			return autoWhen;
+		}
+
+		public void setAutoWhen(String autoWhen) {
+			this.autoWhen = autoWhen;
+		}
+
+
+
+
+	public String getgNum() {
+			return gNum;
+		}
+
+		public void setgNum(String gNum) {
+			this.gNum = gNum;
+		}
+
+
+
+
+	public String getAddA() {
+			return addA;
+		}
+
+		public void setAddA(String addA) {
+			this.addA = addA;
+		}
+
+
+
 
 	private int idx;
     private int jidx;
@@ -184,4 +339,29 @@ public class ManageM
     private String wtM;
     private String itM;
     private String mode;
+    
+    
+    /// 가스 상세
+    
+    private String gNum;
+    
+    private String defM;
+    private String cGm;
+    private String uGm;
+    private String aGm;
+    private String sGm;
+    private String mGm;
+    private String avgGm;
+    private String jsGm;
+    private String enGu;
+    private String monGu;
+    private String useG;
+    private String useB;
+    private String gChk;
+    private String autoM;
+    private String autoHow;
+    private String autoWhen;
+    
+    private String addA;
+    
 }

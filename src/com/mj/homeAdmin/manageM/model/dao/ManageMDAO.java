@@ -57,6 +57,14 @@ public class ManageMDAO
 	public List<ManageM> manageGasNow(ManageM vo) {
 		return sqlSession.selectList("manageMapper.manageGasNow", vo);
 	}
+
+	public void updateGas(ManageM vo) {
+		sqlSession.update("manageMapper.updateGas", vo);
+	}
+
+	public void updateMGas(ManageM vo) {
+		sqlSession.update("manageMapper.updateMGas", vo);
+	}
 	
 
 }

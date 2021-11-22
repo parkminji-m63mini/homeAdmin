@@ -14,6 +14,25 @@
 		<result property="elM" column="EL_M"/>
 		<result property="wtM" column="WT_M"/>
 		<result property="itM" column="IT_M"/>
+		
+		<result property="gNum" column="G_NUM"/>
+		<result property="defM" column="DEF_M"/>
+		<result property="cGm" column="C_GM"/>
+		<result property="uGm" column="U_GM"/>
+		<result property="aGm" column="A_GM"/>
+		<result property="sGm" column="S_GM"/>
+		<result property="mGm" column="M_GM"/>
+		<result property="avgGm" column="AVG_GM"/>
+		<result property="jsGm" column="JS_GM"/>
+		<result property="enGu" column="EN_GU"/>
+		<result property="monGu" column="MON_GU"/>
+		<result property="useG" column="USE_G"/>
+		<result property="useB" column="USE_B"/>
+		<result property="gChk" column="G_CHK"/>
+		<result property="autoM" column="AUTO_M"/>
+		<result property="autoHow" column="AUTO_HOW"/>
+		<result property="autoWhen" column="AUTO_WHEN"/>
+		
 	</resultMap>
 
 
@@ -71,6 +90,21 @@
 		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
 		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
 	</select>
+	
+	
+	<!-- 공과금 데이터 update (기본값만) -->
+	<update id="updateGas" parameterType="Manage">
+		UPDATE MANAGE_GAS SET EDT=SYSDATE, DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
+		, S_GM=#{sGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
+		, USE_G=#{useG}, USE_B=#{useB}
+		WHERE U_ID=#{uId} AND IDX=#{idx}
+	</update>
+	
+	<!-- 공과금 기본 가스 데이터 update -->
+	<update id="updateMGas" parameterType="Manage">
+		UPDATE MANAGE_MA SET GAS_M=${defM} + ${cGm} +${uGm} +${aGm} +${sGm} +${mGm} + ${avgGm} +  ${jsGm} +${enGu}
+		WHERE U_ID=#{uId} AND IDX=#{jidx}
+	</update>
 	
 	<!--가스 상세 데이터 종료-->
 </mapper>

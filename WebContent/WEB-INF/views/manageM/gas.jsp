@@ -34,9 +34,9 @@ function up(index){
 					
 					
 					$(".nomalFrom").css("display", "inline");
+					
 					$(".upFrom").css("display", "none");
 					$("#upbtn").val("수정");
-					
 					reload();
 			 form 액션 종료 */
 			 
@@ -44,17 +44,27 @@ function up(index){
 				type : "post",
 				dataType : "text", 
 				 async : false,
-				url : "updateMAll.do",
+				url : "updateGas.do",
 				data : {
 					yyyy: $("input:hidden[name='yyyy']").val(), 
 					mm: $("input:hidden[name='mm']").val(), 
 					mode: $("input:hidden[name='mode']").val(), 
 					uId: $("input:hidden[name='uId']").val(), 
 					idx: $("input:hidden[name='idx']").val(), 
-					gasM: $("input[name='gasM']").val(), 
-					elM: $("input[name='elM']").val(), 
-					wtM: $("input[name='wtM']").val(), 
-					itM: $("input[name='itM']").val(), 
+					jidx: $("input:hidden[name='jidx']").val(), 
+					defM: $("input[name='defM']").val(), 
+					cGm: $("input[name='cGm']").val(), 
+					uGm: $("input[name='uGm']").val(), 
+					aGm: $("input[name='aGm']").val(), 
+					sGm: $("input[name='sGm']").val(), 
+					mGm: $("input[name='mGm']").val(), 
+					avgGm: $("input[name='avgGm']").val(), 
+					jsGm: $("input[name='jsGm']").val(), 
+					enGu: $("input[name='enGu']").val(), 
+					monGu: $("input[name='monGu']").val(), 
+					useG: $("input[name='useG']").val(), 
+					usrB: $("input[name='usrB']").val(), 
+					
 				},
 				success : function(result){
 					alert("등록완료");
@@ -117,6 +127,7 @@ function reload() { (location || window.location || document.location).reload();
 				</c:if>
 				
                 <input type="hidden" value="${arr.idx}" name='idx' id='idx'/>
+                <input type="hidden" value="${arr.jidx}" name='jidx' id='jidx'/>
                 <input type="hidden" value="${mode}" name='mode' id='mode'/>
                 <input type="hidden" value="${arr.yyyy}" name='yyyy' id='yyyy'/>
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
@@ -127,61 +138,129 @@ function reload() { (location || window.location || document.location).reload();
                 	<table class='tb'>
                 	<tbody>
 					<tr>
-						<th  class='boder-black'>기본료</th>
+						<th  class='boder-black'>기본료 </th>
 						<th  class='boder-black'>교체비</th>
 						<th  class='boder-black'>사용요금</th>
 						<th  class='boder-black'>부가세</th>
 						<th  class='boder-black'>할인금액</th>
-						<th  class='boder-black'>미납금</th>
-						<th  class='boder-black'>정산금액</th>
-						<th  class='boder-black'>절시금액</th>
-						<th  class='boder-black'>에너지바우처</th>
 					</tr>
+										
 					<tr>
 						<th  class='boder-black'>
 						<c:choose>
-						<c:when test="${arr.gasM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.gasM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name='gasM' value="${arr.gasM}"/>원</span>
+						<c:when test="${arr.defM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.defM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name='defM' value="${arr.defM}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom' ><input  class='manageI' type="text" name='gasM' value=""/>원</span>
+						<span class='upFrom' ><input  class='manageI' type="text" name='defM' value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
 						
 						<th  class='boder-black'>
 						<c:choose>
-						<c:when  test="${arr.elM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.elM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="elM" value="${arr.elM}"/>원</span>
+						<c:when  test="${arr.cGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.cGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="cGm" value="${arr.cGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom'><input  class='manageI' type="text" name="elM" value=""/>원</span>
+						<span class='upFrom'><input  class='manageI' type="text" name="cGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
 						
 						<th  class='boder-black'>
 						<c:choose>
-						<c:when  test="${arr.wtM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.wtM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="wtM" value="${arr.wtM}""/>원</span>
+						<c:when  test="${arr.uGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.uGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="uGm" value="${arr.uGm}""/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom' ><input  class='manageI' type="text" name="wtM" value=""/>원</span>
+						<span class='upFrom' ><input  class='manageI' type="text" name="uGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
 						
 						<th  class='boder-black'>
 						<c:choose>
-						<c:when test="${arr.itM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.itM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="itM"  value="${arr.itM}"/>원</span>
+						<c:when test="${arr.aGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.aGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="aGm"  value="${arr.aGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom'><input  class='manageI' type="text" name="itM" value=""/>원</span>
+						<span class='upFrom'><input  class='manageI' type="text" name="aGm" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+							<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.sGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.sGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="sGm"  value="${arr.sGm}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="sGm" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+					</tr>
+					
+					<tr>
+						<th  class='boder-black'>미납금</th>
+						<th  class='boder-black'>정산금액</th>
+						<th  class='boder-black'>절시금액</th>
+						<th colspan="2"  class='boder-black'>에너지바우처</th>
+					</tr>
+					
+					<tr>
+					
+							<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.mGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.mGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="mGm"  value="${arr.mGm}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="mGm" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+							<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.avgGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.avgGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="avgGm"  value="${arr.avgGm}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="avgGm" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+							<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.jsGm ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.jsGm}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="jsGm"  value="${arr.jsGm}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="jsGm" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+							<th colspan="2" class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.enGu ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.enGu}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="enGu"  value="${arr.enGu}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="enGu" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -205,7 +284,7 @@ function reload() { (location || window.location || document.location).reload();
 						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name='gasM' value="${arr.gasM}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom' ><input  class='manageI' type="text" name='gasM' value=""/>원</span>
+						<span class='upFrom' ><input  class='manageI' type="text" name='gasM' value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -230,18 +309,6 @@ function reload() { (location || window.location || document.location).reload();
 						</c:when>
 						<c:otherwise>
 						<span class='upFrom' ><input  class='manageI' type="text" name="wtM" value=""/>원</span>
-						</c:otherwise>
-						</c:choose>
-						</th>
-						
-						<th  class='boder-black'>
-						<c:choose>
-						<c:when test="${arr.itM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.itM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="itM"  value="${arr.itM}"/>원</span>
-						</c:when>
-						<c:otherwise>
-						<span class='upFrom'><input  class='manageI' type="text" name="itM" value=""/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>

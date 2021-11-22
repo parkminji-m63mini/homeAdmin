@@ -166,5 +166,14 @@ public class ManageMServiceImpl
 		return arrList;
 	}
 
+	public void updateGas(ManageM vo, HttpServletResponse res)   throws Exception{
+		
+		dao.updateGas(vo);
+		
+		// 값 들어가지 않아서 잠시 멈춤
+		// 기본 테이블 가스 컬럼도 수정 (상세값 전부 + 했을 때 값으로) update
+		//dao.updateMGas(vo);
+	}
+
 
 }

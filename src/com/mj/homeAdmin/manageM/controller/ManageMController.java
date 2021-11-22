@@ -146,10 +146,13 @@ public class ManageMController
     	// 당월분만
 	       vo.setYyyy(yyyy);
 	       vo.setMm(mm);
+	       
+	       System.out.println(vo.getuId() + " 1");
+	       System.out.println(vo.getYyyy()+ " 1");
+	       System.out.println(vo.getMm() + " 1");
        
         // 이번달
         List<ManageM> arrViewNow = ms.manageGasNow(vo);
-    	
     	
     	// 당월에서부터 전 6개월치 가스비
     	
@@ -165,6 +168,45 @@ public class ManageMController
         model.addAttribute("arrViewNow", arrViewNow);
     	return "manageM/gas";
     }
+    
+    
+    // 가스상세 업데이트 1
+    @ResponseBody
+    @RequestMapping(value="updateGas.do", produces = "application/json; charset=utf-8")
+    public String updatGas(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+        throws Exception
+    {
+        
+        String str = "";
+        
+        System.out.println(vo.getDefM() + " /1 / " + vo.getcGm() );
+      
+//        int avg =0;
+//        
+//      int defm = Integer.parseInt(vo.getDefM())	;  
+//      int cgm = Integer.parseInt(vo.getcGm());  
+//      int uGm = Integer.parseInt(vo.getuGm())	;  
+//      int aGm = Integer.parseInt(vo.getaGm())	;  
+//      int sGm = Integer.parseInt(vo.getsGm())	;  
+//      int mGm = Integer.parseInt(vo.getmGm())	;  
+//      int avgGm = Integer.parseInt(vo.getAvgGm())	;  
+//      int jsGm = Integer.parseInt(vo.getJsGm())	;  
+//        	
+//      avg = defm + cgm + uGm +aGm + sGm + mGm +avgGm + jsGm;
+//      System.out.println(avg + "  : avg");
+//      String avg2 = Integer.toString(avg);
+//        
+//       	vo.setAddA(avg2);
+//        
+       	System.out.println(vo.getAddA() + "확인");
+            ms.updateGas(vo, res);
+            str ="성공";
+          //  String strScript = "alert('\uC5C5\uB370\uC774\uD2B8 \uC644\uB8CC'); location.href = './index.do';";
+        //    myutil.webScript(res, strScript);
+        return str;
+    }
+
+    
     @RequestMapping("electric.do")
     public String electric()
     {
