@@ -16,6 +16,10 @@
 		<result property="itM" column="IT_M"/>
 	</resultMap>
 
+
+
+	<!--기본 공과금 데이터 시작 -->
+
 	<!-- 공과금 전체 페이지 당월 데이터 -->
 	<select id="manageList" parameterType="Manage" resultMap="manageResultSet">
 		SELECT IDX, YYYY,MM,U_ID, GAS_M, EL_M, WT_M, IT_M
@@ -46,15 +50,27 @@
 		WHERE U_ID=#{uId} AND YYYY=#{yyyy} AND MM=#{mm}
 	</update>
 	
-	<!-- 공과금 상세 데이터 insert(당월) -->
+	<!-- 공과금 가스 상세 데이터 insert(당월) -->
 	<insert id="insertMGAS" parameterType="Manage">
-		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID) VALUES (MG_SEQ.NEXTVAL,${jidx}, #{uId});
+		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID) VALUES (MG_SEQ.NEXTVAL,#{jidx}, #{uId})
 	</insert>
 	
-	
-	<select id="manageIndex" parameterType="_int" resultType="_int">
+	<!-- 공과금 상세(가스,수도...) 데이터 가져올 때 필요한 기본 공과금 데이터 IDX -->
+	<select id="manageIndex" parameterType="Manage" resultType="_int">
 			SELECT IDX
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
 	</select>
 	
+	<!--기본 공과금 데이터 종료 -->
+	
+	<!--가스 상세 데이터 시작 -->
+	
+	<!-- 가스 상세 데이터 가져오기 (당월분 1) -->
+	<select id="manageGasNow" parameterType="Manage" resultMap="manageResultSet">
+		SELECT * FROM MANAGE_GAS A
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
+	</select>
+	
+	<!--가스 상세 데이터 종료-->
 </mapper>

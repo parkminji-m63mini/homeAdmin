@@ -148,7 +148,7 @@ public class ManageMController
 	       vo.setMm(mm);
        
         // 이번달
-        List<ManageM> arrViewNow = ms.manageIndex(vo);
+        List<ManageM> arrViewNow = ms.manageGasNow(vo);
     	
     	
     	// 당월에서부터 전 6개월치 가스비

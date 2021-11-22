@@ -21,6 +21,10 @@ import com.mj.homeAdmin.manageM.vo.ManageM;
 // Referenced classes of package com.mj.homeAdmin.manageM.model.service:
 //            ManegeMService
 
+/**
+ * @author Administrator
+ *
+ */
 @Service
 public class ManageMServiceImpl
     implements ManegeMService
@@ -45,26 +49,33 @@ public class ManageMServiceImpl
     	 
     	 
     	 // 여기부터 데이터 값 받는거 확인!
-    	 System.out.println();
+    	 System.out.println(arrList + ": 테스트 1");
     	 
     	 // 당월 데이터가 없다면 새로 생성
     	 if(arrList.isEmpty()) {
+    		 System.out.println("들어옴");
     		 dao.insertMAll(vo);
+    		 System.out.println("넘어옴3");
     		 
     		 //가스비 상세 데이터 생성 하기 ------------------
     		 
     		 // 조인idx 가져옴 (새로만든 MANAGE_MA 의 IDX)
     		 int jidx = dao.manageIndex(vo);
+    		 
+    		 System.out.println("넘어옴 2");
     		 vo.setJidx(jidx);
     		 
     		 System.out.println("jidx : " + jidx);
     		 //가스비 상세 데이터 생성
     		 dao.insertMGAS(vo);
     		 //------------------------
+    		 System.out.println("넘어옴");
     		 
     		 // 다시 불러오기
     		  arrList = dao.manageList(vo);
     	 }
+   	 
+    	 
         System.out.println((new StringBuilder()).append(arrList).append(" : arrList").toString());
         return arrList;
     }
@@ -76,7 +87,7 @@ public class ManageMServiceImpl
     }
 
     
-    // 공과금 테이블 데이터 INSRT (MANAGE_MA)
+    // 공과금 테이블 데이터 INSERT (MANAGE_MA)
     @Transactional(rollbackFor=Exception.class)
     @Override
     public void insertMAll(ManageM vo)
@@ -85,6 +96,7 @@ public class ManageMServiceImpl
         dao.insertMAll(vo);
     }
 
+    // 공과금 테이블 데이터 UPDATE (MANAGE_MA)
     @Transactional(rollbackFor=Exception.class)
     @Override
     public void updateMAll(ManageM vo, HttpServletResponse res)
@@ -94,7 +106,7 @@ public class ManageMServiceImpl
     }
 
     
-    // 공과금 상세 테이블 데이터 INSRT (MANAGE_GAS)
+    // 공과금 상세 가스 테이블 데이터 INSRT (MANAGE_GAS)
     @Transactional(rollbackFor=Exception.class)
     @Override
     public void insertMGAS(ManageM vo)
@@ -103,9 +115,54 @@ public class ManageMServiceImpl
         dao.insertMGAS(vo);
     }
     
+	/**
+	 * 공과금 전체 데이터 조회 (3개월)
+	 */
 	public List<ManageM> manageListP3(ManageM vo) {
 		
 		List<ManageM> arrList = dao.manageListP3(vo);
+		return arrList;
+	}
+
+	/**
+	 * 가스비 상세 데이터 조회 (당월)
+	 */
+	public List<ManageM> manageGasNow(ManageM vo) {
+		
+		List<ManageM> arrList = dao.manageGasNow(vo);
+		
+		 // 당월 가스 데이터가 없다면 새로 생성
+   	 if(arrList.isEmpty()) {
+   		 
+   		 // 공과금 전체 데이터를 가지고 있는 지 부터 확인
+   		 List<ManageM> arrListChk = dao.manageList(vo);
+
+   		 // 전체 데이터가 없다면 생성
+   		 if(arrListChk.isEmpty()) {
+   			 dao.insertMAll(vo);
+   		 }
+   		 int jidx = 0;
+   		 
+   		 //가스비 상세 데이터 생성 하기 ------------------
+
+   		 // 조인idx 가져옴 (새로만든 MANAGE_MA 의 IDX)
+   		 jidx = dao.manageIndex(vo); // 공과금 전체 데이터 idx 가져오기
+   		   
+   		  // 생성 후 다시 인덱스 조회
+   		   jidx = dao.manageIndex(vo);
+   		 vo.setJidx(jidx);
+   		 
+   		 //가스비 상세 데이터 생성
+   		 dao.insertMGAS(vo);
+   		 //------------------------
+   		 System.out.println("넘어옴");
+   		 
+   		 // 다시 불러오기
+   		  arrList = dao.manageGasNow(vo);
+   	 }
+  	 
+		
+		
 		return arrList;
 	}
 

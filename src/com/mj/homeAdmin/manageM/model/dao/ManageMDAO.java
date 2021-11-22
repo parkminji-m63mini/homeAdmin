@@ -53,6 +53,10 @@ public class ManageMDAO
 	public int manageIndex(ManageM vo) {
 		return sqlSession.selectOne("manageMapper.manageIndex", vo);
 		}
+
+	public List<ManageM> manageGasNow(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageGasNow", vo);
+	}
 	
 
 }

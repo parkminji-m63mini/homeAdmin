@@ -20,6 +20,9 @@ public interface ManegeMService
     
     public abstract  List<ManageM> manageListP3(ManageM managem)
     		throws Exception;
+    
+    public abstract  List<ManageM> manageGasNow(ManageM managem)
+    		throws Exception;
 
     public abstract void insertMAll(ManageM managem)
         throws Exception;

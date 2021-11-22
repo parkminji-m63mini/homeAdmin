@@ -106,7 +106,7 @@ function reload() { (location || window.location || document.location).reload();
 					<%--이번달 요금 --%>
                 <div class="swiper-slide">
                 	<c:forEach var='arr' items='${arrViewNow}' varStatus="st">
-                	 <h3>${arr.yyyy}년도 ${arr.mm}월 가스요금</h3>
+                	 <h3>${arr.yyyy}년도 ${arr.mm}월 가스 상세요금</h3>
 				<form name="frmReg${st.index}" meth  class='boder-black'od="post">
 				
 				
@@ -121,13 +121,81 @@ function reload() { (location || window.location || document.location).reload();
                 <input type="hidden" value="${arr.yyyy}" name='yyyy' id='yyyy'/>
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${arr.uId}" name='uId' id='uId'/>
+                	
+                	
+                	
                 	<table class='tb'>
                 	<tbody>
 					<tr>
-						<th  class='boder-black'>가스비</th>
-						<th  class='boder-black'>전기세</th>
-						<th  class='boder-black'>수도세</th>
-						<th  class='boder-black'>인터넷</th>
+						<th  class='boder-black'>기본료</th>
+						<th  class='boder-black'>교체비</th>
+						<th  class='boder-black'>사용요금</th>
+						<th  class='boder-black'>부가세</th>
+						<th  class='boder-black'>할인금액</th>
+						<th  class='boder-black'>미납금</th>
+						<th  class='boder-black'>정산금액</th>
+						<th  class='boder-black'>절시금액</th>
+						<th  class='boder-black'>에너지바우처</th>
+					</tr>
+					<tr>
+						<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.gasM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.gasM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name='gasM' value="${arr.gasM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom' ><input  class='manageI' type="text" name='gasM' value=""/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+						<th  class='boder-black'>
+						<c:choose>
+						<c:when  test="${arr.elM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.elM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="elM" value="${arr.elM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="elM" value=""/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+						<th  class='boder-black'>
+						<c:choose>
+						<c:when  test="${arr.wtM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.wtM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="wtM" value="${arr.wtM}""/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom' ><input  class='manageI' type="text" name="wtM" value=""/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+						
+						<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.itM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.itM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="itM"  value="${arr.itM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='upFrom'><input  class='manageI' type="text" name="itM" value=""/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+                	</tbody>
+                	</table>
+                	
+                	<!--  사용량 -->
+                	<table class='tb'>
+                	<tbody>
+					<tr>
+						<th  class='boder-black'>당월지침</th>
+						<th  class='boder-black'>사용량</th>
+						<th  class='boder-black'>사용열량</th>
 					</tr>
 					<tr>
 						<th  class='boder-black'>
