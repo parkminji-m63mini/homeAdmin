@@ -205,6 +205,49 @@ public class ManageMController
         //    myutil.webScript(res, strScript);
         return str;
     }
+    // 가스상세 지불여부 업데이트
+    @ResponseBody
+    @RequestMapping(value="updateGchk.do", produces = "application/json; charset=utf-8")
+    public String updateGchk(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    
+    	System.out.println(vo.getgChk() + "확인");
+    	ms.updateGchk(vo, res);
+    	str ="성공";
+    	return str;
+    }
+    // 가스상세 자동이체 업데이트
+    @ResponseBody
+    @RequestMapping(value="updateGchkA.do", produces = "application/json; charset=utf-8")
+    public String updateGchkA(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	System.out.println(vo.getAutoM() + "확인");
+    	ms.updateGchkA(vo, res);
+    	str ="성공";
+    	return str;
+    }
+    
+    // 기본 가스비 업데이트
+    @ResponseBody
+    @RequestMapping(value="updateTgasM.do", produces = "application/json; charset=utf-8")
+    public String updateTgasM(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	System.out.println(vo.getGasM() + "확인");
+    	ms.updateTgasM(vo, res);
+    	str ="성공";
+    	return str;
+    }
 
     
     @RequestMapping("electric.do")

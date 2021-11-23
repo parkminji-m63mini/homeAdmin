@@ -320,6 +320,19 @@ public class ManageM
 			this.addA = addA;
 		}
 
+		
+
+
+
+	public String getkGm() {
+			return kGm;
+		}
+
+		public void setkGm(String kGm) {
+			this.kGm = kGm;
+		}
+
+
 
 
 
@@ -350,6 +363,7 @@ public class ManageM
     private String uGm;
     private String aGm;
     private String sGm;
+    private String kGm;
     private String mGm;
     private String avgGm;
     private String jsGm;

@@ -175,5 +175,18 @@ public class ManageMServiceImpl
 		//dao.updateMGas(vo);
 	}
 
+	public void updateGchk(ManageM vo, HttpServletResponse res) {
+		dao.updateGchk(vo);
+	}
+
+	public void updateTgasM(ManageM vo, HttpServletResponse res) {
+		dao.updateTgasM(vo);
+	}
+
+	public void updateGchkA(ManageM vo, HttpServletResponse res) {
+		dao.updateGchkA(vo);
+		
+	}
+
 
 }

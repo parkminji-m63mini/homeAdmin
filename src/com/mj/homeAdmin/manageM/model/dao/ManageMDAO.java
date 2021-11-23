@@ -65,6 +65,21 @@ public class ManageMDAO
 	public void updateMGas(ManageM vo) {
 		sqlSession.update("manageMapper.updateMGas", vo);
 	}
+
+	public void updateGchk(ManageM vo) {
+		sqlSession.update("manageMapper.updateGchk", vo);
+		
+	}
+
+	public void updateTgasM(ManageM vo) {
+		sqlSession.update("manageMapper.updateTgasM", vo);
+		
+	}
+
+	public void updateGchkA(ManageM vo) {
+		sqlSession.update("manageMapper.updateGchkA", vo);
+		
+	}
 	
 
 }

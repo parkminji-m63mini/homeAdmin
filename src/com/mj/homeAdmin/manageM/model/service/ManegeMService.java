@@ -36,4 +36,10 @@ public interface ManegeMService
     public abstract void updateGas(ManageM managem, HttpServletResponse httpservletresponse)
             throws Exception;
     
+    public abstract void updateGchk(ManageM managem, HttpServletResponse httpservletresponse)
+    		throws Exception;
+    
+    public abstract void updateTgasM(ManageM managem, HttpServletResponse httpservletresponse)
+    		throws Exception;
+    
 }

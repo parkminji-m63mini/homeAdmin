@@ -21,6 +21,7 @@
 		<result property="uGm" column="U_GM"/>
 		<result property="aGm" column="A_GM"/>
 		<result property="sGm" column="S_GM"/>
+		<result property="kGm" column="K_GM"/>
 		<result property="mGm" column="M_GM"/>
 		<result property="avgGm" column="AVG_GM"/>
 		<result property="jsGm" column="JS_GM"/>
@@ -80,6 +81,12 @@
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
 	</select>
 	
+	<!--  가스  데이터 update -->
+	<update id="updateTgasM" parameterType="Manage">
+		UPDATE MANAGE_MA SET GAS_M=#{gasM}
+		WHERE IDX=#{idx}
+	</update>
+	
 	<!--기본 공과금 데이터 종료 -->
 	
 	<!--가스 상세 데이터 시작 -->
@@ -95,16 +102,28 @@
 	<!-- 공과금 데이터 update (기본값만) -->
 	<update id="updateGas" parameterType="Manage">
 		UPDATE MANAGE_GAS SET EDT=SYSDATE, DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
-		, S_GM=#{sGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
+		, S_GM=#{sGm},K_GM=#{kGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
 		, USE_G=#{useG}, USE_B=#{useB}
 		WHERE U_ID=#{uId} AND IDX=#{idx}
 	</update>
 	
-	<!-- 공과금 기본 가스 데이터 update -->
+	<!-- 공과금 기본 가스 데이터 update (개발멈춤)--> 
 	<update id="updateMGas" parameterType="Manage">
 		UPDATE MANAGE_MA SET GAS_M=${defM} + ${cGm} +${uGm} +${aGm} +${sGm} +${mGm} + ${avgGm} +  ${jsGm} +${enGu}
 		WHERE U_ID=#{uId} AND IDX=#{jidx}
 	</update>
+	
+	<!--  가스 지출 여부 데이터 update -->
+	<update id="updateGchk" parameterType="Manage">
+		UPDATE MANAGE_GAS SET G_CHK=#{gChk}
+		WHERE IDX=#{idx}
+	</update>
+	<!--  가스 지출 여부 데이터 update -->
+	<update id="updateGchkA" parameterType="Manage">
+		UPDATE MANAGE_GAS SET AUTO_M=#{autoM}
+		WHERE IDX=#{idx}
+	</update>
+	
 	
 	<!--가스 상세 데이터 종료-->
 </mapper>

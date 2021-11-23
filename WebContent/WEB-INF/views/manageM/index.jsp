@@ -52,6 +52,7 @@ function up(index){
 					reload();
 			 form 액션 종료 */
 			 
+			 // 음 필요없을지도?
 			$.ajax({
 				type : "post",
 				dataType : "text", 
