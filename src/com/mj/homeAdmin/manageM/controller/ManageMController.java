@@ -248,6 +248,21 @@ public class ManageMController
     	str ="성공";
     	return str;
     }
+    
+    // 가스 계량기 번호 업데이트
+    @ResponseBody
+    @RequestMapping(value="updateGasNum.do", produces = "application/json; charset=utf-8")
+    public String updateGasNum(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	System.out.println(vo.getgNum() + "확인");
+    	ms.updateGasNum(vo, res);
+    	str ="성공";
+    	return str;
+    }
 
     
     @RequestMapping("electric.do")

@@ -80,6 +80,10 @@ public class ManageMDAO
 		sqlSession.update("manageMapper.updateGchkA", vo);
 		
 	}
+
+	public void updateGasNum(ManageM vo) {
+		sqlSession.update("manageMapper.updateGasNum", vo);
+	}
 	
 
 }

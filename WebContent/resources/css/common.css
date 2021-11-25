@@ -24,3 +24,22 @@
     margin-top: 1%;
     float: right;
 }
+
+.btn_brownNfloat{
+	background-color: #8f7662;
+    color: white;
+    border: 1px;
+ 	solid white;
+    border-radius: 13%;
+    width: 48px;
+    margin-top: 1%;
+}
+.btn_yellowNfloat{
+	background-color: #ffa207;
+    color: #3c3434;
+    border: 1px;
+ 	solid white;
+    border-radius: 13%;
+    width: 48px;
+    margin-top: 1%;
+}

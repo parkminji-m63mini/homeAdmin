@@ -112,6 +112,7 @@
     <!-- Vendor JS Files -->
 
   <script src="${contextPath}/resources/vendor/aos/aos.js"></script>
+  <script src="${contextPath}/resources/js/common.js"></script>
   <script src="${contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="${contextPath}/resources/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="${contextPath}/resources/vendor/isotope-layout/isotope.pkgd.min.js"></script>

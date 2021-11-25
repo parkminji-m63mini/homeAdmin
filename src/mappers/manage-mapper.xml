@@ -89,6 +89,7 @@
 	
 	<!--기본 공과금 데이터 종료 -->
 	
+	
 	<!--가스 상세 데이터 시작 -->
 	
 	<!-- 가스 상세 데이터 가져오기 (당월분 1) -->
@@ -124,6 +125,11 @@
 		WHERE IDX=#{idx}
 	</update>
 	
+	<!--  가스 계량기 번호 데이터 update -->
+	<update id="updateGasNum" parameterType="Manage">
+		UPDATE MANAGE_GAS SET G_NUM=#{gNum}
+		WHERE IDX=#{idx}
+	</update>
 	
 	<!--가스 상세 데이터 종료-->
 </mapper>

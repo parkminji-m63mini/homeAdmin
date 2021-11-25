@@ -188,5 +188,10 @@ public class ManageMServiceImpl
 		
 	}
 
+	public void updateGasNum(ManageM vo, HttpServletResponse res) {
+		dao.updateGasNum(vo);
+		
+	}
+
 
 }

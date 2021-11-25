@@ -132,7 +132,7 @@ function chpayChk(idx, yn, gb){
 //수정 버튼을 눌렀을 때, 입력폼으로 전환
 function upgNum(index){
 	
-	if($("#upbtn").val() == "등록"){
+	if($("#upbtn2").val() == "등록"){
 		if(confirm("등록하시겠습니까?")){
 			
 			/* 그냥 form 액션
@@ -157,26 +157,11 @@ function upgNum(index){
 				type : "post",
 				dataType : "text", 
 				 async : false,
-				url : "updateGas.do",
+				url : "updateGasNum.do",
 				data : {
-					yyyy: $("input:hidden[name='yyyy']").val(), 
-					mm: $("input:hidden[name='mm']").val(), 
-					mode: $("input:hidden[name='mode']").val(), 
-					uId: $("input:hidden[name='uId']").val(), 
+					
 					idx: $("input:hidden[name='idx']").val(), 
-					jidx: $("input:hidden[name='jidx']").val(), 
-					defM: $("input[name='defM']").val(), 
-					cGm: $("input[name='cGm']").val(), 
-					uGm: $("input[name='uGm']").val(), 
-					aGm: $("input[name='aGm']").val(), 
-					sGm: $("input[name='sGm']").val(), 
-					mGm: $("input[name='mGm']").val(), 
-					avgGm: $("input[name='avgGm']").val(), 
-					jsGm: $("input[name='jsGm']").val(), 
-					enGu: $("input[name='enGu']").val(), 
-					monGu: $("input[name='monGu']").val(), 
-					useG: $("input[name='useG']").val(), 
-					usrB: $("input[name='usrB']").val(), 
+					gNum: $("input[name='gNum']").val(), 
 					
 				},
 				success : function(result){
@@ -191,14 +176,12 @@ function upgNum(index){
 		}
 		return;
 	}
-	$(".nomalFrom2").css("display", "none");
+	$(".nomalForm2").css("display", "none");
 	$(".upFrom2").css("display", "inline");
 	
-	$("#upbtn").val("등록");
+	$("#upbtn2").val("등록");
 	
 }
-
-
 
 
 </script>
@@ -260,21 +243,24 @@ function upgNum(index){
                 
                 	 
                 	 <div>
-                	 <h4>계량기 번호 : 
+                	 <p>계량기 번호 : 
                 	 <c:choose>
                 	 <c:when test="${arr.gNum ne null }">
-                		<span class='nomalFrom2'>: ${arr.gNum} </span>
-                		<span class='upFrom2'  style="display: none;"><input  class='manageI' type="text" name='gNum' value="${arr.gNum}"/></span>
-                	 <span><input id='upbtn2' class='btn_brown' type="button" onclick="upgNum(${st.index});" value="수정"/> </span>  
+                		<span class='nomalForm2'>: ${arr.gNum} </span>
+                		<span class='upFrom2'  style="display: none;"><input id='gNumC' class='manageI' type="text" name='gNum' value="${arr.gNum}"/> </span>
+                	 <span><input id='copybtn' onclick="copy(${arr.gNum}, '계량기 번호 복사 완료');" class='btn_yellowNfloat' type="button" value="copy"/> </span>  
+                	 <span><input id='upbtn2' class='btn_brownNfloat' type="button" onclick="upgNum(${st.index});" value="수정"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
-                	<span class='nomalFrom2'>데이터가 없습니다</span>
-                	<span class='upFrom2'  style="display: none;"><input  class='manageI' type="text" name='gNum' value="0"/></span>
-                	 <input id='upbtn2' class='btn_brown' type="button" onclick="upgNum(${st.index});" value="입력"/> </span> 
+                	<span class='nomalForm2'>데이터가 없습니다</span>
+                	<span class='upFrom2'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/></span>
+                	
+                	
+                	 <input id='upbtn2' class='btn_brownNfloat' type="button" onclick="upgNum(${st.index});" value="입력"/> </span> 
                 	 </c:otherwise>
                 	 </c:choose>
-                	 </h4>
+                	 </p>
                 	 </div>
                 	 
                 	 
