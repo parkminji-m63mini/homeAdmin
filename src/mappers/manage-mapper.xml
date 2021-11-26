@@ -16,6 +16,7 @@
 		<result property="itM" column="IT_M"/>
 		
 		<result property="gNum" column="G_NUM"/>
+		<result property="pNum" column="P_NUM"/>
 		<result property="defM" column="DEF_M"/>
 		<result property="cGm" column="C_GM"/>
 		<result property="uGm" column="U_GM"/>
@@ -72,7 +73,23 @@
 	
 	<!-- 공과금 가스 상세 데이터 insert(당월) -->
 	<insert id="insertMGAS" parameterType="Manage">
-		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID) VALUES (MG_SEQ.NEXTVAL,#{jidx}, #{uId})
+		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM) VALUES (MG_SEQ.NEXTVAL,#{jidx}, #{uId},
+		( select a.auto_how From manage_gas A
+        left join manage_ma B on A.JIDX=B.IDX
+        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId}),
+        ( select a.auto_when From manage_gas A
+        left join manage_ma B on A.JIDX=B.IDX
+        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
+        ,( select a.auto_m From manage_gas A
+        left join manage_ma B on A.JIDX=B.IDX
+        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
+        ,( select a.G_NUM From manage_gas A
+        left join manage_ma B on A.JIDX=B.IDX
+        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
+        ,( select a.P_NUM From manage_gas A
+        left join manage_ma B on A.JIDX=B.IDX
+        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
+		)
 	</insert>
 	
 	<!-- 공과금 상세(가스,수도...) 데이터 가져올 때 필요한 기본 공과금 데이터 IDX -->
@@ -119,7 +136,7 @@
 		UPDATE MANAGE_GAS SET G_CHK=#{gChk}
 		WHERE IDX=#{idx}
 	</update>
-	<!--  가스 지출 여부 데이터 update -->
+	<!--  가스 납부 여부 체크 확인 update -->
 	<update id="updateGchkA" parameterType="Manage">
 		UPDATE MANAGE_GAS SET AUTO_M=#{autoM}
 		WHERE IDX=#{idx}
@@ -129,6 +146,24 @@
 	<update id="updateGasNum" parameterType="Manage">
 		UPDATE MANAGE_GAS SET G_NUM=#{gNum}
 		WHERE IDX=#{idx}
+	</update>
+	
+	<!--  가스 고객 번호 데이터 update -->
+	<update id="updatepNum" parameterType="Manage">
+		UPDATE MANAGE_GAS SET P_NUM=#{pNum}
+		WHERE IDX=#{idx}
+	</update>
+	
+	<!--  가스 전체 데이터 update -->
+	<update id="allUpdateGas" parameterType="Manage">
+		UPDATE MANAGE_GAS SET 
+		EDT=SYSDATE, DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
+		, S_GM=#{sGm},K_GM=#{kGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, 
+		JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
+		, USE_G=#{useG}, USE_B=#{useB},
+		 P_NUM=#{pNum}, G_NUM=#{gNum}, G_CHK=#{gChk},AUTO_M=#{autoM}
+		 ,AUTO_HOW=#{autoHow}, AUTO_WHEN=#{autoWhen}
+		WHERE U_ID=#{uId} AND IDX=#{idx}
 	</update>
 	
 	<!--가스 상세 데이터 종료-->

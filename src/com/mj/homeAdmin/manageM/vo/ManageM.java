@@ -336,6 +336,18 @@ public class ManageM
 
 
 
+	public String getpNum() {
+			return pNum;
+		}
+
+		public void setpNum(String pNum) {
+			this.pNum = pNum;
+		}
+
+
+
+
+
 	private int idx;
     private int jidx;
     private String yyyy;
@@ -357,7 +369,7 @@ public class ManageM
     /// 가스 상세
     
     private String gNum;
-    
+    private String pNum;
     private String defM;
     private String cGm;
     private String uGm;

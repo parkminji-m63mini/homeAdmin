@@ -84,6 +84,15 @@ public class ManageMDAO
 	public void updateGasNum(ManageM vo) {
 		sqlSession.update("manageMapper.updateGasNum", vo);
 	}
+
+	public void updatepNum(ManageM vo) {
+		
+	}
+
+	public void allUpdateGas(ManageM vo) {
+		sqlSession.update("manageMapper.allUpdateGas", vo);
+		
+	}
 	
 
 }

@@ -193,5 +193,15 @@ public class ManageMServiceImpl
 		
 	}
 
+	public void updatepNum(ManageM vo, HttpServletResponse res) {
+		dao.updatepNum(vo);
+		
+	}
+
+	public void allUpdateGas(ManageM vo, HttpServletResponse res) {
+		dao.allUpdateGas(vo);
+		
+	}
+
 
 }

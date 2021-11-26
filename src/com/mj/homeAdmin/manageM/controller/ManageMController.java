@@ -263,6 +263,35 @@ public class ManageMController
     	str ="성공";
     	return str;
     }
+    // 가스 고객 번호 업데이트
+    @ResponseBody
+    @RequestMapping(value="updatepNum.do", produces = "application/json; charset=utf-8")
+    public String updatepNum(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	System.out.println(vo.getpNum() + "확인");
+    	ms.updatepNum(vo, res);
+    	str ="성공";
+    	return str;
+    }
+    
+    // 가스 전체 업데이트
+    @ResponseBody
+    @RequestMapping(value="allUpdateGas.do", produces = "application/json; charset=utf-8")
+    public String allUpdateGas(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	System.out.println(vo.getpNum() + "확인");
+    	ms.allUpdateGas(vo, res);
+    	str ="성공";
+    	return str;
+    }
 
     
     @RequestMapping("electric.do")

@@ -43,5 +43,8 @@ public interface ManegeMService
     		throws Exception;
     public abstract void updateGasNum(ManageM managem, HttpServletResponse httpservletresponse)
     		throws Exception;
-    
+    public abstract void updatepNum(ManageM managem, HttpServletResponse httpservletresponse)
+    		throws Exception;
+    public abstract void allUpdateGas(ManageM managem, HttpServletResponse httpservletresponse)
+    		throws Exception;
 }
