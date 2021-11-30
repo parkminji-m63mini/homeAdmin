@@ -93,6 +93,14 @@ public class ManageMDAO
 		sqlSession.update("manageMapper.allUpdateGas", vo);
 		
 	}
+
+	public List<ManageM> gasNP(ManageM vo) {
+		return sqlSession.selectList("manageMapper.gasNP", vo);
+	}
+
+	public List<ManageM> gasNP6m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.gasNP6m", vo);
+	}
 	
 
 }

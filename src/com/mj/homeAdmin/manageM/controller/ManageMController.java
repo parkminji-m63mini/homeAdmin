@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mj.homeAdmin.comm.JavaUtil;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
 import com.mj.homeAdmin.manageM.model.service.ManageMServiceImpl;
 import com.mj.homeAdmin.manageM.vo.ManageM;
@@ -32,6 +35,7 @@ public class ManageMController
 	@Autowired
 	private CmmnServiceImpl myutil;
 	
+	
     public ManageMController()
     {
     }
@@ -42,7 +46,6 @@ public class ManageMController
     {
     	// 나중에 세션으로 가져오기
         vo.setuId("m63mini");
-        
         
         System.out.println(LocalDate.now().getYear()  + "  현재 년");      
         System.out.println(LocalDate.now().getMonthValue()  + "  현재 월");   
@@ -132,14 +135,29 @@ public class ManageMController
     public String gas(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
     {
     	
+    	String flag = "false";
+;    	
     	// 나중에 세션으로 가져오기
     	vo.setuId("m63mini");
     	
+        //System.out.println("값 체크 : " + vo.getYyyy() + " / " + vo.getMm());
     	
-    	String yyyy= "" + LocalDate.now().getYear();
+        String yyyy= vo.getYyyy();
+        String mm= vo.getMm();
+        if(yyyy == null || yyyy.equals("")) {
+        	yyyy= "" + LocalDate.now().getYear();
+        	mm= "" +LocalDate.now().getMonthValue();
+        }else {
+        	yyyy= vo.getYyyy();
+        	mm = vo.getMm();
+        	flag = "ture";
+        }
+        
+        // 체크하는 용도로 사용함
+        vo.setgChk(flag);
+        
     	String yyyy2 = "";
     	String yyyy3= "";
-    	String mm= "" +LocalDate.now().getMonthValue();
     	String mm2= "" +(LocalDate.now().getMonthValue()-1);
     	String mm3= "" +(LocalDate.now().getMonthValue()-2);
 
@@ -154,21 +172,43 @@ public class ManageMController
         // 이번달
         List<ManageM> arrViewNow = ms.manageGasNow(vo);
     	
+        //-------------------------------//
+        // 이번달, 이전달 비교
+        
+        
+        vo.setMm2(JavaUtil.checkMM(mm, "1"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
+        
+        System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast = ms.gasNP(vo);
+        //--------------------------------
+        
+        
     	// 당월에서부터 전 6개월치 가스비
+        vo.setMm2(JavaUtil.checkMM(mm, "6"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
     	
+        System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast2 = ms.gasNP6m(vo);
+        
+        
     	
     	// 당월 계절에 맞는 가스비 불러오기
     	// 봄 3~5
     	// 여름  6~9
     	// 가을 10~11
     	// 겨울 12~2
-    	
         
         
         model.addAttribute("arrViewNow", arrViewNow);
+        model.addAttribute("arrViewPast", arrViewPast);
+        model.addAttribute("arrViewPast2", arrViewPast2);
     	return "manageM/gas";
     }
     
+      
     
     // 가스상세 업데이트 1
     @ResponseBody
@@ -179,26 +219,6 @@ public class ManageMController
         
         String str = "";
         
-        System.out.println(vo.getDefM() + " /1 / " + vo.getcGm() );
-      
-//        int avg =0;
-//        
-//      int defm = Integer.parseInt(vo.getDefM())	;  
-//      int cgm = Integer.parseInt(vo.getcGm());  
-//      int uGm = Integer.parseInt(vo.getuGm())	;  
-//      int aGm = Integer.parseInt(vo.getaGm())	;  
-//      int sGm = Integer.parseInt(vo.getsGm())	;  
-//      int mGm = Integer.parseInt(vo.getmGm())	;  
-//      int avgGm = Integer.parseInt(vo.getAvgGm())	;  
-//      int jsGm = Integer.parseInt(vo.getJsGm())	;  
-//        	
-//      avg = defm + cgm + uGm +aGm + sGm + mGm +avgGm + jsGm;
-//      System.out.println(avg + "  : avg");
-//      String avg2 = Integer.toString(avg);
-//        
-//       	vo.setAddA(avg2);
-//        
-       	System.out.println(vo.getAddA() + "확인");
             ms.updateGas(vo, res);
             str ="성공";
           //  String strScript = "alert('\uC5C5\uB370\uC774\uD2B8 \uC644\uB8CC'); location.href = './index.do';";

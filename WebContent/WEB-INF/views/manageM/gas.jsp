@@ -12,16 +12,24 @@
 <meta charset="UTF-8">
 <title>공과금 - 가스</title>
 </head>
+<!--  차트 -->
+<%-- <script src="${contextPath}/resources/css/chart/highcharts.js"></script> --%>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+ <link href="${contextPath}/resources/css/chart/chart.css" rel="stylesheet">
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
 <script type="text/javascript">
 
-function reload() { (location || window.location || document.location).reload(); }
+
 
 
 // 체크박스 바로 업데이트
-function chpayChk(idx, yn, gb){
+/*function chpayChk(idx, yn, gb){
 
 	var url;
 	
@@ -56,69 +64,9 @@ function chpayChk(idx, yn, gb){
 		}
 	});
 }
+*/
 
 
-
-// 전체 수정 버튼
-function allUpdateGas(idx, val){
-	
-	console.log($("input[name='gChk']:checked").val()+ " ///////");
-	if(val == "등록"){
-		if(confirm("등록하시겠습니까?")){
-	$.ajax({
-		type : "post",
-		dataType : "text", 
-		 async : false,
-		url : "allUpdateGas.do",
-		data : {
-				yyyy: $("input:hidden[name='yyyy']").val(), 
-				mm: $("input:hidden[name='mm']").val(), 
-				mode: $("input:hidden[name='mode']").val(), 
-				uId: $("input:hidden[name='uId']").val(), 
-				idx: $("input:hidden[name='idx']").val(), 
-				jidx: $("input:hidden[name='jidx']").val(), 
-				defM: $("input[name='defM']").val(), 
-				cGm: $("input[name='cGm']").val(), 
-				uGm: $("input[name='uGm']").val(), 
-				aGm: $("input[name='aGm']").val(), 
-				sGm: $("input[name='sGm']").val(), 
-				kGm: $("input[name='kGm']").val(), 
-				mGm: $("input[name='mGm']").val(), 
-				avgGm: $("input[name='avgGm']").val(), 
-				jsGm: $("input[name='jsGm']").val(), 
-				enGu: $("input[name='enGu']").val(), 
-				monGu: $("input[name='monGu']").val(), 
-				useG: $("input[name='useG']").val(), 
-				useB: $("input[name='useB']").val(), 
-				pNum: $("input[name='pNum']").val(), 
-				gNum: $("input[name='gNum']").val(), 
-				gChk: $("input[name='gChk']:checked").val(), 
-				autoM: $("input[name='autoM']:checked").val(),
-				autoHow: $("input[name='autoHow']").val(),
-				autoWhen: $("input[name='autoWhen']").val(),
-				
-			
-		},
-		success : function(result){
-			alert("등록완료");
-			reload();
-		},
-		error : function(result){
-			errMsg(result);
-		}
-	});
-		}
-	}
-	
-
-	$(".nomalForm").css("display", "none");
-	$(".copybtn").css("display", "none");
-	$(".upForm").css("display", "inline");
-	
-	$(".upbtn").val("등록");
-	
-	
-}
 
 $(document).ready(function(){
 	if($("input[name='autoM']:checked").val() == 'Y'){
@@ -135,6 +83,87 @@ $("input[name='autoM']").click(function(){
 	
 });
 });
+
+
+
+
+
+
+
+//총합 6개월 총 지출 금액 차트
+var chart;
+$(document).ready(function() {
+	
+	// 전월, 전전월 데이터 없을 때 0으로 채워주기
+	//<c:set var='mode' value='i'/>
+	
+	chart = new Highcharts.chart('container', {
+
+	    title: {
+	        text: '공과금 비교 (최근 3개월)'
+	    },
+
+	    subtitle: {
+	        text: '~${arrViewPast2[0].yyyy}년도 ${arrViewPast2[0].mm}월 '
+	    },
+
+	    yAxis: {
+	        title: {
+	            text: '금액(원)'
+	        }
+	    },
+
+	    xAxis: {
+	        accessibility: {
+	            rangeDescription: '??? 잘모르겠음 Range: 2010 to 2017'
+	        }
+	    },
+
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	            pointStart:${arrViewPast2[0].mm-6}
+	        }
+	    },
+
+	    series: [{
+	    	<c:forEach var="arrC2" items="${arrViewPast2}" varStatus="st">	
+		        name: '${arrC2.yyyy}/${arrC2.mm}',
+		        data : [${my:NVL(arrC2.suma,0)}]
+		    },
+		    </c:forEach>
+	     ],
+
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+
+	});
+});
+
+
+
+
+
 
 </script>
 <main id="main">
@@ -158,8 +187,29 @@ $("input[name='autoM']").click(function(){
         <div class="">
 
           <div class="">
+          
+					<div>
+					<select id='yyyyC' name='yyyyC'>
+					<option>년도</option>
+					<option value="2021" <c:if test='${arrViewNow[0].yyyy eq "2021"}'>selected="selected"</c:if>>2021</option>
+					<option value="2020" <c:if test='${arrViewNow[0].yyyy eq "2020"}'>selected="selected"</c:if>>2020</option>
+					<option value="2019" <c:if test='${arrViewNow[0].yyyy eq "2019"}'>selected="selected"</c:if>>2019</option>
+					</select>
+					
+					<select id='mmC' name='mmC'>
+					<option>월</option>
+					<c:forEach var="i" begin="1" end="12" step="1">
+					<option value="${i}"<c:if test='${arrViewNow[0].mm eq i}'>selected="selected"</c:if>>${i}</option>
+					</c:forEach>
+					</select>
+					
+					<button onclick="schGo();">검색</button>
+					
+					</div>
+					
             <div class="portfolio-info">
               <div class="swiper-wrapper align-items-center">
+
 
 					<%--이번달 요금 --%>
                 <div class="swiper-slide">
@@ -495,56 +545,56 @@ $("input[name='autoM']").click(function(){
       		<tbody>
       			<tr>
       			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>가스</th>
-      			<th  class='boder-black'>전기</th>
-      			<th  class='boder-black'>수도</th>
-      			<th  class='boder-black'>인터넷</th>
+      			<th  class='boder-black'>당월지침</th>
+      			<th  class='boder-black'>사용량</th>
+      			<th  class='boder-black'>사용요금</th>
+      			<th  class='boder-black'>총 금액</th>
       			</tr>
 		      <c:forEach var='arrC' items='${arrViewPast}' varStatus="st">
       			<tr>
       			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.gasM}" type="number"/>원
+      			<span class='nomalForm'><fmt:formatNumber value="${arrC.monGu}" type="number"/>m³
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.elM}" type="number"/>원
+      			<span class='nomalForm'><fmt:formatNumber value="${arrC.useG}" type="number"/>m³
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.wtM}" type="number"/>원
+      			<span class='nomalForm'><fmt:formatNumber value="${arrC.uGm}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.itM}" type="number"/>원
+      			<span class='nomalForm'><fmt:formatNumber value="${arrC.suma}" type="number"/>원
       			</span>
       			</th>      			
       			</tr>	
       			</c:forEach>
       			
-      			<c:set var='gas' value='${arrViewPast[1].gasM - arrViewPast[0].gasM}'/>
-      			<c:set var='el' value='${arrViewPast[1].elM - arrViewPast[0].elM}' />
-      			<c:set var='wt' value='${arrViewPast[1].wtM - arrViewPast[0].wtM}'/>
-      			<c:set var='it' value='${arrViewPast[1].itM - arrViewPast[0].itM}' />
+      			<c:set var='monGu' value='${arrViewPast[1].monGu - arrViewPast[0].monGu}'/>
+      			<c:set var='useG' value='${arrViewPast[1].useG - arrViewPast[0].useG}' />
+      			<c:set var='uGm' value='${arrViewPast[1].uGm - arrViewPast[0].suma}'/>
+      			<c:set var='suma' value='${arrViewPast[1].suma - arrViewPast[0].suma}' />
       		
       			
       			<tr>
       				<th>개별 총</th>
-      				<th class='boder-black'><fmt:formatNumber value="${gas}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${el}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${wt}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${it}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${monGu}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${useG}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${uGm}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${suma}" type="number"/>원</th>
       			</tr>	    
       		</tbody>
      		</table>
      		
      		<br><br>
      		
-      		<c:set var='avg' value="${gas+el+wt+it}" ></c:set>
+      		<c:set var='avg' value="${suma}" ></c:set>
 			<c:choose>
 			<c:when test="${avg >= 0}">
 			<div style="text-align: center;">
@@ -567,7 +617,7 @@ $("input[name='autoM']").click(function(){
       		<hr>
       		<br>
       		
-      		<h3>한눈에 보는 내 공과금</h3>
+      		<h3>한눈에 보는 내 공과금 </h3>
       		<br>
       		<!-- 전원 당월 막대그래프 비교 -->
       		<figure class="highcharts-figure">
@@ -630,6 +680,103 @@ $("input[name='autoM']").click(function(){
 			}
 		});
 	}
+	
+	
+	
+	
+
+	// 검색 버튼
+	function schGo(){
+		
+		location.href='gas.do?yyyy='+ $("select[name=yyyyC]").val() + '&mm=' + $("select[name=mmC]").val() + '&uId=' + $("input:hidden[name='uId']").val(); 
+		/*
+		$.ajax({
+			type : "post",
+			  dataType : "JSON",
+			 async : false,
+			url : "schGoGas.do",
+			data : {
+					yyyy: $("select[name=yyyyC]").val(), 
+					mm: $("select[name=mmC]").val(), 
+					uId: $("input:hidden[name='uId']").val(), 
+			},
+			success : function(result){
+				 console.log(JSON.parse(result));
+	           	 list = JSON.parse(result);
+				alert("등록완료");
+				//reload();
+			},
+			error : function(result){
+				errMsg(result);
+			}
+		});
+		*/
+	}
+	
+
+	// 전체 수정 버튼
+	function allUpdateGas(idx, val){
+		
+		console.log($("input[name='gChk']:checked").val()+ " ///////");
+		if(val == "등록"){
+			if(confirm("등록하시겠습니까?")){
+		$.ajax({
+			type : "post",
+			dataType : "text", 
+			 async : false,
+			url : "allUpdateGas.do",
+			data : {
+					yyyy: $("input:hidden[name='yyyy']").val(), 
+					mm: $("input:hidden[name='mm']").val(), 
+					mode: $("input:hidden[name='mode']").val(), 
+					uId: $("input:hidden[name='uId']").val(), 
+					idx: $("input:hidden[name='idx']").val(), 
+					jidx: $("input:hidden[name='jidx']").val(), 
+					defM: $("input[name='defM']").val(), 
+					cGm: $("input[name='cGm']").val(), 
+					uGm: $("input[name='uGm']").val(), 
+					aGm: $("input[name='aGm']").val(), 
+					sGm: $("input[name='sGm']").val(), 
+					kGm: $("input[name='kGm']").val(), 
+					mGm: $("input[name='mGm']").val(), 
+					avgGm: $("input[name='avgGm']").val(), 
+					jsGm: $("input[name='jsGm']").val(), 
+					enGu: $("input[name='enGu']").val(), 
+					monGu: $("input[name='monGu']").val(), 
+					useG: $("input[name='useG']").val(), 
+					useB: $("input[name='useB']").val(), 
+					pNum: $("input[name='pNum']").val(), 
+					gNum: $("input[name='gNum']").val(), 
+					gChk: $("input[name='gChk']:checked").val(), 
+					autoM: $("input[name='autoM']:checked").val(),
+					autoHow: $("input[name='autoHow']").val(),
+					autoWhen: $("input[name='autoWhen']").val(),
+					
+				
+			},
+			success : function(result){
+				alert("등록완료");
+				reload();
+			},
+			error : function(result){
+				errMsg(result);
+			}
+		});
+			}
+		}
+		
+
+		$(".nomalForm").css("display", "none");
+		$(".copybtn").css("display", "none");
+		$(".upForm").css("display", "inline");
+		
+		$(".upbtn").val("등록");
+		
+		
+	}
+	
+	function reload() { (location || window.location || document.location).reload(); }
+
 	</script>
 	
 </html>

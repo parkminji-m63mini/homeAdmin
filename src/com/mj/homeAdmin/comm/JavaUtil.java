@@ -211,4 +211,44 @@ public class JavaUtil {
 	}
 	
 	
+	public static String checkYYYY(String yyyy,String mm, String mn) {
+		
+		// 현재 값에서 원하는 달 수만큼 뺀 년 구하기
+		
+		// mn = 원하는 감소 월 수
+		
+		String chk = checkMM(mm,mn);
+		
+		String result = "";
+		
+		// 마이너스 해서 나온 값이 기존 달 보다 값이 크다면 ex) 현재달 1월 / - 1 = chk 달 12월 일 때
+		if(Integer.parseInt(chk) > Integer.parseInt(mm)) {
+			
+			result = Integer.parseInt(yyyy) -1 + "";
+		}else {
+			result = yyyy;
+		}
+		
+		return result;
+	}
+	
+	public static String checkMM(String mm, String mn) {
+		
+		int ch =( Integer.parseInt(mm) - Integer.parseInt(mn));
+		
+		//	1-2 = -1  11  (12-1)
+		//	1-3 = -2  10  (12-2)
+	
+		String result ="";
+		
+		if(ch < 0) {
+			result = ch + 12 + ""; 
+		}else {
+			result = ch + "";
+		}
+		
+		return result;
+	}
+	
+	
 }

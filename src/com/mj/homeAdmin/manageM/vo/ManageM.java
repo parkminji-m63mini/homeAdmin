@@ -348,6 +348,18 @@ public class ManageM
 
 
 
+	public String getSuma() {
+			return suma;
+		}
+
+		public void setSuma(String suma) {
+			this.suma = suma;
+		}
+
+
+
+
+
 	private int idx;
     private int jidx;
     private String yyyy;
@@ -389,5 +401,6 @@ public class ManageM
     private String autoWhen;
     
     private String addA;
+    private String suma;
     
 }

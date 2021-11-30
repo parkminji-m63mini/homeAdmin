@@ -5,6 +5,7 @@
 
 package com.mj.homeAdmin.manageM.model.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -137,8 +138,18 @@ public class ManageMServiceImpl
    		 // 공과금 전체 데이터를 가지고 있는 지 부터 확인
    		 List<ManageM> arrListChk = dao.manageList(vo);
 
+   		 // gChk는 값 담기위해  일시적으로 사용한거임 별 의미없음
+   		 if(vo.getgChk().equals("ture")) {
+   			 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+   			 vo.setgChk(dt);
+   		 }else {
+   			 vo.setgChk(LocalDate.now() +"");
+   		 }
+   		 
    		 // 전체 데이터가 없다면 생성
    		 if(arrListChk.isEmpty()) {
+   			 
+   			 
    			 dao.insertMAll(vo);
    		 }
    		 int jidx = 0;
@@ -201,6 +212,23 @@ public class ManageMServiceImpl
 	public void allUpdateGas(ManageM vo, HttpServletResponse res) {
 		dao.allUpdateGas(vo);
 		
+	}
+
+	public List<ManageM> gasNP(ManageM vo) {
+			List<ManageM> arrList = dao.gasNP(vo);
+    	
+    	return arrList;
+	}
+
+	public List<ManageM> gasNP6m(ManageM vo) {
+		
+		vo.setYyyy(vo.getYyyy() + "/" + vo.getMm());
+		vo.setYyyy2(vo.getYyyy2() + "/" + vo.getMm2());
+		
+		System.out.println(vo.getYyyy() +  "  : yyyy 확인");
+		
+		List<ManageM> arrList = dao.gasNP6m(vo);
+		return arrList;
 	}
 
 

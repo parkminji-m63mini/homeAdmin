@@ -47,4 +47,9 @@ public interface ManegeMService
     		throws Exception;
     public abstract void allUpdateGas(ManageM managem, HttpServletResponse httpservletresponse)
     		throws Exception;
+    public abstract  List<ManageM> gasNP(ManageM managem)
+    		throws Exception;
+    public abstract  List<ManageM> gasNP6m(ManageM managem)
+    		throws Exception;
 }
+

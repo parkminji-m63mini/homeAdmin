@@ -61,7 +61,7 @@
 	
 	<!-- 공과금 데이터 insert(당월) -->
 	<insert id="insertMAll" parameterType="Manage">
-		INSERT INTO MANAGE_MA VALUES(MN_SEQ.NEXTVAL,#{yyyy}, #{mm}, SYSDATE, SYSDATE, #{uId}, 
+		INSERT INTO MANAGE_MA VALUES(MN_SEQ.NEXTVAL,#{yyyy}, #{mm}, #{gChk}, SYSDATE, #{uId}, 
 		#{gasM},#{elM},#{wtM},#{itM})
 	</insert>
 
@@ -73,7 +73,7 @@
 	
 	<!-- 공과금 가스 상세 데이터 insert(당월) -->
 	<insert id="insertMGAS" parameterType="Manage">
-		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM) VALUES (MG_SEQ.NEXTVAL,#{jidx}, #{uId},
+		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT) VALUES (MG_SEQ.NEXTVAL,#{jidx}, #{uId},
 		( select a.auto_how From manage_gas A
         left join manage_ma B on A.JIDX=B.IDX
         where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId}),
@@ -88,7 +88,8 @@
         where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
         ,( select a.P_NUM From manage_gas A
         left join manage_ma B on A.JIDX=B.IDX
-        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
+        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId}
+        ),#{gChk}
 		)
 	</insert>
 	
@@ -165,6 +166,29 @@
 		 ,AUTO_HOW=#{autoHow}, AUTO_WHEN=#{autoWhen}
 		WHERE U_ID=#{uId} AND IDX=#{idx}
 	</update>
+	
+	
+	<!--가스 당월,전월 비교 데이터 -->
+	<select id="gasNP" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+        SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA,
+        U_GM,MON_GU, USE_G
+		FROM manage_gas A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,U_GM,MON_GU, USE_G 	
+	</select>
+	
+	<!--가스 6개월치 비교 데이터 -->
+	<select id="gasNP6m" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+        SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA
+		FROM manage_gas A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy} AND #{yyyy2}
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT
+        ORDER BY B.WDT DESC
+	</select>
 	
 	<!--가스 상세 데이터 종료-->
 </mapper>
