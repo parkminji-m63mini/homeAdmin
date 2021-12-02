@@ -242,9 +242,18 @@ public class JavaUtil {
 		String result ="";
 		
 		if(ch < 0) {
-			result = ch + 12 + ""; 
+			if(ch + 12 <10) {
+				result = "0"+ ch + 12 + ""; 
+			}else {
+				result = ch + 12 + ""; 
+			}
 		}else {
-			result = ch + "";
+			if(ch <10) {
+				result = "0" + ch + "";
+			}else {
+				result = ch + "";
+			}
+			
 		}
 		
 		return result;

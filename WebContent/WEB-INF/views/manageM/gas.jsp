@@ -100,7 +100,7 @@ $(document).ready(function() {
 	chart = new Highcharts.chart('container', {
 
 	    title: {
-	        text: '공과금 비교 (최근 3개월)'
+	        text: '가스비 요금 비교 (최근 3개월)'
 	    },
 
 	    subtitle: {
@@ -114,9 +114,8 @@ $(document).ready(function() {
 	    },
 
 	    xAxis: {
-	        accessibility: {
-	            rangeDescription: '??? 잘모르겠음 Range: 2010 to 2017'
-	        }
+	    	categories : ['']
+	        
 	    },
 
 	    legend: {
@@ -130,18 +129,15 @@ $(document).ready(function() {
 	            label: {
 	                connectorAllowed: false
 	            },
-	            pointStart:${arrViewPast2[0].mm-6}
+	            pointStart:${arrViewPast2[0].mm}
 	        }
 	    },
 
 	    series: [{
-	    	<c:forEach var="arrC2" items="${arrViewPast2}" varStatus="st">	
-		        name: '${arrC2.yyyy}/${arrC2.mm}',
-		        data : [${my:NVL(arrC2.suma,0)}]
-		    },
-		    </c:forEach>
+		        name: '변화',
+		        data : [${arrViewPast2[0].suma},${arrViewPast2[1].suma},${arrViewPast2[2].suma},${arrViewPast2[3].suma},${arrViewPast2[4].suma},${arrViewPast2[5].suma}]
+			    },
 	     ],
-
 	    responsive: {
 	        rules: [{
 	            condition: {
@@ -652,7 +648,7 @@ $(document).ready(function() {
 	$(document).ready(function(){ 
 		
 		//alert(${addGas});
-		upGasM(${addGas});
+	//	upGasM(${addGas});
 	});
 	
 	
@@ -755,7 +751,13 @@ $(document).ready(function() {
 				
 			},
 			success : function(result){
+				if(confirm("현재 등록한 데이터로 총 가스비를 업데이트 하시겠습니까? \n 확인을 누르시면 전체 공과금 페이지에서 작성한 데이터가 업데이트 됩니다")){
+					upGasM(${addGas});
+					// 기능 체크해봐야함
 				alert("등록완료");
+				}else{
+				alert("세부 데이터만 등록완료");
+				}
 				reload();
 			},
 			error : function(result){

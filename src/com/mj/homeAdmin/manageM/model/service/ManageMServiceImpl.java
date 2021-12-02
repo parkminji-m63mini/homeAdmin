@@ -226,6 +226,7 @@ public class ManageMServiceImpl
 		vo.setYyyy2(vo.getYyyy2() + "/" + vo.getMm2());
 		
 		System.out.println(vo.getYyyy() +  "  : yyyy 확인");
+		System.out.println(vo.getYyyy2() +  "  : yyyy2 확인");
 		
 		List<ManageM> arrList = dao.gasNP6m(vo);
 		return arrList;

@@ -185,9 +185,9 @@
         SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA
 		FROM manage_gas A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
-        WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy} AND #{yyyy2}
+        WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy2} AND #{yyyy}
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT
-        ORDER BY B.WDT DESC
+        ORDER BY B.yyyy,b.mm 
 	</select>
 	
 	<!--가스 상세 데이터 종료-->
