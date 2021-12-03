@@ -68,7 +68,7 @@
               <!-- -<li><a href="#">관리비</a></li> -->
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="${contextPath}/food">식재료</a></li>
+          <li><a class="nav-link scrollto" href="${contextPath}/food/index.do">식재료</a></li>
           <li><a class="nav-link scrollto " href="${contextPath}/clean">청소 체크</a></li>
           <li><a class="nav-link scrollto" href="${contextPath}/fix">집 수리</a></li>
           <li><a class="nav-link scrollto" href="${contextPath}/houseInfo">집 정보</a></li>

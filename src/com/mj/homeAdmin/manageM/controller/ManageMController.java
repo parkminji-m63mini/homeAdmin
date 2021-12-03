@@ -44,18 +44,29 @@ public class ManageMController
     public String manegeMIndex(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
         throws Exception
     {
+    	
+    	String flag = "false";
     	// 나중에 세션으로 가져오기
         vo.setuId("m63mini");
         
-        System.out.println(LocalDate.now().getYear()  + "  현재 년");      
-        System.out.println(LocalDate.now().getMonthValue()  + "  현재 월");   
-       
-        String yyyy= "" + LocalDate.now().getYear();
+        String yyyy= vo.getYyyy();
+        String mm= vo.getMm();
+        if(yyyy == null || yyyy.equals("")) {
+        	yyyy= "" + LocalDate.now().getYear();
+        	mm= "" +LocalDate.now().getMonthValue();
+        }else {
+        	yyyy= vo.getYyyy();
+        	mm = vo.getMm();
+        	flag = "ture";
+        }
+        
+        // 체크하는 용도로 사용함
+        vo.setgChk(flag);
+        
         String yyyy2 = "";
         String yyyy3= "";
-        String mm= "" +LocalDate.now().getMonthValue();
-        String mm2= "" +(LocalDate.now().getMonthValue()-1);
-        String mm3= "" +(LocalDate.now().getMonthValue()-2);
+        String mm2= "" ;
+        String mm3= "" ;
         
         
 	       vo.setYyyy(yyyy);
@@ -66,36 +77,26 @@ public class ManageMController
         
         //-------------------------------//
         // 이번달, 이전달 비교
-        vo.setMm2(mm2);
+ 
+        vo.setMm2(JavaUtil.checkMM(mm, "1"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
         
-        // 전월이 12월 일 때는 전년도로 변경
-        if(mm2.equals("12")) {
-        	 yyyy2 = ""+ (LocalDate.now().getYear()- 1);
-        	 System.out.println("전월이 12월이라면  현재년도 -1 : " + yyyy2);
-        	 
-        }else {
-        	yyyy2 = yyyy;
-        }
-        vo.setYyyy2(yyyy2);
         List<ManageM> arrViewPast = ms.manageNP(vo);
         
         //------------------------------------//
         // 이번달, 3개월 평균값 비교
         
         
-        // 2개월전 월(month)가 12월 일 때 전년도로 변경
-        if(mm3.equals("12")) {
-       	 yyyy3 = ""+ (LocalDate.now().getYear()- 1);
-       	 System.out.println("전월이 12월이라면  현재년도 -1 yyyy3 : " + yyyy3);
-       	 
-       }else {
-       	yyyy3 = yyyy;
-       }
-        vo.setYyyy3(yyyy3);
+        vo.setMm3(JavaUtil.checkMM(mm, "2"));
+        vo.setYyyy3(JavaUtil.checkYYYY(yyyy, mm, "2"));
         
         List<ManageM> arrViewPast3 = ms.manageListP3(vo); 
         
         //-------------------------------------//
+        
+        System.out.println("확인1 :" + vo.getYyyy() + "/" + vo.getMm());
+        System.out.println("확인2 :" + vo.getYyyy2() + "/" + vo.getMm2());
+        System.out.println("확인3 :" + vo.getYyyy3() + "/" + vo.getMm3());
         
         model.addAttribute("arrViewNow", arrViewNow);
         model.addAttribute("arrViewPast", arrViewPast);

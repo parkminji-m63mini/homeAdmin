@@ -85,73 +85,74 @@ $("input[name='autoM']").click(function(){
 });
 
 
-
-
-
-
-
 //총합 6개월 총 지출 금액 차트
 var chart;
 $(document).ready(function() {
 	
-	// 전월, 전전월 데이터 없을 때 0으로 채워주기
-	//<c:set var='mode' value='i'/>
-	
 	chart = new Highcharts.chart('container', {
-
+	    chart: {
+	        type: 'column'
+	    },
 	    title: {
-	        text: '가스비 요금 비교 (최근 3개월)'
+	        text: '공과금 세부 비교 (3개월)'
 	    },
-
 	    subtitle: {
-	        text: '~${arrViewPast2[0].yyyy}년도 ${arrViewPast2[0].mm}월 '
+	        text: ''
 	    },
-
+	    xAxis: {
+	        categories: [
+	            '가스',
+	            '전기',
+	            '수도',
+	            '인터넷'
+	        ],
+	        crosshair: true
+	    },
 	    yAxis: {
+	        min: 0,
+	       	//max: 50000,
 	        title: {
 	            text: '금액(원)'
 	        }
 	    },
-
-	    xAxis: {
-	    	categories : ['']
-	        
+	    tooltip: {
+	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	            '<td style="padding:0"><b>{point.y:.0f} 원</b></td></tr>',
+	        footerFormat: '</table>',
+	        shared: true,
+	        useHTML: true
 	    },
-
-	    legend: {
-	        layout: 'vertical',
-	        align: 'right',
-	        verticalAlign: 'middle'
-	    },
-
 	    plotOptions: {
-	        series: {
-	            label: {
-	                connectorAllowed: false
-	            },
-	            pointStart:${arrViewPast2[0].mm}
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
 	        }
 	    },
+	    series: [
+	    	<c:forEach var="arrC2" items="${arrViewPast2}" varStatus="st">
+	    	 	{
+	        name: '${arrC2.mm}월',
+	        data : [${arrC2.suma}]
 
-	    series: [{
-		        name: '변화',
-		        data : [${arrViewPast2[0].suma},${arrViewPast2[1].suma},${arrViewPast2[2].suma},${arrViewPast2[3].suma},${arrViewPast2[4].suma},${arrViewPast2[5].suma}]
-			    },
-	     ],
-	    responsive: {
-	        rules: [{
-	            condition: {
-	                maxWidth: 500
-	            },
-	            chartOptions: {
-	                legend: {
-	                    layout: 'horizontal',
-	                    align: 'center',
-	                    verticalAlign: 'bottom'
-	                }
-	            }
-	        }]
-	    }
+	    },
+	    </c:forEach>
+	   ]
+	    
+	    
+	//	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
+	//	<c:if test='${st.index ne fn:length(arrViewPast)}'>		                 
+	//	{
+	//	name : '${arrC2.mm}',
+		//data : [0, 1, 2, 3],
+	//	data : [${arr.gasM}, ${arr.elM}, ${arr.wtM}, ${arr.itM}],
+	//	color : '#0072bc'
+	//	}
+	//		</c:if>   					
+				
+	//	</c:forEach>
+	    
+	    
 
 	});
 });

@@ -273,6 +273,26 @@ $(document).ready(function() {
         <div class="">
 
           <div class="">
+          
+          <div>
+					<select id='yyyyC' name='yyyyC'>
+					<option>년도</option>
+					<option value="2021" <c:if test='${arrViewNow[0].yyyy eq "2021"}'>selected="selected"</c:if>>2021</option>
+					<option value="2020" <c:if test='${arrViewNow[0].yyyy eq "2020"}'>selected="selected"</c:if>>2020</option>
+					<option value="2019" <c:if test='${arrViewNow[0].yyyy eq "2019"}'>selected="selected"</c:if>>2019</option>
+					</select>
+					
+					<select id='mmC' name='mmC'>
+					<option>월</option>
+					<c:forEach var="i" begin="1" end="12" step="1">
+					<option value="${i}"<c:if test='${arrViewNow[0].mm eq i}'>selected="selected"</c:if>>${i}</option>
+					</c:forEach>
+					</select>
+					
+					<button onclick="schGo();">검색</button>
+					
+					</div>
+					
             <div class="portfolio-info">
               <div class="swiper-wrapper align-items-center">
 
@@ -467,6 +487,14 @@ $(document).ready(function() {
               </div>
             </div>
           </div>
+          <script>
+      	// 검색 버튼
+      	function schGo(){
+      		
+      		location.href='index.do?yyyy='+ $("select[name=yyyyC]").val() + '&mm=' + $("select[name=mmC]").val() + '&uId=' + $("input:hidden[name='uId']").val(); 
+      		
+      	}
+          </script>
 <%-- 
           <div class="col-lg-4">
             <div class="portfolio-info">
