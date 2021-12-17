@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myinfoMapper">
+	<resultMap id="myinfoResultSet" type="Myinfo" >
+		<id property="id" column="ID"/>
+		<id property="pw" column="PW"/>
+		<id property="gb" column="GB"/>
+		<id property="sex" column="SEX"/>
+		<id property="addr" column="ADDR"/>
+		<id property="hp" column="HP"/>
+		<id property="ltype" column="LTYPE"/>
+		<id property="htype" column="HTYPE"/>
+		<id property="birth" column="BIRTH"/>
+		<id property="photo" column="PHOTO"/>
+		<id property="nm" column="NM"/>
+		<id property="nNm" column="N_NM"/>
+	</resultMap>
+	
+	<select id="checkPw" parameterType="Myinfo" resultMap="myinfoResultSet">
+	SELECT PW FROM USER_INFO WHERE ID=#{id}
+	</select>
+</mapper>

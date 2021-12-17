@@ -11,3 +11,11 @@ function copy(num, msg){
 	document.body.removeChild(textarea);
 	alert(msg);
 }
+
+function ltype(){
+	//ajax 구현
+}
+
+function htype(){
+	//ajax 구현
+}

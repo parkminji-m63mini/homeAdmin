@@ -302,7 +302,7 @@ $(document).ready(function() {
                 	<!-- !!이건 나중에 고지서 보고 컬럼 더 만들어야함 -->
                 	 <span style="float: right;" ><a href="#" > >> 자세히 보러가기</a></span>
                 	 <h3>${arr.yyyy}년도 ${arr.mm}월 공과금</h3>
-				<form name="frmReg${st.index}" meth  class='boder-black'od="post">
+				<form name="frmReg${st.index}"   class='boder-black' method="post">
 				
 				
 				<c:set var='mode' value='u'/>
