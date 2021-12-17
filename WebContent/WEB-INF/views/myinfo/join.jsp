@@ -21,6 +21,12 @@ function signUp(){
 	var frm = document.frmReg;
 	frm.submit();
 }
+
+$(document).ready(function(){
+	ltype();
+	htype();
+	
+});
 </script>
 <body>
 <main id="main">
