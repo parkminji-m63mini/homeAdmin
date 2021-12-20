@@ -6,5 +6,7 @@ public interface MyinfoService {
 
 	  public abstract String checkPw(MyinfoVo vo)
 		        throws Exception;
+	  public abstract void signUp(MyinfoVo vo)
+		        throws Exception;
 		
 }

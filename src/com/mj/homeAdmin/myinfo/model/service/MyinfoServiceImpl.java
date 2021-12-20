@@ -18,4 +18,9 @@ public class MyinfoServiceImpl implements MyinfoService {
 		String chkPw = dao.checkPw(vo);
 		return chkPw;
 	}
+
+	public void signUp(MyinfoVo vo)   throws Exception {
+		dao.signUp(vo);
+		
+	}
 }

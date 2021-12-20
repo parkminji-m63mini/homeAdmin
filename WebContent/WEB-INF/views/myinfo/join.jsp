@@ -57,7 +57,7 @@ $(document).ready(function(){
 				
                 <div class="swiper-slide">
                 	 <h3>회원가입</h3>
-				<form name="frmReg" method="post" action="/signUp.do">
+				<form name="frmReg" method="post" action="${contextPath}/my/signUp.do">
 				
 				
                 	<table class='tb'>
@@ -80,7 +80,7 @@ $(document).ready(function(){
 					</tr>
 					<tr>
 						<th  class='boder-black'>닉네임</th>
-						<th  class='boder-black'><input type='text' name='nNM' id='nNM'/></th>
+						<th  class='boder-black'><input type='text' name='nNm' id='nNm'/></th>
 					</tr>
 					<tr>
 						<th  class='boder-black'>성별</th>

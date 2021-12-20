@@ -36,8 +36,9 @@ public class BCryptTest {
 	public boolean checkPw(MyinfoVo vo) throws Exception {
 		
 		boolean result = false;
+
 		// 아이디 있는지 확인 -> 있으면 암호화 된 비번 가져오기 
-		String chkPw = ms.checkPw(vo);
+		String chkPw = String.valueOf(ms.checkPw(vo));
 		
 		if(chkPw.equals("") || chkPw.isEmpty()) {
 		}else if(!chkPw.isEmpty()) {
@@ -46,7 +47,6 @@ public class BCryptTest {
 			vo.setPw(chkPw);
 			// 암호화된 비밀번호 비교
 			result = BCrypt.checkpw(vo.getInputPw(),vo.getPw());
-			
 		}
 		
 		return result;

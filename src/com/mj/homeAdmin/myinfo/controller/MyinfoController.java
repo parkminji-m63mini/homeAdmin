@@ -1,10 +1,15 @@
 package com.mj.homeAdmin.myinfo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mj.homeAdmin.comm.BCryptTest;
+import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
 import com.mj.homeAdmin.myinfo.model.service.MyinfoServiceImpl;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 import com.sun.org.apache.regexp.internal.RE;
@@ -19,6 +24,9 @@ public class MyinfoController {
 
 	@Autowired
 	private BCryptTest by;
+	
+	@Autowired
+	private CmmnServiceImpl cm;
 	
 	public MyinfoController() {
 		
@@ -35,19 +43,24 @@ public class MyinfoController {
 	}
 	
 	
-	// 회원가입 만들고 시도
-	@RequestMapping("loginGo.do")
-	public String loginGo(MyinfoVo vo) throws Exception{
+	// 로그인
+	 @ResponseBody
+	 @RequestMapping(value="loginGo.do", produces = "application/json; charset=utf-8")
+	public String loginGo(MyinfoVo vo,  HttpSession ss, HttpServletRequest req) throws Exception{
 		
 		String result ="false";
 		
 			boolean chk = by.checkPw(vo);
-		if(chk == true) {
+			
+	if(chk == true) {
 		result ="true";
-		}	
+		//세션에 필요한 정보가져오기
+		// 여기부터
 		
-		// 비밀번호 신규 암호화
-		//String pw = by.encry("test");
+		// 세션에 세팅
+		cm.goSessionChk(vo, ss, req);
+		
+	}	
 		
 		return result;
 	}
@@ -58,6 +71,20 @@ public class MyinfoController {
 			return "myinfo/join";
 		}
 			
+		// 회원가입  완료 or 실패
+		@RequestMapping("signUp.do")
+		public String signUp(MyinfoVo vo) throws Exception{
 			
+
+			// 비밀번호 신규 암호화
+			String pw = by.encry(vo.getPw());
+			vo.setPw(pw);
+			
+			ms.signUp(vo);
+			
+			
+			
+			return "../../main";
+		}		
 	
 }

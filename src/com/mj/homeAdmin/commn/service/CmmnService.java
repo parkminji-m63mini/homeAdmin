@@ -5,11 +5,18 @@
 
 package com.mj.homeAdmin.commn.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 
 public interface CmmnService
 {
 
     public abstract void webScript(HttpServletResponse httpservletresponse, String s)
         throws Exception;
+    
+    public abstract void goSessionChk(MyinfoVo vo, HttpSession ss, HttpServletRequest req)
+            throws Exception;
 }

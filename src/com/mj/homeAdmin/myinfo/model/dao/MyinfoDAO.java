@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.sun.org.apache.regexp.internal.recompile;
 
 @Repository
 public class MyinfoDAO {
@@ -16,5 +17,9 @@ public class MyinfoDAO {
 
 	public String checkPw(MyinfoVo vo) {
 		return sqlSession.selectOne("myinfoMapper.checkPw", vo);
+	}
+
+	public void signUp(MyinfoVo vo) {
+		sqlSession.insert("myinfoMapper.signUp", vo);
 	}
 }

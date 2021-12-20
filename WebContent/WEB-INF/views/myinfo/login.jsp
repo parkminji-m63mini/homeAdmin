@@ -17,7 +17,22 @@
 <script type="text/javascript">
 
 function loginGo(){
-	// ajax로 구현
+	$.ajax({
+		type : "post",
+		dataType : "text", 
+		 async : false,
+		url : "loginGo.do",
+		data : {
+			id: $("input:text[name='id']").val(), 
+			inputPw: $("input:text[name='inputPw']").val(), 
+		},
+		success : function(result){
+			alert("성공");
+		},
+		error : function(result){
+			alert("실패");
+		}
+	});
 }
 </script>
 <body>

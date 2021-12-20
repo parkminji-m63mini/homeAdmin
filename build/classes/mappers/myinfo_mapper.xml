@@ -16,7 +16,12 @@
 		<id property="nNm" column="N_NM"/>
 	</resultMap>
 	
-	<select id="checkPw" parameterType="Myinfo" resultMap="myinfoResultSet">
+	<select id="checkPw" parameterType="Myinfo" resultType="String">
 	SELECT PW FROM USER_INFO WHERE ID=#{id}
 	</select>
+	
+	<insert id="signUp" parameterType="Myinfo">
+		INSERT INTO USER_INFO VALUES(#{id},#{pw}, #{gb}, #{sex}, #{addr}, #{hp}, 
+		#{ltype},#{htype},#{birth},#{photo}, #{nm}, #{nNm})
+	</insert>
 </mapper>
