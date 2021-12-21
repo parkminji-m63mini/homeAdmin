@@ -17,7 +17,8 @@
 <script type="text/javascript">
 
 function loginGo(){
-	$.ajax({
+	// ajax도 되는 거임 
+	/*$.ajax({
 		type : "post",
 		dataType : "text", 
 		 async : false,
@@ -27,13 +28,32 @@ function loginGo(){
 			inputPw: $("input:text[name='inputPw']").val(), 
 		},
 		success : function(result){
-			alert("성공");
+			if(result =="false"){
+			alert("계정정보가 맞지 않습니다.");
+			}else{
+			location.href='${contextPath}';
+			}
+			//alert("성공" + '${sessionScope.ssID}' );
+			
 		},
 		error : function(result){
-			alert("실패");
+			alert("실패")	;		
 		}
 	});
+	*/
+	document.frmReg.submit();
 }
+
+$(document).ready(function() {
+	/*alert("${sessionScope.ssID}");
+	 <c:if test="${sessionScope.ssID != null}">
+		alert("이미 로그인 되어 있습니다. 로그아웃 후 이용해주세요");
+		history.back();
+	</c:if>
+	*/
+	
+});
+
 </script>
 <body>
 <main id="main">
@@ -65,7 +85,7 @@ function loginGo(){
 
 					<%--로그인 --%>
                 <div class="swiper-slide">
-                <form name="frmReg" method="post" action="/loginGo.do">
+                <form name="frmReg" method="post" action="loginGo.do">
                 		<input type="text" id='id' name="id"/>
                 		<br>
                 		<input type="text" id='inputPw' name="inputPw"/>	

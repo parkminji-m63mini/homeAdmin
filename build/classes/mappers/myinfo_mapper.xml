@@ -24,4 +24,8 @@
 		INSERT INTO USER_INFO VALUES(#{id},#{pw}, #{gb}, #{sex}, #{addr}, #{hp}, 
 		#{ltype},#{htype},#{birth},#{photo}, #{nm}, #{nNm})
 	</insert>
+	
+	<select id="selectUser" parameterType="Myinfo" resultMap="myinfoResultSet">
+	SELECT ID, NM, N_NM, GB FROM USER_INFO WHERE ID=#{id}
+	</select>
 </mapper>

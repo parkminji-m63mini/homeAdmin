@@ -1,10 +1,13 @@
 package com.mj.homeAdmin.myinfo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,9 +47,8 @@ public class MyinfoController {
 	
 	
 	// 로그인
-	 @ResponseBody
 	 @RequestMapping(value="loginGo.do", produces = "application/json; charset=utf-8")
-	public String loginGo(MyinfoVo vo,  HttpSession ss, HttpServletRequest req) throws Exception{
+	public String loginGo(MyinfoVo vo, Model model, HttpSession ss, HttpServletRequest req) throws Exception{
 		
 		String result ="false";
 		
@@ -56,13 +58,24 @@ public class MyinfoController {
 		result ="true";
 		//세션에 필요한 정보가져오기
 		// 여기부터
+		 List<MyinfoVo> user = ms.selectUser(vo);
 		
+		 vo.setId(user.get(0).getId());
+		 vo.setNm(user.get(0).getNm());
+		 vo.setnNm(user.get(0).getnNm());
+		 vo.setGb(user.get(0).getGb());
+	//	 System.out.println(user.get(0).getNm() + " 리스트 값");
+	//	 System.out.println(vo.getNm() + " vo값");
+		 
 		// 세션에 세팅
 		cm.goSessionChk(vo, ss, req);
+		cm.getSessionChk(ss);
+		model.addAttribute("user" ,vo);
 		
+	//	System.out.println(ss.getAttribute("ssNM") + " 세션 확인");
 	}	
 		
-		return result;
+	return "../../main" ;
 	}
 	
 	// 회원가입 페이지
@@ -85,6 +98,23 @@ public class MyinfoController {
 			
 			
 			return "../../main";
-		}		
+		}	
+		
+		
+		@ResponseBody
+		 @RequestMapping(value="logoutGo.do", produces = "application/json; charset=utf-8")
+			public String logoutGo(MyinfoVo vo, Model model, HttpSession ss, HttpServletRequest req) throws Exception{
+				
+			String result = "false";
+			
+			  ss.removeAttribute("ssID");
+			  ss.removeAttribute("ssNM");
+			  ss.removeAttribute("ssnNM");
+			  ss.removeAttribute("ssGB");
+			  ss.removeAttribute("ssIP");
+			
+			  result = "true";
+			return result ;
+			}
 	
 }

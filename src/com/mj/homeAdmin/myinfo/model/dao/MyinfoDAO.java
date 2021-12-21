@@ -1,5 +1,7 @@
 package com.mj.homeAdmin.myinfo.model.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,5 +23,9 @@ public class MyinfoDAO {
 
 	public void signUp(MyinfoVo vo) {
 		sqlSession.insert("myinfoMapper.signUp", vo);
+	}
+
+	public List<MyinfoVo> selectUser(MyinfoVo vo) {
+		return sqlSession.selectList("myinfoMapper.selectUser", vo);
 	}
 }

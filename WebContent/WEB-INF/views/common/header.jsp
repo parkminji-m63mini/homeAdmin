@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" uri="myFunc"%> 
-
+<%String myId = ""+session.getAttribute("ssID");%>
+<%String myNnm = ""+session.getAttribute("ssnNM");%>
+<%String myNm = ""+session.getAttribute("ssNM");%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,6 +57,8 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
+<p><%=myNm %>님</p>
+
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
@@ -95,7 +99,12 @@
           </li>
            -->
           <li><a class="nav-link scrollto" href="${contextPath}/my/mypage.do">마이페이지</a></li> 
+         <c:if test="${sessionScope.ssID == null}">
           <li><a class="nav-link scrollto" href="${contextPath}/my/login.do">로그인</a></li>
+          </c:if>
+            <c:if test="${sessionScope.ssID != null}">
+          <li><a class="nav-link scrollto" href="#" onclick="logout();">로그아웃</a></li>
+          </c:if>
            <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
         </ul>
         
@@ -128,5 +137,34 @@
   <!-- Template Main JS File -->
   <script src="${contextPath}/resources/js/main.js"></script>
   
+  <script type="text/javascript">
+  function logout(){
+	  if(confirm("로그아웃 하시겠습니까?")){
+		 
+		  $.ajax({
+			type : "post",
+			dataType : "text", 
+			 async : false,
+			url : "${contextPath}/my/logoutGo.do",
+			data : {
+			},
+			success : function(result){
+				if(result =="false"){
+				alert("로그아웃 실패");
+				}else{
+					alert("로그아웃 성공");
+				}
+				//alert("성공" + '${sessionScope.ssID}' );
+				
+			},
+			error : function(result){
+				alert("실패")	;		
+			}
+		});
+	
+	  location.href='${contextPath}';
+	  }
+  }
+  </script>
   </body>
   </html>

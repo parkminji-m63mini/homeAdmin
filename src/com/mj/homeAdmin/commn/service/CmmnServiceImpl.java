@@ -52,5 +52,16 @@ public class CmmnServiceImpl
 		ss.setAttribute("ssGB", vo.getGb());
 		ss.setAttribute("ssIP", req.getRemoteAddr());
 	}
+	
+	public MyinfoVo getSessionChk(HttpSession ss) throws Exception {
+		// LOGGER.info("========================= 로그인 정보 가져오기 =====================================");
+		MyinfoVo vo = new MyinfoVo();
+		vo.setId((String) ss.getAttribute("ssID"));
+		vo.setGb((char) ss.getAttribute("ssGB"));
+		vo.setNm((String) ss.getAttribute("ssNM"));
+		vo.setnNm((String) ss.getAttribute("ssnNM"));
+		
+		return vo;
+	}
 
 }

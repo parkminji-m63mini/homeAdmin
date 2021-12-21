@@ -1,5 +1,7 @@
 package com.mj.homeAdmin.myinfo.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,9 @@ public class MyinfoServiceImpl implements MyinfoService {
 	public void signUp(MyinfoVo vo)   throws Exception {
 		dao.signUp(vo);
 		
+	}
+
+	public List<MyinfoVo> selectUser(MyinfoVo vo)  throws Exception{
+		return dao.selectUser(vo);
 	}
 }
