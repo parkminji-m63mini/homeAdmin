@@ -16,7 +16,38 @@ public class MyinfoVo {
 	private String nm;
 	private String nNm; // 닉네임
 	
+	// 코드
+	private String cd;
+	private String cnm;
+	private String fcd;
+	private int idx;
 	
+	
+	
+	public String getCd() {
+		return cd;
+	}
+	public void setCd(String cd) {
+		this.cd = cd;
+	}
+	public String getCnm() {
+		return cnm;
+	}
+	public void setCnm(String cnm) {
+		this.cnm = cnm;
+	}
+	public String getFcd() {
+		return fcd;
+	}
+	public void setFcd(String fcd) {
+		this.fcd = fcd;
+	}
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
 	public String getInputPw() {
 		return inputPw;
 	}

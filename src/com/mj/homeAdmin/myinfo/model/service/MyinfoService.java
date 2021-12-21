@@ -1,5 +1,7 @@
 package com.mj.homeAdmin.myinfo.model.service;
 
+import java.util.List;
+
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 
 public interface MyinfoService {
@@ -8,5 +10,6 @@ public interface MyinfoService {
 		        throws Exception;
 	  public abstract void signUp(MyinfoVo vo)
 		        throws Exception;
-		
+	  public abstract List<MyinfoVo> selectCode(MyinfoVo vo)
+		        throws Exception;	
 }

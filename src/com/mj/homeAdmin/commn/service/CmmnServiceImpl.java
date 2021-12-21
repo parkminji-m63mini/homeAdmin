@@ -63,5 +63,15 @@ public class CmmnServiceImpl
 		
 		return vo;
 	}
+	
+	public boolean loginchk(HttpSession ss) {
+		boolean result = false;
+		String test = (String) ss.getAttribute("ssID");
+		if(!test.equals("") || !test.equals(null)) {
+			result = true;
+		}
+		
+		return result;
+	}
 
 }

@@ -19,3 +19,25 @@ function ltype(){
 function htype(){
 	//ajax 구현
 }
+
+// 코드 셀렉트 박스로 가져오기
+//링크 제대로 안잡혀서 못씀
+/*
+function selectCode(cd){
+	$.ajaxSettings.traditional = true;
+		$.ajax({
+			type : "post"
+			,dataType : "html"
+			,data :{
+			  cd : cd
+			}
+			,url :"${contextPath}/my/code.do"
+			,success : listGo  
+			,error : function(result) { alert(result + "실패"); }
+		});
+	}
+	function listGo(msg) { 
+		$("#ListFrm").html(msg);	
+	}
+
+*/

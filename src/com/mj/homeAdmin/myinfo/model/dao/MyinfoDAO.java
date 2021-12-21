@@ -28,4 +28,8 @@ public class MyinfoDAO {
 	public List<MyinfoVo> selectUser(MyinfoVo vo) {
 		return sqlSession.selectList("myinfoMapper.selectUser", vo);
 	}
+
+	public List<MyinfoVo> selectCode(MyinfoVo vo) {
+		return sqlSession.selectList("myinfoMapper.selectCode", vo);
+	}
 }

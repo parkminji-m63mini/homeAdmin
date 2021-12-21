@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,13 +42,14 @@ public class ManageMController
     }
 
     @RequestMapping("index.do")
-    public String manegeMIndex(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+    public String manegeMIndex(ManageM vo,  HttpSession ss,Model model, RedirectAttributes rdAttr, HttpServletResponse response)
         throws Exception
     {
     	
     	String flag = "false";
-    	// 나중에 세션으로 가져오기
-        vo.setuId("m63mini");
+    	
+    	// 세션으로 가져오기
+        vo.setuId((String)ss.getAttribute("ssID"));
         
         String yyyy= vo.getYyyy();
         String mm= vo.getMm();
@@ -108,7 +110,7 @@ public class ManageMController
 
     @ResponseBody
     @RequestMapping(value="updateMAll.do", produces = "application/json; charset=utf-8")
-    public String updateMAll(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updateMAll(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
         throws Exception
     {
         System.out.println((new StringBuilder(String.valueOf(vo.getuId()))).append(" : id").toString());
@@ -133,13 +135,13 @@ public class ManageMController
     }
 
     @RequestMapping("gas.do")
-    public String gas(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
+    public String gas(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
     {
     	
     	String flag = "false";
-;    	
-    	// 나중에 세션으로 가져오기
-    	vo.setuId("m63mini");
+    	
+		//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
     	
         //System.out.println("값 체크 : " + vo.getYyyy() + " / " + vo.getMm());
     	
@@ -214,7 +216,7 @@ public class ManageMController
     // 가스상세 업데이트 1
     @ResponseBody
     @RequestMapping(value="updateGas.do", produces = "application/json; charset=utf-8")
-    public String updatGas(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updatGas(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
         throws Exception
     {
         
@@ -229,7 +231,7 @@ public class ManageMController
     // 가스상세 지불여부 업데이트
     @ResponseBody
     @RequestMapping(value="updateGchk.do", produces = "application/json; charset=utf-8")
-    public String updateGchk(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updateGchk(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
     		throws Exception
     {
     	
@@ -243,7 +245,7 @@ public class ManageMController
     // 가스상세 자동이체 업데이트
     @ResponseBody
     @RequestMapping(value="updateGchkA.do", produces = "application/json; charset=utf-8")
-    public String updateGchkA(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updateGchkA(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
     		throws Exception
     {
     	
@@ -258,7 +260,7 @@ public class ManageMController
     // 기본 가스비 업데이트
     @ResponseBody
     @RequestMapping(value="updateTgasM.do", produces = "application/json; charset=utf-8")
-    public String updateTgasM(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updateTgasM(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
     		throws Exception
     {
     	
@@ -273,7 +275,7 @@ public class ManageMController
     // 가스 계량기 번호 업데이트
     @ResponseBody
     @RequestMapping(value="updateGasNum.do", produces = "application/json; charset=utf-8")
-    public String updateGasNum(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updateGasNum(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
     		throws Exception
     {
     	
@@ -287,7 +289,7 @@ public class ManageMController
     // 가스 고객 번호 업데이트
     @ResponseBody
     @RequestMapping(value="updatepNum.do", produces = "application/json; charset=utf-8")
-    public String updatepNum(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String updatepNum(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
     		throws Exception
     {
     	
@@ -302,7 +304,7 @@ public class ManageMController
     // 가스 전체 업데이트
     @ResponseBody
     @RequestMapping(value="allUpdateGas.do", produces = "application/json; charset=utf-8")
-    public String allUpdateGas(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse res)
+    public String allUpdateGas(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
     		throws Exception
     {
     	
@@ -327,7 +329,7 @@ public class ManageMController
     }
 
     @RequestMapping("it.do")
-    public String it(ManageM vo, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+    public String it(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response)
     {
         return "manageM/gas";
     }

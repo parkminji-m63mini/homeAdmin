@@ -29,4 +29,8 @@ public class MyinfoServiceImpl implements MyinfoService {
 	public List<MyinfoVo> selectUser(MyinfoVo vo)  throws Exception{
 		return dao.selectUser(vo);
 	}
+
+	public List<MyinfoVo> selectCode(MyinfoVo vo)   throws Exception {
+		return dao.selectCode(vo);
+	}
 }

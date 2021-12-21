@@ -4,6 +4,27 @@
 
 	<resultMap id="foodResultSet" type="Food" >
 		<id property="idx" column="IDX"/>
+		<result property="uId" column="U_ID"/>
+		<result property="tp" column="TP"/>
+		<result property="wdt" column="WDT"/>
+		<result property="jidx" column="JIDX"/>
+		<result property="area" column="AREA"/>
+		<result property="edt" column="EDT"/>
+		<result property="fnm" column="FNM"/>
+		<result property="bdt" column="BDT"/>
+		<result property="fdt" column="FDT"/>
+		<result property="vm" column="VM"/>
+		<result property="price" column="PRICE"/>
+		<result property="sort" column="SORT"/>
+		<result property="chk" column="CHK"/>
 	</resultMap>
 	
+		<select id="frFind" parameterType="Food" resultType="String">
+	select DISTINCT(U_ID) from food where u_id=#{uId}
+	</select>
+	
+	<!-- 최초 냉장고 타입 생성 -->
+		<insert id="insertType" parameterType="Food">
+		INSERT INTO FOOD VALUES(FD_SEQ.NEXTVAL,#{uId},#{cd}, SYSDATE)
+	</insert>
 </mapper>

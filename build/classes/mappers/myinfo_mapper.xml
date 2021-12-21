@@ -28,4 +28,8 @@
 	<select id="selectUser" parameterType="Myinfo" resultMap="myinfoResultSet">
 	SELECT ID, NM, N_NM, GB FROM USER_INFO WHERE ID=#{id}
 	</select>
+	
+	<select id="selectCode" parameterType="Myinfo" resultMap="myinfoResultSet">
+		SELECT CD, CNM FROM H_CODE_SECOND WHERE FCD=#{cd}
+	</select>
 </mapper>

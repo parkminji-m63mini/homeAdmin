@@ -116,5 +116,22 @@ public class MyinfoController {
 			  result = "true";
 			return result ;
 			}
+		
+		/** 셀렉트 코드생성
+		 * @return
+		 */
+		@RequestMapping("code.do")
+		public String code(MyinfoVo vo, Model model) throws Exception{
+
+			System.out.println(vo.getCd() + " 확인");
+			List<MyinfoVo>list =  ms.selectCode(vo);
+			
+			model.addAttribute("list" ,list);
+			model.addAttribute("cd" ,vo.getCd());
+			
+			System.out.println(list.get(0));
+			return "myinfo/code";
+		}
+		
 	
 }

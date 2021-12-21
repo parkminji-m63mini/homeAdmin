@@ -55,6 +55,7 @@ public class ManageMServiceImpl
     	 // 당월 데이터가 없다면 새로 생성
     	 if(arrList.isEmpty()) {
     		 System.out.println("들어옴");
+    		 vo.setgChk(LocalDate.now() +"");
     		 dao.insertMAll(vo);
     		 System.out.println("넘어옴3");
     		 

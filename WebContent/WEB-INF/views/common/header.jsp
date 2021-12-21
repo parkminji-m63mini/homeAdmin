@@ -57,25 +57,23 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-<p><%=myNm %>님</p>
-
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
             <li class="dropdown"><a href="#"><span>공과금</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="${contextPath}/manageM/index.do">전체</a></li>
-              <li><a href="${contextPath}/manageM/gas.do">가스</a></li>
-              <li><a href="${contextPath}/manageM/electric.do">전기</a></li>
-              <li><a href="${contextPath}/manageM/water.do">수도</a></li>
-              <li><a href="${contextPath}/manageM/it.do">인터넷</a></li>
+              <li><a href="#" onclick="loginchk('/manageM/index.do');">전체</a></li>
+              <li><a href="#" onclick="loginchk('/manageM/gas.do');" >가스</a></li>
+              <li><a href="#" onclick="loginchk('/manageM/electric.do');">전기</a></li>
+              <li><a href="#" onclick="loginchk('/manageM/water.do');">수도</a></li>
+              <li><a href="#" onclick="loginchk('/manageM/it.do');">인터넷</a></li>
               <!-- -<li><a href="#">관리비</a></li> -->
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="${contextPath}/food/index.do">식재료</a></li>
-          <li><a class="nav-link scrollto " href="${contextPath}/clean/index.do">청소 체크</a></li>
-          <li><a class="nav-link scrollto" href="${contextPath}/fix/index.do">집 수리</a></li>
-          <li><a class="nav-link scrollto" href="${contextPath}/houseInfo/index.do">집 정보</a></li>
+          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do');">식재료</a></li>
+          <li><a class="nav-link scrollto " href="#" onclick="loginchk('/clean/index.do');">청소 체크</a></li>
+          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/fix/index.do');">집 수리</a></li>
+          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/houseInfo/index.do');">집 정보</a></li>
           
           
           <!-- 드롭다운 메뉴 -->
@@ -98,7 +96,8 @@
             </ul>
           </li>
            -->
-          <li><a class="nav-link scrollto" href="${contextPath}/my/mypage.do">마이페이지</a></li> 
+           
+          <li><a class="nav-link scrollto" href="${contextPath}/my/mypage.do" onclick="loginchk('/manageM/gas.do');">마이페이지</a></li> 
          <c:if test="${sessionScope.ssID == null}">
           <li><a class="nav-link scrollto" href="${contextPath}/my/login.do">로그인</a></li>
           </c:if>
@@ -164,6 +163,16 @@
 	
 	  location.href='${contextPath}';
 	  }
+  }
+  
+  function loginchk(url){
+	  if('${sessionScope.ssID}' == null || '${sessionScope.ssID}' == ""){
+			alert('로그인 후 이용 가능합니다.');
+			return false;
+		}else{
+			  location.href='${contextPath}'+ url;
+		}
+		
   }
   </script>
   </body>
