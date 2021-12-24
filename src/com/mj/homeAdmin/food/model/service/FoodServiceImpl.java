@@ -1,5 +1,7 @@
 package com.mj.homeAdmin.food.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,24 +22,38 @@ public class FoodServiceImpl implements FoodService{
 	}
 
 	@Override
-	public int frFind(Food vo) throws Exception {
+	public String frFind(Food vo) throws Exception {
 		
 		
 		String chk = dao.frFind(vo);
 
-		int result = 0;
-		if(chk !=null) {
-			result = 1;
-		}else {
-		}
-		System.out.println(result +" result 출력 ");
+//		int result = 0;
+//		if(chk !=null) {
+//			result = 1;
+//		}else {
+//		}
+//		System.out.println(result +" result 출력 ");
 		
-		return result;
+		return chk;
 	}
 
 	@Override
 	public void insertType(Food vo) throws Exception {
 		dao.insertType(vo);
+	}
+
+	@Override
+	public List<Food> selectFr(Food vo) throws Exception {
+		
+		List<Food> arrList = dao.selectFr(vo);
+		
+		
+		return arrList;
+	}
+
+	@Override
+	public int frJidx(Food vo) throws Exception {
+		return dao.frJidx(vo);
 	}
 
 }

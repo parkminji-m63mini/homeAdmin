@@ -20,11 +20,23 @@
 	</resultMap>
 	
 		<select id="frFind" parameterType="Food" resultType="String">
-	select DISTINCT(U_ID) from food where u_id=#{uId}
+	select DISTINCT(TP) from food where u_id=#{uId}
 	</select>
 	
 	<!-- 최초 냉장고 타입 생성 -->
 		<insert id="insertType" parameterType="Food">
 		INSERT INTO FOOD VALUES(FD_SEQ.NEXTVAL,#{uId},#{cd}, SYSDATE)
 	</insert>
+	
+	<!-- 냉장고 음식 리스트 -->
+	<select id="selectFr" parameterType="Food" resultMap="foodResultSet">
+		SELECT B.TP,A.*  FROM FOOD_L A
+		LEFT JOIN FOOD B ON A.JIDX=B.IDX
+		WHERE B.U_ID=#{uId}
+	</select>
+	
+	<select id="frJidx" parameterType="Food" resultType="int">
+	select idx from food where u_id=#{uId}
+	</select>
+	
 </mapper>

@@ -39,21 +39,57 @@ public class FoodController {
 			vo.setuId((String)ss.getAttribute("ssID"));
 			
 			String url = "food/index";
-			
+			List<Food> arrList = null;
 		 // 냉장고 타입을 선택했는지 데이터 가져오기
-		 int chkF = fs.frFind(vo);
+		 String chkF = fs.frFind(vo);
 		 
-		 if(chkF == 1) { // 데이터 있음
+		 if(chkF != null) { // 데이터 있음
 			 // 나의 냉장고 가져오기 (+ 음식 리스트)
-			 List<Food> arrList = fs.selectFr(vo);
+			  arrList = fs.selectFr(vo);
 			 // 여기부터 만들기
 		 }else {
 			 url ="food/typeChk";
 		 }
 		 
+		 model.addAttribute("arrList", arrList);
+		 
 		 return url;
 	    }
 	
+	 @RequestMapping("frTypeProc.do")
+	    public String frTypeProc(Food vo, MyinfoVo mvo,  HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+	        throws Exception
+	    {
+		//세션으로 가져오기
+			vo.setuId((String)ss.getAttribute("ssID"));
+			
+			List<Food> arrList = null;
+		 // 냉장고 타입을 선택했는지 데이터 가져오기
+		 String chkF = fs.frFind(vo);
+		 
+		 // 냉장고 IDX 가져오기 세팅
+		 vo.setJidx(fs.frJidx(vo));
+		 
+		 String url = "";
+		 
+		 if(chkF != null) { // 냉장고 타입 데이터 있음
+			 // 나의 냉장고 가져오기 (+ 음식 리스트)
+			  arrList = fs.selectFr(vo);
+		 }
+		 
+		 
+		 if(chkF.equals("FR01")) {
+			url = "food/type/fr01";
+		 }
+		 
+		 model.addAttribute("arrList", arrList);
+		 model.addAttribute("chkF", chkF);
+		 model.addAttribute("vo", vo);
+		 
+		 return url;
+	    }
+	
+	 
 	 @RequestMapping("foodTypeInsert.do")
 	    public String foodTypeInsert(Food vo, MyinfoVo mvo,  HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
 	        throws Exception

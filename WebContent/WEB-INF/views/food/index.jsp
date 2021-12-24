@@ -14,7 +14,30 @@
 </head>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<script type="text/javascript">
+$(document).ready(function(){
+	
+	selectCode();
+});
 
+function selectCode(){
+	$.ajaxSettings.traditional = true;
+		$.ajax({
+			type : "post"
+			,dataType : "html"
+			,data :{
+			  
+			}
+			,url :"frTypeProc.do"
+			,success : listGo  
+			,error : function(result) { alert(result + "실패"); }
+		});
+	}
+	function listGo(msg) { 
+		$("#ListFrm").html(msg);	
+	}
+
+</script>
 	
 <body>
 <main>
@@ -38,7 +61,16 @@
         <div class="">
 
           <div class="">
-          
+          <style>
+          .bodyFR01{
+          border: 1px solid black;
+          width: 70%;
+		  text-align: center;
+		  margin: 0 auto;
+          }
+          </style>
+          	
+          	<span id='ListFrm'></span>
           <div>
           </div>
           </div>

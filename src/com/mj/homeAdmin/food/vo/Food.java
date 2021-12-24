@@ -16,8 +16,16 @@ public class Food {
 	private String price; // 가격
 	private char sort; //정렬 순서
 	private char chk; // 1 : 사용완료 / 0 : 남아있음
+	private String dataChk; // 식재료 데이터가 있는지 없는지   NO / YES
 	
 	private String cd;
+	
+	public String getDataChk() {
+		return dataChk;
+	}
+	public void setDataChk(String dataChk) {
+		this.dataChk = dataChk;
+	}
 	
 	
 	public String getCd() {
