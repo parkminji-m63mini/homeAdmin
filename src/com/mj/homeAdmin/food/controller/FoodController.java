@@ -1,5 +1,6 @@
 package com.mj.homeAdmin.food.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -102,5 +103,20 @@ public class FoodController {
 			
 		 return "food/index";
 	    }
+	 
+	 @RequestMapping("fr01Insert.do")
+	    public String fr01Insert(Food vo, MyinfoVo mvo,  HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+	        throws Exception
+	    {
+		//세션으로 가져오기
+			vo.setuId((String)ss.getAttribute("ssID"));
+				
+			System.out.println("ddd/ " + Arrays.toString(vo.getBdtL()));
+			System.out.println("ddd/ " + Arrays.toString(vo.getVmL()));
+			System.out.println("ddd/ " + Arrays.toString(vo.getPriceL()));
+			//fs.fr01Insert(vo);	
+		 return "food/index";
+	    }
+	
 	
 }

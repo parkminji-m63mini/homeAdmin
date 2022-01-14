@@ -1,5 +1,7 @@
 package com.mj.homeAdmin.food.vo;
 
+import java.util.List;
+
 public class Food {
 	
 	private String uId;
@@ -20,6 +22,51 @@ public class Food {
 	
 	private String cd;
 	
+	private String[] fnmL;
+	private String[] priceL;
+	private String[] bdtL;
+	private String[] fdtL;
+	private String[] vmL;
+	private String[] fAreaL;
+
+	
+	
+	public String[] getfAreaL() {
+		return fAreaL;
+	}
+	public void setfAreaL(String[] fAreaL) {
+		this.fAreaL = fAreaL;
+	}
+	public String[] getPriceL() {
+		return priceL;
+	}
+	public void setPriceL(String[] priceL) {
+		this.priceL = priceL;
+	}
+	public String[] getBdtL() {
+		return bdtL;
+	}
+	public void setBdtL(String[] bdtL) {
+		this.bdtL = bdtL;
+	}
+	public String[] getFdtL() {
+		return fdtL;
+	}
+	public void setFdtL(String[] fdtL) {
+		this.fdtL = fdtL;
+	}
+	public String[] getVmL() {
+		return vmL;
+	}
+	public void setVmL(String[] vmL) {
+		this.vmL = vmL;
+	}
+	public String[] getFnmL() {
+		return fnmL;
+	}
+	public void setFnmL(String[] fnmL) {
+		this.fnmL = fnmL;
+	}
 	public String getDataChk() {
 		return dataChk;
 	}

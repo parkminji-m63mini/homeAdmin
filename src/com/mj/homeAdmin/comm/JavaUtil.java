@@ -243,7 +243,7 @@ public class JavaUtil {
 		
 		if(ch < 0) {
 			if(ch + 12 <10) {
-				result = "0"+ ch + 12 + ""; 
+				result = "0"+ (ch + 12) + ""; 
 			}else {
 				result = ch + 12 + ""; 
 			}

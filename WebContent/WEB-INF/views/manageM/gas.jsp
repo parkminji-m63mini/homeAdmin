@@ -304,7 +304,7 @@ $(document).ready(function() {
                 	 
              
                 	
-				<form name="frmReg${st.index}" meth  class='boder-black'od="post">
+				<form name="frmReg${st.index}" class='boder-black' method="post">
 				
 				
 				<c:set var='mode' value='u'/>
