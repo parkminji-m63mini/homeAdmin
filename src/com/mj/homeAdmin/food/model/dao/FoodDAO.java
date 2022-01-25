@@ -34,4 +34,8 @@ public class FoodDAO {
 	public int frJidx(Food vo) {
 		return sqlSession.selectOne("foodMapper.frJidx", vo);
 	}
+
+	public void fr01Insert(Food vo) {
+		 sqlSession.insert("foodMapper.fr01Insert", vo);
+	}
 }

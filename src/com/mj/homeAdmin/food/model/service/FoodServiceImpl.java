@@ -56,4 +56,35 @@ public class FoodServiceImpl implements FoodService{
 		return dao.frJidx(vo);
 	}
 
+	@Override
+	public void fr01Insert(Food vo) throws Exception {
+		
+		System.out.println(vo.getFnmL().length + " : 숫자확인");
+		
+		for (int i=0; i<vo.getFnmL().length; i++) {
+			
+			String[] fnm = vo.getFnmL();
+			String[] area = vo.getfAreaL();
+			String[] price = vo.getPriceL();
+			String[] bDt = vo.getBdtL();
+			String[] fdt = vo.getFdtL();
+			String[] vm = vo.getVmL();
+			
+			if(fnm[i] != "") {
+			
+				vo.setFnm(fnm[i]);
+				vo.setArea(area[i]);
+				vo.setPrice(price[i]);
+				vo.setBdt(bDt[i]);
+				vo.setFdt(fdt[i]);
+				vo.setVm(vm[i]);
+				dao.fr01Insert(vo);
+				
+			}
+				
+			
+		}
+		
+	}
+
 }

@@ -39,4 +39,11 @@
 	select idx from food where u_id=#{uId}
 	</select>
 	
+	<!-- 음식 저장  안돼-->
+		<insert id="fr01Insert" parameterType="Food">
+		INSERT INTO FOOD_L VALUES(FDL_SEQ.NEXTVAL, #{jidx}, #{area}, SYSDATE, SYSDATE,
+		#{fnm}, #{bdt},#{fdt}, #{vm}, #{price}, '0', '0')
+		
+	</insert>
+	
 </mapper>

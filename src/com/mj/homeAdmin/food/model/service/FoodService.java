@@ -15,4 +15,6 @@ public interface FoodService {
 
 	public abstract int frJidx(Food vo)throws Exception;
 
+	public abstract void fr01Insert(Food vo)throws Exception;
+
 }

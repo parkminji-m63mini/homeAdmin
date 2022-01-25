@@ -1,6 +1,8 @@
 package com.mj.homeAdmin.food.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -111,10 +113,13 @@ public class FoodController {
 		//세션으로 가져오기
 			vo.setuId((String)ss.getAttribute("ssID"));
 				
+			System.out.println("ddd/ " + Arrays.toString(vo.getFnmL()));
 			System.out.println("ddd/ " + Arrays.toString(vo.getBdtL()));
 			System.out.println("ddd/ " + Arrays.toString(vo.getVmL()));
 			System.out.println("ddd/ " + Arrays.toString(vo.getPriceL()));
-			//fs.fr01Insert(vo);	
+		
+			fs.fr01Insert(vo);
+			
 		 return "food/index";
 	    }
 	

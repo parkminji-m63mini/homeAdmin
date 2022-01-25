@@ -57,14 +57,25 @@ function insertD(){
 	
 	if(confirm("등록하시겠습니까??")){
 		var frm = document.frmReg;
-		frm.submit();
-	 // 여기부터
+		
 		var arrfnmL = [];
 		$( "input[name='fnmL']").each( function ( i ) {
 			arrfnmL.push( $( this ).val() );
 		} );
 		
+		//arrfnmL  = arrfnmL.filter(function(item) {
+		//	  return item !== null && item !== undefined && item !== '';
+		//	});
+		
+		
+		
 		console.log(arrfnmL);
+		
+		frm.fnmL.value = arrfnmL;
+		
+		frm.submit();
+	 // 여기부터
+		
 		
 	}
 }
