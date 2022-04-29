@@ -58,7 +58,7 @@ $(document).ready(function(){
                 <div class="swiper-slide">
                 	 <h3>회원가입</h3>
 				<form name="frmReg" method="post" action="${contextPath}/my/signUp.do">
-				
+					<input type="hidden" name='gb' value="1"/>
 				
                 	<table class='tb'>
                 	<tbody>

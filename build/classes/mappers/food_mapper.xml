@@ -25,7 +25,7 @@
 	
 	<!-- 최초 냉장고 타입 생성 -->
 		<insert id="insertType" parameterType="Food">
-		INSERT INTO FOOD VALUES(FD_SEQ.NEXTVAL,#{uId},#{cd}, SYSDATE)
+		INSERT INTO FOOD(U_ID, CD, WDT) VALUES(#{uId},#{cd}, NOW())
 	</insert>
 	
 	<!-- 냉장고 음식 리스트 -->
@@ -41,7 +41,7 @@
 	
 	<!-- 음식 저장  안돼-->
 		<insert id="fr01Insert" parameterType="Food">
-		INSERT INTO FOOD_L VALUES(FDL_SEQ.NEXTVAL, #{jidx}, #{area}, SYSDATE, SYSDATE,
+		INSERT INTO FOOD_L(JIDX, AREA, WDT, EDT, FNM, BDT, FDT, VM, PRICE, SORT,CHK) VALUES(#{jidx}, #{area}, NOW(), NOW(),
 		#{fnm}, #{bdt},#{fdt}, #{vm}, #{price}, '0', '0')
 		
 	</insert>

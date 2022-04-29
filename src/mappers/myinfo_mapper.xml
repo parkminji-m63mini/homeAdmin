@@ -21,7 +21,7 @@
 	</select>
 	
 	<insert id="signUp" parameterType="Myinfo">
-		INSERT INTO USER_INFO VALUES(#{id},#{pw}, #{gb}, #{sex}, #{addr}, #{hp}, 
+		INSERT INTO USER_INFO(ID, PW,  GB,SEX, ADDR, HP, LTYPE,HTYPE, BIRTH, PHOTO, NM, N_NM) VALUES(#{id},#{pw}, #{gb}, #{sex}, #{addr}, #{hp}, 
 		#{ltype},#{htype},#{birth},#{photo}, #{nm}, #{nNm})
 	</insert>
 	

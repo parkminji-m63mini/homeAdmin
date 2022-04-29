@@ -62,34 +62,34 @@
 	
 	<!-- 공과금 데이터 insert(당월) -->
 	<insert id="insertMAll" parameterType="Manage">
-		INSERT INTO MANAGE_MA VALUES(MN_SEQ.NEXTVAL,#{yyyy}, #{mm}, #{gChk}, SYSDATE, #{uId}, 
+		INSERT INTO MANAGE_MA(YYYY, MM, WDT,EDT, U_ID, GAS_M, EL_M, WT_M, IT_M) VALUES(#{yyyy}, #{mm}, #{gChk}, NOW(), #{uId}, 
 		#{gasM},#{elM},#{wtM},#{itM})
 	</insert>
 
 	<!-- 공과금 데이터 update (기본값만) -->
 	<update id="updateMAll" parameterType="Manage">
-		UPDATE MANAGE_MA SET EDT=SYSDATE, GAS_M=#{gasM}, EL_M=#{elM}, WT_M=#{wtM}, IT_M=#{itM}
+		UPDATE MANAGE_MA SET EDT=NOW(), GAS_M=#{gasM}, EL_M=#{elM}, WT_M=#{wtM}, IT_M=#{itM}
 		WHERE U_ID=#{uId} AND YYYY=#{yyyy} AND MM=#{mm}
 	</update>
 	
 	<!-- 공과금 가스 상세 데이터 insert(당월) -->
 	<insert id="insertMGAS" parameterType="Manage">
-		INSERT INTO MANAGE_GAS(IDX,JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT) VALUES (MG_SEQ.NEXTVAL,#{jidx}, #{uId},
-		( select a.auto_how From manage_gas A
-        left join manage_ma B on A.JIDX=B.IDX
-        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId}),
-        ( select a.auto_when From manage_gas A
-        left join manage_ma B on A.JIDX=B.IDX
-        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
-        ,( select a.auto_m From manage_gas A
-        left join manage_ma B on A.JIDX=B.IDX
-        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
-        ,( select a.G_NUM From manage_gas A
-        left join manage_ma B on A.JIDX=B.IDX
-        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId})
-        ,( select a.P_NUM From manage_gas A
-        left join manage_ma B on A.JIDX=B.IDX
-        where B.yyyy=#{yyyy} and B.mm=${mm}-1 AND B.U_ID=#{uId}
+		INSERT INTO MANAGE_GAS(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT) VALUES (#{jidx}, #{uId},
+		( select A.AUTO_HOW From MANAGE_GAS A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId}),
+        ( select A.AUTO_WHEN From MANAGE_GAS A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId})
+        ,( select A.AUTO_M From MANAGE_GAS A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId})
+        ,( select A.G_NUM From MANAGE_GAS A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId})
+        ,( select A.P_NUM From MANAGE_GAS A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId}
         ),#{gChk}
 		)
 	</insert>
@@ -121,7 +121,7 @@
 	
 	<!-- 공과금 데이터 update (기본값만) -->
 	<update id="updateGas" parameterType="Manage">
-		UPDATE MANAGE_GAS SET EDT=SYSDATE, DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
+		UPDATE MANAGE_GAS SET EDT=NOW(), DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
 		, S_GM=#{sGm},K_GM=#{kGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
 		, USE_G=#{useG}, USE_B=#{useB}
 		WHERE U_ID=#{uId} AND IDX=#{idx}
@@ -159,7 +159,7 @@
 	<!--  가스 전체 데이터 update -->
 	<update id="allUpdateGas" parameterType="Manage">
 		UPDATE MANAGE_GAS SET 
-		EDT=SYSDATE, DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
+		EDT=NOW(), DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
 		, S_GM=#{sGm},K_GM=#{kGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, 
 		JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
 		, USE_G=#{useG}, USE_B=#{useB},
@@ -174,7 +174,7 @@
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
         SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA,
         U_GM,MON_GU, USE_G
-		FROM manage_gas A
+		FROM MANAGE_GAS A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,U_GM,MON_GU, USE_G 	
@@ -184,7 +184,7 @@
 	<select id="gasNP6m" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
         SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA
-		FROM manage_gas A
+		FROM MANAGE_GAS A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy2} AND #{yyyy}
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT

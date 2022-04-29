@@ -3,8 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
    
    <!-- Root Context: defines shared resources visible to all other web components
@@ -23,24 +29,15 @@
        BasicDataSource dataSource = new BasicDataSource();
      -->
     <!-- destroy-method="close" : 주어진 SqlSession 작업이 종료되면 close 하라는 의미 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-       <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-       <property name="username" value="HOMEA"/>
-       <property name="password" value="HOMEA"/>
-       
-       <!-- defaultAutoCommit : 커넥션풀을 이용해서 DB와 연결할 경우 기본적으로 auto commit 상태 
-                   false로 지정할 경우 Spring Framework 또는 개발자에 의해서 트랜잭션을 제어하겠다 라는 의미
-       -->
-       <property name="defaultAutoCommit" value="false"/>
-       
-       <!-- 커넥션 풀 관련 설정 -->
-       <property name="initialSize" value="10"/> <!-- 초기 커넥션 수, 기본 0 -->
-        <property name="maxTotal" value="500"/> <!-- 최대 커넥션 수, 기본 8 -->
-        <property name="maxIdle" value="100"/> <!-- 유휴 상태로 존재할 수 있는 커넥션 최대 수, 기본 8-->
-        <property name="minIdle" value="10"/> <!-- 유휴 상태로 존재할 수 있는 커넥션 최소 수, 기본 0 -->
-        <property name="maxWaitMillis" value="60000"/> <!-- 예외 발생 전 커넥션이 반환 될 떄 까지 대기하는 최대 시간(ms), 기본 -1(무기한) -->
-    </bean>
+    
+     
+       <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
+	<property name="url" value="jdbc:mariadb://database-1.chygdhuk6ke6.ap-northeast-2.rds.amazonaws.com:3306/HOME"></property>
+	<property name="username" value="m63mini"></property>
+	<property name="password" value="asdf092274"></property>
+	</bean>
+     
     
    <!-- 트랜잭션 처리를 위한 트랜잭션 매니저 추가 -->
     <bean id="transactionManager"
@@ -67,6 +64,7 @@
           
           <property name="configLocation" value="classpath:mybatis-config.xml"/>
           <property name="dataSource" ref="dataSource"/>
+           <property name="mapperLocations" value="classpath*:/mybatis/sql/*.xml"></property>
        </bean>
        
        <!-- SqlSessionTemplate : 기본 SQL 실행 기능을 가진 SqlSession에 트랜잭션 처리 기능 부여 -->

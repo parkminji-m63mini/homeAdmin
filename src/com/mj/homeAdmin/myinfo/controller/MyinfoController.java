@@ -88,6 +88,10 @@ public class MyinfoController {
 		@RequestMapping("signUp.do")
 		public String signUp(MyinfoVo vo) throws Exception{
 			
+			// 임의 셋팅
+			vo.setGb('1');
+			vo.setLtype("1");
+			vo.setHtype("1");
 
 			// 비밀번호 신규 암호화
 			String pw = by.encry(vo.getPw());
