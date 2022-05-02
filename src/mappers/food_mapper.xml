@@ -20,12 +20,12 @@
 	</resultMap>
 	
 		<select id="frFind" parameterType="Food" resultType="String">
-	select DISTINCT(TP) from food where u_id=#{uId}
+	select DISTINCT(TP) from FOOD where u_id=#{uId}
 	</select>
 	
 	<!-- 최초 냉장고 타입 생성 -->
 		<insert id="insertType" parameterType="Food">
-		INSERT INTO FOOD(U_ID, CD, WDT) VALUES(#{uId},#{cd}, NOW())
+		INSERT INTO FOOD(U_ID, TP, WDT) VALUES(#{uId},#{cd}, NOW())
 	</insert>
 	
 	<!-- 냉장고 음식 리스트 -->
@@ -36,12 +36,13 @@
 	</select>
 	
 	<select id="frJidx" parameterType="Food" resultType="int">
-	select idx from food where u_id=#{uId}
+	select idx from FOOD where u_id=#{uId}
 	</select>
 	
 	<!-- 음식 저장  안돼-->
 		<insert id="fr01Insert" parameterType="Food">
-		INSERT INTO FOOD_L(JIDX, AREA, WDT, EDT, FNM, BDT, FDT, VM, PRICE, SORT,CHK) VALUES(#{jidx}, #{area}, NOW(), NOW(),
+		INSERT INTO FOOD_L(JIDX, AREA, WDT, EDT, FNM ,BDT
+		 ,FDT, VM, PRICE, SORT,CHK) VALUES(#{jidx}, #{area}, NOW(), NOW(),
 		#{fnm}, #{bdt},#{fdt}, #{vm}, #{price}, '0', '0')
 		
 	</insert>

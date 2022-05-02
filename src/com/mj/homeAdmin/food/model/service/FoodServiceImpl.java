@@ -70,6 +70,18 @@ public class FoodServiceImpl implements FoodService{
 			String[] fdt = vo.getFdtL();
 			String[] vm = vo.getVmL();
 			
+			if(bDt[i] == null || bDt[i] == "") {
+				System.out.println("null 이다");
+				bDt[i] ="0000-00-00";
+			}
+			
+			if(fdt[i] == null || fdt[i] == "") {
+				System.out.println("null 이다");
+				fdt[i] ="0000-00-00";
+			}
+			
+			System.out.println(bDt[i] + "bDt");
+			
 			if(fnm[i] != "") {
 			
 				vo.setFnm(fnm[i]);
@@ -78,6 +90,7 @@ public class FoodServiceImpl implements FoodService{
 				vo.setBdt(bDt[i]);
 				vo.setFdt(fdt[i]);
 				vo.setVm(vm[i]);
+				
 				dao.fr01Insert(vo);
 				
 			}

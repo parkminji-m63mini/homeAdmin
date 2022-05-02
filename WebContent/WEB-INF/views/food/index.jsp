@@ -64,7 +64,7 @@ function selectCode(){
           <style>
           .bodyFR01{
           border: 1px solid black;
-          width: 70%;
+          width: 100%;
 		  text-align: center;
 		  margin: 0 auto;
           }

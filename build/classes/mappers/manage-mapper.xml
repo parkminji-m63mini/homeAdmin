@@ -188,7 +188,7 @@
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy2} AND #{yyyy}
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT
-        ORDER BY B.yyyy,b.mm 
+        ORDER BY B.YYYY,B.MM 
 	</select>
 	
 	<!--가스 상세 데이터 종료-->

@@ -8,13 +8,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>fr01</title>
 </head>
 
 <body>
 <style>
-.wi_1{ width: 120px;}
-.wi_2{ width: 100px;}
+.wi_1{ width: 100%;}
+.wi_2{ width: 100%;}
 </style>
 
 <script type="text/javascript">
@@ -35,18 +35,18 @@ function addLine(tp){
 	if(tp == 1){
 	$("#addbtn1").remove();
 	$("#FR01_TOP").append("<tr id='tr_"+ line1 +"'>" +"</th><th><input class='wi_1' type='text' name='fnmL'></th>" +
-			"<th><input class='wi_2' type='text' name='priceL'></th>	<th><input class='wi_2' type='date' name='bdtL'></th>"
-			+"<th><input class='wi_2' type='date' name='fdtL'></th>"
-			+"<th><input class='wi_2' type='text' name='vmL'></th>"
+			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	<th><input class='wi_2' type='date' name='bdtL' disabled='disabled'></th>"
+			+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
+			+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
 			+"<th><p class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>삭제</p></th></tr>");
 	$("#FR01_TOP").append("<tr id='addbtn1'><th colspan='7'><p class='btn_brown' onclick='addLine(1)'>+</p></th>	</tr>");	
        line1 ++;
 	}else if(tp == 2){
 		$("#addbtn2").remove();
 		$("#FR01_BOTTOM").append("<tr id='br_"+ line2 +"'>" +"</th><th><input class='wi_1' type='text' name='fnmL'></th>" +
-				"<th><input class='wi_2' type='text' name='priceL'></th>	<th><input class='wi_2' type='date' name='bdtL'></th>"
-				+"<th><input class='wi_2' type='date' name='fdtL'></th>"
-				+"<th><input class='wi_2' type='text' name='vmL'></th>"
+				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	<th><input class='wi_2' type='date' name='bdtL' disabled='disabled'></th>"
+				+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
+				+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
 				+"<th><p class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>삭제</p></th></tr>");
 		$("#FR01_BOTTOM").append("<tr id='addbtn2'><th colspan='7'><p class='btn_brown' onclick='addLine(2)'>+</p></th>	</tr>");	
 	       line2 ++;
@@ -56,6 +56,17 @@ function addLine(tp){
 function insertD(){
 	
 	if(confirm("등록하시겠습니까??")){
+		
+		// 식재료명 중에 작성안한 input은 null값 인식되지 않도록 disabled 값 주기
+		var vv = [];
+		$( "input[class='wi_1']").each( function ( i ) {
+			vv.push( $( this ).val() );
+			if ($(this).val()== "" || $(this).val() == null || $(this).val() == undefined || ( $(this).val() != null && typeof $(this).val() == "object" && !Object.keys($(this).val()).length )){
+				$( this ).attr('disabled','true');
+				
+			}
+		} );
+				
 		var frm = document.frmReg;
 		
 		var arrfnmL = [];
@@ -74,6 +85,7 @@ function insertD(){
 		frm.fnmL.value = arrfnmL;
 		
 		frm.submit();
+		
 	 // 여기부터
 		
 		
@@ -114,7 +126,7 @@ function chkEpy(id, index){
 <c:choose>
 <c:when test="${fn:length(arrList) == 0}">
 	<form name="frmReg${st.index}" class='boder-black' method="post" action="fr01Insert.do">
-<input type="hidden" name='jidx' value='${vo.jidx}'>
+<input type="hidden" name='jidx' value='${vo.jidx}'/>
 				<table class="bodyFR01" id='FR01_TOP'>
 					<tr>
 					<th colspan="7">냉동실</th>
@@ -166,6 +178,79 @@ function chkEpy(id, index){
 		          	</table>
 </form>		          	
 <a href='#' onclick="insertD();">등록하기</a>
+</c:when>
+<c:when test="${fn:length(arrList) != 0}">
+
+<form name="frmReg${st.index}" class='boder-black' method="post" action="fr01Insert.do">
+<input type="hidden" name='jidx' value='${vo.jidx}'/>
+				<table class="bodyFR01" id='FR01_TOP'>
+					<tr>
+					<th colspan="7">냉동실</th>
+					</tr>
+					<tr>
+					<th>품명</th>
+					<th>가격</th>
+					<th>구매일</th>
+					<th>유통기한</th>
+					<th>개수/용량</th>
+					<th>수정</th>
+					</tr>
+					
+					
+					<c:forEach items="${arrList}" var='arr' varStatus="st">
+					<tr id='tr_${st}'>
+		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${st}' value="${arr.fnm}" onchange="chkEpy('fnm${st}', '${st}');">
+		          	<input class="wi_1" type="hidden" name='fAreaL' value="TP01"></th>
+		          	<th><input class="wi_2" type='text' name='priceL' id='price${st}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${st}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type='text' name='vmL' id='vm${st}' disabled="disabled"></th>
+		          	<th><a class='wi_2 btn_brown' onclick="delLine1(${st});">삭제</a></th>
+		          	</tr>
+		          	</c:forEach>
+					
+					<c:forEach var="i" begin="1" end="5">
+		          	<tr id='tr_${i}'>
+		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${i}' onchange="chkEpy('fnm${i}', '${i}');"><input class="wi_1" type="hidden" name='fAreaL' value="TP01"></th>
+		          	<th><input class="wi_2" type='text' name='priceL' id='price${i}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${i}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${i}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type='text' name='vmL' id='vm${i}' disabled="disabled"></th>
+		          	<th><a class='wi_2 btn_brown' onclick="delLine1(${i});">삭제</a></th>
+		          	</tr>
+		          	</c:forEach>
+		          	<tr id='addbtn1'><th colspan="7"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr>
+		          	</table>
+		          	
+		        <table class="bodyFR01" id='FR01_BOTTOM'>
+					<tr>
+					<th colspan="7">냉장실</th>
+					</tr>
+					<tr>
+					<th>품명</th>
+					<th>가격</th>
+					<th>구매일</th>
+					<th>유통기한</th>
+					<th>개수/용량</th>
+					<th>수정</th>
+					</tr>
+					
+					
+					<c:forEach var="i" begin="1" end="5">
+		          	<tr id='br_${i}'>
+		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm2${i}' onchange="chkEpy('fnm2${i}', '2${i}');"></th>
+		          	<th><input class="wi_2" type='text' name='priceL' id='price2${i}' disabled="disabled" ></th>
+		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt2${i}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt2${i}' disabled="disabled"></th>
+		          	<th><input class="wi_2" type='text' name='vmL'  id='vm2${i}' disabled="disabled"></th>
+		          	<th><p class='wi_2 btn_brown' onclick="delLine2(${i});">삭제</p></th>
+		          	</tr>
+		          	</c:forEach>
+		          	<tr id='addbtn2'><th colspan="7"><p class='btn_brown' onclick="addLine(2)">+</p></th>	</tr>
+		          	</table>
+     	</form>		          	
+<a href='#' onclick="insertD();">등록하기</a>
+
 </c:when>
 </c:choose>
 	

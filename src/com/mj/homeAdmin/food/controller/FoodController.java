@@ -19,6 +19,7 @@ import com.mj.homeAdmin.food.model.service.FoodService;
 import com.mj.homeAdmin.food.vo.Food;
 import com.mj.homeAdmin.manageM.vo.ManageM;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.sun.xml.internal.bind.v2.runtime.Location;
 
 @Controller
 @RequestMapping("/food/*")
@@ -70,14 +71,20 @@ public class FoodController {
 		 // 냉장고 타입을 선택했는지 데이터 가져오기
 		 String chkF = fs.frFind(vo);
 		 
+		 System.out.println(chkF +  " : chkF ");
+		 
 		 // 냉장고 IDX 가져오기 세팅
 		 vo.setJidx(fs.frJidx(vo));
+		 
+		 System.out.println(vo.getJidx() +  " : jidx ");
 		 
 		 String url = "";
 		 
 		 if(chkF != null) { // 냉장고 타입 데이터 있음
 			 // 나의 냉장고 가져오기 (+ 음식 리스트)
 			  arrList = fs.selectFr(vo);
+			  
+				 System.out.println(arrList +  " : arrL ");
 		 }
 		 
 		 
@@ -107,7 +114,7 @@ public class FoodController {
 	    }
 	 
 	 @RequestMapping("fr01Insert.do")
-	    public String fr01Insert(Food vo, MyinfoVo mvo,  HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+	    public void fr01Insert(Food vo, MyinfoVo mvo,  HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
 	        throws Exception
 	    {
 		//세션으로 가져오기
@@ -120,7 +127,8 @@ public class FoodController {
 		
 			fs.fr01Insert(vo);
 			
-		 return "food/index";
+			response.sendRedirect("index.do");
+			
 	    }
 	
 	
