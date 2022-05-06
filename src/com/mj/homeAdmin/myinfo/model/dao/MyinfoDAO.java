@@ -32,4 +32,7 @@ public class MyinfoDAO {
 	public List<MyinfoVo> selectCode(MyinfoVo vo) {
 		return sqlSession.selectList("myinfoMapper.selectCode", vo);
 	}
+	public List<MyinfoVo> selectCode3(MyinfoVo vo) {
+		return sqlSession.selectList("myinfoMapper.selectCode3", vo);
+	}
 }

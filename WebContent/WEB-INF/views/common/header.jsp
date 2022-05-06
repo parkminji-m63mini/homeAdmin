@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="my" uri="myFunc"%> 
+<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>    
 <%String myId = ""+session.getAttribute("ssID");%>
 <%String myNnm = ""+session.getAttribute("ssnNM");%>
 <%String myNm = ""+session.getAttribute("ssNM");%>
@@ -70,7 +69,7 @@
               <!-- -<li><a href="#">관리비</a></li> -->
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do');">식재료</a></li>
+          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do?mode=0');">식재료</a></li>
           <li><a class="nav-link scrollto " href="#" onclick="loginchk('/clean/index.do');">청소 체크</a></li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/fix/index.do');">집 수리</a></li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/houseInfo/index.do');">집 정보</a></li>

@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="my" uri="myFunc"%> 
+<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +11,7 @@
 <select id='cd${cd}' name='cd${cd}'>
 <c:forEach var='arr' items="${list}" varStatus="st">
 
-<option value="${arr.cd}">${arr.cnm}</option>
+<option value="${arr.cd}" <c:if test="${arr.cd eq vo.cd}"> selected="selected"</c:if> >${arr.cnm}</option>
 </c:forEach>
 </select>
 </body>

@@ -33,4 +33,8 @@ public class MyinfoServiceImpl implements MyinfoService {
 	public List<MyinfoVo> selectCode(MyinfoVo vo)   throws Exception {
 		return dao.selectCode(vo);
 	}
+
+	public List<MyinfoVo> selectCode3(MyinfoVo vo)  throws Exception {
+		return dao.selectCode3(vo);
+	}
 }

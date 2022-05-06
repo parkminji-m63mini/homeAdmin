@@ -39,5 +39,28 @@ function selectCode(cd){
 	function listGo(msg) { 
 		$("#ListFrm").html(msg);	
 	}
-
+	
+// 세번째 코드 테이블 코드 가져오기
+	function selectCode3(scd,cd){
+		
+		
+		$.ajaxSettings.traditional = true;
+			$.ajax({
+				type : "post"
+				,dataType : "html"
+				,data :{
+				  scd : scd,
+				  cd : cd				  
+				}
+				,url :"${contextPath}/my/code3.do"
+				,success : listGo  
+				,error : function(result) { alert(result + "실패"); }
+			});
+		}
+		function listGo(msg) { 
+			$("#ListFrm").html(msg);	
+			
+		}	
 */
+		
+function reload() { (location || window.location || document.location).reload(); }		

@@ -19,11 +19,20 @@ public class MyinfoVo {
 	// 코드
 	private String cd;
 	private String cnm;
-	private String fcd;
+	private String fcd; // 첫번째 코드
+	private String scd; // 두번째 코드
 	private int idx;
 	
 	
 	
+	
+	
+	public String getScd() {
+		return scd;
+	}
+	public void setScd(String scd) {
+		this.scd = scd;
+	}
 	public String getCd() {
 		return cd;
 	}

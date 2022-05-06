@@ -32,19 +32,42 @@
 	<select id="selectFr" parameterType="Food" resultMap="foodResultSet">
 		SELECT B.TP,A.*  FROM FOOD_L A
 		LEFT JOIN FOOD B ON A.JIDX=B.IDX
-		WHERE B.U_ID=#{uId}
+		WHERE B.U_ID=#{uId} 
+		<if test='area != null'>
+		AND AREA = #{area}
+		</if>
+		AND 
+		<if test='mode.equals("0")'>
+		(A.CHK = '0' or A.CHK IS NULL)
+		</if>
+		<if test='mode.equals("1")'>
+		A.CHK = '1'
+		</if> 
+		<if test='idx != 0'> AND A.IDX=#{idx}</if>
+		ORDER BY FDT, BDT DESC, WDT DESC
 	</select>
 	
 	<select id="frJidx" parameterType="Food" resultType="int">
 	select idx from FOOD where u_id=#{uId}
 	</select>
 	
-	<!-- 음식 저장  안돼-->
 		<insert id="fr01Insert" parameterType="Food">
 		INSERT INTO FOOD_L(JIDX, AREA, WDT, EDT, FNM ,BDT
 		 ,FDT, VM, PRICE, SORT,CHK) VALUES(#{jidx}, #{area}, NOW(), NOW(),
-		#{fnm}, #{bdt},#{fdt}, #{vm}, #{price}, '0', '0')
+		#{fnm}, #{bdt},	#{fdt}, #{vm}, #{price}, '0', 
+		<if test='chk ==0'>'0'</if>
+		<if test='chk !=0'>#{chk}</if>
+		)
 		
 	</insert>
+	
+		<update id="fr01Update" parameterType="Food">
+		UPDATE FOOD_L SET EDT=NOW(), FNM=#{fnm}, BDT=#{bdt} ,FDT=#{fdt} , VM=#{vm}, PRICE=#{price}, CHK=#{chk} WHERE IDX=#{idx}
+		
+		</update>
+		
+		<delete id="fr01delete" parameterType="Food">
+		DELETE FROM FOOD_L WHERE IDX=#{idx} AND JIDX=#{jidx}
+		</delete>
 	
 </mapper>

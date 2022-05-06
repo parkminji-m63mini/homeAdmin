@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="my" uri="myFunc"%> 
-
+<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 
 <!DOCTYPE html>
 <html lang="kn">
@@ -21,12 +17,16 @@ $(document).ready(function(){
 });
 
 function selectCode(){
+	
+	var mode = '${vo.mode}';
+	
+	
 	$.ajaxSettings.traditional = true;
 		$.ajax({
 			type : "post"
 			,dataType : "html"
 			,data :{
-			  
+			  mode : mode
 			}
 			,url :"frTypeProc.do"
 			,success : listGo  

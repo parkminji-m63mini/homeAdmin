@@ -16,5 +16,13 @@ public interface FoodService {
 	public abstract int frJidx(Food vo)throws Exception;
 
 	public abstract void fr01Insert(Food vo)throws Exception;
+	
+	public abstract void fr01InsertOne(Food vo)throws Exception;
+	
+	public abstract void fr01Update(Food vo)throws Exception;
+
+	public abstract void fr01delete(Food vo)throws Exception;
+
+	public abstract String dtNullRp(String dt) throws Exception;
 
 }

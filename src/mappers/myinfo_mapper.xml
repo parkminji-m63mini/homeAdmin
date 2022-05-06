@@ -32,4 +32,7 @@
 	<select id="selectCode" parameterType="Myinfo" resultMap="myinfoResultSet">
 		SELECT CD, CNM FROM H_CODE_SECOND WHERE FCD=#{cd}
 	</select>
+	<select id="selectCode3" parameterType="Myinfo" resultMap="myinfoResultSet">
+		SELECT CD, CNM FROM H_CODE_THIRD WHERE SCD=#{scd}
+	</select>
 </mapper>

@@ -21,6 +21,7 @@ public class Food {
 	private String dataChk; // 식재료 데이터가 있는지 없는지   NO / YES
 	
 	private String cd;
+	private String mode; // 0 = 사용 완료 x , 1 = 사용완료 o
 	
 	private String[] fnmL;
 	private String[] priceL;
@@ -28,9 +29,30 @@ public class Food {
 	private String[] fdtL;
 	private String[] vmL;
 	private String[] fAreaL;
+	private String[] idxL;
+	private String[] chkL;
 
 	
 	
+	
+	public String getMode() {
+		return mode;
+	}
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+	public String[] getIdxL() {
+		return idxL;
+	}
+	public void setIdxL(String[] idxL) {
+		this.idxL = idxL;
+	}
+	public String[] getChkL() {
+		return chkL;
+	}
+	public void setChkL(String[] chkL) {
+		this.chkL = chkL;
+	}
 	public String[] getfAreaL() {
 		return fAreaL;
 	}

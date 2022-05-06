@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mj.homeAdmin.comm.BCryptTest;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
+import com.mj.homeAdmin.myinfo.model.service.MyinfoService;
 import com.mj.homeAdmin.myinfo.model.service.MyinfoServiceImpl;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 import com.sun.org.apache.regexp.internal.RE;
@@ -23,7 +24,7 @@ import com.sun.org.apache.regexp.internal.RE;
 public class MyinfoController {
 
 	@Autowired
-	private MyinfoServiceImpl ms;
+	private MyinfoService ms;
 
 	@Autowired
 	private BCryptTest by;
@@ -121,7 +122,7 @@ public class MyinfoController {
 			return result ;
 			}
 		
-		/** 셀렉트 코드생성
+		/** 셀렉트 코드생성 (2차 코드)
 		 * @return
 		 */
 		@RequestMapping("code.do")
@@ -137,5 +138,21 @@ public class MyinfoController {
 			return "myinfo/code";
 		}
 		
+		/** 셀렉트 코드생성 (3차 코드)
+		 * @return
+		 */
+		@RequestMapping("code3.do")
+		public String code3(MyinfoVo vo, Model model) throws Exception{
+
+			System.out.println(vo.getCd() + " 확인");
+			System.out.println(vo.getScd() + " 확인");
+			List<MyinfoVo>list =  ms.selectCode3(vo);
+			
+			model.addAttribute("list" ,list);
+			model.addAttribute("cd" ,vo.getCd());
+			
+			System.out.println(list.get(0));
+			return "myinfo/code";
+		}
 	
 }
