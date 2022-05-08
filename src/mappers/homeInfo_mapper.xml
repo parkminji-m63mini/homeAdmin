@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="homeInfoMapper">
+	<resultMap type="HomeInfo" id="homeInfoResultSet">
+		<id property = "id" column = "ID"/>
+		<id property = "contract" column = "CONTRACT"/>
+		<id property = "size" column = "SIZE"/>
+		<id property = "room" column = "ROOM"/>
+		<id property = "deposit" column = "DEPOSIT"/>
+		<id property = "rentalFee" column = "RENTAL_FEE"/>
+		<id property = "floor" column = "FLOOR"/>
+		<id property = "building" column = "BUILDING"/>
+		<id property = "manageFee" column = "MANAGE_FEE"/>
+		<id property = "contractDate" column = "CONTRACT_DATE"/>
+	
+	</resultMap>
+
+
+
+<!-- 집정보 입력 -->
+	<insert id="insertHomeInfo" parameterType = "HomeInfo">
+		INSERT INTO HOME( ID, CONTRACT, SIZE, ROOM, DEPOSIT, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT_DATE)
+                  VALUES (  #{id}, #{contract}, #{size}, #{room}, #{deposit}, #{rentalFee}, #{floor}, #{building}, #{manageFee}, #{contractDate})
+                  
+	</insert>
+	
+	<!-- 집정보 조회 -->
+	<select id = "selectHomeInfo" parameterType = "string" resultMap = "homeInfoResultSet">
+		SELECT ID, CONTRACT, SIZE, ROOM, DEPOSIT, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT_DATE
+		  FROM HOME
+		WHERE ID = #{id}
+	</select>
+	
+	<!-- 집정보 수정 -->
+	<update id = "updateHomeInfo" parameterType = "homeInfo" >
+		UPDATE HOME
+		   SET CONTRACT = #{contract},
+		       SIZE = #{size},
+		       ROOM = #{room},
+		       DEPOSIT = #{deposit},
+		       RENTAL_FEE = #{rentalFee},
+		       FLOOR = #{floor},
+		       BUILDING = #{building},
+		       MANAGE_FEE = #{manageFee},
+		       CONTRACT_DATE = #{contractDate}
+		WHERE ID = #{id}
+		       
+	</update>
+</mapper>
