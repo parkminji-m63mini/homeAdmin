@@ -16,5 +16,5 @@ public interface HomeInfoService {
 	// 집정보 수정
 	public abstract int updateHomeInfo(HomeInfo vo) throws Exception;
 
-	
+	 
 }

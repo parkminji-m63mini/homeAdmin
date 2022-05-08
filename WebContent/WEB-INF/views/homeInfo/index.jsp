@@ -73,7 +73,7 @@
                   <div class="error-message"></div>
                   <div class="sent-message">Your message has been sent. Thank you!</div>
                 </div>
-                
+                 
                 <c:choose>
                 	<c:when test="${ empty selectHome}">
                 	<div class="text-center"><button type="button" id="insertBtn" title="Send Message" onclick = "getPost('01')">저장</button></div>
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-   
+    
   </footer><!-- End  Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

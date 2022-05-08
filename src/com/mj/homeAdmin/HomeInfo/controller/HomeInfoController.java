@@ -44,7 +44,7 @@ public class HomeInfoController {
 		hs.insertHomeInfo(home);
 		
 		return "homeInfo/index";
-	}
+	}  
 	// 집정보 조회
 	@RequestMapping("index.do")
 	public String selectHomeInfo(HomeInfo home, Model model , HttpSession ss, HttpServletRequest req ) throws Exception{

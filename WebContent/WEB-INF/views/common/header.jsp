@@ -138,7 +138,7 @@
   <script type="text/javascript">
   function logout(){
 	  if(confirm("로그아웃 하시겠습니까?")){
-		 
+		  
 		  $.ajax({
 			type : "post",
 			dataType : "text", 
@@ -153,7 +153,7 @@
 					alert("로그아웃 성공");
 				}
 				//alert("성공" + '${sessionScope.ssID}' );
-				
+				 
 			},
 			error : function(result){
 				alert("실패")	;		

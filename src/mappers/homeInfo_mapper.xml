@@ -15,7 +15,7 @@
 	
 	</resultMap>
 
-
+ 
 
 <!-- 집정보 입력 -->
 	<insert id="insertHomeInfo" parameterType = "HomeInfo">

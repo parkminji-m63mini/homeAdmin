@@ -82,7 +82,7 @@ public class HomeInfo {
 	public void setBuilding(String building) {
 		this.building = building;
 		
-	}
+	} 
 	public Date getContractDate() {
 		return contractDate;
 	}

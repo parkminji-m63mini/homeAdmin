@@ -25,7 +25,7 @@
 	<typeAlias type="com.mj.homeAdmin.myinfo.vo.MyinfoVo" alias="Myinfo"/>
 	<typeAlias type="com.mj.homeAdmin.HomeInfo.vo.HomeInfo" alias="HomeInfo"/>
 	</typeAliases>
-
+ 
 	
 	<!-- mapper.xml 파일을 등록하는 태그 -->
 	<mappers>

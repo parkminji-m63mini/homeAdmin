@@ -16,7 +16,7 @@ public class HomeInfoImpl implements HomeInfoService{
 	
 	public HomeInfoImpl() {
 		
-	}
+	} 
 	
 	@Override
 	public void insertHomeInfo(HomeInfo vo) throws Exception{
@@ -27,7 +27,7 @@ public class HomeInfoImpl implements HomeInfoService{
 	@Override
 	public HomeInfo selectHomeInfo(String id) throws Exception{
 		return dao.selectHomeInfo(id);
-	}
+	} 
 	
 	@Override
 	public int updateHomeInfo(HomeInfo vo) throws Exception{
