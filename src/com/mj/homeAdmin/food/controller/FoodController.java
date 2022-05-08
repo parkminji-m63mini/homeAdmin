@@ -142,11 +142,44 @@ public class FoodController {
 			System.out.println("ddd/ " + Arrays.toString(vo.getPriceL()));
 			System.out.println("ddd/ " + Arrays.toString(vo.getChkL()));
 			System.out.println("ddd/ " + Arrays.toString(vo.getfAreaL()));
-			if(vo.getBdtL().length == 0) {
-				System.out.println("null 임");
-			}
-			
+			if(vo.getFnmL().length == 1) {
+				System.out.println("1 임");
+				
+				vo.setFnm(vo.getFnmL()[0]);
+				
+				if(vo.getBdtL().length == 0) {
+					vo.setBdt("0000-00-00");
+				}else {
+					vo.setBdt(vo.getBdtL()[0]);
+				}
+				if(vo.getFdtL().length == 0) {
+					vo.setFdt("0000-00-00");
+				}else {
+					vo.setFdt(vo.getFdtL()[0]);
+				}
+				if(vo.getVmL().length == 0) {
+					vo.setVm("");
+				}else {
+					vo.setVm(vo.getVmL()[0]);
+				}
+				if(vo.getPriceL().length == 0) {
+					vo.setPrice("");
+				}else {
+					vo.setPrice(vo.getPriceL()[0]);
+				}
+				if(vo.getfAreaL().length == 0) {
+					vo.setArea("");
+				}else {
+					vo.setArea(vo.getfAreaL()[0]);
+				}
+				
+				fs.fr01InsertOne(vo);
+			}else {
+				
 				fs.fr01Insert(vo);
+			}
+
+			
 			
 			
 			response.sendRedirect("index.do?mode=0");

@@ -72,9 +72,6 @@ public class FoodServiceImpl implements FoodService{
 				
 				if(fnm[i] != "") {
 					
-					System.out.println("들어옴");
-					System.out.println(price[i].length() + "//cpzm");
-					
 					vo.setFnm(fnm[i]);
 					vo.setArea(area[i]);
 					if(price[i].length() == 0) {

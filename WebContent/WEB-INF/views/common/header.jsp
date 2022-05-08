@@ -72,7 +72,7 @@
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do?mode=0');">식재료</a></li>
           <li><a class="nav-link scrollto " href="#" onclick="loginchk('/clean/index.do');">청소 체크</a></li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/fix/index.do');">집 수리</a></li>
-          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/houseInfo/index.do');">집 정보</a></li>
+          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/homeInfo/index.do');">집 정보</a></li>
           
           
           <!-- 드롭다운 메뉴 -->
@@ -138,7 +138,7 @@
   <script type="text/javascript">
   function logout(){
 	  if(confirm("로그아웃 하시겠습니까?")){
-		 
+		  
 		  $.ajax({
 			type : "post",
 			dataType : "text", 
@@ -153,7 +153,7 @@
 					alert("로그아웃 성공");
 				}
 				//alert("성공" + '${sessionScope.ssID}' );
-				
+				 
 			},
 			error : function(result){
 				alert("실패")	;		
@@ -165,6 +165,7 @@
   }
   
   function loginchk(url){
+	
 	  if('${sessionScope.ssID}' == null || '${sessionScope.ssID}' == ""){
 			alert('로그인 후 이용 가능합니다.');
 			return false;
