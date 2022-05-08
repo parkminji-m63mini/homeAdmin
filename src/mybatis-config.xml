@@ -12,7 +12,6 @@
 			해당 세팅은 파리미터에 null값이 있을 경우
 			value에 지정된 값을 파라미터로 사용하라는 의미.
 		 -->
-		
 	</settings>
 	
 	<!-- 
@@ -24,13 +23,15 @@
 	<typeAlias type="com.mj.homeAdmin.manageM.vo.ManageM" alias="Manage"/>
 	<typeAlias type="com.mj.homeAdmin.food.vo.Food" alias="Food"/>
 	<typeAlias type="com.mj.homeAdmin.myinfo.vo.MyinfoVo" alias="Myinfo"/>
+	<typeAlias type="com.mj.homeAdmin.HomeInfo.vo.HomeInfo" alias="HomeInfo"/>
 	</typeAliases>
-
+ 
 	
 	<!-- mapper.xml 파일을 등록하는 태그 -->
 	<mappers>
 		<mapper resource="/mappers/manage-mapper.xml" />
 		<mapper resource="/mappers/food_mapper.xml" />
 		<mapper resource="/mappers/myinfo_mapper.xml" />
+		<mapper resource="/mappers/homeInfo_mapper.xml" />
 	</mappers>
 </configuration>
