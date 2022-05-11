@@ -360,6 +360,18 @@ public class ManageM
 
 
 
+	public String getTp() {
+			return tp;
+		}
+
+		public void setTp(String tp) {
+			this.tp = tp;
+		}
+
+
+
+
+
 	private int idx;
     private int jidx;
     private String yyyy;
@@ -402,5 +414,8 @@ public class ManageM
     
     private String addA;
     private String suma;
+
+    private String tp;
+    
     
 }

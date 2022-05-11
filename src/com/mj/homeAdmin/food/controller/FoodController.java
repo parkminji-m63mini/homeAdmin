@@ -96,9 +96,6 @@ public class FoodController {
 			  
 			  vo.setArea("TP02");
 			  arrListBottom = fs.selectFr(vo);
-			  
-			  
-				 System.out.println(arrListTop +  " : arrL ");
 		 }
 		 
 		 
@@ -201,6 +198,7 @@ public class FoodController {
 		 System.out.println("ddd/ " + Arrays.toString(vo.getPriceL()));
 		 System.out.println("ddd/ " + Arrays.toString(vo.getIdxL()));
 		 System.out.println("ddd/ " + Arrays.toString(vo.getChkL()));
+		 System.out.println("ddd/ " + Arrays.toString(vo.getfAreaL()));
 		 System.out.println("ddd/ " + vo.getJidx());
 		 
 		 String idx [] = vo.getIdxL();
@@ -318,6 +316,26 @@ public class FoodController {
 	 
 	 
 	 
-	 
+	 // 사용완료 체크시 업데이트
+	 @ResponseBody
+	 @RequestMapping(value="updateChk.do", produces = "application/json; charset=utf-8")
+	 public String updateChk(Food vo, MyinfoVo mvo,  HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+			 throws Exception
+	 {
+		 String result = "false";
+		 
+		 //세션으로 가져오기
+		 vo.setuId((String)ss.getAttribute("ssID"));
+		 
+		 System.out.println("ddd/ " + vo.getJidx());
+		
+				 fs.updateChk(vo);
+		 
+		 
+		 //response.sendRedirect("index.do");
+		 result = "true";
+		 
+		 return "true";
+	 }
 	 
 }

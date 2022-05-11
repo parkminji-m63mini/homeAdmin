@@ -47,4 +47,8 @@ public class FoodDAO {
 		sqlSession.delete("foodMapper.fr01delete", vo);
 		
 	}
+
+	public void updateChk(Food vo) {
+		 sqlSession.update("foodMapper.updateChk", vo);
+	}
 }

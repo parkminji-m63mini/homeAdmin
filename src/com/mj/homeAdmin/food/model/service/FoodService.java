@@ -25,4 +25,6 @@ public interface FoodService {
 
 	public abstract String dtNullRp(String dt) throws Exception;
 
+	public abstract void updateChk(Food vo) throws Exception;
+
 }

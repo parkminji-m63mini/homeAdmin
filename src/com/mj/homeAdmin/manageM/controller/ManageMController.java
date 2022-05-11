@@ -23,6 +23,7 @@ import com.google.gson.GsonBuilder;
 import com.mj.homeAdmin.comm.JavaUtil;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
 import com.mj.homeAdmin.manageM.model.service.ManageMServiceImpl;
+import com.mj.homeAdmin.manageM.model.service.ManegeMService;
 import com.mj.homeAdmin.manageM.vo.ManageM;
 
 @Controller
@@ -31,7 +32,7 @@ public class ManageMController
 {
 	
 	@Autowired
-	private ManageMServiceImpl ms;
+	private ManegeMService ms;
 	
 	@Autowired
 	private CmmnServiceImpl myutil;
@@ -52,13 +53,13 @@ public class ManageMController
         vo.setuId((String)ss.getAttribute("ssID"));
         
         String yyyy= vo.getYyyy();
-        String mm= vo.getMm();
+        String mm=  vo.getMm();
         if(yyyy == null || yyyy.equals("")) {
         	yyyy= "" + LocalDate.now().getYear();
-        	mm= "" +LocalDate.now().getMonthValue();
+        	mm=   JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
         }else {
         	yyyy= vo.getYyyy();
-        	mm = vo.getMm();
+        	mm = JavaUtil.checkMM(vo.getMm(), "0");
         	flag = "ture";
         }
         
@@ -84,6 +85,11 @@ public class ManageMController
         vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
         
         List<ManageM> arrViewPast = ms.manageNP(vo);
+        
+        System.out.println(vo.getMm() + "chk0");
+        System.out.println(vo.getMm2() + "chk");
+        System.out.println(vo.getYyyy2() + "chk2");
+        
         
         //------------------------------------//
         // 이번달, 3개월 평균값 비교
@@ -121,7 +127,11 @@ public class ManageMController
         String str = "";
         
         if(vo.getMode().equals("i")) {
-            ms.insertMAll(vo);
+        	 vo.setMm(JavaUtil.checkMM(vo.getMm(), "0"));
+             
+        	 System.out.println(vo.getMm() + "mm 확인");
+        	
+        	ms.insertMAll(vo);
             str ="성공";
             
         }else if(vo.getMode().equals("u"))
@@ -149,10 +159,10 @@ public class ManageMController
         String mm= vo.getMm();
         if(yyyy == null || yyyy.equals("")) {
         	yyyy= "" + LocalDate.now().getYear();
-        	mm= "" +LocalDate.now().getMonthValue();
+        	mm=  JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
         }else {
         	yyyy= vo.getYyyy();
-        	mm = vo.getMm();
+        	mm = JavaUtil.checkMM(vo.getMm(), "0");
         	flag = "ture";
         }
         
@@ -208,6 +218,7 @@ public class ManageMController
         model.addAttribute("arrViewNow", arrViewNow);
         model.addAttribute("arrViewPast", arrViewPast);
         model.addAttribute("arrViewPast2", arrViewPast2);
+        model.addAttribute("vo", vo);
     	return "manageM/gas";
     }
     
@@ -296,6 +307,7 @@ public class ManageMController
     	String str = "";
     	
     	System.out.println(vo.getpNum() + "확인");
+    	
     	ms.updatepNum(vo, res);
     	str ="성공";
     	return str;
@@ -333,5 +345,22 @@ public class ManageMController
     {
         return "manageM/gas";
     }
+    
+    // 가스 계량기, 고객번호 최근 데이터로 업데이트
+    @RequestMapping("newUp.do")
+    public void newUp(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
+    {
+    	
+    	// 세션으로 가져오기
+        vo.setuId((String)ss.getAttribute("ssID"));
+    	
+    	System.out.println(vo.getTp());
+    	System.out.println(vo.getIdx() + "확인");
+    	System.out.println(vo.getYyyy() + "확인");
+    	
+    	ms.newUp(vo, ss);
+    	
+    }
+    
     
 }

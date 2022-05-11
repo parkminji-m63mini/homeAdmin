@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,7 +121,7 @@ public class ManageMServiceImpl
 	/**
 	 * 공과금 전체 데이터 조회 (3개월)
 	 */
-	public List<ManageM> manageListP3(ManageM vo) {
+	public List<ManageM> manageListP3(ManageM vo)  throws Exception{
 		
 		List<ManageM> arrList = dao.manageListP3(vo);
 		return arrList;
@@ -129,7 +130,7 @@ public class ManageMServiceImpl
 	/**
 	 * 가스비 상세 데이터 조회 (당월)
 	 */
-	public List<ManageM> manageGasNow(ManageM vo) {
+	public List<ManageM> manageGasNow(ManageM vo)  throws Exception{
 		
 		List<ManageM> arrList = dao.manageGasNow(vo);
 		
@@ -187,41 +188,41 @@ public class ManageMServiceImpl
 		//dao.updateMGas(vo);
 	}
 
-	public void updateGchk(ManageM vo, HttpServletResponse res) {
+	public void updateGchk(ManageM vo, HttpServletResponse res)  throws Exception{
 		dao.updateGchk(vo);
 	}
 
-	public void updateTgasM(ManageM vo, HttpServletResponse res) {
+	public void updateTgasM(ManageM vo, HttpServletResponse res)  throws Exception{
 		dao.updateTgasM(vo);
 	}
 
-	public void updateGchkA(ManageM vo, HttpServletResponse res) {
+	public void updateGchkA(ManageM vo, HttpServletResponse res)  throws Exception{
 		dao.updateGchkA(vo);
 		
 	}
 
-	public void updateGasNum(ManageM vo, HttpServletResponse res) {
+	public void updateGasNum(ManageM vo, HttpServletResponse res)  throws Exception{
 		dao.updateGasNum(vo);
 		
 	}
 
-	public void updatepNum(ManageM vo, HttpServletResponse res) {
+	public void updatepNum(ManageM vo, HttpServletResponse res)  throws Exception{
 		dao.updatepNum(vo);
 		
 	}
 
-	public void allUpdateGas(ManageM vo, HttpServletResponse res) {
+	public void allUpdateGas(ManageM vo, HttpServletResponse res)  throws Exception{
 		dao.allUpdateGas(vo);
 		
 	}
 
-	public List<ManageM> gasNP(ManageM vo) {
+	public List<ManageM> gasNP(ManageM vo)  throws Exception{
 			List<ManageM> arrList = dao.gasNP(vo);
     	
     	return arrList;
 	}
 
-	public List<ManageM> gasNP6m(ManageM vo) {
+	public List<ManageM> gasNP6m(ManageM vo)  throws Exception{
 		
 		vo.setYyyy(vo.getYyyy() + "/" + vo.getMm());
 		vo.setYyyy2(vo.getYyyy2() + "/" + vo.getMm2());
@@ -231,6 +232,12 @@ public class ManageMServiceImpl
 		
 		List<ManageM> arrList = dao.gasNP6m(vo);
 		return arrList;
+	}
+
+	public void newUp(ManageM vo, HttpSession ss)  throws Exception{
+	
+		dao.newUp(vo);
+		
 	}
 
 

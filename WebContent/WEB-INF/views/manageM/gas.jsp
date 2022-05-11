@@ -150,12 +150,18 @@ $(document).ready(function() {
 	    
 	    
 
-	});
+});
+	
 });
 
 
 
-
+function newUp(yyyy,idx, tp){
+	
+	location.href= "newUp.do?yyyy=" + yyyy+ "&idx="+ idx +  "&tp=" + tp;
+	reload();
+	
+}
 
 
 </script>
@@ -184,6 +190,7 @@ $(document).ready(function() {
 					<div>
 					<select id='yyyyC' name='yyyyC'>
 					<option>년도</option>
+					<option value="2022" <c:if test='${arrViewNow[0].yyyy eq "2022"}'>selected="selected"</c:if>>2022</option>
 					<option value="2021" <c:if test='${arrViewNow[0].yyyy eq "2021"}'>selected="selected"</c:if>>2021</option>
 					<option value="2020" <c:if test='${arrViewNow[0].yyyy eq "2020"}'>selected="selected"</c:if>>2020</option>
 					<option value="2019" <c:if test='${arrViewNow[0].yyyy eq "2019"}'>selected="selected"</c:if>>2019</option>
@@ -268,13 +275,16 @@ $(document).ready(function() {
                 	 <c:choose>
                 	 <c:when test="${arr.gNum ne null }">
                 		<span class='nomalForm'>: ${arr.gNum} </span>
-                		<span class='upForm'  style="display: none;"><input id='gNumC' class='manageI' type="text" name='gNum' value="${arr.gNum}"/> </span>
+                		<span class='upForm'  style="display: none;"><input id='gNumC' class='manageI' type="text" name='gNum' value="${arr.gNum}"/> 
+                		<a onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" href=''>최근 데이터 가져오기</a></span>
                 	 <span><input id='copybtn1' onclick="copy(${arr.gNum}, '계량기 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
                 	<span class='nomalForm'>데이터가 없습니다</span>
-                	<span class='upForm'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/></span>
+                	<span class='upForm'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/>
+                	<a onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" href=''>최근 데이터 가져오기</a>
+                	</span>
                 	 </c:otherwise>
                 	 </c:choose>
                 	 </p>
@@ -285,13 +295,16 @@ $(document).ready(function() {
                 	 <c:choose>
                 	 <c:when test="${arr.pNum ne null }">
                 		<span class='nomalForm'>: ${arr.pNum} </span>
-                		<span class='upForm'  style="display: none;"><input id='pNumC' class='manageI' type="text" name='pNum' value="${arr.pNum}"/> </span>
+                		<span class='upForm'  style="display: none;"><input id='pNumC' class='manageI' type="text" name='pNum' value="${arr.pNum}"/>
+                		<a onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" href=''>최근 데이터 가져오기</a> </span>
                 	 <span><input id='copybtn2' onclick="copy(${arr.pNum}, '고객 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
                 	<span class='nomalForm'>데이터가 없습니다</span>
-                	<span class='upForm'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='pNum' value="" placeholder="숫자만 입력"/></span>
+                	<span class='upForm'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
+                	<a onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" href=''>최근 데이터 가져오기</a> </span>
+                	</span>
                 	 </c:otherwise>
                 	 </c:choose>
                 	 </p>
@@ -399,7 +412,7 @@ $(document).ready(function() {
 						<th  class='boder-black'>가산금</th>
 						<th  class='boder-black'>미납금</th>
 						<th  class='boder-black'>정산금액</th>
-						<th  class='boder-black'>절시금액</th>
+						<th  class='boder-black'>절사금액</th>
 						<th  class='boder-black'>에너지바우처</th>
 					</tr>
 					

@@ -101,6 +101,11 @@ public class ManageMDAO
 	public List<ManageM> gasNP6m(ManageM vo) {
 		return sqlSession.selectList("manageMapper.gasNP6m", vo);
 	}
+
+	public void newUp(ManageM vo) {
+		sqlSession.update("manageMapper.newUp", vo);
+		
+	}
 	
 
 }

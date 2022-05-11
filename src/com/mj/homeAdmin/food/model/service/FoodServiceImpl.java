@@ -144,4 +144,9 @@ public class FoodServiceImpl implements FoodService{
 		
 		return dt;
 	}
+
+	@Override
+	public void updateChk(Food vo) throws Exception {
+		dao.updateChk(vo);
+	}
 }

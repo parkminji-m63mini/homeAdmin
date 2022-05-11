@@ -69,5 +69,10 @@
 		<delete id="fr01delete" parameterType="Food">
 		DELETE FROM FOOD_L WHERE IDX=#{idx} AND JIDX=#{jidx}
 		</delete>
+		
+		<update id="updateChk" parameterType="Food">
+		UPDATE FOOD_L SET CHK=#{chk} WHERE IDX=#{idx} AND JIDX=#{jidx}
+		
+		</update>
 	
 </mapper>

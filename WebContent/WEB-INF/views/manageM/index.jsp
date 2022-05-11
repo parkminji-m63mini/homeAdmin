@@ -419,10 +419,10 @@ $(document).ready(function() {
       			</tr>	
       			</c:forEach>
       			
-      			<c:set var='gas' value='${arrViewPast[1].gasM - arrViewPast[0].gasM}'/>
-      			<c:set var='el' value='${arrViewPast[1].elM - arrViewPast[0].elM}' />
-      			<c:set var='wt' value='${arrViewPast[1].wtM - arrViewPast[0].wtM}'/>
-      			<c:set var='it' value='${arrViewPast[1].itM - arrViewPast[0].itM}' />
+      			<c:set var='gas' value='${arrViewPast[0].gasM - arrViewPast[1].gasM}'/>
+      			<c:set var='el' value='${arrViewPast[0].elM - arrViewPast[1].elM}' />
+      			<c:set var='wt' value='${arrViewPast[0].wtM - arrViewPast[1].wtM}'/>
+      			<c:set var='it' value='${arrViewPast[0].itM - arrViewPast[1].itM}' />
       		
       			
       			<tr>
@@ -439,7 +439,7 @@ $(document).ready(function() {
      		
       		<c:set var='avg' value="${gas+el+wt+it}" ></c:set>
 			<c:choose>
-			<c:when test="${avg >= 0}">
+			<c:when test="${avg <= 0}">
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
@@ -447,11 +447,11 @@ $(document).ready(function() {
 			</div>
 			
 			</c:when>
-			<c:when test="${avg < 0}">
+			<c:when test="${avg > 0}">
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
-			<fmt:formatNumber value="${avg}" type="number"/>원 이라니..홀리...마마</h4>
+			<fmt:formatNumber value="${avg}" type="number"/>원 더 사용했어..</h4>
 			</div>
 			</c:when>
 			</c:choose>

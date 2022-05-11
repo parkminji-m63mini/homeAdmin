@@ -8,6 +8,7 @@ package com.mj.homeAdmin.manageM.model.service;
 import com.mj.homeAdmin.manageM.vo.ManageM;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public interface ManegeMService
 {
@@ -51,5 +52,9 @@ public interface ManegeMService
     		throws Exception;
     public abstract  List<ManageM> gasNP6m(ManageM managem)
     		throws Exception;
+
+	public abstract void updateGchkA(ManageM vo, HttpServletResponse res)throws Exception;
+
+	public abstract void newUp(ManageM vo, HttpSession ss)throws Exception;
 }
 

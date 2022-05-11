@@ -121,7 +121,7 @@
 				},
 				success : function(result){
 					alert("등록완료");
-					history.back();
+					location.href='index.do?mode='+ ${vo.mode};
 				},
 				error : function(result){
 					errMsg(result);

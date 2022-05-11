@@ -51,6 +51,7 @@
 	<select id="manageNP" parameterType="Manage" resultMap="manageResultSet">
 		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2}) 	
+		ORDER BY MM DESC
 	</select>
 	
 	<!-- 공과금 전체 페이지 3개월 비교 데이터 -->
@@ -77,19 +78,19 @@
 		INSERT INTO MANAGE_GAS(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT) VALUES (#{jidx}, #{uId},
 		( select A.AUTO_HOW From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
-        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId}),
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}),
         ( select A.AUTO_WHEN From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
-        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId})
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
         ,( select A.AUTO_M From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
-        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId})
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
         ,( select A.G_NUM From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
-        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId})
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
         ,( select A.P_NUM From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
-        where B.YYYY=#{yyyy} and B.MM=${mm}-1 AND B.U_ID=#{uId}
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}
         ),#{gChk}
 		)
 	</insert>
@@ -178,6 +179,7 @@
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,U_GM,MON_GU, USE_G 	
+        ORDER BY A.WDT DESC
 	</select>
 	
 	<!--가스 6개월치 비교 데이터 -->
@@ -190,6 +192,21 @@
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT
         ORDER BY B.YYYY,B.MM 
 	</select>
+	
+	<update id="newUp" parameterType="Manage">
+		UPDATE MANAGE_GAS SET 
+		<if test='tp.equals("1")'>
+		P_NUM=(SELECT A.P_NUM FROM
+		(select ROW_NUMBER() OVER (ORDER BY P_NUM DESC ) AS RN , P_NUM FROM MANAGE_GAS WHERE (U_ID=#{uId} AND P_NUM IS NOT NULL AND TO_CHAR(WDT, 'YYYY/MM') != #{yyyy}) ) A
+		WHERE A.RN = 1)
+		</if>
+		<if test='tp.equals("2")'>
+		G_NUM=(SELECT A.G_NUM FROM
+		(select ROW_NUMBER() OVER (ORDER BY G_NUM DESC ) AS RN , G_NUM FROM MANAGE_GAS WHERE (U_ID=#{uId} AND G_NUM IS NOT NULL AND TO_CHAR(WDT, 'YYYY/MM') != #{yyyy}) ) A
+		WHERE A.RN = 1)
+		</if>
+		WHERE IDX=#{idx}
+	</update>
 	
 	<!--가스 상세 데이터 종료-->
 </mapper>
