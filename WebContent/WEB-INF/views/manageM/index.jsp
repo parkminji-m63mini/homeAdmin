@@ -330,7 +330,8 @@ $(document).ready(function() {
 						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name='gasM' value="${arr.gasM}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom' ><input  class='manageI' type="text" name='gasM' value=""/>원</span>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;" ><input  class='manageI' type="text" name='gasM' value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -342,7 +343,8 @@ $(document).ready(function() {
 						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="elM" value="${arr.elM}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom'><input  class='manageI' type="text" name="elM" value=""/>원</span>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="elM" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -354,7 +356,8 @@ $(document).ready(function() {
 						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="wtM" value="${arr.wtM}""/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom' ><input  class='manageI' type="text" name="wtM" value=""/>원</span>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;" ><input  class='manageI' type="text" name="wtM" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -366,7 +369,8 @@ $(document).ready(function() {
 						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="itM"  value="${arr.itM}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upFrom'><input  class='manageI' type="text" name="itM" value=""/>원</span>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="itM" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -419,10 +423,10 @@ $(document).ready(function() {
       			</tr>	
       			</c:forEach>
       			
-      			<c:set var='gas' value='${arrViewPast[0].gasM - arrViewPast[1].gasM}'/>
-      			<c:set var='el' value='${arrViewPast[0].elM - arrViewPast[1].elM}' />
-      			<c:set var='wt' value='${arrViewPast[0].wtM - arrViewPast[1].wtM}'/>
-      			<c:set var='it' value='${arrViewPast[0].itM - arrViewPast[1].itM}' />
+      			<c:set var='gas' value='${arrViewPast[1].gasM - arrViewPast[0].gasM}'/>
+      			<c:set var='el' value='${arrViewPast[1].elM - arrViewPast[0].elM}' />
+      			<c:set var='wt' value='${arrViewPast[1].wtM - arrViewPast[0].wtM}'/>
+      			<c:set var='it' value='${arrViewPast[1].itM - arrViewPast[0].itM}' />
       		
       			
       			<tr>
@@ -437,9 +441,11 @@ $(document).ready(function() {
      		
      		<br><br>
      		
-      		<c:set var='avg' value="${gas+el+wt+it}" ></c:set>
+     		<c:set var='avg' value="${(gas+el+wt+it)}" ></c:set>
+     		
+     		     		
 			<c:choose>
-			<c:when test="${avg <= 0}">
+			<c:when test="${avg >= 0}">
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
@@ -447,7 +453,9 @@ $(document).ready(function() {
 			</div>
 			
 			</c:when>
-			<c:when test="${avg > 0}">
+			<c:when test="${avg < 0}">
+     		<c:set var='avg2' value="${(gas+el+wt+it)* -1}" ></c:set>
+     		
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">

@@ -55,6 +55,6 @@ public interface ManegeMService
 
 	public abstract void updateGchkA(ManageM vo, HttpServletResponse res)throws Exception;
 
-	public abstract void newUp(ManageM vo, HttpSession ss)throws Exception;
+	public abstract String newUp(ManageM vo, HttpSession ss)throws Exception;
 }
 

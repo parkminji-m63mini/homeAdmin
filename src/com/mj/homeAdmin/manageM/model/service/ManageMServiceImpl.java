@@ -234,9 +234,9 @@ public class ManageMServiceImpl
 		return arrList;
 	}
 
-	public void newUp(ManageM vo, HttpSession ss)  throws Exception{
-	
-		dao.newUp(vo);
+	public String newUp(ManageM vo, HttpSession ss)  throws Exception{
+		String result = dao.newUp(vo); 
+		return result; 
 		
 	}
 

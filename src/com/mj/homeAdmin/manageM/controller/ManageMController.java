@@ -347,8 +347,9 @@ public class ManageMController
     }
     
     // 가스 계량기, 고객번호 최근 데이터로 업데이트
-    @RequestMapping("newUp.do")
-    public void newUp(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
+    @ResponseBody
+    @RequestMapping(value="newUp.do", produces = "application/json; charset=utf-8")
+    public String newUp(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
     {
     	
     	// 세션으로 가져오기
@@ -358,7 +359,15 @@ public class ManageMController
     	System.out.println(vo.getIdx() + "확인");
     	System.out.println(vo.getYyyy() + "확인");
     	
-    	ms.newUp(vo, ss);
+    	String result = ms.newUp(vo, ss);
+    	
+    	
+    	
+    	Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    	
+    	System.out.println(result + "확인");
+    	
+    	return  gson.toJson(result); 
     	
     }
     

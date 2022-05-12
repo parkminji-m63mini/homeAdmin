@@ -20,50 +20,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <body>
 <script type="text/javascript">
-
-
-
-
-// 체크박스 바로 업데이트
-/*function chpayChk(idx, yn, gb){
-
-	var url;
-	
-	if(gb =='gChk'){
-		url = 'updateGchk.do';		
-	}else if(gb == 'autoM'){
-		url = 'updateGchkA.do';		
-		
-	}
-	
-	
-	 
-	$.ajax({
-		type : "post",
-		dataType : "text", 
-		 async : false,
-		url : url,
-		data : {
-			
-			idx: idx, 
-			gChk: yn, 
-			autoM : yn
-			 
-			
-		},
-		success : function(result){
-			alert("등록완료");
-			reload();
-		},
-		error : function(result){
-			errMsg(result);
-		}
-	});
-}
-*/
-
-
-
+var chart;
 $(document).ready(function(){
 	if($("input[name='autoM']:checked").val() == 'Y'){
 		$("#showAuto").css("display", "inline");
@@ -78,13 +35,10 @@ $("input[name='autoM']").click(function(){
 	}
 	
 });
-});
 
 
-//총합 6개월 총 지출 금액 차트
-var chart;
-$(document).ready(function() {
-	
+
+//총합 6개월 총 지출 금액 차트	
 	chart = new Highcharts.chart('container', {
 	    chart: {
 	        type: 'column'
@@ -135,36 +89,15 @@ $(document).ready(function() {
 	    </c:forEach>
 	   ]
 	    
-	    
-	//	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
-	//	<c:if test='${st.index ne fn:length(arrViewPast)}'>		                 
-	//	{
-	//	name : '${arrC2.mm}',
-		//data : [0, 1, 2, 3],
-	//	data : [${arr.gasM}, ${arr.elM}, ${arr.wtM}, ${arr.itM}],
-	//	color : '#0072bc'
-	//	}
-	//		</c:if>   					
-				
-	//	</c:forEach>
-	    
-	    
 
-});
+			});
 	
 });
 
-
-
-function newUp(yyyy,idx, tp){
-	
-	location.href= "newUp.do?yyyy=" + yyyy+ "&idx="+ idx +  "&tp=" + tp;
-	reload();
-	
-}
 
 
 </script>
+
 <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
@@ -276,14 +209,14 @@ function newUp(yyyy,idx, tp){
                 	 <c:when test="${arr.gNum ne null }">
                 		<span class='nomalForm'>: ${arr.gNum} </span>
                 		<span class='upForm'  style="display: none;"><input id='gNumC' class='manageI' type="text" name='gNum' value="${arr.gNum}"/> 
-                		<a onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" href=''>최근 데이터 가져오기</a></span>
+                		<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" value="최근 데이터 가져오기"/></span>
                 	 <span><input id='copybtn1' onclick="copy(${arr.gNum}, '계량기 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
                 	<span class='nomalForm'>데이터가 없습니다</span>
-                	<span class='upForm'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/>
-                	<a onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" href=''>최근 데이터 가져오기</a>
+                	<span class='upForm'  style="display: none;"><input  id='gNumC' style="width: 15%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/>
+                	<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" value="최근 데이터 가져오기"/>
                 	</span>
                 	 </c:otherwise>
                 	 </c:choose>
@@ -296,14 +229,14 @@ function newUp(yyyy,idx, tp){
                 	 <c:when test="${arr.pNum ne null }">
                 		<span class='nomalForm'>: ${arr.pNum} </span>
                 		<span class='upForm'  style="display: none;"><input id='pNumC' class='manageI' type="text" name='pNum' value="${arr.pNum}"/>
-                		<a onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" href=''>최근 데이터 가져오기</a> </span>
+                			<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" value="최근 데이터 가져오기"/> </span>
                 	 <span><input id='copybtn2' onclick="copy(${arr.pNum}, '고객 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
                 	<span class='nomalForm'>데이터가 없습니다</span>
-                	<span class='upForm'  style="display: none;"><input  style="width: 10%;" class='manageI' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
-                	<a onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" href=''>최근 데이터 가져오기</a> </span>
+                	<span class='upForm'  style="display: none;"><input  id='pNumC' style="width: 15%;" class='manageI' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
+                	<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" value="최근 데이터 가져오기"/> </span>
                 	</span>
                 	 </c:otherwise>
                 	 </c:choose>
@@ -655,12 +588,7 @@ function newUp(yyyy,idx, tp){
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 	
 	<script>
-	$(document).ready(function(){ 
-		
-		//alert(${addGas});
-	//	upGasM(${addGas});
-	});
-	
+
 	
 	// 가스비 상세요금의 합으로 공과금 전체 테이블 가스 데이터 업로드
 	// 데이터 일치 시켜주기 위해서
@@ -788,6 +716,38 @@ function newUp(yyyy,idx, tp){
 	}
 	
 	function reload() { (location || window.location || document.location).reload(); }
+	
+	
+	function newUp(yyyy,idx, tp){
+		
+		$.ajax({
+			type : "post",
+			dataType : "JSON", 
+			url : "newUp.do",
+			data : {
+				yyyy : yyyy,
+				idx : idx,
+				tp : tp
+			},
+			success : function(result){
+				if(tp == 1){
+				$("#pNumC").val(result);
+				}else if(tp == 2){
+				$("#gNumC").val(result);
+				}
+				
+				//alert("완료" + result);
+			},
+			error : function(result){
+				errMsg(result);
+			}
+		});
+		
+		return false;
+		
+	}
+
+
 
 	</script>
 	

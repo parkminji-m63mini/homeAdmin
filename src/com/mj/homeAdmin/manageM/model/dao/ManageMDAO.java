@@ -102,8 +102,8 @@ public class ManageMDAO
 		return sqlSession.selectList("manageMapper.gasNP6m", vo);
 	}
 
-	public void newUp(ManageM vo) {
-		sqlSession.update("manageMapper.newUp", vo);
+	public String newUp(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.newUp", vo);
 		
 	}
 	

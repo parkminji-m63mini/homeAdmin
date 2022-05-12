@@ -193,20 +193,19 @@
         ORDER BY B.YYYY,B.MM 
 	</select>
 	
-	<update id="newUp" parameterType="Manage">
-		UPDATE MANAGE_GAS SET 
+	<select id="newUp" parameterType="Manage" resultType="String">
+		 
 		<if test='tp.equals("1")'>
-		P_NUM=(SELECT A.P_NUM FROM
+		SELECT A.P_NUM FROM
 		(select ROW_NUMBER() OVER (ORDER BY P_NUM DESC ) AS RN , P_NUM FROM MANAGE_GAS WHERE (U_ID=#{uId} AND P_NUM IS NOT NULL AND TO_CHAR(WDT, 'YYYY/MM') != #{yyyy}) ) A
-		WHERE A.RN = 1)
+		WHERE A.RN = 1
 		</if>
 		<if test='tp.equals("2")'>
-		G_NUM=(SELECT A.G_NUM FROM
+		SELECT A.G_NUM FROM
 		(select ROW_NUMBER() OVER (ORDER BY G_NUM DESC ) AS RN , G_NUM FROM MANAGE_GAS WHERE (U_ID=#{uId} AND G_NUM IS NOT NULL AND TO_CHAR(WDT, 'YYYY/MM') != #{yyyy}) ) A
-		WHERE A.RN = 1)
+		WHERE A.RN = 1
 		</if>
-		WHERE IDX=#{idx}
-	</update>
+	</select>
 	
 	<!--가스 상세 데이터 종료-->
 </mapper>
