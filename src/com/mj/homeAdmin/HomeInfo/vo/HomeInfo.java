@@ -2,6 +2,8 @@ package com.mj.homeAdmin.HomeInfo.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class HomeInfo {
 
 	
@@ -13,7 +15,17 @@ public class HomeInfo {
 	private int floor;
 	private String building;
 	private int manageFee;
-	private Date contractDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date contractDateFr;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date contractDateTo;
+	private String hnm;
+	private String wifi;
+	private String petYN;
+	private String info;
+	private String notice;
+	
+	private int payDate;
 	private String id;
 
 	
@@ -83,12 +95,21 @@ public class HomeInfo {
 		this.building = building;
 		
 	} 
-	public Date getContractDate() {
-		return contractDate;
+	public Date getContractDateFr() {
+		return contractDateFr;
 	}
 	
-	public void setContractDate(Date contractDate) {
-		this.contractDate = contractDate;
+	public void setContractDateFr(Date contractDateFr) {
+		this.contractDateFr = contractDateFr;
+		
+	}
+	
+	public Date getContractDateTo() {
+		return contractDateTo;
+	}
+	
+	public void setContractDateTo(Date contractDateTo) {
+		this.contractDateTo = contractDateTo;
 		
 	}
 	public String getId() {
@@ -100,6 +121,56 @@ public class HomeInfo {
 		
 	}
 	
+	public String getHnm() {
+		return hnm;
+	}
+	
+	public void setHnm(String hnm) {
+		this.hnm = hnm;
+		
+	}
+	
+	public String getWifi() {
+		return wifi;
+	}
+	
+	public void setWifi(String wifi) {
+		this.hnm = wifi;
+		
+	}
+	public String getPetYN() {
+		return petYN;
+	}
+	
+	public void setPetYN(String petYN) {
+		this.petYN = petYN;
+		
+	}
+	
+	public String getInfo() {
+		return info;
+	}
+	
+	public void setInfo(String info) {
+		this.info = info;
+		
+	}
+	public String getNotice() {
+		return notice;
+	}
+	
+	public void setNotice(String notice) {
+		this.notice = notice;
+		
+	}
 
+	public int getPayDate() {
+		return payDate;
+	}
+	
+	public void setPayDate(int payDate) {
+		this.payDate = payDate;
+		
+	}
 	
 }
