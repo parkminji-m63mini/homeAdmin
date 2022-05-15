@@ -298,7 +298,7 @@ $(document).ready(function() {
                 <div class="swiper-slide">
                 	<c:forEach var='arr' items='${arrViewNow}' varStatus="st">
                 	<!-- !!이건 나중에 고지서 보고 컬럼 더 만들어야함 -->
-                	 <span style="float: right;" ><a href="#" > >> 자세히 보러가기</a></span>
+                	 <span style="float: right;" ><a href="javascript:detail();" > >> 자세히 보러가기</a></span>
                 	 <h3>${arr.yyyy}년도 ${arr.mm}월 공과금</h3>
 				<form name="frmReg${st.index}"   class='boder-black' method="post">
 				
@@ -459,7 +459,7 @@ $(document).ready(function() {
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
-			<fmt:formatNumber value="${avg}" type="number"/>원 더 사용했어..</h4>
+			<fmt:formatNumber value="${avg2}" type="number"/>원 더 사용했어..</h4>
 			</div>
 			</c:when>
 			</c:choose>
@@ -499,6 +499,12 @@ $(document).ready(function() {
       		
       		location.href='index.do?yyyy='+ $("select[name=yyyyC]").val() + '&mm=' + $("select[name=mmC]").val() + '&uId=' + $("input:hidden[name='uId']").val(); 
       		
+      	}
+      	
+      	// 자세히 보기
+      	function detail(){
+      		
+      		location.href='detailView.do?yyyy='+ $("select[name=yyyyC]").val() + '&mm=' + $("select[name=mmC]").val() ; 
       	}
           </script>
 <%-- 

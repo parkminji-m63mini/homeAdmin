@@ -515,14 +515,14 @@ $("input[name='autoM']").click(function(){
       			</tr>	
       			</c:forEach>
       			
-      			<c:set var='monGu' value='${arrViewPast[1].monGu - arrViewPast[0].monGu}'/>
-      			<c:set var='useG' value='${arrViewPast[1].useG - arrViewPast[0].useG}' />
-      			<c:set var='uGm' value='${arrViewPast[1].uGm - arrViewPast[0].suma}'/>
-      			<c:set var='suma' value='${arrViewPast[1].suma - arrViewPast[0].suma}' />
+      			<c:set var='monGu' value='${arrViewPast[0].monGu - arrViewPast[1].monGu}'/>
+      			<c:set var='useG' value='${arrViewPast[0].useG - arrViewPast[1].useG}' />
+      			<c:set var='uGm' value='${arrViewPast[0].uGm - arrViewPast[1].suma}'/>
+      			<c:set var='suma' value='${arrViewPast[0].suma - arrViewPast[1].suma}' />
       		
       			
       			<tr>
-      				<th>개별 총</th>
+      				<th>(당월 - 전월)</th>
       				<th class='boder-black'><fmt:formatNumber value="${monGu}" type="number"/>원</th>
       				<th class='boder-black'><fmt:formatNumber value="${useG}" type="number"/>원</th>
       				<th class='boder-black'><fmt:formatNumber value="${uGm}" type="number"/>원</th>
@@ -535,15 +535,16 @@ $("input[name='autoM']").click(function(){
      		
       		<c:set var='avg' value="${suma}" ></c:set>
 			<c:choose>
-			<c:when test="${avg >= 0}">
+			<c:when test="${avg < 0}">
+			<c:set var='avg2' value="${(avg)* -1}" ></c:set>
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
-			<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
+			<fmt:formatNumber value="${avg2}" type="number"/>원 절약했어!</h4>
 			</div>
 			
 			</c:when>
-			<c:when test="${avg < 0}">
+			<c:when test="${avg >= 0}">
 			<div style="text-align: center;">
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">

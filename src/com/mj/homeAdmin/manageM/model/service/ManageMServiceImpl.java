@@ -141,7 +141,7 @@ public class ManageMServiceImpl
    		 List<ManageM> arrListChk = dao.manageList(vo);
 
    		 // gChk는 값 담기위해  일시적으로 사용한거임 별 의미없음
-   		 if(vo.getgChk().equals("ture")) {
+   		 if(vo.getgChk().equals("true")) {
    			 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
    			 vo.setgChk(dt);
    		 }else {

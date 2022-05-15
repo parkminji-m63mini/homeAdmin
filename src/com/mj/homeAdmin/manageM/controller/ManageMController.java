@@ -60,7 +60,7 @@ public class ManageMController
         }else {
         	yyyy= vo.getYyyy();
         	mm = JavaUtil.checkMM(vo.getMm(), "0");
-        	flag = "ture";
+        	flag = "true";
         }
         
         // 체크하는 용도로 사용함
@@ -163,7 +163,7 @@ public class ManageMController
         }else {
         	yyyy= vo.getYyyy();
         	mm = JavaUtil.checkMM(vo.getMm(), "0");
-        	flag = "ture";
+        	flag = "true";
         }
         
         // 체크하는 용도로 사용함
@@ -369,6 +369,32 @@ public class ManageMController
     	
     	return  gson.toJson(result); 
     	
+    }
+    
+    
+    
+    
+    @RequestMapping("detailView.do")
+    public String detailView(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
+    {
+    	
+    	
+		//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    	
+    	
+		//가스 데이터
+		 vo.setMm(JavaUtil.checkMM(vo.getMm(), "0"));
+
+		 // 체크하는 용도로 사용함
+	        vo.setgChk("true");
+	        
+        List<ManageM> gasV = ms.manageGasNow(vo);
+    	
+        System.out.println("test");
+        
+        model.addAttribute("gasV", gasV);
+    	return "manageM/detailView";
     }
     
     
