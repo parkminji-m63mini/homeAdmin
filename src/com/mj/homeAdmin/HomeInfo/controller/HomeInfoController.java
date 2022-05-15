@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mj.homeAdmin.HomeInfo.model.vo.HomeInfoImpl;
@@ -58,8 +59,9 @@ public class HomeInfoController {
 		return "homeInfo/index";
 	}
 	
-	@RequestMapping("updateHomeInfo.do")
-	public String updateHomeInfo(HomeInfo home, Model model, HttpSession ss,  HttpServletRequest req) throws Exception{
+	
+	@RequestMapping(value = "updateHomeInfo.do")
+	public void updateHomeInfo(HomeInfo home, Model model, HttpSession ss,  HttpServletRequest req, HttpServletResponse response) throws Exception{
 		System.out.println("업데이트 :");
 		home.setId((String)ss.getAttribute("ssID"));
 		
@@ -79,6 +81,7 @@ public class HomeInfoController {
 			
 		}
 		System.out.println("msg :" + msg);
-		return "homeInfo/index";
+		response.sendRedirect("index.do");
+		
 	}
 }
