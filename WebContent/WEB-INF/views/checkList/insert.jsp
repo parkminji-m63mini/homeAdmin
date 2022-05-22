@@ -28,7 +28,7 @@
       <div class="container" >
         <div class="row">
      	
-     	
+     	 
      	
      		<div class="col-md-6 col-lg-4 "  >
      	    <form id = "insertList" name = "updateList" method = "post"  action = "../insert">  
