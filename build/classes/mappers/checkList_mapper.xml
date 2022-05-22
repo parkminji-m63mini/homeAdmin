@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="checkListMapper">
+
+	<resultMap id="checkListSet" type="checkList" >
+		<id property="idx" column="IDX"/>
+		<result property="id" column="ID"/>
+		<result property="idx" column="IDX"/>
+		<result property="listName" column="LIST_NAME"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="dIdx" column="D_IDX"/>
+		<result property="content" column="CONTENT"/>
+		<result property="dWdt" column="D_WDT"/>
+		<result property="dEdt" column="D_EDT"/>
+		<result property="checkYN" column="CHECK_YN"/>
+	
+	</resultMap>
+	
+	
+	<!-- 체크리스트 조회 -->
+	<select id="selectCheckList" parameterType="checkList" resultMap="checkListSet">
+		SELECT A.IDX, A.LIST_NAME
+		 FROM CHECKLIST A
+		WHERE A.ID = #{id}
+	</select>
+	
+	
+		<!-- 체크리스트디테일 조회 -->
+	<select id="selectCheckListDetail" parameterType="checkList" resultMap="checkListSet">
+		SELECT A.IDX, B.D_IDX, B.CONTENT, B.CHECK_YN 
+		FROM CHECKLIST A
+		LEFT JOIN CHECKLIST_D B
+		ON B.IDX = A.IDX	
+		WHERE A.ID = #{id} 
+	</select>
+	
+	
+		<!-- 체크리스트수정 조회 -->
+	<select id="checkListDetailView" parameterType="checkList" resultMap="checkListSet">
+		SELECT A.IDX, B.D_IDX, B.CONTENT, B.CHECK_YN , A.LIST_NAME
+		FROM CHECKLIST A
+		LEFT JOIN CHECKLIST_D B
+		ON B.IDX = A.IDX	
+		WHERE A.ID = #{id} AND A.IDX = #{idx}
+	</select>
+	
+	
+	<!-- 체크리스트 수정 -->
+	<update id = "checkListUpdate" parameterType="checkList" >
+		UPDATE CHECKLIST_D
+           SET CONTENT = #{content},
+               D_EDT = #{dEdt}
+         WHERE IDX = #{idx} AND D_IDX = #{dIdx} 
+	</update>
+	
+	<!-- 체크리스트 추가 -->
+	<insert id = "insertCheckList" parameterType="checkList">
+	
+	
+	INSERT INTO CHECKLIST(ID, IDX, LIST_NAME, WDT, EDT) 
+		VALUES(#{id}, (select IFNULL(MAX(A.IDX)+1,0) FROM CHECKLIST A WHERE ID = #{id}), #{listName}, NOW(),  NOW())
+	
+	</insert>
+	
+	<!-- 체크리스트 디테일 추가 -->
+	<insert id ="insertCheckListDetail" parameterType="checkList">
+	INSERT INTO CHECKLIST_D(IDX, D_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
+	VALUES((select IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE ID = #{id}), #{dIdx}, #{content}, NOW(),  NOW(), "N"); 
+	
+	</insert>
+</mapper>

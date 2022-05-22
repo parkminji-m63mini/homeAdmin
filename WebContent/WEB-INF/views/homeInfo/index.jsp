@@ -12,89 +12,91 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <body>
+ <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
 
-  <section id="breadcrumbs" class="breadcrumbs">
-  <!--  <footer id="footer" class="section-bg">-->
-   <!-- <div class="footer-top">  -->
-     <header class="section-header">
-         
-          <h4>집정보</h4>
-              <p>집정보 입력해주세요</p>
-          </header>
+        <ol>
+          <li><a href="index.html">집정보</a></li>
+          <li>전체</li>
+        </ol>
+        <h2>전체</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
       <div class="container">
 
         <div class="row  justify-content-center">
           <div class="col-lg-6">
 
             <div class="form">
-
+        <c:choose>
+     	<c:when test = "${empty selectHome}">
+     		<p>등록된 정보가 없습니다.</p>
+     		<a href = "insertView.do" >등록하기</a>
+     	</c:when>
+     	<c:otherwise>
+     	
               
 
               <form method="post" role="form" class="php-email-form" name="submit">
               
                <div class="form-group mt-3">
-                집이름  <input type="text" class="form-control" name="homeName" id="homeName" placeholder="보증금"  value = "${selectHome.deposit}" required>
+                <h3 class="section-title">집이름</h3>  <p> ${selectHome.hnm} </p>
                 </div>
                 <div class="form-group">
-               	계약 <br>
-               	<span id='ListContract'></span>
+               	<h3 class="section-title">계약</h3>  <br>
+               	<p> ${selectHome.contractCnm} </p>
                 </div>              
                
                 <div class="form-group mt-3">
-                 평수  <input type="text" class="form-control" name="size" id="size" placeholder="평수"  value = "${selectHome.size}" required >
+                 <h3 class="section-title">평수</h3>  <p>${selectHome.size}  </p>
                 </div>
                 <div class="form-group mt-3">
-                  방	<br>
-                  <span id='ListRoom'></span>
+                  <h3 class="section-title">방</h3>	<br>
+                 <p> ${selectHome.roomCnm} </p>
                 </div>
                 <div class="form-group mt-3">
-                보증금  <input type="text" class="form-control" name="deposit" id="deposit" placeholder="보증금"  value = "${selectHome.deposit}" >
+               <h3 class="section-title"> 보증금</h3>  <p>${selectHome.deposit} </p>
                 </div>
                 <div class="form-group mt-3">
-                월세  <input type="text" class="form-control" name="rentalFee" id="rentalFee" placeholder="월세"  value = "${selectHome.rentalFee}" >
+                <h3 class="section-title">월세</h3> <p>${selectHome.rentalFee}</p>
                 </div>
                 <div class="form-group mt-3">
-                층수  <input type="text" class="form-control" name="floor" id="floor" placeholder="층수"  value = "${selectHome.floor}" >
+                <h3 class="section-title">층수</h3>  <p>${selectHome.floor} </p>
                 </div>
                 <div class="form-group mt-3">
-                계약기간  <input type="date" class="form-control" name="contractDateFr" id="contractDateFr"  value = "${selectHome.contractDateFr}" >
-                <input type="date" class="form-control" name="contractDateTo" id="contractDateTo"  value = "${selectHome.contractDateTo}" >
+                <h3 class="section-title">계약기간</h3>  <p>${selectHome.contractDateFr} ~ ${selectHome.contractDateTo} </p>
                 </div>
                 
                   <div class="form-group mt-3">
-                반려동물  <br>
-                <select id="petYN" name="petYN" class = "form-control">
-                <option value = "Y" <c:if test="${selectHome.petYN eq 'Y'}"> selected = "selected" </c:if>>있음</option>
-                <option value = "N" <c:if test="${selectHome.petYN eq 'N'}"> selected = "selected" </c:if>>없음</option>
-                </select>
+                <h3 class="section-title">반려동물 </h3> <br>
+               
+                <c:if test="${selectHome.petYN eq 'Y'}"><p>있음</p></c:if>
+               <c:if test="${selectHome.petYN eq 'N'}"> <p>없음</p></c:if>
+               
                 </div>
                
                 <div class="form-group mt-3">
-              정보     <textarea class="form-control" name="info" rows="5" placeholder="정보" >${selectHome.info}</textarea>
+             <h3 class="section-title"> 정보 </h3>    <p>${selectHome.info}</p>
                 </div>
                 
                 <div class="form-group mt-3">
-           공지사항       <textarea class="form-control" name="notice" rows="5" placeholder="공지사항"   >${selectHome.notice}</textarea>
+           <h3 class="section-title">공지사항  </h3>     <p>${selectHome.notice}</p>
                 </div>
 
 
               <div class="form-group mt-3">
-                월세이체일  <input type="text" class="form-control" name="payDate" id="payDate"  value = "${selectHome.payDate}" >
+               <h3 class="section-title"> 월세이체일 </h3><p>${selectHome.payDate}</p>
                 
                 </div>
                 <br><br>
                
-                <c:choose>
-                	<c:when test="${ empty selectHome}">
-                	<div class="text-center"><button type="button" id="insertBtn" title="Send Message" onclick = "getPost('01')">저장</button></div>
-                	</c:when>
-                	<c:otherwise>
-                	<div class="text-center"><button type="button" id="updateBtn" title="Send Message" onclick = "getPost('02')">수정</button></div>
-                	</c:otherwise>
-                
-                </c:choose>
+              
+                	<div class="text-center"><button type="button" id="updateBtn" title="Send Message" onclick = "location.href = 'updateView/${selectHome.id}'" >수정</button></div>
+                	
               </form>
-
+        </c:otherwise>
+ 	</c:choose>
             </div>
 
           </div>
@@ -106,12 +108,12 @@
 
     
  <!-- </footer>  -->
-</section>
+
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <script language=javascript>
 $(document).ready(function(){
-	console.log("selectCode");
+	
 	selectCode('CT');
 	selectCode('RC');
 });
@@ -144,10 +146,10 @@ function selectCode(cd){
 			,success : function(msg){
 				if(cd == "CT"){
 					ContractListGo(msg);
-					document.getElementById('cdCT').className = 'form-control';
+					//document.getElementById('cdCT').className = 'form-control';
 				}else if(cd == "RC"){
 					RoomListGo(msg)
-					document.getElementById('cdRC').className = 'form-control';
+					//document.getElementById('cdRC').className = 'form-control';
 				}
 				
 			}			

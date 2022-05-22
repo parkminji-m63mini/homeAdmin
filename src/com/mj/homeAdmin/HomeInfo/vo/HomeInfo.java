@@ -9,7 +9,7 @@ public class HomeInfo {
 	
 	private String contract;
 	private int size;
-	private int room;
+	private String room;
 	private int deposit;
 	private int rentalFee;
 	private int floor;
@@ -27,8 +27,26 @@ public class HomeInfo {
 	
 	private int payDate;
 	private String id;
-
+	private String contractCnm;
+	private String roomCnm;
+	private String cdCT;
 	
+	public String getRoomCnm() {
+		return roomCnm;
+	}
+
+	public void setRoomCnm(String roomCnm) {
+		this.roomCnm = roomCnm;
+	}
+
+	public String getContractCnm() {
+		return contractCnm;
+	}
+
+	public void setContractCnm(String contractCnm) {
+		this.contractCnm = contractCnm;
+	}
+
 	public String getContract() {
 		return contract;
 	}
@@ -46,11 +64,11 @@ public class HomeInfo {
 		this.size = size;
 	}
 	
-	public int getRoom() {
+	public String getRoom() {
 		return room;
 	}
 	
-	public void setRoom(int room) {
+	public void setRoom(String room) {
 		this.room = room;
 	}
 	

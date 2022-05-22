@@ -24,6 +24,7 @@
 	<typeAlias type="com.mj.homeAdmin.food.vo.Food" alias="Food"/>
 	<typeAlias type="com.mj.homeAdmin.myinfo.vo.MyinfoVo" alias="Myinfo"/>
 	<typeAlias type="com.mj.homeAdmin.HomeInfo.vo.HomeInfo" alias="HomeInfo"/>
+	<typeAlias type="com.mj.homeAdmin.checkList.vo.checkList" alias="checkList"/>
 	</typeAliases>
  
 	
@@ -33,5 +34,6 @@
 		<mapper resource="/mappers/food_mapper.xml" />
 		<mapper resource="/mappers/myinfo_mapper.xml" />
 		<mapper resource="/mappers/homeInfo_mapper.xml" />
+		<mapper resource="/mappers/checkList_mapper.xml"/>
 	</mappers>
 </configuration>
