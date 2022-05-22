@@ -45,6 +45,11 @@ public class ManageMDAO
 		return sqlSession.selectList("manageMapper.manageListP3", vo);
 	}
 
+	public List<ManageM> manageListP12(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageListP12", vo);
+	}
+
+	
 	public void insertMGAS(ManageM vo) {
 		sqlSession.insert("manageMapper.insertMGAS", vo);
 		
@@ -52,6 +57,10 @@ public class ManageMDAO
 
 	public int manageIndex(ManageM vo) {
 		return sqlSession.selectOne("manageMapper.manageIndex", vo);
+		}
+	
+	public String manageIndexS(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.manageIndexS", vo);
 		}
 
 	public List<ManageM> manageGasNow(ManageM vo) {
@@ -106,6 +115,32 @@ public class ManageMDAO
 		return sqlSession.selectOne("manageMapper.newUp", vo);
 		
 	}
+
+	public List<ManageM> managePassSame(ManageM vo) {
+		return sqlSession.selectList("manageMapper.managePassSame", vo);
+	}
+
+	public String chkD(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.chkD", vo);
+		
+	}
+
+	public List<ManageM> gasNP12m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.gasNP12m", vo);
+	}
+
+	public String chkDG(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.chkDG", vo);
+	}
+
+	public List<ManageM> gasPassSame(ManageM vo) {
+		return sqlSession.selectList("manageMapper.gasPassSame", vo);
+	}
 	
+	//--- 인터넷 시작
+	
+	public List<ManageM> manageItNow(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageItNow", vo);
+	}
 
 }

@@ -372,6 +372,30 @@ public class ManageM
 
 
 
+	public String getMaM() {
+			return maM;
+		}
+
+		public void setMaM(String maM) {
+			this.maM = maM;
+		}
+
+
+
+
+
+	public String getRepeat() {
+			return repeat;
+		}
+
+		public void setRepeat(String repeat) {
+			this.repeat = repeat;
+		}
+
+
+
+
+
 	private int idx;
     private int jidx;
     private String yyyy;
@@ -387,6 +411,7 @@ public class ManageM
     private String elM;
     private String wtM;
     private String itM;
+    private String maM;
     private String mode;
     
     
@@ -416,6 +441,11 @@ public class ManageM
     private String suma;
 
     private String tp;
+    
+    
+    private String repeat;
+    
+    
     
     
 }
