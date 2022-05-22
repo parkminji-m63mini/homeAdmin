@@ -19,6 +19,8 @@
 		<id property = "info" column = "INFO"/>
 		<id property = "notice" column = "NOTICE"/>
 		<id property = "payDate" column = "PAY_DATE"/>
+		<id property = "contractCnm" column ="CONTRACT_CNM"/>
+		<id property = "roomCnm" column ="ROOM_CNM"/>
 		
 	
 	</resultMap>
@@ -28,8 +30,8 @@
 <!-- 집정보 입력 -->
 	<insert id="insertHomeInfo" parameterType = "HomeInfo">
 		INSERT INTO HOME( ID, CONTRACT, SIZE, ROOM, DEPOSIT
-		                , RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI, PET_YN, INFO, NOTICE, PAYDATE)
-                  VALUES (  #{id}, #{contract}, #{size}, #{room}, #{deposit}
+		                , RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI, PET_YN, INFO, NOTICE, PAY_DATE)
+                  VALUES (  #{id}, #{cdCT}, #{size}, #{room}, #{deposit}
                             , #{rentalFee}, #{floor}, #{building}, #{manageFee}, #{contractDateFr}
                             , #{contractDateTo}, #{hnm}, #{wifi}, #{petYN}, #{info}
                             , #{notice}, #{payDate} )
@@ -38,10 +40,28 @@
 	
 	<!-- 집정보 조회 -->
 	<select id = "selectHomeInfo" parameterType = "string" resultMap = "homeInfoResultSet">
+		SELECT  ID, SIZE,DEPOSIT, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT, ROOM
+		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI, PET_YN, INFO, NOTICE, PAY_DATE, B.CNM as CONTRACT_CNM , C.CNM as ROOM_CNM
+		  FROM HOME A
+          LEFT JOIN H_CODE_SECOND B
+          ON B.CD = A.CONTRACT
+          LEFT JOIN H_CODE_SECOND C
+          ON C.CD = A.ROOM
+		WHERE A.ID = #{id}
+	</select>
+	
+	
+	
+	
+	
+	<!-- 집정보 조회 -->
+	<select id = "updateHomeInfoView" parameterType = "string" resultMap = "homeInfoResultSet">
 		SELECT  ID, CONTRACT, SIZE, ROOM, DEPOSIT, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE
-		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI, PET_YN, INFO, NOTICE, PAY_DATE
-		  FROM HOME
-		WHERE ID = #{id}
+		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI, PET_YN, INFO, NOTICE, PAY_DATE, B.CNM
+		  FROM HOME A
+          LEFT JOIN H_CODE_SECOND B
+          ON B.CD = A.CONTRACT
+		WHERE A.ID = #{id}
 	</select>
 	
 	<!-- 집정보 수정 -->

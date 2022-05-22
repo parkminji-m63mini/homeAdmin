@@ -8,7 +8,7 @@ public interface HomeInfoService {
 
 	
 	// 집정보 입력
-	public abstract void insertHomeInfo(HomeInfo vo) throws Exception;
+	public abstract int insertHomeInfo(HomeInfo vo) throws Exception;
 	
 	// 집정보 조회
 	public abstract HomeInfo selectHomeInfo(String id) throws Exception;

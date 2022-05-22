@@ -21,9 +21,9 @@ public class HomeInfoDAO {
 	}
 	
 	// 집정보 입력
-	public void insertHomeInfo(HomeInfo vo) {
+	public int insertHomeInfo(HomeInfo vo) {
 		
-		sqlSession.selectOne("homeInfoMapper.insertHomeInfo", vo);
+		return sqlSession.selectOne("homeInfoMapper.insertHomeInfo", vo);
 	}
 	
 	// 집정보 조회

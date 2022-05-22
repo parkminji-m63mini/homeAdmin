@@ -19,9 +19,9 @@ public class HomeInfoImpl implements HomeInfoService{
 	} 
 	
 	@Override
-	public void insertHomeInfo(HomeInfo vo) throws Exception{
+	public int insertHomeInfo(HomeInfo vo) throws Exception{
 		System.out.println("임플왔나");
-		dao.insertHomeInfo(vo);
+		return dao.insertHomeInfo(vo);
 	}
 	
 	@Override
