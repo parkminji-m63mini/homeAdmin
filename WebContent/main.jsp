@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ include file="/WEB-INF/views/includes/taglibs.jsp"%>
 <!DOCTYPE html>
 <html lang="kn">
 
@@ -10,16 +10,66 @@
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="WEB-INF/views/common/header.jsp"/>
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+	  if('${sessionScope.ssID}' == null || '${sessionScope.ssID}' == ""){
+	  }else{
+			$("#profile").css("display", "inline");
+	  }
+});
+</script>
+
 <body>
 
- 
+<section id="profile" style="display: none;">
+
+
+ <!-- ======= Features Section ======= -->
+      <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+       
+          <table class='tb' style="border: 1px solid black;">
+         	<tr>
+         	<th rowspan="4" style="width: 40%;">
+         	   <img src="${contextPath}/resources/img/sample/profile2.jpg" style="border-radius: 50%;" alt="" class="img-fluid">
+         	</th>
+         	<th>
+         		집 이름
+         	</th>
+         	</tr>
+         	<tr>
+         	<th>계약 정보</th>
+         	</tr>
+         	<tr>
+         	<th>방명록 이동</th>
+         	</tr>
+         	<tr>
+         	<th>친구들이 놀러올 때 필요한 정보</th>
+         	</tr>
+         	</table>
+         	</div>
+         
+
+    </section><!-- End Features Section -->
+</section>
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="clearfix">
     <div class="container d-flex h-100">
       <div class="row justify-content-center align-self-center" data-aos="fade-up">
         <div class="col-lg-6 intro-info order-lg-first order-last" data-aos="zoom-in" data-aos-delay="100">
-          <h2>Rapid Solutions<br>for Your <span>Business!</span></h2>
+         <c:if test=" ${sessionScope.ssID ne ''}"><h2>11dfsdf</h2></c:if>
+          <h2>${sessionScope.ssID}Rapid Solutions<br>for Your <span>Business!</span></h2>
           <div>
             <a href="#about" class="btn-get-started scrollto">Get Started</a>
           </div>

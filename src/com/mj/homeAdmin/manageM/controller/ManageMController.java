@@ -22,9 +22,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mj.homeAdmin.comm.JavaUtil;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
+import com.mj.homeAdmin.food.vo.Food;
 import com.mj.homeAdmin.manageM.model.service.ManageMServiceImpl;
 import com.mj.homeAdmin.manageM.model.service.ManegeMService;
 import com.mj.homeAdmin.manageM.vo.ManageM;
+import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 
 @Controller
 @RequestMapping("/manageM/*")
@@ -89,6 +91,12 @@ public class ManageMController
         System.out.println(vo.getMm() + "chk0");
         System.out.println(vo.getMm2() + "chk");
         System.out.println(vo.getYyyy2() + "chk2");
+     
+      
+      //-------------------------------------//
+        // 작년 동월 값
+        
+        List<ManageM> arrViewPast4 = ms.managePassSame(vo);
         
         
         //------------------------------------//
@@ -101,6 +109,10 @@ public class ManageMController
         List<ManageM> arrViewPast3 = ms.manageListP3(vo); 
         
         //-------------------------------------//
+        // 12개월 평균값 비교
+        
+        List<ManageM> arrViewPast12 = ms.manageListP12(vo); 
+        
         
         System.out.println("확인1 :" + vo.getYyyy() + "/" + vo.getMm());
         System.out.println("확인2 :" + vo.getYyyy2() + "/" + vo.getMm2());
@@ -109,6 +121,11 @@ public class ManageMController
         model.addAttribute("arrViewNow", arrViewNow);
         model.addAttribute("arrViewPast", arrViewPast);
         model.addAttribute("arrViewPast3", arrViewPast3);
+        model.addAttribute("arrViewPast4", arrViewPast4);
+        model.addAttribute("arrViewPast12", arrViewPast12);
+        model.addAttribute("repeat", "3"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("type", "all"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        
      //   System.out.println((new StringBuilder(String.valueOf(((ManageM)arrViewNow.get(0)).getGasM()))).append(" \uC778\uB371\uC2A4 \uAC00\uC2A4").toString());
      //   System.out.println("index \uB85C\uB529 \uC644");
         return "manageM/index";	
@@ -195,6 +212,10 @@ public class ManageMController
         System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
         
         List<ManageM> arrViewPast = ms.gasNP(vo);
+        //-------------------------------------//
+        // 작년 동월 값
+        
+        List<ManageM> arrViewPastY = ms.gasPassSame(vo);
         //--------------------------------
         
         
@@ -204,9 +225,15 @@ public class ManageMController
     	
         System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
         
-        List<ManageM> arrViewPast2 = ms.gasNP6m(vo);
+        List<ManageM> arrViewPast6 = ms.gasNP6m(vo);
         
+      //--------------------------------
         
+        //12개월 데이터
+        vo.setYyyy(yyyy);
+        	vo.setMm(mm);
+        List<ManageM> arrViewPast12 = ms.gasNP12m(vo);
+      //--------------------------------  
     	
     	// 당월 계절에 맞는 가스비 불러오기
     	// 봄 3~5
@@ -217,7 +244,11 @@ public class ManageMController
         
         model.addAttribute("arrViewNow", arrViewNow);
         model.addAttribute("arrViewPast", arrViewPast);
-        model.addAttribute("arrViewPast2", arrViewPast2);
+        model.addAttribute("arrViewPast6", arrViewPast6);
+        model.addAttribute("arrViewPast12", arrViewPast12);
+        model.addAttribute("arrViewPastY", arrViewPastY);
+        model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("type", "gas"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
         model.addAttribute("vo", vo);
     	return "manageM/gas";
     }
@@ -330,20 +361,109 @@ public class ManageMController
 
     
     @RequestMapping("electric.do")
-    public String electric()
+    public String electric()throws Exception
     {
         return "manageM/electric";
     }
     @RequestMapping("water.do")
-    public String water()
+    public String water()throws Exception
     {
         return "manageM/water";
     }
 
     @RequestMapping("it.do")
-    public String it(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response)
+    public String it(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response)throws Exception
     {
-        return "manageM/gas";
+    	
+String flag = "false";
+    	
+		//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    	
+        //System.out.println("값 체크 : " + vo.getYyyy() + " / " + vo.getMm());
+    	
+        String yyyy= vo.getYyyy();
+        String mm= vo.getMm();
+        if(yyyy == null || yyyy.equals("")) {
+        	yyyy= "" + LocalDate.now().getYear();
+        	mm=  JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
+        }else {
+        	yyyy= vo.getYyyy();
+        	mm = JavaUtil.checkMM(vo.getMm(), "0");
+        	flag = "true";
+        }
+        
+        // 체크하는 용도로 사용함
+        vo.setgChk(flag);
+        
+    	String yyyy2 = "";
+    	String yyyy3= "";
+    	String mm2= "" +(LocalDate.now().getMonthValue()-1);
+    	String mm3= "" +(LocalDate.now().getMonthValue()-2);
+
+    	// 당월분만
+	       vo.setYyyy(yyyy);
+	       vo.setMm(mm);
+	       
+	       System.out.println(vo.getuId() + " 1");
+	       System.out.println(vo.getYyyy()+ " 1");
+	       System.out.println(vo.getMm() + " 1");
+       
+        // 이번달
+        //List<ManageM> arrViewNow = ms.manageItNow(vo);
+    	// 이거 아직 다 못함 그래서 주석처리~~
+	       
+        //-------------------------------//
+        // 이번달, 이전달 비교
+        
+        
+        vo.setMm2(JavaUtil.checkMM(mm, "1"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
+        
+        System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast = ms.gasNP(vo);
+        //-------------------------------------//
+        // 작년 동월 값
+        
+        List<ManageM> arrViewPastY = ms.gasPassSame(vo);
+        //--------------------------------
+        
+        
+    	// 당월에서부터 전 6개월치 가스비
+        vo.setMm2(JavaUtil.checkMM(mm, "6"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
+    	
+        System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast6 = ms.gasNP6m(vo);
+        
+      //--------------------------------
+        
+        //12개월 데이터
+        vo.setYyyy(yyyy);
+        	vo.setMm(mm);
+        List<ManageM> arrViewPast12 = ms.gasNP12m(vo);
+      //--------------------------------  
+    	
+    	// 당월 계절에 맞는 가스비 불러오기
+    	// 봄 3~5
+    	// 여름  6~9
+    	// 가을 10~11
+    	// 겨울 12~2
+        
+        
+   //     model.addAttribute("arrViewNow", arrViewNow);
+        model.addAttribute("arrViewPast", arrViewPast);
+        model.addAttribute("arrViewPast6", arrViewPast6);
+        model.addAttribute("arrViewPast12", arrViewPast12);
+        model.addAttribute("arrViewPastY", arrViewPastY);
+        model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("type", "gas"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        model.addAttribute("vo", vo);
+    	
+    	
+        return "manageM/it";
     }
     
     // 가스 계량기, 고객번호 최근 데이터로 업데이트
@@ -397,5 +517,7 @@ public class ManageMController
     	return "manageM/detailView";
     }
     
+    
+	 
     
 }

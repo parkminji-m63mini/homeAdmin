@@ -56,5 +56,17 @@ public interface ManegeMService
 	public abstract void updateGchkA(ManageM vo, HttpServletResponse res)throws Exception;
 
 	public abstract String newUp(ManageM vo, HttpSession ss)throws Exception;
+
+	public abstract List<ManageM> managePassSame(ManageM vo)throws Exception;
+
+	public abstract List<ManageM> manageListP12(ManageM vo)throws Exception;
+
+	public abstract List<ManageM> gasNP12m(ManageM vo)throws Exception;
+
+	public abstract List<ManageM> gasPassSame(ManageM vo)throws Exception;
+	
+	//--------------------- 인터넷 --------------------
+	public abstract  List<ManageM> manageItNow(ManageM managem)	throws Exception;
+	
 }
 

@@ -11,6 +11,8 @@
 
 <!--  차트 -->
 <%-- <script src="${contextPath}/resources/css/chart/highcharts.js"></script> --%>
+<!-- chart.js  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -20,7 +22,9 @@
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
-	
+	<!-- 차트 -->
+	<jsp:include page="/WEB-INF/views/common/chart.jsp"/>
+<link rel="stylesheet" href="${contextPath}/resources/css/common.css">	
 <body>
 
 <script type="text/javascript">
@@ -64,6 +68,7 @@ function up(index){
 					elM: $("input[name='elM']").val(), 
 					wtM: $("input[name='wtM']").val(), 
 					itM: $("input[name='itM']").val(), 
+					maM: $("input[name='maM']").val(), 
 				},
 				success : function(result){
 					alert("등록완료");
@@ -89,162 +94,190 @@ function reload() { (location || window.location || document.location).reload();
 
 
 
-// 총합 3개월 총 지출 금액 차트
-var chart;
 $(document).ready(function() {
 	
 	// 전월, 전전월 데이터 없을 때 0으로 채워주기
-	//<c:set var='mode' value='i'/>
+list =['가스','전기', '수도','인터넷', '관리비'];
+
+// 전월, 당월
+chart1("column", '전월 vs 당월','(전월) ${arrViewPast[0].yyyy}년도 ${arrViewPast[0].mm}월 | (당월) ${arrViewPast[1].yyyy}년도 ${arrViewPast[1].mm}월 ', list); // ${arrViewPast}
+//차트타입, 타이틀, 서브타이들, x축 컬럼명
 	
-	chart = new Highcharts.chart('container', {
+//3개월
+chart3("column", '최근 3개월', "${arrViewPast3[2].yyyy}년도 ${arrViewPast3[2].mm}월 ~ ${arrViewPast3[0].yyyy}년도 ${arrViewPast3[0].mm}월",list); // ${arrViewPast3}
+//차트타입, 타이틀, x축 컬럼명
 
-	    title: {
-	        text: '공과금 비교 (최근 3개월)'
-	    },
+var cList = ["line","line","line", "line", "line"]; 
+var  rList = ["가스", "전기", "수도", "인터넷", "관리비"]; 
+// 1년
+chart12('최근 12개월','${my:NVL(arrViewPast12[0].yyyy, 0)}년도 ${my:NVL(arrViewPast12[0].mm, 0)}월 ~${arrViewPast12[12].yyyy}년도 ${arrViewPast12[12].mm}월  ',cList, rList );
+//타이틀, 서브타이들,  type 배열 리스트, x컬럼 데이터
+// 반복횟수는 컨트롤러에서 세팅
+// ${arrViewPast12}
 
-	    subtitle: {
-	        text: '${my:NVL(arrViewPast3[2].yyyy, 0)}년도 ${my:NVL(arrViewPast3[2].yyyy, 0)}월 ~${arrViewPast3[0].yyyy}년도 ${arrViewPast3[0].mm}월 '
-	    },
 
-	    yAxis: {
-	        title: {
-	            text: '금액(원)'
-	        }
-	    },
-
-	    xAxis: {
-	        accessibility: {
-	            rangeDescription: '??? 잘모르겠음 Range: 2010 to 2017'
-	        }
-	    },
-
-	    legend: {
-	        layout: 'vertical',
-	        align: 'right',
-	        verticalAlign: 'middle'
-	    },
-
-	    plotOptions: {
-	        series: {
-	            label: {
-	                connectorAllowed: false
-	            },
-	            pointStart: ${arrViewPast3[0].mm-2}
-	        }
-	    },
-
-	    series: [{
-		        name: '가스',
-		        data : [${my:NVL(arrViewPast3[2].gasM,0)},${my:NVL(arrViewPast3[1].gasM,0)}, ${arrViewPast3[0].gasM}]
-		    },
-		    {
-		        name: '전기',
-		        data : [${my:NVL(arrViewPast3[2].elM,0)}, ${my:NVL(arrViewPast3[1].elM,0)}, ${arrViewPast3[0].elM}]
-		
-		    },
-		    {
-		        name: '수도',
-		        data : [${my:NVL(arrViewPast3[2].wtM,0)}, ${my:NVL(arrViewPast3[1].wtM,0)},${arrViewPast3[0].wtM}]
-		
-		    },
-		    {
-		        name: '인터넷',
-		        data : [${my:NVL(arrViewPast3[2].itM,0)}, ${my:NVL(arrViewPast3[1].itM,0)}, ${arrViewPast3[0].itM}]
-		
-		    },
-	     ],
-
-	    responsive: {
-	        rules: [{
-	            condition: {
-	                maxWidth: 500
-	            },
-	            chartOptions: {
-	                legend: {
-	                    layout: 'horizontal',
-	                    align: 'center',
-	                    verticalAlign: 'bottom'
-	                }
-	            }
-	        }]
-	    }
-
-	});
+	
 });
 
-
-//전월,당월 막대 그래프 비교 차트
-var chart2;
+//총합 12개월 총 지출 금액 차트 (chart.js 썼는데 망함)
 $(document).ready(function() {
 	
-	chart = new Highcharts.chart('container2', {
-	    chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: '공과금 세부 비교 (전월)'
-	    },
-	    subtitle: {
-	        text: '(당월) ${arrViewPast[0].yyyy}년도 ${arrViewPast[0].mm}월 | (전월) ${arrViewPast[1].yyyy}년도 ${arrViewPast[1].mm}월'
-	    },
-	    xAxis: {
-	        categories: [
-	            '가스',
-	            '전기',
-	            '수도',
-	            '인터넷'
-	        ],
-	        crosshair: true
-	    },
-	    yAxis: {
-	        min: 0,
-	       	//max: 50000,
-	        title: {
-	            text: '금액(원)'
-	        }
-	    },
-	    tooltip: {
-	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-	            '<td style="padding:0"><b>{point.y:.0f} 원</b></td></tr>',
-	        footerFormat: '</table>',
-	        shared: true,
-	        useHTML: true
-	    },
-	    plotOptions: {
-	        column: {
-	            pointPadding: 0.2,
-	            borderWidth: 0
-	        }
-	    },
-	    series: [
-	    	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
-	    	 	{
-	        name: '${arrC2.mm}월',
-	        data : [${arrC2.gasM}, ${arrC2.elM}, ${arrC2.wtM}, ${arrC2.itM}]
-
-	    },
-	    </c:forEach>
-	   ]
-	    
-	    
-	//	<c:forEach var="arrC2" items="${arrViewPast}" varStatus="st">
-	//	<c:if test='${st.index ne fn:length(arrViewPast)}'>		                 
-	//	{
-	//	name : '${arrC2.mm}',
-		//data : [0, 1, 2, 3],
-	//	data : [${arr.gasM}, ${arr.elM}, ${arr.wtM}, ${arr.itM}],
-	//	color : '#0072bc'
-	//	}
-	//		</c:if>   					
-				
-	//	</c:forEach>
-	    
-	    
-
-	});
+	var context = document
+    .getElementById('myChart')
+    .getContext('2d');
+	 var myChart = new Chart(context, {
+         type: 'line', // 차트의 형태
+         data: { // 차트에 들어갈 데이터
+             labels: [
+                 //x 축
+             	<c:forEach items="${arrViewPast12}" var="v12">
+             	'${v12.yyyy}/${v12.mm}',
+             	</c:forEach>
+             ],
+             datasets: [
+                 { //데이터
+                     label: '가스', //차트 제목
+                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                     data: [
+                    		<c:forEach items="${arrViewPast12}" var="v12">
+                         	${v12.gasM},
+                         	</c:forEach>
+                         	//x축 label에 대응되는 데이터 값
+                     ],
+                     backgroundColor: 
+                         //색상
+                          'rgba(255, 99, 132, 0.2)',
+                     
+                     borderColor: 
+                         //경계선 색상
+                            'rgba(255, 99, 132, 1)',
+                     
+                     borderWidth: 1 //경계선 굵기
+                 },
+                 { //데이터
+                     label: '전기', //차트 제목
+                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                     data: [
+                    		<c:forEach items="${arrViewPast12}" var="v12">
+                         	${v12.elM},
+                         	</c:forEach>
+                         	//x축 label에 대응되는 데이터 값
+                     ],
+                     backgroundColor: 
+                         //색상
+                         'rgba(54, 162, 235, 0.2)',
+                     
+                     borderColor: 
+                         //경계선 색상
+                              'rgba(54, 162, 235, 1)',
+                     
+                     borderWidth: 1 //경계선 굵기
+                 },
+                 { //데이터
+                     label: '수도', //차트 제목
+                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                     data: [
+                    		<c:forEach items="${arrViewPast12}" var="v12">
+                         	${v12.wtM},
+                         	</c:forEach>
+                         	//x축 label에 대응되는 데이터 값
+                     ],
+                     backgroundColor: 
+                         //색상
+                      'rgba(75, 192, 192, 0.2)',
+                     
+                     borderColor: 
+                         //경계선 색상
+                            'rgba(75, 192, 192, 1)',
+                     
+                     borderWidth: 1 //경계선 굵기
+                 },
+                 { //데이터
+                     label: '인터넷', //차트 제목
+                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                     data: [
+                    		<c:forEach items="${arrViewPast12}" var="v12">
+                         	${v12.itM},
+                         	</c:forEach>
+                         	//x축 label에 대응되는 데이터 값
+                     ],
+                     backgroundColor: 
+                         //색상
+                         	 'rgba(153, 102, 255, 0.2)',
+                     
+                     borderColor: 
+                         //경계선 색상
+                         	 'rgba(153, 102, 255, 1)',
+                     
+                     borderWidth: 1 //경계선 굵기
+                 },
+                 { //데이터
+                     label: '관리', //차트 제목
+                     fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                     data: [
+                    		<c:forEach items="${arrViewPast12}" var="v12">
+                         	${v12.maM},
+                        	</c:forEach>
+                         	//x축 label에 대응되는 데이터 값
+                     ],
+                     backgroundColor:                          //색상
+                         	 'rgba(255, 159, 64, 0.2)',
+                     
+                     borderColor: 
+                         //경계선 색상
+                         'rgba(255, 159, 64, 1)',
+                     
+                     borderWidth: 1 //경계선 굵기
+                 }
+                 /* ,
+                 {
+                     label: 'test2',
+                     fill: false,
+                     data: [
+                         8, 34, 12, 24
+                     ],
+                     backgroundColor: 'rgb(157, 109, 12)',
+                     borderColor: 'rgb(157, 109, 12)'
+                 } */
+             ]
+         },
+         options: {
+             scales: {
+            	  yAxes: [{
+                      display: true,
+                    
+                      scaleLabel: {
+                          display: true
+                      }
+                  }]
+             },
+             title: { display: true, text: '최근 1년 공과금 비교' },
+           tootip : {
+        		enabled : true,
+        		mode : 'dataset',
+        		position : 'cursor',
+        		intersect : false
+           },
+             hover: { mode: 'dataset', intersect: false }
+         }
+     });
 });
 
+
+		
+	  
+
+function show(){
+	if(	$("#passY").text() == "접기"){
+	$("#passYT").css("display","none");
+	$("#passY").text(">> 작년에는 얼마 썼을까?");
+	$(".savingDiv").css("display","inline");
+	}else{
+	$("#passYT").css("display","table");
+	$("#passY").text("접기");
+	$('.savingDiv').css("display","none");
+	}
+}
 
 </script>
 
@@ -321,6 +354,7 @@ $(document).ready(function() {
 						<th  class='boder-black'>전기세</th>
 						<th  class='boder-black'>수도세</th>
 						<th  class='boder-black'>인터넷</th>
+						<th  class='boder-black'>관리비</th>
 					</tr>
 					<tr>
 						<th  class='boder-black'>
@@ -374,6 +408,25 @@ $(document).ready(function() {
 						</c:otherwise>
 						</c:choose>
 						</th>
+						
+						<th  class='boder-black'>
+						<c:choose>
+						<c:when test="${arr.maM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.maM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="maM"  value="${arr.maM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input  class='manageI' type="text" name="maM" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+					<tr>
+					<th colspan="5">
+						<c:set var='avgNow' value="${(arr.gasM+arr.elM+arr.wtM+arr.itM+arr.maM)}" ></c:set>
+					총 지출 : <fmt:formatNumber value="${avgNow}" type="number"/>원
+					</th>
 					</tr>
                 	</tbody>
                 	</table>
@@ -396,6 +449,7 @@ $(document).ready(function() {
       			<th  class='boder-black'>전기</th>
       			<th  class='boder-black'>수도</th>
       			<th  class='boder-black'>인터넷</th>
+      			<th  class='boder-black'>관리비</th>
       			</tr>
 		      <c:forEach var='arrC' items='${arrViewPast}' varStatus="st">
       			<tr>
@@ -420,13 +474,19 @@ $(document).ready(function() {
       			<span class='nomalFrom'><fmt:formatNumber value="${arrC.itM}" type="number"/>원
       			</span>
       			</th>      			
-      			</tr>	
+      			
+      			<th  class='boder-black'>
+      			<span class='nomalFrom'><fmt:formatNumber value="${arrC.maM}" type="number"/>원
+      			</span>
+      			</th>      			
+      			</tr>		
       			</c:forEach>
       			
       			<c:set var='gas' value='${arrViewPast[1].gasM - arrViewPast[0].gasM}'/>
       			<c:set var='el' value='${arrViewPast[1].elM - arrViewPast[0].elM}' />
       			<c:set var='wt' value='${arrViewPast[1].wtM - arrViewPast[0].wtM}'/>
       			<c:set var='it' value='${arrViewPast[1].itM - arrViewPast[0].itM}' />
+      			<c:set var='ma' value='${arrViewPast[1].maM - arrViewPast[0].maM}' />
       		
       			
       			<tr>
@@ -435,34 +495,97 @@ $(document).ready(function() {
       				<th class='boder-black'><fmt:formatNumber value="${el}" type="number"/>원</th>
       				<th class='boder-black'><fmt:formatNumber value="${wt}" type="number"/>원</th>
       				<th class='boder-black'><fmt:formatNumber value="${it}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${ma}" type="number"/>원</th>
       			</tr>	    
       		</tbody>
      		</table>
      		
-     		<br><br>
+     		<br>
+     		<a id='passY' href='javascript:show();' >>> 작년에는 얼마 썼을까?</a>
+     		<table class="tb disNone" id = 'passYT' style="display: none;">
+      		<tbody>
+      			<tr>
+      			<th  class='boder-black'>년/월</th>
+      			<th  class='boder-black'>가스</th>
+      			<th  class='boder-black'>전기</th>
+      			<th  class='boder-black'>수도</th>
+      			<th  class='boder-black'>인터넷</th>
+      			<th  class='boder-black'>관리비</th>
+      			</tr>
+		      <c:forEach var='arr4' items='${arrViewPast4}' varStatus="st">
+      			<tr>
+      			<th  class='boder-black'>${arr4.yyyy}년 ${arr4.mm}월</th>
+      			
+      			<th  class='boder-black'>
+      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.gasM}" type="number"/>원
+      			</span>
+      			</th>
+      			
+      			<th  class='boder-black'>
+      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.elM}" type="number"/>원
+      			</span>
+      			</th>
+      			
+      			<th  class='boder-black'>
+      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.wtM}" type="number"/>원
+      			</span>
+      			</th>
+      			
+      			<th  class='boder-black'>
+      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.itM}" type="number"/>원
+      			</span>
+      			</th>    
+      			
+      			<th  class='boder-black'>
+      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.maM}" type="number"/>원
+      			</span>
+      			</th>     			
+      			</tr>	
+      			</c:forEach>
+      			
+      			<c:set var='gas2' value='${arrViewPast4[1].gasM - arrViewPast4[0].gasM}'/>
+      			<c:set var='el2' value='${arrViewPast4[1].elM - arrViewPast4[0].elM}' />
+      			<c:set var='wt2' value='${arrViewPast4[1].wtM - arrViewPast4[0].wtM}'/>
+      			<c:set var='it2' value='${arrViewPast4[1].itM - arrViewPast4[0].itM}' />
+      			<c:set var='ma2' value='${arrViewPast4[1].maM - arrViewPast4[0].maM}' />
+      		
+      			
+      			<tr>
+      				<th>개별 총</th>
+      				<th class='boder-black'><fmt:formatNumber value="${gas2}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${el2}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${wt2}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${it2}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${ma2}" type="number"/>원</th>
+      			</tr>	    
+      		</tbody>
+     		</table>
      		
-     		<c:set var='avg' value="${(gas+el+wt+it)}" ></c:set>
+     		<br>
+     		
+     		<c:set var='avg' value="${(gas+el+wt+it+ma)}" ></c:set>
      		
      		     		
 			<c:choose>
 			<c:when test="${avg >= 0}">
-			<div style="text-align: center;">
+			<div style="text-align: center;" class='savingDiv'>
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
-			<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
+			이번달엔<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
 			</div>
 			
 			</c:when>
 			<c:when test="${avg < 0}">
      		<c:set var='avg2' value="${(gas+el+wt+it)* -1}" ></c:set>
      		
-			<div style="text-align: center;">
+			<div style="text-align: center;" class='savingDiv'>
 			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
 			<fmt:formatNumber value="${avg2}" type="number"/>원 더 사용했어..</h4>
 			</div>
 			</c:when>
 			</c:choose>
+			
       		
       		<br>
       		<hr>
@@ -472,7 +595,7 @@ $(document).ready(function() {
       		<br>
       		<!-- 전원 당월 막대그래프 비교 -->
       		<figure class="highcharts-figure">
-		    <div id="container2"></div>
+		    <div id="container1"></div>
 		    <p class="highcharts-description">
 		      
 		    </p>
@@ -483,7 +606,34 @@ $(document).ready(function() {
       		
       		<!-- 3개월간 총 지출 금액 차트 -->
       		<figure class="highcharts-figure">
-		    <div id="container"></div>
+		    <div id="container3"></div>
+		    <p class="highcharts-description">
+		        
+		    </p>
+			</figure>
+			
+				<!-- 6개월간 총 지출 금액 차트 -->
+      		<figure class="highcharts-figure">
+		    <div id="container6"></div>
+		    <p class="highcharts-description">
+		        
+		    </p>
+			</figure>
+			
+      		
+      		<%-- 
+      		<!-- 1년간 총 지출 금액 차트 --> <!-- 여기부터 -->
+      		<div style="width: 100%; ">
+				<!--차트가 그려질 부분-->
+				<canvas id="myChart" ></canvas>
+			</div>
+			 --%> 
+			<br><br>
+			
+			
+		<!-- 1년간 총 지출 금액 차트 --> <!-- 여기부터 -->
+      		<figure class="highcharts-figure">
+		    <div id="container12"></div>
 		    <p class="highcharts-description">
 		        
 		    </p>

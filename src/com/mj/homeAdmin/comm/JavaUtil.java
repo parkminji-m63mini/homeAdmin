@@ -217,13 +217,15 @@ public class JavaUtil {
 		
 		// mn = 원하는 감소 월 수
 		
-		String chk = checkMM(mm,mn);
+		String chk = checkMM(mm,mn); //5
 		
 		String result = "";
 		
 		// 마이너스 해서 나온 값이 기존 달 보다 값이 크다면 ex) 현재달 1월 / - 1 = chk 달 12월 일 때
 		if(Integer.parseInt(chk) > Integer.parseInt(mm)) {
 			
+			result = Integer.parseInt(yyyy) -1 + "";
+		}else if(Integer.parseInt(mn) == 12){ // mn 이 12면 원래 숫자로 돌아오기 때문에 체크해서 년도 빼주기
 			result = Integer.parseInt(yyyy) -1 + "";
 		}else {
 			result = yyyy;
@@ -235,6 +237,7 @@ public class JavaUtil {
 	public static String checkMM(String mm, String mn) {
 		
 		int ch =( Integer.parseInt(mm) - Integer.parseInt(mn));
+		
 		
 		//	1-2 = -1  11  (12-1)
 		//	1-3 = -2  10  (12-2)
@@ -250,6 +253,9 @@ public class JavaUtil {
 		}else {
 			if(ch <10) {
 				result = "0" + ch + "";
+				if(ch== 0) {
+					result = "12";
+				}
 			}else {
 				result = ch + "";
 			}

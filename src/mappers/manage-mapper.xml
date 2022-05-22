@@ -14,6 +14,7 @@
 		<result property="elM" column="EL_M"/>
 		<result property="wtM" column="WT_M"/>
 		<result property="itM" column="IT_M"/>
+		<result property="maM" column="MA_M"/>
 		
 		<result property="gNum" column="G_NUM"/>
 		<result property="pNum" column="P_NUM"/>
@@ -43,39 +44,57 @@
 
 	<!-- 공과금 전체 페이지 당월 데이터 -->
 	<select id="manageList" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, GAS_M, EL_M, WT_M, IT_M
+		SELECT IDX, YYYY,MM,U_ID, GAS_M, EL_M, WT_M, IT_M, MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
 	</select>
 
 	<!-- 공과금 전체 페이지 당월,전월 비교 데이터 -->
 	<select id="manageNP" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M
+		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M,
+		NVL(MA_M,0) AS MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2}) 	
 		ORDER BY MM DESC
 	</select>
 	
 	<!-- 공과금 전체 페이지 3개월 비교 데이터 -->
 	<select id="manageListP3" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M
+		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M, NVL(MA_M,0) AS MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2} or YYYY =#{yyyy3} AND MM = #{mm3})
 		   ORDER BY YYYY DESC, MM DESC 	
 	</select>
 	
+	<!-- 공과금 전체 페이지 1년 비교 데이터 -->
+	<select id="manageListP12" parameterType="Manage" resultMap="manageResultSet">
+		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M, NVL(MA_M,0) AS MA_M
+		FROM MANAGE_MA WHERE U_ID= #{uId} AND DATE_FORMAT(CONCAT(YYYY, MM,"01"),'%Y%m%d') BETWEEN DATE_FORMAT(CONCAT(${yyyy}-1, #{mm},"01"),'%Y%m%d') AND DATE_FORMAT(CONCAT(#{yyyy}, #{mm},"01"),'%Y%m%d')
+		order by yyyy,mm  
+
+	</select>
+	
+	
+	<!-- 공과금 전체 페이지 당월,전년 동월 비교 데이터 -->
+	<select id="managePassSame" parameterType="Manage" resultMap="manageResultSet">
+		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M,
+		NVL(MA_M,0) AS MA_M
+		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =${yyyy}-1 AND MM = #{mm}) 	
+		ORDER BY MM DESC
+	</select>
+	
 	<!-- 공과금 데이터 insert(당월) -->
 	<insert id="insertMAll" parameterType="Manage">
-		INSERT INTO MANAGE_MA(YYYY, MM, WDT,EDT, U_ID, GAS_M, EL_M, WT_M, IT_M) VALUES(#{yyyy}, #{mm}, #{gChk}, NOW(), #{uId}, 
-		#{gasM},#{elM},#{wtM},#{itM})
+		INSERT INTO MANAGE_MA(YYYY, MM, WDT,EDT, U_ID, GAS_M, EL_M, WT_M, IT_M, MA_M) VALUES(#{yyyy}, #{mm}, #{gChk}, NOW(), #{uId}, 
+		#{gasM},#{elM},#{wtM},#{itM},#{maM})
 	</insert>
 
 	<!-- 공과금 데이터 update (기본값만) -->
 	<update id="updateMAll" parameterType="Manage">
-		UPDATE MANAGE_MA SET EDT=NOW(), GAS_M=#{gasM}, EL_M=#{elM}, WT_M=#{wtM}, IT_M=#{itM}
+		UPDATE MANAGE_MA SET EDT=NOW(), GAS_M=#{gasM}, EL_M=#{elM}, WT_M=#{wtM}, IT_M=#{itM}, MA_M=#{maM}
 		WHERE U_ID=#{uId} AND YYYY=#{yyyy} AND MM=#{mm}
 	</update>
 	
-	<!-- 공과금 가스 상세 데이터 insert(당월) -->
+	<!-- 가스 상세 데이터 insert(당월) -->
 	<insert id="insertMGAS" parameterType="Manage">
-		INSERT INTO MANAGE_GAS(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT) VALUES (#{jidx}, #{uId},
+		INSERT INTO MANAGE_GAS(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT, EDT) VALUES (#{jidx}, #{uId},
 		( select A.AUTO_HOW From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
         where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}),
@@ -91,12 +110,18 @@
         ,( select A.P_NUM From MANAGE_GAS A
         left join MANAGE_MA B on A.JIDX=B.IDX
         where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}
-        ),#{gChk}
+        ),#{gChk},NOW()
 		)
 	</insert>
 	
 	<!-- 공과금 상세(가스,수도...) 데이터 가져올 때 필요한 기본 공과금 데이터 IDX -->
 	<select id="manageIndex" parameterType="Manage" resultType="_int">
+			SELECT IDX
+		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
+	</select>
+	
+		<!-- 공과금 상세(가스,수도...) 데이터 가져올 때 필요한 기본 공과금 데이터 IDX (null 오류로 String 버전 하나 더 추가) -->
+	<select id="manageIndexS" parameterType="Manage" resultType="string">
 			SELECT IDX
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
 	</select>
@@ -107,6 +132,12 @@
 		WHERE IDX=#{idx}
 	</update>
 	
+	<!-- 공과금 전체 페이지 데이터 있는지 체크 -->
+	<select id="chkD" parameterType="Manage" resultType="String">
+		select IDX from  MANAGE_MA where U_ID= #{uId} AND YYYY =#{yyyy} AND MM = #{mm}	
+	</select>
+	
+	
 	<!--기본 공과금 데이터 종료 -->
 	
 	
@@ -114,7 +145,9 @@
 	
 	<!-- 가스 상세 데이터 가져오기 (당월분 1) -->
 	<select id="manageGasNow" parameterType="Manage" resultMap="manageResultSet">
-		SELECT * FROM MANAGE_GAS A
+		SELECT * ,
+		 SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA
+		FROM MANAGE_GAS A
 		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
 		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
 	</select>
@@ -124,7 +157,7 @@
 	<update id="updateGas" parameterType="Manage">
 		UPDATE MANAGE_GAS SET EDT=NOW(), DEF_M=#{defM}, C_GM=#{cGm}, U_GM=#{uGm}, A_GM=#{aGm}
 		, S_GM=#{sGm},K_GM=#{kGm}, M_GM=#{mGm}, AVG_GM=#{avgGm}, JS_GM=#{jsGm}, EN_GU=#{enGu}, MON_GU=#{monGu}
-		, USE_G=#{useG}, USE_B=#{useB}
+		, USE_G=#{useG}, USE_B=#{useB}, EDT=NOW()
 		WHERE U_ID=#{uId} AND IDX=#{idx}
 	</update>
 	
@@ -136,24 +169,24 @@
 	
 	<!--  가스 지출 여부 데이터 update -->
 	<update id="updateGchk" parameterType="Manage">
-		UPDATE MANAGE_GAS SET G_CHK=#{gChk}
+		UPDATE MANAGE_GAS SET G_CHK=#{gChk}, EDT=NOW()
 		WHERE IDX=#{idx}
 	</update>
 	<!--  가스 납부 여부 체크 확인 update -->
 	<update id="updateGchkA" parameterType="Manage">
-		UPDATE MANAGE_GAS SET AUTO_M=#{autoM}
+		UPDATE MANAGE_GAS SET AUTO_M=#{autoM}, EDT=NOW()
 		WHERE IDX=#{idx}
 	</update>
 	
 	<!--  가스 계량기 번호 데이터 update -->
 	<update id="updateGasNum" parameterType="Manage">
-		UPDATE MANAGE_GAS SET G_NUM=#{gNum}
+		UPDATE MANAGE_GAS SET G_NUM=#{gNum}, EDT=NOW()
 		WHERE IDX=#{idx}
 	</update>
 	
 	<!--  가스 고객 번호 데이터 update -->
 	<update id="updatepNum" parameterType="Manage">
-		UPDATE MANAGE_GAS SET P_NUM=#{pNum}
+		UPDATE MANAGE_GAS SET P_NUM=#{pNum}, EDT=NOW()
 		WHERE IDX=#{idx}
 	</update>
 	
@@ -179,7 +212,7 @@
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,U_GM,MON_GU, USE_G 	
-        ORDER BY A.WDT DESC
+        ORDER BY A.WDT
 	</select>
 	
 	<!--가스 6개월치 비교 데이터 -->
@@ -190,7 +223,7 @@
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy2} AND #{yyyy}
         GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT
-        ORDER BY B.YYYY,B.MM 
+        ORDER BY B.YYYY,B.MM         
 	</select>
 	
 	<select id="newUp" parameterType="Manage" resultType="String">
@@ -207,5 +240,60 @@
 		</if>
 	</select>
 	
+	<!-- 가스  페이지 1년 비교 데이터 -->
+	<select id="gasNP12m" parameterType="Manage" resultMap="manageResultSet">
+		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
+        sum(NVL(A.DEF_M,0) + NVL(A.C_GM,0)
+       + NVL(A.U_GM,0) 
+       + NVL(A.A_GM,0) 
+       + NVL(A.S_GM,0) 
+       + NVL(A.M_GM,0) 
+       + NVL(A.K_GM,0) 
+       + NVL(A.AVG_GM,0) 
+       - NVL(A.JS_GM,0) 
+       + NVL(A.EN_GU,0) ) AS SUMA
+		FROM MANAGE_GAS A
+        LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId}
+        AND DATE_FORMAT(CONCAT(B.YYYY, B.MM,"01"),'%Y%m%d') BETWEEN DATE_FORMAT(CONCAT(${yyyy}-1+ "", #{mm},"01"),'%Y%m%d') AND DATE_FORMAT(CONCAT(#{yyyy}, #{mm},"01"),'%Y%m%d')
+          GROUP BY B.YYYY,B.MM
+		order by B.yyyy,B.mm  
+	</select>
+	
+		<!-- 가스 데이터 있는지 체크 -->
+	<select id="chkDG" parameterType="Manage" resultType="String">
+		select A.IDX from  MANAGE_GAS A 
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX 
+		where A.U_ID= #{uId} AND B.YYYY =#{yyyy} AND B.MM = #{mm}	
+	</select>
+	
+	<!-- 가스 페이지 당월,전년 동월 비교 데이터 -->
+	<select id="gasPassSame" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+       NVL(SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU),0) AS SUMA,
+        NVL(U_GM,0) AS U_GM,
+        NVL(MON_GU,0) AS MON_GU, 
+        NVL(USE_G,0) AS USE_G
+		FROM MANAGE_GAS A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,U_GM,MON_GU, USE_G 	
+        ORDER BY A.WDT
+	</select>
+	
+	
 	<!--가스 상세 데이터 종료-->
+	
+	
+	<!-- 인터넷 시작 -->
+	<!-- 가스 상세 데이터 가져오기 (당월분 1) -->
+	<select id="manageItNow" parameterType="Manage" resultMap="manageResultSet">
+	-- 테이블도 안 만듬 ^^ 테이블부터 만들어야함 
+		SELECT *
+		FROM MANAGE_IT A
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
+	</select>
+	
+	<!-- 인터넷 종료 -->
 </mapper>

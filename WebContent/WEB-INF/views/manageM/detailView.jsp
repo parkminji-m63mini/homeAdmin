@@ -282,9 +282,11 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 					</tr>
+					<tr>
+					<th colspan="6"> 총 사용 금액 : <fmt:formatNumber value="${arr.suma}" type="number"/>원 </th>
+					</tr>
                 	</tbody>
                 	</table>
-                		<input class='btn_brown upbtn' type="button" onclick="allUpdateGas('${arr.idx}', this.value);" value="수정"/> 
 </form>
 </c:forEach>
 </div>
