@@ -31,27 +31,25 @@
      	
      	
      		<div class="col-md-6 col-lg-4 "  >
-     	    <form id = "updateList" name = "updateList" method = "post"  action = "../update/${checkListDetail[0].idx }">  
+     	    <form id = "updateList" name = "updateList" method = "post"  action = "../update">  
             <div class="box">
             <a href="#" onclick = "return update();">저장</a>
-              <h4 class="title"><a href=""></a>${checkListDetail[0].listName }</h4>
-              
-              
-              	
+            <input  type="text" name = "listName" id = "listName" value = "${checkListDetail[0].listName }">
+           
               		 <div class="about-content detailContent${detail.idx}"   >
-              		 
+              		  
             		  <ul id ="detailList" >
-            			  
             			  <c:forEach var="detail" items = "${checkListDetail}">
-              				  <li style="list-style:none;" id="detail${detail.dIdx}"> <input  type="text" name = "color" value ="${detail.content }" >
-              				      <button  type = "button" id = "deleteBtn" onclick = "deleteOne(${detail.dIdx});">삭제</button></li>
+              				  <li style="list-style:none;" id="detail${detail.dIdx}"> <input  type="text" name = "content" id="content" value ="${detail.content }" >
+              				  
+              				      <span class = "del">삭제</span>
+              				      </li>
+              				   
                  		 </c:forEach>
                  		 
              		 </ul>
              		  
                      </div>
-                     
-              
              
               <button  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
             </div>
@@ -71,21 +69,56 @@
     
 </body>
 <script language = javascript>
-	function deleteOne(dIdx){
-		var obj = document.getElementById("detail"+dIdx);
-		alert(dIdx);
-		obj.remove();
-	};
+	
 	
 	function addOne(){
-	
-		$("#detailList").append("<li style='list-style:none;'> <input  type='text' name = 'color'  >" +
-	     "<button  type = 'text' id = 'deleteBtn' >삭제</button></li>");
+		$("#detailList").append("<li style='list-style:none;'> <input  type='text' name = 'content' id = 'content'  >" +
+				  "<span class = 'del'>삭제</span>");
 	};
 	
-	function update(){
-		document.getElementById('updateList').submit();
+
+	
+		jQuery(".del").click(function(){
+			alert("?")
+			jQuery(this).closest("li").remove();
+	   });
+      function update(){
+			//alert("?");
+			var idx = ${idx};
+			
+		var list = new Array();
+		var name = document.getElementById('listName').value;
+		$("input[name = content]").each(function(index, item){
+			list.push($(item).val());
+			
+		});
+		alert(list);
+		alert(name);
+		alert(idx);
+		
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			async : false,
+			traditional : true,
+			url : "../update",
+			data :{
+				contentL : list,
+				listName : name,
+				idx : idx
+			},
+			success : function(result){
+				alert("저장");
+				location.href = 'index.do';
+			},
+			error : function(request,status,error){
+				 //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				
+			}
+		})
+		
 	}
+
 
 	
 

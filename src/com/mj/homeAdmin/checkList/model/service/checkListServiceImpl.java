@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mj.homeAdmin.checkList.model.dao.checkListDAO;
 import com.mj.homeAdmin.checkList.vo.checkList;
@@ -40,9 +41,17 @@ public class checkListServiceImpl implements checkListService {
 	}
 
 	// 체크리스트 수정
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public int checkListUpdate(checkList vo) {
 		// TODO Auto-generated method stub
+		int deleteD = dao.deleteCheckListDetail(vo.getIdx());
+		int deleteM = dao.deleteCheckListMaster(vo.getIdx());
+		
+		if (deleteD > 0 & deleteM > 0) {
+			int result = dao.updateCheckList(vo);
+		}
+		
 		return dao.checkListUpdate(vo);
 	}
 

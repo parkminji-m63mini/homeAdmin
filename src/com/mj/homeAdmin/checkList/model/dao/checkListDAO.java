@@ -55,4 +55,22 @@ public class checkListDAO {
 		return sqlSession.insert("checkListMapper.insertCheckListDetail", vo);
 	}
 
+	// 체크리스트 디테일 삭제
+	public int deleteCheckListDetail(int idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("checkListMapper.deleteCheckListDetail", idx);
+	}
+
+	// 체크리스트 마스터 삭제
+	public int deleteCheckListMaster(int idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("checkListMapper.deleteCheckListMaster", idx);
+	}
+
+	// 체크리스트 수정
+	public int updateCheckList(checkList vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("checkListMapper.updateCheckList", vo);
+	}
+
 }
