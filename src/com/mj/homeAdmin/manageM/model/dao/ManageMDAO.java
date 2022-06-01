@@ -142,5 +142,34 @@ public class ManageMDAO
 	public List<ManageM> manageItNow(ManageM vo) {
 		return sqlSession.selectList("manageMapper.manageItNow", vo);
 	}
+	
+	public void insertMIT(ManageM vo) {
+		sqlSession.insert("manageMapper.insertMIT", vo);
+		
+	}
+	public void allUpdateIt(ManageM vo) {
+		sqlSession.update("manageMapper.allUpdateIt", vo);
+		
+	}
+	
+	public void updateTItM(ManageM vo) {
+		sqlSession.update("manageMapper.updateTItM", vo);
+		
+	}
+	public List<ManageM> itNP(ManageM vo) {
+		return sqlSession.selectList("manageMapper.itNP", vo);
+	}
+	
+	public String chkDI(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.chkDI", vo);
+	}
+
+	public List<ManageM> itNP12m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.itNP12m", vo);
+	}
+	
+	public List<ManageM> itPassSame(ManageM vo) {
+		return sqlSession.selectList("manageMapper.itPassSame", vo);
+	}
 
 }

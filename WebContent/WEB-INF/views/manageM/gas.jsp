@@ -578,20 +578,20 @@ function show(){
      		
       		<c:set var='avg' value="${suma}" ></c:set>
 			<c:choose>
+			<c:when test="${avg >= 0}">
+			<div style="text-align: center;" class='savingDiv'>
+			<h4>
+			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
+			<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
+			</div>
+			
+			</c:when>
 			<c:when test="${avg < 0}">
 			<c:set var='avg2' value="${(avg)* -1}" ></c:set>
 			<div style="text-align: center;" class='savingDiv'>
 			<h4>
-			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
-			<fmt:formatNumber value="${avg2}" type="number"/>원 절약했어!</h4>
-			</div>
-			
-			</c:when>
-			<c:when test="${avg >= 0}">
-			<div style="text-align: center;" class='savingDiv'>
-			<h4>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
-			<fmt:formatNumber value="${avg}" type="number"/>원 이라니..홀리...마마</h4>
+			<fmt:formatNumber value="${avg2}" type="number"/>원 이라니..홀리...마마</h4>
 			</div>
 			</c:when>
 			</c:choose>
@@ -648,7 +648,9 @@ function show(){
 	
 	// 가스비 상세요금의 합으로 공과금 전체 테이블 가스 데이터 업로드
 	// 데이터 일치 시켜주기 위해서
-	function upGasM(gas){
+	function upGasM(){
+		
+		//DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA
 		$.ajax({
 			type : "post",
 			dataType : "text", 
@@ -657,7 +659,16 @@ function show(){
 			data : {
 				
 				idx: $("input:hidden[name='jidx']").val(),  
-				gasM: gas, 
+				defM: $("input[name='defM']").val(), 
+				cGm: $("input[name='cGm']").val(), 
+				uGm: $("input[name='uGm']").val(), 
+				aGm: $("input[name='aGm']").val(), 
+				sGm: $("input[name='sGm']").val(), 
+				kGm: $("input[name='kGm']").val(), 
+				mGm: $("input[name='mGm']").val(), 
+				avgGm: $("input[name='avgGm']").val(), 
+				jsGm: $("input[name='jsGm']").val(), 
+				enGu: $("input[name='enGu']").val(), 
 				 
 				
 			},
@@ -746,9 +757,11 @@ function show(){
 			},
 			success : function(result){
 				if(confirm("현재 등록한 데이터로 총 가스비를 업데이트 하시겠습니까? \n 확인을 누르시면 전체 공과금 페이지에서 작성한 데이터가 업데이트 됩니다")){
-					upGasM(${addGas});
-					// 기능 체크해봐야함
-				alert("등록완료");
+			
+					upGasM();
+					
+					alert("등록완료");
+		
 				}else{
 				alert("세부 데이터만 등록완료");
 				}

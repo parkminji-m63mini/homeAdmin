@@ -396,6 +396,26 @@ public class ManageM
 
 
 
+	public String getsIm() {
+			return sIm;
+		}
+
+		public void setsIm(String sIm) {
+			this.sIm = sIm;
+		}
+
+		public String getgIm() {
+			return gIm;
+		}
+
+		public void setgIm(String gIm) {
+			this.gIm = gIm;
+		}
+
+
+
+
+
 	private int idx;
     private int jidx;
     private String yyyy;
@@ -446,6 +466,9 @@ public class ManageM
     private String repeat;
     
     
+    // 인터넷
+    private String sIm;
+    private String gIm;
     
     
 }

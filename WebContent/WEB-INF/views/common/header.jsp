@@ -66,14 +66,12 @@
               <li><a href="#" onclick="loginchk('/manageM/electric.do');">전기</a></li>
               <li><a href="#" onclick="loginchk('/manageM/water.do');">수도</a></li>
               <li><a href="#" onclick="loginchk('/manageM/it.do');">인터넷</a></li>
-              <!-- -<li><a href="#">관리비</a></li> -->
+              <li><a href="#" onclick="loginchk('/manageM/ma.do');">관리비</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do?mode=0');">식재료</a></li>
           <li><a class="nav-link scrollto " href="#" onclick="loginchk('/clean/index.do');">청소 체크</a></li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/checkList/index.do');">체크리스트</a></li>
-          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/fix/index.do');">집 수리</a></li>
-          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/homeInfo/index.do');">집 정보</a></li>
           
           
           <!-- 드롭다운 메뉴 -->
@@ -96,14 +94,25 @@
             </ul>
           </li>
            -->
-           
-          <li><a class="nav-link scrollto" href="${contextPath}/my/mypage.do" onclick="loginchk('/manageM/gas.do');">마이페이지</a></li> 
+            <li><a class="nav-link scrollto" href="#" onclick="loginchk('/notice/index.do');">공지사항</a></li>
+         
+          <li class="dropdown"><a href="#"><span>마이페이지</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#" onclick="loginchk('/my/mypage.do');">내 정보</a>
+              <li><a href="#" onclick="loginchk('/fix/index.do');">집 수리</a></li>
+        	  <li><a  href="#" onclick="loginchk('/homeInfo/index.do');">집 정보</a></li>
+        	  <li><a  href="#" onclick="loginchk('/visit/index.do');">방명록</a></li>
+            </ul>
+          </li>
+         
          <c:if test="${sessionScope.ssID == null}">
           <li><a class="nav-link scrollto" href="${contextPath}/my/login.do">로그인</a></li>
           </c:if>
             <c:if test="${sessionScope.ssID != null}">
           <li><a class="nav-link scrollto" href="#" onclick="logout();">로그아웃</a></li>
           </c:if>
+          
+            <li><a class="nav-link scrollto" href="#" onclick="loginchk('/help/index.do');">고객센터</a></li>
            <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
         </ul>
         

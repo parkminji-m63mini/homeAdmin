@@ -469,12 +469,12 @@ public class ManageMServiceImpl
   		 vo.setJidx(jidx);
   		 
   		 //가스비 상세 데이터 생성
-  		 dao.insertMGAS(vo);
+  		 dao.insertMIT(vo);
   		 //------------------------
   		 System.out.println("넘어옴");
   		 
   		 // 다시 불러오기
-  		  arrList = dao.manageGasNow(vo);
+  		  arrList = dao.manageItNow(vo);
   	 }
  	 
 		
@@ -482,5 +482,178 @@ public class ManageMServiceImpl
 		return arrList;
 	}
 
+	public void allUpdateIt(ManageM vo, HttpServletResponse res)  throws Exception{
+		dao.allUpdateIt(vo);
+		
+	}
+
+	@Override
+	public void updateTItM(ManageM vo, HttpServletResponse httpservletresponse) throws Exception {
+		dao.updateTItM(vo);
+		
+	}
+
+	@Override
+	public List<ManageM> itNP(ManageM vo) throws Exception {
+	List<ManageM> arrList = dao.itNP(vo);
+    	System.out.println(arrList.size() + " /// arrList.si");
+    	String mm = vo.getMm();
+    	String yyyy = vo.getYyyy();
+	if(arrList.size() == 1) {
+		// 해당 데이터가 있는지 체크
+		
+		vo.setMm(JavaUtil.checkMM(vo.getMm(), "1"));
+		vo.setYyyy(JavaUtil.checkYYYY(vo.getYyyy(),vo.getMm(), "1"));
+		String chk = dao.chkDI(vo);
+		System.out.println( chk  + " /chk");
+		// 데이터 없으면 insert
+		if(chk == null || chk.equals("") || chk.isEmpty() == true) {
+			 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+   			 vo.setgChk(dt);
+   			 
+   			 // 전체 공과금 데이터가 있는지 확인
+   		  String chk2 = dao.manageIndexS(vo);
+   		
+   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+   			System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+   			// 공과금 데이터 생성
+   			dao.insertMAll(vo);
+   			
+   			// 가스 데이터에 넣을 조인 idx 가져오기
+   			// jidx 세팅
+   			vo.setJidx(dao.manageIndex(vo));
+   			System.out.println("jidx : " + vo.getJidx() );
+   			// gas 월 데이터 새로 생성
+   			dao.insertMIT(vo);
+   		}else {
+   			System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+   			vo.setJidx(dao.manageIndex(vo));
+   			dao.insertMIT(vo);
+   			System.out.println("jidx : " + vo.getJidx() );
+   		}
+   			 
+	
+		}
+		vo.setMm(mm);
+		vo.setMm(yyyy);
+	 arrList = dao.itNP(vo);
+	 
+	 System.out.println(vo.getYyyy() + "/"+ vo.getMm() + "   " + vo.getYyyy2() + "/"+ vo.getMm2());
+		}
+	
+    	return arrList;
+	}
+	
+	@Override
+	public List<ManageM> itNP12m(ManageM vo) throws Exception {
+	
+		List<ManageM> arrList = dao.itNP12m(vo);
+		System.out.println(arrList.size()  +  " ////");
+		// 1년간의 데이터는 13개의 데이터가 나와야함
+		// 그게 아니라면 자리 채우기 데이터 삽입
+		if(arrList.size() != 13) {
+			
+			// 현재 vo있는 yyyy, mm 데이터를 기준함
+			for (int i = 1; i <= 12; i++) {
+				System.out.println("==============================");
+				System.out.println(vo.getYyyy() + "/" + vo.getMm() + "시작");
+				
+				String yy = vo.getYyyy();
+				String mm = vo.getMm();
+				
+			// 현재 데이터는 무조건 있음으로 그 다음월부터 데이터 확인
+			vo.setYyyy(JavaUtil.checkYYYY(vo.getYyyy(),vo.getMm(), i+""));
+			vo.setMm(JavaUtil.checkMM(vo.getMm(), i+""));
+			
+			System.out.println( i + "i 값");
+			System.out.println(vo.getYyyy() + "/" + vo.getMm() + "확인22");
+			// 해당 데이터가 있는지 체크
+			String chk = dao.chkDI(vo);
+			
+			// 데이터 없으면 insert
+			if(chk == null || chk.equals("") || chk.isEmpty() == true) {
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+	   			 
+	   			 // 전체 공과금 데이터가 있는지 확인
+	   		  String chk2 = dao.manageIndexS(vo);
+	   		
+	   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+	   			//System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+	   			// 공과금 데이터 생성
+	   			dao.insertMAll(vo);
+	   			
+	   			// 가스 데이터에 넣을 조인 idx 가져오기
+	   			// jidx 세팅
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			//System.out.println("jidx : " + vo.getJidx() );
+	   			// gas 월 데이터 새로 생성
+	   			dao.insertMIT(vo);
+	   		}else {
+	   			//System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			dao.insertMIT(vo);
+	   			//System.out.println("jidx : " + vo.getJidx() );
+	   		}
+	   			 
+			}	
+			
+			// 다시 기본데이터로 값 세팅
+			vo.setMm(mm);
+			vo.setYyyy(yy);
+		}
+			 arrList = dao.itNP12m(vo);
+		}
+			
+		return arrList;
+	}
+
+	@Override
+	public List<ManageM> itPassSame(ManageM vo) throws Exception {
+		List<ManageM> arrList = dao.itPassSame(vo);
+
+		System.out.println(vo.getYyyy() + "/" + vo.getMm() + "날짜 확인");
+				
+		System.out.println(arrList.size()  + "크기확인");
+		
+		// 작년 동월 데이터가 있는지 확인 
+		// 당월 데이터는 무조건 있으니 1이라면 전년도 데이터가 없는 것
+		if(arrList.size() == 1) {
+			// 해당 데이터가 있는지 체크
+			String chk = dao.chkDI(vo);
+			
+			// 데이터 없으면 insert
+			if(chk == null || chk.equals("") || chk.isEmpty() == true) {
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+	   			 
+	   			 // 전체 공과금 데이터가 있는지 확인
+	   		  String chk2 = dao.manageIndexS(vo);
+	   		
+	   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+	   			System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+	   			// 공과금 데이터 생성
+	   			dao.insertMAll(vo);
+	   			
+	   			// 가스 데이터에 넣을 조인 idx 가져오기
+	   			// jidx 세팅
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			System.out.println("jidx : " + vo.getJidx() );
+	   			// gas 월 데이터 새로 생성
+	   			dao.insertMIT(vo);
+	   		}else {
+	   			System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			dao.insertMIT(vo);
+	   			System.out.println("jidx : " + vo.getJidx() );
+	   		}
+	   			 
+			}	
+			arrList = dao.itPassSame(vo);
+		}
+	
+    	
+    	return arrList;
+	}
 
 }

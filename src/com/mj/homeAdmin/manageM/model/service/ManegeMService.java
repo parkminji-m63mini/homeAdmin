@@ -68,5 +68,14 @@ public interface ManegeMService
 	//--------------------- 인터넷 --------------------
 	public abstract  List<ManageM> manageItNow(ManageM managem)	throws Exception;
 	
+	  public abstract void allUpdateIt(ManageM managem, HttpServletResponse httpservletresponse)
+	    		throws Exception;
+	  public abstract void updateTItM(ManageM vo, HttpServletResponse httpservletresponse)
+	    		throws Exception;
+	  public abstract  List<ManageM> itNP(ManageM managem)
+	    		throws Exception;
+	  
+	  public abstract List<ManageM> itNP12m(ManageM vo)throws Exception;
+	  public abstract List<ManageM> itPassSame(ManageM vo)throws Exception;
 }
 

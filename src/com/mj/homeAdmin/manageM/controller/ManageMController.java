@@ -375,7 +375,7 @@ public class ManageMController
     public String it(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response)throws Exception
     {
     	
-String flag = "false";
+    	String flag = "false";
     	
 		//세션으로 가져오기
 		vo.setuId((String)ss.getAttribute("ssID"));
@@ -410,8 +410,7 @@ String flag = "false";
 	       System.out.println(vo.getMm() + " 1");
        
         // 이번달
-        //List<ManageM> arrViewNow = ms.manageItNow(vo);
-    	// 이거 아직 다 못함 그래서 주석처리~~
+        List<ManageM> arrViewNow = ms.manageItNow(vo);
 	       
         //-------------------------------//
         // 이번달, 이전달 비교
@@ -422,11 +421,12 @@ String flag = "false";
         
         System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
         
-        List<ManageM> arrViewPast = ms.gasNP(vo);
+        List<ManageM> arrViewPast = ms.itNP(vo);
+        
         //-------------------------------------//
         // 작년 동월 값
         
-        List<ManageM> arrViewPastY = ms.gasPassSame(vo);
+        List<ManageM> arrViewPastY = ms.itPassSame(vo);
         //--------------------------------
         
         
@@ -436,14 +436,14 @@ String flag = "false";
     	
         System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
         
-        List<ManageM> arrViewPast6 = ms.gasNP6m(vo);
+     //   List<ManageM> arrViewPast6 = ms.gasNP6m(vo);
         
       //--------------------------------
         
         //12개월 데이터
         vo.setYyyy(yyyy);
         	vo.setMm(mm);
-        List<ManageM> arrViewPast12 = ms.gasNP12m(vo);
+        List<ManageM> arrViewPast12 = ms.itNP12m(vo);
       //--------------------------------  
     	
     	// 당월 계절에 맞는 가스비 불러오기
@@ -453,13 +453,13 @@ String flag = "false";
     	// 겨울 12~2
         
         
-   //     model.addAttribute("arrViewNow", arrViewNow);
+        model.addAttribute("arrViewNow", arrViewNow);
         model.addAttribute("arrViewPast", arrViewPast);
-        model.addAttribute("arrViewPast6", arrViewPast6);
+     //   model.addAttribute("arrViewPast6", arrViewPast6);
         model.addAttribute("arrViewPast12", arrViewPast12);
         model.addAttribute("arrViewPastY", arrViewPastY);
         model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
-        model.addAttribute("type", "gas"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        model.addAttribute("type", "it"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
         model.addAttribute("vo", vo);
     	
     	
@@ -518,6 +518,38 @@ String flag = "false";
     }
     
     
-	 
+    
+    // 인터넷 전체 업데이트
+    @ResponseBody
+    @RequestMapping(value="allUpdateIt.do", produces = "application/json; charset=utf-8")
+    public String allUpdateIt(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+
+    	System.out.println(vo.getuId() + "/" + vo.getDefM() + "/" + vo.getIdx() + "/ ddddd");
+
+    	ms.allUpdateIt(vo, res);
+    	str ="성공";
+    	return str;
+    }
+
+    // 기본 인터넷 업데이트
+    @ResponseBody
+    @RequestMapping(value="updateTItM.do", produces = "application/json; charset=utf-8")
+    public String updateTItM(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	ms.updateTItM(vo, res);
+    	str ="성공";
+    	return str;
+    }
+    
+   
     
 }

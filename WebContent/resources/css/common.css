@@ -52,3 +52,24 @@
 .disNone{
 	display: none;
 }
+
+.thc{
+	text-align: center;
+}
+.profile{
+	border-radius: 50%;
+	min-width:80px;
+	min-height:80px;
+	max-width: 80px; 
+	max-height: 80px;
+}
+
+-- 텍스트 자동 ... 처리
+.ellTxt {
+	text-overflow: ellipsis;
+    white-space: nowrap !important;
+    overflow: hidden;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    display: -webkit-box;}

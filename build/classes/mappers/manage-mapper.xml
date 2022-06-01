@@ -128,7 +128,12 @@
 	
 	<!--  가스  데이터 update -->
 	<update id="updateTgasM" parameterType="Manage">
-		UPDATE MANAGE_MA SET GAS_M=#{gasM}
+		UPDATE MANAGE_MA SET GAS_M=${defM} + ${cGm} + ${uGm} + ${aGm} + ${sGm} + ${mGm} + ${kGm} + ${avgGm} - ${jsGm} + ${enGu}
+		WHERE IDX=#{idx}
+	</update>
+	<!--  인터넷  데이터 update -->
+	<update id="updateTItM" parameterType="Manage">
+		UPDATE MANAGE_MA SET IT_M=${defM} - ${sIm} - ${gIm} + ${aGm} + ${mGm} - ${sGm}
 		WHERE IDX=#{idx}
 	</update>
 	
@@ -288,12 +293,111 @@
 	<!-- 인터넷 시작 -->
 	<!-- 가스 상세 데이터 가져오기 (당월분 1) -->
 	<select id="manageItNow" parameterType="Manage" resultMap="manageResultSet">
-	-- 테이블도 안 만듬 ^^ 테이블부터 만들어야함 
-		SELECT *
+		SELECT *,
+		  sum(NVL(A.DEF_M,0)
+       - NVL(A.S_IM,0) 
+       - NVL(A.G_IM,0) 
+       + NVL(A.A_GM,0) 
+       - NVL(A.S_GM,0) 
+       + NVL(A.M_GM,0) 
+		 ) AS SUMA
 		FROM MANAGE_IT A
 		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
 		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
 	</select>
+	
+	
+	
+	<!-- 인터넷 상세 데이터 insert(당월) -->
+	<insert id="insertMIT" parameterType="Manage">
+	INSERT INTO MANAGE_IT(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,P_NUM,WDT, EDT) VALUES (#{jidx}, #{uId},
+		( select A.AUTO_HOW From MANAGE_IT A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}),
+        ( select A.AUTO_WHEN From MANAGE_IT A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
+        ,( select A.AUTO_M From MANAGE_IT A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
+        ,( select A.P_NUM From MANAGE_IT A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}
+        ),#{gChk},NOW()
+		)
+	</insert>
+	
+		<!--  인터넷 전체 데이터 update -->
+	<update id="allUpdateIt" parameterType="Manage">
+		UPDATE MANAGE_IT SET 
+		EDT=NOW(), DEF_M=#{defM}, G_IM=#{gIm},S_IM=#{sIm}, A_GM=#{aGm}
+		, S_GM=#{sGm}, M_GM=#{mGm},
+		 P_NUM=#{pNum}, G_CHK=#{gChk},AUTO_M=#{autoM}
+		 ,AUTO_HOW=#{autoHow}, AUTO_WHEN=#{autoWhen}
+		WHERE U_ID=#{uId} AND IDX=#{idx}
+	</update>
+	
+	<!--인터넷 당월,전월 비교 데이터 -->
+	<select id="itNP" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+      	  sum(NVL(A.DEF_M,0)- NVL(A.S_IM,0)- NVL(A.G_IM,0) + NVL(A.A_GM,0) - NVL(A.S_GM,0) + NVL(A.M_GM,0) ) AS SUMA
+        ,NVL(DEF_M,0) AS DEF_M 
+        ,NVL(A_GM,0) AS A_GM
+        ,NVL(S_GM,0) AS S_GM
+        ,NVL(M_GM,0) AS M_GM
+		FROM MANAGE_IT A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,DEF_M, A_GM, S_GM, M_GM 	
+        ORDER BY A.WDT
+	</select>
+	
+		<!-- 인터넷 데이터 있는지 체크 -->
+	<select id="chkDI" parameterType="Manage" resultType="String">
+		select A.IDX from  MANAGE_IT A 
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX 
+		where A.U_ID= #{uId} AND B.YYYY =#{yyyy} AND B.MM = #{mm}	
+	</select>
+	
+	
+	<!-- 인터넷 페이지 1년 비교 데이터 -->
+	<select id="itNP12m" parameterType="Manage" resultMap="manageResultSet">
+		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
+        sum(NVL(A.DEF_M,0)
+       - NVL(A.S_IM,0) 
+       - NVL(A.G_IM,0) 
+       + NVL(A.A_GM,0) 
+       - NVL(A.S_GM,0) 
+       + NVL(A.M_GM,0) 
+		 ) AS SUMA
+		FROM MANAGE_IT A
+        LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId}
+        AND DATE_FORMAT(CONCAT(B.YYYY, B.MM,"01"),'%Y%m%d') BETWEEN DATE_FORMAT(CONCAT(${yyyy}-1+ "", #{mm},"01"),'%Y%m%d') AND DATE_FORMAT(CONCAT(#{yyyy}, #{mm},"01"),'%Y%m%d')
+          GROUP BY B.YYYY,B.MM
+		order by B.yyyy,B.mm  
+	</select>
+	
+	<!-- 가스 페이지 당월,전년 동월 비교 데이터 -->
+	<select id="itPassSame" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+        sum(NVL(A.DEF_M,0)- NVL(A.S_IM,0)- NVL(A.G_IM,0)+ NVL(A.A_GM,0) - NVL(A.S_GM,0) + NVL(A.M_GM,0)	 ) AS SUMA,
+       NVL(A.DEF_M,0) AS DEF_M,
+       NVL(A.S_IM,0) AS S_IM, 
+       NVL(A.G_IM,0) AS G_IM,
+       NVL(A.A_GM,0) AS A_GM,
+       NVL(A.S_GM,0) AS S_GM,
+       NVL(A.M_GM,0) AS M_GM 
+		FROM MANAGE_IT A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,DEF_M,S_IM, A_GM, S_GM,  M_GM	
+        ORDER BY A.WDT
+	</select>
+	
+	
+	
+	
 	
 	<!-- 인터넷 종료 -->
 </mapper>

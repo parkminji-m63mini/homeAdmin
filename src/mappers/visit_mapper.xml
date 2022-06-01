@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="visitMapper">
+
+<resultMap id="visitResultSet" type="Visit" >
+		
+		<id property="idx" column="IDX"/>
+		<result property="wdt" column="WDT"/>
+		<result property="vdt" column="VDT"/>
+		<result property="uId" column="U_ID"/>
+		<result property="vId" column="V_ID"/>
+		<result property="vNm" column="V_NM"/>
+		<result property="pNo" column="P_NO"/>
+		<result property="cont" column="CONT"/>
+		<result property="photo" column="PHOTO"/>
+		<result property="cSkip" column="C_SKIP"/>
+		
+	</resultMap>
+
+	<!-- 방명록 페이지 이동시 유저 이름 가져오기 -->
+	<select id="findNm" parameterType="Visit" resultType="string">
+			SELECT NM
+		FROM USER_INFO WHERE ID= #{uId}	
+	</select>
+
+	<!-- 데이터 insert -->
+	<insert id="insertVisit" parameterType="Visit">
+		INSERT INTO VISIT(U_ID,V_NM, P_NO, WDT, VDT, CONT, PHOTO ) 
+		VALUES (#{uId}, #{vNm}, #{pNo}, NOW(), #{vdt}, #{cont}, #{photo})
+		
+	</insert>
+	
+	<!-- 방명록 리스트 -->
+	<select id="visitList" parameterType="Visit" resultMap="visitResultSet">
+		SELECT IDX,U_ID, V_ID, V_NM, P_NO, LEFT(WDT,10) AS WDT, LEFT(VDT, 10) AS VDT, CONT, PHOTO, 
+		CASE WHEN LENGTH(CONT) > 300 THEN
+       CONCAT( LEFT(CONT, 50), "...")
+        ELSE
+        "0"  -- 있는지 없는지 판단을 위해 사용
+        END
+        AS C_SKIP FROM VISIT WHERE U_ID=#{uId}
+         <if test='key.equals("all")'>
+        <if test='word != null'>
+        AND (CONT LIKE  CONCAT( "%", #{word}, "%")
+        OR
+        	V_NM LIKE  CONCAT( "%", #{word}, "%")
+        )
+        </if>
+         </if>
+         
+          <if test='key.equals("cont")'>
+          	<if test='word != null'>
+	        AND CONT LIKE  CONCAT( "%", #{word}, "%")
+	        </if>
+          </if>
+          
+           <if test='key.equals("nm")'>
+          	<if test='word != null'>
+	        AND V_NM LIKE  CONCAT( "%", #{word}, "%")
+	        </if>
+          </if>
+          
+           <if test='!sdt.equals("")'>
+          <![CDATA[
+            AND
+       		  DATE_FORMAT(WDT,'%Y%m%d')  >= DATE_FORMAT(#{sdt},'%Y%m%d') 
+          ]]>
+        </if>
+          
+           <if test='!edt.equals("")'>
+          <![CDATA[
+			AND 
+	        DATE_FORMAT(WDT,'%Y%m%d') <= DATE_FORMAT(#{edt},'%Y%m%d')
+      	  ]]>
+        </if>
+        
+          <if test='sdt.equals("") and edt.equals("") '>
+           <![CDATA[
+           AND
+           DATE_FORMAT(WDT,'%Y%m%d') BETWEEN DATE_FORMAT(date_add(now(), interval -1 month),'%Y%m%d')  
+           AND   DATE_FORMAT(now() ,'%Y%m%d')
+       		  
+          ]]>
+          
+          </if>
+        ORDER BY VDT DESC, IDX DESC
+	</select>
+
+</mapper>

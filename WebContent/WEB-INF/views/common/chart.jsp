@@ -47,6 +47,8 @@ function chartOption(){
 function chart1(type, text, text2, xcategories){
 				// 차트타입, 타이틀, 서브타이들, x축 컬럼명
 	chartOption();
+				
+				console.log()
 	
 	//전월 당월 비교
 	chart01 = new Highcharts.chart('container1', {
@@ -97,6 +99,9 @@ function chart1(type, text, text2, xcategories){
     	 	<c:if test="${type == 'gas'}">
     	 	 data : [${arrC2.suma}, ${arrC2.uGm}, ${arrC2.monGu}, ${arrC2.useG}]
     	 	</c:if>	
+    	 	<c:if test="${type == 'it'}">
+   		 	 data : [${arrC2.defM}, ${arrC2.aGm}, ${arrC2.sGm}, ${arrC2.mGm}, ${arrC2.suma}]
+   	 	</c:if>	
     	 	
 	    },
 	    </c:forEach>
@@ -324,6 +329,9 @@ function chart12(text, text2,  cList, rList){
 	        </c:forEach>]
 	        </c:if>
 	        <c:if test="${type == 'gas'}">
+	        data : [<c:forEach items="${arrViewPast12}" var="v12"> ${v12.suma }, </c:forEach>]
+			</c:if>
+	        <c:if test="${type == 'it'}">
 	        data : [<c:forEach items="${arrViewPast12}" var="v12"> ${v12.suma }, </c:forEach>]
 			</c:if>
 	    },
