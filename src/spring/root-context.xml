@@ -33,7 +33,7 @@
      
        <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
-	<property name="url" value="jdbc:mariadb://database-1.chygdhuk6ke6.ap-northeast-2.rds.amazonaws.com:3306/HOME"></property>
+	<property name="url" value="jdbc:mariadb://database-1.cdw7wjhawdiz.ap-northeast-2.rds.amazonaws.com:3306/HOME"></property>
 	<property name="username" value="m63mini"></property>
 	<property name="password" value="asdf092274"></property>
 	</bean>
@@ -104,5 +104,5 @@
             </props>
         </property>
     </bean>
-      
+    
 </beans>
