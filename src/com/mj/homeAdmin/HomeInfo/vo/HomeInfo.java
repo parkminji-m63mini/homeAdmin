@@ -20,11 +20,46 @@ public class HomeInfo {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date contractDateTo;
 	private String hnm;
-	private String wifi;
+	private String wifiNm;
+	private String wifiPw;
 	private String petYN;
 	private String info;
 	private String notice;
+	private String address;
+	private String direction;
 	
+	public String getWifiPw() {
+		return wifiPw;
+	}
+
+	public void setWifiPw(String wifiPw) {
+		this.wifiPw = wifiPw;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public String getCdCT() {
+		return cdCT;
+	}
+
+	public void setCdCT(String cdCT) {
+		this.cdCT = cdCT;
+	}
+
 	private int payDate;
 	private String id;
 	private String contractCnm;
@@ -148,12 +183,12 @@ public class HomeInfo {
 		
 	}
 	
-	public String getWifi() {
-		return wifi;
+	public String getWifiNm() {
+		return wifiNm;
 	}
 	
-	public void setWifi(String wifi) {
-		this.hnm = wifi;
+	public void setWifiNm(String wifiNm) {
+		this.hnm = wifiNm;
 		
 	}
 	public String getPetYN() {

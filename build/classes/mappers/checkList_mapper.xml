@@ -47,7 +47,7 @@
 	
 	
 	<!-- 체크리스트 수정 -->
-	<update id = "checkListUpdate" parameterType="checkList" >
+	<update id = "updateCheckList" parameterType="checkList" >
 		UPDATE CHECKLIST_D
            SET CONTENT = #{content},
                D_EDT = #{dEdt}
@@ -66,7 +66,20 @@
 	<!-- 체크리스트 디테일 추가 -->
 	<insert id ="insertCheckListDetail" parameterType="checkList">
 	INSERT INTO CHECKLIST_D(IDX, D_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
-	VALUES((select IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE ID = #{id}), #{dIdx}, #{content}, NOW(),  NOW(), "N"); 
+	VALUES((select IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE ID = #{id}), #{dIdx}, #{content}, NOW(),  NOW(), "N")
 	
 	</insert>
+	
+	
+	<!-- 체크리스트 디테일 삭제 -->
+	<delete id="deleteCheckListDetail" parameterType="checkList">
+		DELETE FROM CHECKLIST_D WHERE IDX = #{idx}
+	</delete>
+	
+	<!-- 체크리스트 마스터 삭제 -->
+	<delete id="deleteCheckListMaster" parameterType="checkList">
+		DELETE FROM CHECKLIST WHERE IDX = #{idx}
+	</delete>
+	
+	
 </mapper>

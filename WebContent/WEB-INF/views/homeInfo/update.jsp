@@ -99,29 +99,40 @@ function selectCode(cd){
               <form id='frmReg' name='frmReg' method="post" role="form" class="php-email-form" action="../update.do" >
               
                <div class="form-group mt-3">
-                집이름  <input type="text" class="form-control" name="hnm" id="hnm" placeholder="보증금"  value = "${selectHome.hnm}" >
+                집이름  <input type="text" class="form-control" name="hnm" id="hnm"  value = "${selectHome.hnm}" >
                 </div>
                 <div class="form-group">
                	계약 <br>
                	<span id='ListContract'></span>
                 </div>              
-               
+                    <div class="form-group mt-3">
+                집주소  <input type="text" class="form-control" name="address" id="address"   value = "${selectHome.address}" >
+                </div>    
+                 <div class="form-group mt-3">
+                오는길  <input type="text" class="form-control" name="direction" id="direction"   value = "${selectHome.direction}" >
+                </div>
                 <div class="form-group mt-3">
-                 평수  <input type="text" class="form-control" name="size" id="size" placeholder="평수"  value = "${selectHome.size}" >
+                 평수  <input type="text" class="form-control" name="size" id="size"   value = "${selectHome.size}" >
                 </div>
                 <div class="form-group mt-3">
                   방	<br>
                   <span id='ListRoom'></span>
                 </div>
-                <div class="form-group mt-3">
-                보증금  <input type="text" class="form-control" name="deposit" id="deposit" placeholder="보증금"  value = "${selectHome.deposit}" >
+                    <div class="form-group mt-3">
+                층수  <input type="text" class="form-control" name="floor" id="floor"  value = "${selectHome.floor}" >
                 </div>
                 <div class="form-group mt-3">
-                월세  <input type="text" class="form-control" name="rentalFee" id="rentalFee" placeholder="월세"  value = "${selectHome.rentalFee}" >
+                보증금  <input type="text" class="form-control" name="deposit" id="deposit"value = "${selectHome.deposit}" >
                 </div>
                 <div class="form-group mt-3">
-                층수  <input type="text" class="form-control" name="floor" id="floor" placeholder="층수"  value = "${selectHome.floor}" >
+                월세  <input type="text" class="form-control" name="rentalFee" id="rentalFee"   value = "${selectHome.rentalFee}" >
                 </div>
+                
+              <div class="form-group mt-3">
+                월세이체일  <input type="text" class="form-control" name="payDate" id="payDate"  value = "${selectHome.payDate}" >
+                
+                </div>
+            
                 <div class="form-group mt-3">
                 계약기간  <input type="date" class="form-control" name="contractDateFr" id="contractDateFr"  value = "${selectHome.contractDateFr}" >
                 <input type="date" class="form-control" name="contractDateTo" id="contractDateTo"   value = "${selectHome.contractDateTo}" >
@@ -143,10 +154,12 @@ function selectCode(cd){
            공지사항       <textarea class="form-control" name="notice" rows="5" placeholder="공지사항"   >${selectHome.notice}</textarea>
                 </div>
 
-
-              <div class="form-group mt-3">
-                월세이체일  <input type="text" class="form-control" name="payDate" id="payDate"  value = "${selectHome.payDate}" >
+           <div class="form-group mt-3">
+                와이파이 이름  <input type="text" class="form-control" name="wifiNm" id="wifiNm"  value = "${selectHome.wifiNm}" >
+                </div>
                 
+                    <div class="form-group mt-3">
+                와이파이 비밀번호  <input type="text" class="form-control" name="wifiPw" id="wifiPw"  value = "${selectHome.wifiPw}" >
                 </div>
                 <br><br>
                

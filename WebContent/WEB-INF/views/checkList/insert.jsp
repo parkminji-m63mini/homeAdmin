@@ -33,7 +33,7 @@
      		<div class="col-md-6 col-lg-4 "  >
      	    <form id = "insertList" name = "updateList" method = "post"  action = "../insert">  
             <div class="box">
-            <a href="#" onclick = "return update();">저장</a>
+            <a href="#" onclick = "return insert();">저장</a>
             <input  type="text" name = "listName" id = "listName">
             <br>
               		 <div class="about-content detailContent" id ="detailList"  >
@@ -71,7 +71,7 @@
 	     "<button  type = 'text' id = 'deleteBtn' >삭제</button></li>");
 	};
 	
-	function update(){
+	function insert(){
 		
 		var list = new Array();
 		var name = document.getElementById('listName').value;

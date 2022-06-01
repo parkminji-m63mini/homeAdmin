@@ -56,18 +56,20 @@ public class checkListController {
 		vo.setId((String)ss.getAttribute("ssID"));
 		listDetail = cs.checkListDetailView(vo);
 		
-		System.out.println("업뎃" + listDetail.get(0).getListName());
+		//System.out.println("업뎃" + listDetail.get(0).getListName());
 		model.addAttribute("checkListDetail", listDetail);		
 		
 		return "checkList/update";
 	}
 	
 	// 수정
-	@RequestMapping("update/{idx}")
-	public ModelAndView updateAction(@PathVariable int idx, checkList vo, ModelAndView mv) throws Exception{
-		System.out.println("idx :" + idx);
-		
-		vo.setIdx(idx);
+	@ResponseBody
+	@RequestMapping(value = "update", produces = "application/json;charset=utf-8")
+	public ModelAndView updateAction( String[] contentL, checkList vo, ModelAndView mv) throws Exception{
+		System.out.println("업뎃 :" );
+		System.out.println("idx :" +vo.getIdx());
+		System.out.println("vo :" + vo.getListName());
+		//vo.setIdx(idx);
 		
 		int result = cs.checkListUpdate(vo);
 		

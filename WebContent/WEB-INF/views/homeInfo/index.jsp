@@ -43,6 +43,14 @@
                <div class="form-group mt-3">
                 <h3 class="section-title">집이름</h3>  <p> ${selectHome.hnm} </p>
                 </div>
+                     <div class="form-group mt-3">
+                   <h3 class="section-title">집주소  </h3>     <p>${selectHome.address}</p>
+                </div>
+                
+              <div class="form-group mt-3">
+                     <h3 class="section-title">오는길  </h3>     <p>${selectHome.direction}</p>
+                </div>
+                
                 <div class="form-group">
                	<h3 class="section-title">계약</h3>  <br>
                	<p> ${selectHome.contractCnm} </p>
@@ -55,18 +63,26 @@
                   <h3 class="section-title">방</h3>	<br>
                  <p> ${selectHome.roomCnm} </p>
                 </div>
+                 <div class="form-group mt-3">
+                <h3 class="section-title">층수</h3>  <p>${selectHome.floor} </p>
+                </div>
+                
                 <div class="form-group mt-3">
                <h3 class="section-title"> 보증금</h3>  <p>${selectHome.deposit} </p>
                 </div>
                 <div class="form-group mt-3">
                 <h3 class="section-title">월세</h3> <p>${selectHome.rentalFee}</p>
                 </div>
-                <div class="form-group mt-3">
-                <h3 class="section-title">층수</h3>  <p>${selectHome.floor} </p>
+                
+              <div class="form-group mt-3">
+               <h3 class="section-title"> 월세이체일 </h3><p>${selectHome.payDate}</p>
+                
                 </div>
+               
                 <div class="form-group mt-3">
                 <h3 class="section-title">계약기간</h3>  <p>${selectHome.contractDateFr} ~ ${selectHome.contractDateTo} </p>
                 </div>
+                
                 
                   <div class="form-group mt-3">
                 <h3 class="section-title">반려동물 </h3> <br>
@@ -83,12 +99,18 @@
                 <div class="form-group mt-3">
            <h3 class="section-title">공지사항  </h3>     <p>${selectHome.notice}</p>
                 </div>
-
-
-              <div class="form-group mt-3">
-               <h3 class="section-title"> 월세이체일 </h3><p>${selectHome.payDate}</p>
-                
+               <div class="form-group mt-3">
+                   <h3 class="section-title">와이파이 이름  </h3>     <p>${selectHome.wifiNm}</p>
                 </div>
+              <div class="form-group mt-3">
+                     <h3 class="section-title">와이파이 비밀번호  </h3>     <p>${selectHome.wifiPw}</p>
+                </div>
+                
+            
+                
+
+
+                
                 <br><br>
                
               

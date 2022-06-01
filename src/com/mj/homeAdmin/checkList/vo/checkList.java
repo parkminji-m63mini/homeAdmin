@@ -7,7 +7,7 @@ public class checkList {
 	private int idx;
 	private String listName; // 체크리스트 이름
 	private String wdt;
-	private String edt;
+	private String edt; 
 	
 	private int dIdx; // 디테일인덱스
 	private String content; // 체크리스트 내용

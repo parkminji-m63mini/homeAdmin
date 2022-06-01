@@ -64,6 +64,25 @@ function selectCode(cd){
     	
 		$("#ListRoom").html(msg);
 	}
+     
+     $(function(){
+    	 $("#fileArea").hide();
+    	 
+    	 $("#homeImgArea").click(function(){
+    		 $("#img").click();
+    	 })
+     });
+     
+     function LoadImg(value){
+    	 if(value.files){
+    		 var reader = new FileReader();
+    		 
+    		 reader.onload = function(e){
+    			 $("#homeImg").attr("src", e.target.result);
+    		 }
+    		 reader.readAsDataURL(value.files[0])
+    	 }
+     }
 	
 	
 
@@ -90,10 +109,16 @@ function selectCode(cd){
 
               
 
-              <form id='frmReg' name='frmReg' method="post" role="form" class="php-email-form" action="insert.do" >
+              <form id='frmReg' name='frmReg' method="post" role="form" class="php-email-form"  enctype="multipart/form-data" action="insert.do" >
               
                <div class="form-group mt-3">
                 집이름  <input type="text" class="form-control" name="hnm" id="hnm" placeholder="집이름"  >
+                </div>
+                 <div class="form-group mt-3">
+                집주소 <input type="text" class="form-control" name="address" id="address" placeholder="집주소"  >
+                </div>
+                 <div class="form-group mt-3">
+                오는길  <input type="text" class="form-control" name="direction" id="direction" placeholder="오는길"  >
                 </div>
                 <div class="form-group">
                	계약 <br>
@@ -121,6 +146,10 @@ function selectCode(cd){
                 <input type="date" class="form-control" name="contractDateTo" id="contractDateTo"   >
                 </div>
                 
+              <div class="form-group mt-3">
+                월세이체일  <input type="text" class="form-control" name="payDate" id="payDate"   >
+                
+                </div>
                   <div class="form-group mt-3">
                 반려동물  <br>
                 <select id="petYN" name="petYN" class = "form-control">
@@ -128,6 +157,21 @@ function selectCode(cd){
                 <option value = "N" >없음</option>
                 </select>
                 </div>
+                
+                <div class="form-inline mb-2">
+					<label class="input-group-addon mr-3 insert-label">업로드<br>이미지</label>
+					<div class="mr-2 boardImg" id="homeImgArea">
+						<img id="homeImg" width="150" height="150">
+					</div>
+				</div>
+				
+				<div id="fileArea">
+					<!--  multiple 속성
+						- input 요소 하나에 둘 이상의 값을 입력할 수 있음을 명시 (파일 여러개 선택 가능)
+					 -->
+					<input type="file" id="img" name="img" onchange="LoadImg(this,1)"> 
+				
+				</div>
                
                 <div class="form-group mt-3">
               정보     <textarea class="form-control" name="info" rows="5" placeholder="정보" ></textarea>
@@ -137,11 +181,13 @@ function selectCode(cd){
            공지사항       <textarea class="form-control" name="notice" rows="5" placeholder="공지사항"   ></textarea>
                 </div>
 
-
-              <div class="form-group mt-3">
-                월세이체일  <input type="text" class="form-control" name="payDate" id="payDate"   >
-                
+           <div class="form-group mt-3">
+      와이파이 이름  <input type="text" class="form-control" name="wifiNm" id="wifiNm" placeholder="와이파이 이름"   >
+                 </div>
+                    <div class="form-group mt-3">
+                와이파이 비밀번호 <input type="text" class="form-control" name="wifiPw" id="wifiPw" placeholder="와이파이 비밀번호"   >
                 </div>
+
                 <br><br>
                
                 	<div class="text-center">
