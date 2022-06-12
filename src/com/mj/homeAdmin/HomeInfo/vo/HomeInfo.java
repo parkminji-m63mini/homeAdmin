@@ -27,7 +27,31 @@ public class HomeInfo {
 	private String notice;
 	private String address;
 	private String direction;
+	private String homeImg;
+	private String petImg;
 	
+	private int payDate;
+	private String id;
+	private String contractCnm;
+	private String roomCnm;
+	private String cdCT;
+	
+	public String getHomeImg() {
+		return homeImg;
+	}
+
+	public void setHomeImg(String homeImg) {
+		this.homeImg = homeImg;
+	}
+
+	public String getPetImg() {
+		return petImg;
+	}
+
+	public void setPetImg(String petImg) {
+		this.petImg = petImg;
+	}
+
 	public String getWifiPw() {
 		return wifiPw;
 	}
@@ -60,11 +84,7 @@ public class HomeInfo {
 		this.cdCT = cdCT;
 	}
 
-	private int payDate;
-	private String id;
-	private String contractCnm;
-	private String roomCnm;
-	private String cdCT;
+	
 	
 	public String getRoomCnm() {
 		return roomCnm;

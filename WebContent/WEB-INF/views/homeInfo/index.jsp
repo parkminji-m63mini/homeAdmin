@@ -6,6 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+
+	.homeImg { width : 500px; height : auto;}
+	.petImg { width : 500px; height : auto;}
+	.basic{display : none}
+	.contract{display : none}
+</style>
 <title>집정보</title>
 </head>
 
@@ -40,71 +47,87 @@
 
               <form method="post" role="form" class="php-email-form" name="submit">
               
-               <div class="form-group mt-3">
-                <h3 class="section-title">집이름</h3>  <p> ${selectHome.hnm} </p>
+               <div class="form-inline mb-2">
+				
+					<div class = "select_homeImg"><img src = "${pageContext.request.contextPath}${selectHome.homeImg }" class = "homeImg" /></div>
+				</div>
+              
+              <p onclick='basicShow()'>기본정보</p>
+               <div class="form-group mt-3 basic">
+                <h3 class="section-title ">집이름</h3>  <p> ${selectHome.hnm} </p>
                 </div>
-                     <div class="form-group mt-3">
-                   <h3 class="section-title">집주소  </h3>     <p>${selectHome.address}</p>
+                     <div class="form-group mt-3 basic" >
+                   <h3 class="section-title basic">집주소  </h3>     <p>${selectHome.address}</p>
                 </div>
                 
-              <div class="form-group mt-3">
+              <div class="form-group mt-3 basic">
                      <h3 class="section-title">오는길  </h3>     <p>${selectHome.direction}</p>
+                     
+                     
                 </div>
                 
-                <div class="form-group">
+                
+                <div class="form-group mt-3 basic">
+                <h3 class="section-title ">반려동물 </h3> <br>
+               
+                 <div class="form-inline mb-2">
+				
+					<div class = "select_img"><img src = "${pageContext.request.contextPath}${selectHome.petImg }" /></div>
+				</div>
+               
+                </div>
+               
+                <div class="form-group mt-3 basic">
+             <h3 class="section-title"> 정보 </h3>    <p>${selectHome.info}</p>
+                </div>
+                
+                <div class="form-group mt-3 basic">
+           <h3 class="section-title">공지사항  </h3>     <p>${selectHome.notice}</p>
+                </div>
+               <div class="form-group mt-3 basic">
+                   <h3 class="section-title">와이파이 이름  </h3>     <p>${selectHome.wifiNm}</p>
+                </div>
+              <div class="form-group mt-3 basic">
+                     <h3 class="section-title">와이파이 비밀번호  </h3>     <p>${selectHome.wifiPw}</p>
+                </div>
+                
+                <br><br>
+                <p onclick='contractShow()'>계약정보</p>
+                
+                <div class="form-group contract">
                	<h3 class="section-title">계약</h3>  <br>
                	<p> ${selectHome.contractCnm} </p>
                 </div>              
                
-                <div class="form-group mt-3">
+                <div class="form-group mt-3 contract">
                  <h3 class="section-title">평수</h3>  <p>${selectHome.size}  </p>
                 </div>
-                <div class="form-group mt-3">
+                <div class="form-group mt-3 contract">
                   <h3 class="section-title">방</h3>	<br>
                  <p> ${selectHome.roomCnm} </p>
                 </div>
-                 <div class="form-group mt-3">
+                 <div class="form-group mt-3 contract">
                 <h3 class="section-title">층수</h3>  <p>${selectHome.floor} </p>
                 </div>
                 
-                <div class="form-group mt-3">
+                <div class="form-group mt-3 contract">
                <h3 class="section-title"> 보증금</h3>  <p>${selectHome.deposit} </p>
                 </div>
-                <div class="form-group mt-3">
+                <div class="form-group mt-3 contract">
                 <h3 class="section-title">월세</h3> <p>${selectHome.rentalFee}</p>
                 </div>
                 
-              <div class="form-group mt-3">
+              <div class="form-group mt-3 contract">
                <h3 class="section-title"> 월세이체일 </h3><p>${selectHome.payDate}</p>
                 
                 </div>
                
-                <div class="form-group mt-3">
+                <div class="form-group mt-3 contract">
                 <h3 class="section-title">계약기간</h3>  <p>${selectHome.contractDateFr} ~ ${selectHome.contractDateTo} </p>
                 </div>
                 
                 
-                  <div class="form-group mt-3">
-                <h3 class="section-title">반려동물 </h3> <br>
-               
-                <c:if test="${selectHome.petYN eq 'Y'}"><p>있음</p></c:if>
-               <c:if test="${selectHome.petYN eq 'N'}"> <p>없음</p></c:if>
-               
-                </div>
-               
-                <div class="form-group mt-3">
-             <h3 class="section-title"> 정보 </h3>    <p>${selectHome.info}</p>
-                </div>
-                
-                <div class="form-group mt-3">
-           <h3 class="section-title">공지사항  </h3>     <p>${selectHome.notice}</p>
-                </div>
-               <div class="form-group mt-3">
-                   <h3 class="section-title">와이파이 이름  </h3>     <p>${selectHome.wifiNm}</p>
-                </div>
-              <div class="form-group mt-3">
-                     <h3 class="section-title">와이파이 비밀번호  </h3>     <p>${selectHome.wifiPw}</p>
-                </div>
+            
                 
             
                 
@@ -189,6 +212,29 @@ function selectCode(cd){
 		$("#ListRoom").html(msg);
 	}
 	
+     function basicShow(){
+    	 
+    	 if($(".basic").css("display") == "none"){
+    		
+    		 $(".basic").show("slow");
+    	 }else{
+    		 $(".basic").hide("slow"); 
+    	 }
+    		
+    	 
+     }
+     
+ function contractShow(){
+    	 
+    	 if($(".contract").css("display") == "none"){
+    		
+    		 $(".contract").show("slow");
+    	 }else{
+    		 $(".contract").hide("slow"); 
+    	 }
+    		
+    	 
+     }
 	
 
 </script>

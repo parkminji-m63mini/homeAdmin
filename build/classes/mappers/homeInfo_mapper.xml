@@ -2,94 +2,108 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="homeInfoMapper">
 	<resultMap type="HomeInfo" id="homeInfoResultSet">
-		<id property = "id" column = "ID"/>
-		<id property = "contract" column = "CONTRACT"/>
-		<id property = "size" column = "SIZE"/>
-		<id property = "room" column = "ROOM"/>
-		<id property = "deposit" column = "DEPOSIT"/>
-		<id property = "rentalFee" column = "RENTAL_FEE"/>
-		<id property = "floor" column = "FLOOR"/>
-		<id property = "building" column = "BUILDING"/>
-		<id property = "manageFee" column = "MANAGE_FEE"/>
-		<id property = "contractDateFr" column = "CONTRACT_DATE_FR"/>
-		<id property = "contractDateTo" column = "CONTRACT_DATE_TO"/>
-		<id property = "hnm" column = "HNM"/>
-		<id property = "wifiNm" column = "WIFI_NM"/>
-		<id property = "petYN" column = "PET_YN"/>
-		<id property = "info" column = "INFO"/>
-		<id property = "notice" column = "NOTICE"/>
-		<id property = "payDate" column = "PAY_DATE"/>
-		<id property = "contractCnm" column ="CONTRACT_CNM"/>
-		<id property = "roomCnm" column ="ROOM_CNM"/>
-		<id property = "wifiPw" column = "WIFI_PW"/>
-		<id property = "address" column = "ADDRESS"/>
-		<id property = "direction" column = "DIRECTION"/>
-	
+		<id property="id" column="ID" />
+		<id property="contract" column="CONTRACT" />
+		<id property="size" column="SIZE" />
+		<id property="room" column="ROOM" />
+		<id property="deposit" column="DEPOSIT" />
+		<id property="rentalFee" column="RENTAL_FEE" />
+		<id property="floor" column="FLOOR" />
+		<id property="building" column="BUILDING" />
+		<id property="manageFee" column="MANAGE_FEE" />
+		<id property="contractDateFr" column="CONTRACT_DATE_FR" />
+		<id property="contractDateTo" column="CONTRACT_DATE_TO" />
+		<id property="hnm" column="HNM" />
+		<id property="wifiNm" column="WIFI_NM" />
+		<id property="petYN" column="PET_YN" />
+		<id property="info" column="INFO" />
+		<id property="notice" column="NOTICE" />
+		<id property="payDate" column="PAY_DATE" />
+		<id property="contractCnm" column="CONTRACT_CNM" />
+		<id property="roomCnm" column="ROOM_CNM" />
+		<id property="wifiPw" column="WIFI_PW" />
+		<id property="address" column="ADDRESS" />
+		<id property="direction" column="DIRECTION" />
+		<id property="homeImg" column="HOME_IMG" />
+		<id property="petImg" column="PET_IMG"/>
 	</resultMap>
 
- 
 
-<!-- 집정보 입력 -->
-	<insert id="insertHomeInfo" parameterType = "HomeInfo">
-		INSERT INTO HOME( ID, CONTRACT, SIZE, ROOM, DEPOSIT
-		                , RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI_NM, WIFI_PW, PET_YN, INFO, NOTICE, PAY_DATE, ADDRESS, DIRECTION)
-                  VALUES (  #{id}, #{cdCT}, #{size}, #{room}, #{deposit}
-                            , #{rentalFee}, #{floor}, #{building}, #{manageFee}, #{contractDateFr}
-                            , #{contractDateTo}, #{hnm}, #{wifiNm}, #{wifiPw}, #{petYN}, #{info}
-                            , #{notice}, #{payDate}, #{address}, #{direction} )
-                  
+
+	<!-- 집정보 입력 -->
+	<insert id="insertHomeInfo" parameterType="HomeInfo">
+		INSERT INTO HOME( ID,
+		CONTRACT, SIZE, ROOM, DEPOSIT
+		, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT_DATE_FR,
+		CONTRACT_DATE_TO, HNM, WIFI_NM, WIFI_PW, PET_YN, INFO, NOTICE,
+		PAY_DATE, ADDRESS, DIRECTION, HOME_IMG, PET_IMG)
+		VALUES ( #{id}, #{cdCT}, #{size}, #{room}, #{deposit}
+		, #{rentalFee}, #{floor}, #{building}, #{manageFee}, #{contractDateFr}
+		, #{contractDateTo}, #{hnm}, #{wifiNm}, #{wifiPw}, #{petYN}, #{info}
+		, #{notice}, #{payDate}, #{address}, #{direction}, #{homeImg} , #{petImg})
+
 	</insert>
-	
+
 	<!-- 집정보 조회 -->
-	<select id = "selectHomeInfo" parameterType = "string" resultMap = "homeInfoResultSet">
-		SELECT  ID, SIZE,DEPOSIT, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE, CONTRACT, ROOM
-		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI_NM, WIFI_PW, PET_YN, INFO, NOTICE, PAY_DATE, ADDRESS, DIRECTION, B.CNM as CONTRACT_CNM , C.CNM as ROOM_CNM
-		  FROM HOME A
-          LEFT JOIN H_CODE_SECOND B
-          ON B.CD = A.CONTRACT
-          LEFT JOIN H_CODE_SECOND C
-          ON C.CD = A.ROOM
+	<select id="selectHomeInfo" parameterType="string"
+		resultMap="homeInfoResultSet">
+		SELECT ID, SIZE,DEPOSIT, RENTAL_FEE, FLOOR, BUILDING,
+		MANAGE_FEE, CONTRACT, ROOM
+		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM,
+		WIFI_NM, WIFI_PW, PET_YN, INFO, NOTICE, PAY_DATE, ADDRESS, DIRECTION,
+		B.CNM as CONTRACT_CNM , C.CNM as ROOM_CNM, HOME_IMG, PET_IMG
+		FROM HOME A
+		LEFT JOIN H_CODE_SECOND B
+		ON B.CD = A.CONTRACT
+		LEFT JOIN H_CODE_SECOND C
+		ON C.CD = A.ROOM
 		WHERE A.ID = #{id}
 	</select>
-	
-	
-	
-	
-	
+
+
+
+
+
 	<!-- 집정보 조회 -->
-	<select id = "updateHomeInfoView" parameterType = "string" resultMap = "homeInfoResultSet">
-		SELECT  ID, CONTRACT, SIZE, ROOM, DEPOSIT, RENTAL_FEE, FLOOR, BUILDING, MANAGE_FEE
-		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM, WIFI_NM, WIFI_PW, PET_YN, INFO, NOTICE, , PAY_DATE, ADDRESS, DIRECTION, B.CNM
-		  FROM HOME A
-          LEFT JOIN H_CODE_SECOND B
-          ON B.CD = A.CONTRACT
+	<select id="updateHomeInfoView" parameterType="string"
+		resultMap="homeInfoResultSet">
+		SELECT ID, CONTRACT, SIZE, ROOM, DEPOSIT, RENTAL_FEE, FLOOR,
+		BUILDING, MANAGE_FEE
+		, CONTRACT_DATE_FR, CONTRACT_DATE_TO, HNM,
+		WIFI_NM, WIFI_PW, PET_YN, INFO, NOTICE,  PAY_DATE, ADDRESS,
+		DIRECTION, B.CNM, HOME_IMG, PET_IMG
+		FROM HOME A
+		LEFT JOIN H_CODE_SECOND B
+		ON B.CD = A.CONTRACT
 		WHERE A.ID = #{id}
 	</select>
-	
+
 	<!-- 집정보 수정 -->
-	<update id = "updateHomeInfo" parameterType = "homeInfo" >
+	<update id="updateHomeInfo" parameterType="homeInfo">
 		UPDATE HOME
-		   SET CONTRACT = #{contract},
-		       SIZE = #{size},
-		       ROOM = #{room},
-		       DEPOSIT = #{deposit},
-		       RENTAL_FEE = #{rentalFee},
-		       FLOOR = #{floor},
-		       BUILDING = #{building},
-		       MANAGE_FEE = #{manageFee},
-		       CONTRACT_DATE_FR = #{contractDateFr},
-		       CONTRACT_DATE_TO = #{contractDateFr},
-		       HNM = #{hnm},
-		       PET_YN = #{petYN},
-		       WIFI_NM = #{wifiNm},
-		       WIFI_PW = #{wifiPw},
-		       INFO = #{info},
-		       NOTICE = #{notice},
-		       PAY_DATE = #{payDate},
-		       ADDRESS = #{address},
-		       DIRECTION = #{direction}
-		      
+		SET CONTRACT = #{contract},
+		SIZE = #{size},
+		ROOM = #{room},
+		DEPOSIT = #{deposit},
+		RENTAL_FEE = #{rentalFee},
+		FLOOR = #{floor},
+		BUILDING = #{building},
+		MANAGE_FEE = #{manageFee},
+		CONTRACT_DATE_FR = #{contractDateFr},
+		CONTRACT_DATE_TO = #{contractDateFr},
+		HNM = #{hnm},
+		PET_YN = #{petYN},
+		WIFI_NM = #{wifiNm},
+		WIFI_PW = #{wifiPw},
+		INFO = #{info},
+		NOTICE = #{notice},
+		PAY_DATE = #{payDate},
+		ADDRESS = #{address},
+		DIRECTION = #{direction},
+		HOME_IMG = #{homeImg},
+		PET_IMG = #{petImg}
+
 		WHERE ID = #{id}
-		       
+
 	</update>
 </mapper>

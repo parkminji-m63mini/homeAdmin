@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="alarmMapper">
+	<resultMap type="alarm" id="alarmResultSet">
+		<id property="id" column="ID" />
+		<id property="idx" column="IDX" />
+		<id property="alarmName" column="ALARM_NAME" />
+		<id property="alarmCycle" column="ALARM_CYCLE" />
+		<id property="alarmTime" column="ALARM_TIME" />
+		<id property="memo" column="MEMO" />
+		<id property="wdt" column="WDT" />
+		<id property="edt" column="EDT" />
+		<id property="useYN" column="USE_YN" />
+		
+	</resultMap>
+
+
+
+	<!-- 알람 입력 -->
+	<insert id="insertAlarm" parameterType="alarm">
+	
+	INSERT INTO ALARM(ID, ALARM_NAME, ALARM_CYCLE, ALARM_TIME, MEMO, WDT, EDT, USE_YN) 
+	VALUES(#{id}, #{alarmName}, #{alarmCycle}, #{alarmTime}, #{memo}, NOW(), NOW(), 'Y')
+
+	</insert>
+
+	<!-- 알람 리스트 조회 -->
+	<select id="selectAlarmList" parameterType="string"		resultMap="alarmResultSet">
+		SELECT ID,IDX,  ALARM_NAME, ALARM_CYCLE, ALARM_TIME, MEMO, USE_YN
+		FROM ALARM
+		WHERE ID = #{id}
+	</select>
+
+
+	<!--  수정화면 조회 -->
+	<select id="selectAlarmOne" parameterType="_int" resultMap="alarmResultSet">
+		SELECT ID, ALARM_NAME, ALARM_CYCLE, ALARM_TIME, MEMO, USE_YN
+		FROM ALARM
+		WHERE IDX = #{idx}
+	</select>
+	<!-- 알람 수정 -->
+	<update id="updateAlarm" parameterType="alarm">
+		UPDATE ALARM
+		  SET ALARM_NAME = #{alarmName},
+		      ALARM_CYCLE = #{alarmCycle},
+		      ALARM_TIME = #{alarmTime},
+		      MEMO = #{memo},
+		      EDT = NOW()
+		 WHERE IDX = #{idx}
+
+	</update>
+	
+	<!-- 사용엽부 업데이트 -->
+	<update id = "updateYN" parameterType="Map" >
+		UPDATE ALARM
+		  SET USE_YN = #{useYN},
+		      EDT = NOW()
+		      
+		 WHERE IDX = #{idx}
+	</update>
+	
+	<!-- 삭제 -->
+	
+	<delete id="deleteAlarm" parameterType="_int">
+		DELETE FROM ALARM WHERE IDX = #{idx}
+	</delete>
+	
+	
+</mapper>
