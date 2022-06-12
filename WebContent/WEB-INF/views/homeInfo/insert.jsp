@@ -109,7 +109,30 @@ function selectCode(cd){
 
               
 
-              <form id='frmReg' name='frmReg' method="post" role="form" class="php-email-form"  enctype="multipart/form-data" action="insert.do" >
+              <form id='insertHomeForm' name='insertHomeForm' method="post" role="form" class="php-email-form"  enctype="multipart/form-data" action="insert.do" >
+              
+               <div class="form-inline mb-2">
+					<label for="homeImg">업로드<br>이미지</label>
+					<input type = "file" id = "homeImg" name = "file"/>
+					<div class = "select_img"><img src = "${selectHome.homeImg }" /></div>
+				</div>
+				
+				<script>
+				
+				$("#homeImg").change(function(){
+					alert(this.files)
+					if(this.files && this.files[0]){
+						var reader = new FileReader;
+						reader.onload = function(data){
+							
+							$(".select_img img").attr("src", data.target.result).width(500);
+							
+						}
+						reader.readAsDataURL(this.files[0]);
+						
+					}
+				})
+				</script>
               
                <div class="form-group mt-3">
                 집이름  <input type="text" class="form-control" name="hnm" id="hnm" placeholder="집이름"  >
@@ -152,27 +175,31 @@ function selectCode(cd){
                 </div>
                   <div class="form-group mt-3">
                 반려동물  <br>
-                <select id="petYN" name="petYN" class = "form-control">
-                <option value = "Y" >있음</option>
-                <option value = "N" >없음</option>
-                </select>
+              
                 </div>
-                
-                <div class="form-inline mb-2">
-					<label class="input-group-addon mr-3 insert-label">업로드<br>이미지</label>
-					<div class="mr-2 boardImg" id="homeImgArea">
-						<img id="homeImg" width="150" height="150">
-					</div>
+                 <div class="form-inline mb-2">
+					<label for="petImg">업로드<br>이미지</label>
+					<input type = "file" id = "petImg" name = "file"/>
+					<div class = "select_img"><img src = "${selectHome.petImg }" /></div>
 				</div>
 				
-				<div id="fileArea">
-					<!--  multiple 속성
-						- input 요소 하나에 둘 이상의 값을 입력할 수 있음을 명시 (파일 여러개 선택 가능)
-					 -->
-					<input type="file" id="img" name="img" onchange="LoadImg(this,1)"> 
+				<script>
 				
-				</div>
-               
+				$("#petImg").change(function(){
+					alert(this.files)
+					if(this.files && this.files[0]){
+						var reader = new FileReader;
+						reader.onload = function(data){
+							
+							$(".select_img img").attr("src", data.target.result).width(500);
+							
+						}
+						reader.readAsDataURL(this.files[0]);
+						
+					}
+				})
+				</script>
+				
                 <div class="form-group mt-3">
               정보     <textarea class="form-control" name="info" rows="5" placeholder="정보" ></textarea>
                 </div>

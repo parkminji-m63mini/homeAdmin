@@ -1,9 +1,11 @@
 package com.mj.homeAdmin.HomeInfo.controller;
 
+import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +30,7 @@ import com.mj.homeAdmin.HomeInfo.model.vo.HomeInfoService;
 import com.mj.homeAdmin.HomeInfo.vo.HomeInfo;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.mj.homeAdmin.utils.UploadFileUtils;
 
 @Controller
 @RequestMapping("/homeInfo/*")
@@ -47,6 +50,9 @@ public class HomeInfoController {
 	@Autowired
 	private CmmnServiceImpl cm;
 	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
+	
 	public HomeInfoController() {
 
 	}
@@ -62,12 +68,24 @@ public class HomeInfoController {
 	
 	// 집정보입력
 	@RequestMapping("insert.do")
-	public ModelAndView insertHomeInfo(HomeInfo home, ModelAndView mv, Model model
-			                        , @RequestParam(value = "img", required = false) MultipartFile img, HttpSession ss, HttpServletRequest req, RedirectAttributes rdAttr) throws Exception{
+	public ModelAndView insertHomeInfo(MultipartFile file, HomeInfo home, ModelAndView mv, Model model
+			                        , HttpSession ss, HttpServletRequest req, RedirectAttributes rdAttr) throws Exception{
 		
 		home.setId((String)ss.getAttribute("ssID"));
-		
-		System.out.println("이미지 : " + img.getOriginalFilename());
+		 
+
+		String imgUploadPath = uploadPath + File.separator + "imgUpload";
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		String fileName = null;
+		System.out.println("imgUploadPath : " + imgUploadPath);
+		if (file != null) {
+			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+			System.out.println("fileName : " + fileName);
+		}else {
+			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+		}
+		System.out.println("set : " + File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+		home.setHomeImg(File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		
 		String status=null;
 		String msg=null;
@@ -94,10 +112,12 @@ public class HomeInfoController {
 	// 집정보 조회
 	@RequestMapping("index.do")
 	public ModelAndView selectHomeInfo(HomeInfo home, Model model , HttpSession ss, HttpServletRequest req , ModelAndView mv) throws Exception{
-		
+		System.out.println("집정보 이동");
 		home.setId((String)ss.getAttribute("ssID"));
+		System.out.println(home.getId());
 		
 		HomeInfo selectHome = hs.selectHomeInfo(home.getId());
+		
 		System.out.println("계약이름 " + selectHome.getContractCnm());
 		
 		  mv.addObject("selectHome", selectHome);
@@ -121,11 +141,31 @@ public class HomeInfoController {
 	
 	// 집정보 수정
 	@RequestMapping(value = "update.do")
-	public ModelAndView updateHomeInfo(HomeInfo vo, ModelAndView mv, HttpSession ss,  HttpServletRequest req, HttpServletResponse response, RedirectAttributes rdAttr) throws Exception{
-		System.out.println("업뎃왓나?"); 
-		System.out.println(vo.getId() + "id");
-		System.out.println(vo.getHnm());
-		System.out.println(vo.getSize());
+	public ModelAndView updateHomeInfo(MultipartFile homeImgFile, MultipartFile petImgFile, HomeInfo vo, ModelAndView mv, HttpSession ss,  HttpServletRequest req, HttpServletResponse response, RedirectAttributes rdAttr) throws Exception{
+
+		String imgUploadPath = uploadPath + File.separator + "imgUpload";
+		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		String homeImgName = null;
+		String petImgName = null;
+		System.out.println("homeImg : " + homeImgFile);
+		System.out.println("petImg : " + petImgFile);
+		
+		if (homeImgFile != null) {
+			homeImgName = UploadFileUtils.fileUpload(imgUploadPath, homeImgFile.getOriginalFilename(), homeImgFile.getBytes(), ymdPath);				
+						
+		}else {
+			homeImgName = uploadPath + File.separator + "images" + File.separator + "none.png";
+		}
+		
+		if (petImgFile != null) {
+			petImgName = UploadFileUtils.fileUpload(imgUploadPath, petImgFile.getOriginalFilename(), petImgFile.getBytes(), ymdPath);				
+						
+		}else {
+			petImgName = uploadPath + File.separator + "images" + File.separator + "none.png";
+		}
+		
+		vo.setHomeImg(File.separator + "imgUpload" + ymdPath + File.separator + homeImgName);
+		vo.setPetImg(File.separator + "imgUpload" + ymdPath + File.separator + petImgName);
 		vo.setId((String)ss.getAttribute("ssID"));
 		int result = hs.updateHomeInfo(vo);
 		String url = null;

@@ -6,10 +6,11 @@
 		<id property="idx" column="IDX"/>
 		<result property="id" column="ID"/>
 		<result property="idx" column="IDX"/>
+		<result property="dIdx" column="D_IDX"/>
 		<result property="listName" column="LIST_NAME"/>
 		<result property="wdt" column="WDT"/>
 		<result property="edt" column="EDT"/>
-		<result property="dIdx" column="D_IDX"/>
+		<result property="mIdx" column="M_IDX"/>
 		<result property="content" column="CONTENT"/>
 		<result property="dWdt" column="D_WDT"/>
 		<result property="dEdt" column="D_EDT"/>
@@ -28,52 +29,62 @@
 	
 		<!-- 체크리스트디테일 조회 -->
 	<select id="selectCheckListDetail" parameterType="checkList" resultMap="checkListSet">
-		SELECT A.IDX, B.D_IDX, B.CONTENT, B.CHECK_YN 
+		SELECT A.IDX, B.M_IDX, B.IDX AS D_IDX, B.CONTENT, B.CHECK_YN 
 		FROM CHECKLIST A
 		LEFT JOIN CHECKLIST_D B
-		ON B.IDX = A.IDX	
+		ON B.M_IDX = A.IDX	
 		WHERE A.ID = #{id} 
 	</select>
 	
 	
 		<!-- 체크리스트수정 조회 -->
 	<select id="checkListDetailView" parameterType="checkList" resultMap="checkListSet">
-		SELECT A.IDX, B.D_IDX, B.CONTENT, B.CHECK_YN , A.LIST_NAME
+		SELECT A.IDX, B.M_IDX, B.CONTENT, B.CHECK_YN , A.LIST_NAME
 		FROM CHECKLIST A
 		LEFT JOIN CHECKLIST_D B
-		ON B.IDX = A.IDX	
-		WHERE A.ID = #{id} AND A.IDX = #{idx}
+		ON B.M_IDX = A.IDX	
+		WHERE A.ID = #{id} AND B.M_IDX = #{idx}
 	</select>
 	
 	
-	<!-- 체크리스트 수정 -->
-	<update id = "updateCheckList" parameterType="checkList" >
-		UPDATE CHECKLIST_D
-           SET CONTENT = #{content},
-               D_EDT = #{dEdt}
-         WHERE IDX = #{idx} AND D_IDX = #{dIdx} 
+	<!-- 마스터체크리스트 수정 -->
+	<update id = "updateCheckListMaster" parameterType="checkList" >
+		UPDATE CHECKLIST
+           SET LIST_NAME = #{listName},
+               EDT = NOW()
+         WHERE IDX = #{idx}  
 	</update>
 	
-	<!-- 체크리스트 추가 -->
-	<insert id = "insertCheckList" parameterType="checkList">
+		<!-- 디테일체크리스트 수정 -->
+	<update id = "updateCheckListDetail" parameterType="checkList" >
+		INSERT INTO CHECKLIST_D(IDX, M_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
+	     VALUES((select IFNULL(MAX(A.IDX),0)+1 FROM CHECKLIST_D A), #{idx}, #{content}, NOW(),  NOW(), "N")
+	
+	</update>
 	
 	
-	INSERT INTO CHECKLIST(ID, IDX, LIST_NAME, WDT, EDT) 
-		VALUES(#{id}, (select IFNULL(MAX(A.IDX)+1,0) FROM CHECKLIST A WHERE ID = #{id}), #{listName}, NOW(),  NOW())
+	<!-- 마스터체크리스트 추가 -->
+	<insert id = "insertCheckListMaster" parameterType="checkList">
+	
+	
+	INSERT INTO CHECKLIST(ID, LIST_NAME, WDT, EDT) 
+		VALUES(#{id}, #{listName}, NOW(),  NOW())
 	
 	</insert>
 	
 	<!-- 체크리스트 디테일 추가 -->
 	<insert id ="insertCheckListDetail" parameterType="checkList">
-	INSERT INTO CHECKLIST_D(IDX, D_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
-	VALUES((select IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE ID = #{id}), #{dIdx}, #{content}, NOW(),  NOW(), "N")
+	INSERT INTO CHECKLIST_D(IDX, M_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
+	VALUES((select IFNULL(MAX(A.IDX),0)+1 FROM CHECKLIST_D A), (SELECT IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE A.ID = #{id}), #{content}, NOW(),  NOW(), "N")
 	
 	</insert>
 	
 	
+	
+	
 	<!-- 체크리스트 디테일 삭제 -->
 	<delete id="deleteCheckListDetail" parameterType="checkList">
-		DELETE FROM CHECKLIST_D WHERE IDX = #{idx}
+		DELETE FROM CHECKLIST_D WHERE M_IDX = #{mIdx}
 	</delete>
 	
 	<!-- 체크리스트 마스터 삭제 -->
@@ -81,5 +92,16 @@
 		DELETE FROM CHECKLIST WHERE IDX = #{idx}
 	</delete>
 	
+	<!-- MAX(IDX) 조회 -->
+	<select id="getIdx" parameterType="checkList" resultType="_int">
+		
+	</select>
 	
+	<!-- 사용여부 변경 -->
+	<update id="updateYN" parameterType="Map">
+		UPDATE CHECKLIST_D
+		SET CHECK_YN = #{useYN},
+			D_EDT = NOW()
+		WHERE IDX = #{dIdx}
+	</update>
 </mapper>

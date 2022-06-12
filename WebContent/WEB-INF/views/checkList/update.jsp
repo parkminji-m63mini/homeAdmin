@@ -40,8 +40,8 @@
               		  
             		  <ul id ="detailList" >
             			  <c:forEach var="detail" items = "${checkListDetail}">
-              				  <li style="list-style:none;" id="detail${detail.dIdx}"> <input  type="text" name = "content" id="content" value ="${detail.content }" >
-              				  
+              				  <li style="list-style:none;" id="detail"><input  type="text" name = "content" id="content" value ="${detail.content }" >
+              				 
               				      <span class = "del">삭제</span>
               				      </li>
               				   

@@ -40,14 +40,18 @@
      		<div class="col-md-6 col-lg-4 "  >
             <div class="box">
               <a href="updateView/${item.idx}" style="float: right;" >수정</a>
+              <a href="delete/${item.idx}" style="float: right;" >삭제</a>
               <h4 class="title"><a href="">${item.listName}</a></h4>
               
               <c:forEach var="detail" items = "${checkListDetail }">
-              	<c:if test = "${item.idx == detail.idx }">
-              		 <div class="about-content detailContent${item.idx}"  >
+              	<c:if test = "${item.idx == detail.mIdx }">
+              		 <div class="about-content detailContent" >
             		  <ul>
-            			  <div id="box">
-              				  <li style="list-style:none;"> <input type="checkbox" name = "color" value ="blue" unchecked></i>${detail.content }</li>
+            			  <div id="box" >
+              				  <li style="list-style:none;"> 
+              				  <input  id = "${detail.dIdx}" type="checkbox" name = "color" value ="blue" <c:if test = '${detail.checkYN eq "Y" }'>checked = "checked"</c:if>/>
+              				  ${detail.content }
+              				  </li>
                  		 </div>
              		 </ul>
                      </div>
@@ -68,8 +72,37 @@
 </body>
 <script language = javascript>
 	
-
+var check = $("input[type='checkbox']");
+var dIdx 
+var YN
+check.click(function(e){
+	//alert(e.target.checked)
+	dIdx = e.target.id
 	
-
+	if (e.target.checked){
+		YN = "Y"
+	}else{
+		YN = "N"
+	}
+	$.ajax({
+	
+		type: "post",
+		dataType : "text",
+		url : "updateYN.do",
+		data :{
+			dIdx : dIdx,
+			YN : YN
+			
+		},
+		success : function(result){
+			
+		},
+		error:function(result){
+			
+		}
+		
+		
+	});	
+});
 </script>
 </html>

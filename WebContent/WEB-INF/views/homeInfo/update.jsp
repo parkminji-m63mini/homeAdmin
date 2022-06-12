@@ -13,21 +13,12 @@
 
 <script language=javascript>
 $(document).ready(function(){
-	alert("${selectHome.contractDateFr}");
+	//alert("${selectHome.contractDateFr}");
 	selectCode('CT');
 	selectCode('RC');
 });
 
-$("#updateBtn").on("click", function(){
-	
-	var frm = document.frmReg;
-	
-	alert(frm  + " chk");
-	
-	location.href="homeInfo/index";
-	
-	//frm.submit();
-});
+
 
 function selectCode(cd){
 	var searchVar;
@@ -70,7 +61,8 @@ function selectCode(cd){
     	
 		$("#ListRoom").html(msg);
 	}
-	
+     
+    
 	
 
 </script>
@@ -96,10 +88,36 @@ function selectCode(cd){
 
               
 
-              <form id='frmReg' name='frmReg' method="post" role="form" class="php-email-form" action="../update.do" >
+              <form id='updateHomeForm' name='updateHomeForm' method="post" role="form" class="php-email-form" enctype="multipart/form-data" action="../update.do" >
+              
+              
+              <div class="form-inline mb-2">
+					<label for="homeImg">업로드<br>이미지</label>
+					<input type = "file" id = "homeImg" name = "homeImgFile"/>
+					<div class = "select_img"><img src = "${selectHome.homeImg }" /></div>
+				</div>
+				
+				<script>
+				
+				$("#homeImg").change(function(){
+					alert(this.files)
+					if(this.files && this.files[0]){
+						var reader = new FileReader;
+						reader.onload = function(data){
+							
+							$(".select_img img").attr("src", data.target.result).width(500);
+							
+						}
+						reader.readAsDataURL(this.files[0]);
+						
+					}
+				})
+				</script>
+              
+              <%= request.getRealPath("/") %> 
               
                <div class="form-group mt-3">
-                집이름  <input type="text" class="form-control" name="hnm" id="hnm"  value = "${selectHome.hnm}" >
+                집이름 <input type="text" class="form-control" name="hnm" id="hnm"  value = "${selectHome.hnm}" >
                 </div>
                 <div class="form-group">
                	계약 <br>
@@ -140,11 +158,29 @@ function selectCode(cd){
                 
                   <div class="form-group mt-3">
                 반려동물  <br>
-                <select id="petYN" name="petYN" class = "form-control">
-                <option value = "Y" <c:if test="${selectHome.petYN eq 'Y'}"> selected = "selected" </c:if>>있음</option>
-                <option value = "N" <c:if test="${selectHome.petYN eq 'N'}"> selected = "selected" </c:if>>없음</option>
-                </select>
                 </div>
+                     <div class="form-inline mb-2">
+					<label for="petImg">업로드<br>이미지</label>
+					<input type = "file" id = "petImg" name = "petImgFile"/>
+					<div class = "select_petImg"><img src = "${selectHome.petImg }" /></div>
+				</div>
+				
+				<script>
+				
+				$("#petImg").change(function(){
+					alert(this.files)
+					if(this.files && this.files[0]){
+						var reader = new FileReader;
+						reader.onload = function(data){
+							
+							$(".select_petImg img").attr("src", data.target.result).width(500);
+							
+						}
+						reader.readAsDataURL(this.files[0]);
+						
+					}
+				})
+				</script>
                
                 <div class="form-group mt-3">
               정보     <textarea class="form-control" name="info" rows="5" placeholder="정보" >${selectHome.info}</textarea>
@@ -164,7 +200,8 @@ function selectCode(cd){
                 <br><br>
                
                 	<div class="text-center">
-               
+            
+               		
 					<button type = "submit" id = "updateBtn">저장 </button>
 						<button id="deleteBtn"  >삭제</button>
 

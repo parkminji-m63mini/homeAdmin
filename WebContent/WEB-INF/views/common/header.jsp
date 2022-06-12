@@ -70,7 +70,7 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do?mode=0');">식재료</a></li>
-          <li><a class="nav-link scrollto " href="#" onclick="loginchk('/clean/index.do');">청소 체크</a></li>
+          <li><a class="nav-link scrollto " href="#" onclick="loginchk('/alarm/index.do');">알람</a></li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/checkList/index.do');">체크리스트</a></li>
           
           

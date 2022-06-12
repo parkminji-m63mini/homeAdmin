@@ -38,7 +38,7 @@
             <br>
               		 <div class="about-content detailContent" id ="detailList"  >
               		 
-            		  <ul  >
+            		  <ul>
               				  <li style="list-style:none;" id="detail"> <input  type="text" name = "content" >
               				      <button  type = "button" id = "deleteBtn" onclick = "deleteOne();">삭제</button></li>
                  		 

@@ -5,11 +5,18 @@ public class checkList {
 	
 	private String id; // 사용자 아이디
 	private int idx;
+	private int dIdx; // 디테일인덱스
 	private String listName; // 체크리스트 이름
 	private String wdt;
 	private String edt; 
 	
-	private int dIdx; // 디테일인덱스
+	private int mIdx; // 디테일테이블_마스터인덱스
+	public int getdIdx() {
+		return dIdx;
+	}
+	public void setdIdx(int dIdx) {
+		this.dIdx = dIdx;
+	}
 	private String content; // 체크리스트 내용
 	private String dWdt; // 디테일 작성일
 	private String dEdt; // 디테일 수정일
@@ -61,11 +68,11 @@ public class checkList {
 	public void setEdt(String edt) {
 		this.edt = edt;
 	}
-	public int getdIdx() {
-		return dIdx;
+	public int getmIdx() {
+		return mIdx;
 	}
-	public void setdIdx(int dIdx) {
-		this.dIdx = dIdx;
+	public void setmIdx(int mIdx) {
+		this.mIdx = mIdx;
 	}
 	public String getContent() {
 		return content;

@@ -33,7 +33,7 @@
 		<load-on-startup>1</load-on-startup>
 		
 		<multipart-config>
-			<location>C:\\workspace\\famework\\homeAdmin2\\WebContent\\upload\\visit</location>
+			<location>C:\\Users\\kljkl\\git\\homeAdmin\\WebContent\\upload\\visit</location>
 			<max-file-size>20971520</max-file-size>
 			<max-request-size>41943040</max-request-size>
 			<file-size-threshold>20971520</file-size-threshold>

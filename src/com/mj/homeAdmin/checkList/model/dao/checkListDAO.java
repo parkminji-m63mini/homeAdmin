@@ -1,6 +1,7 @@
 package com.mj.homeAdmin.checkList.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,10 @@ public class checkListDAO {
 		return sqlSession.update("checkListMapper.checkListUpdate", vo);
 	}
 
-	// 체크리스트 추가
-	public int insertCheckList(checkList vo) {
+	// 체크리스트 마스터 추가
+	public int insertCheckListMaster(checkList vo) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("checkListMapper.insertCheckList", vo);
+		return sqlSession.insert("checkListMapper.insertCheckListMaster", vo);
 	}
 
 	
@@ -67,10 +68,30 @@ public class checkListDAO {
 		return sqlSession.delete("checkListMapper.deleteCheckListMaster", idx);
 	}
 
-	// 체크리스트 수정
-	public int updateCheckList(checkList vo) {
-		// TODO Auto-generated method stub
-		return sqlSession.update("checkListMapper.updateCheckList", vo);
+	// MAX(IDX) 조회
+	public int getIdx(String id) {
+		
+		return sqlSession.selectOne("checkListMapper.getIdx", id);
 	}
+	
+	// 체크리스트 마스터 수정
+	public int updateCheckListMaster(checkList vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("checkListMapper.updateCheckListMaster", vo);
+	}
+
+	// 체크리스트 디테일 수정
+	public int updateCheckListDetail(checkList vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("checkListMapper.updateCheckListDetail", vo);
+	}
+
+	// 사용여부 변경
+	public int updateYN(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("checkListMapper.updateYN", map);
+	}
+
+	
 
 }

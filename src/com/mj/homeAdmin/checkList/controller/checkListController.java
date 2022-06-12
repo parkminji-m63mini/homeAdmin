@@ -1,6 +1,8 @@
 package com.mj.homeAdmin.checkList.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mj.homeAdmin.checkList.model.service.checkListService;
 import com.mj.homeAdmin.checkList.vo.checkList;
@@ -25,7 +28,7 @@ import com.mj.homeAdmin.checkList.vo.checkList;
 public class checkListController {
 
 	@Autowired
-	private checkListService cs;
+	private checkListService service;
 	
 	// 조회화면
 	@RequestMapping("index.do")
@@ -37,8 +40,8 @@ public class checkListController {
 		List<checkList> listDetail = null;
 		
 		
-		list = cs.selectCheckList(vo.getId());
-		listDetail = cs.selectCheckListDetail(vo.getId());
+		list = service.selectCheckList(vo.getId());
+		listDetail = service.selectCheckListDetail(vo.getId());
 		
 		model.addAttribute("checkList", list);
 		model.addAttribute("checkListDetail", listDetail);
@@ -54,9 +57,9 @@ public class checkListController {
 		List<checkList> listDetail = null;
 		vo.setIdx(idx);
 		vo.setId((String)ss.getAttribute("ssID"));
-		listDetail = cs.checkListDetailView(vo);
 		
-		//System.out.println("업뎃" + listDetail.get(0).getListName());
+		listDetail = service.checkListDetailView(vo);
+		
 		model.addAttribute("checkListDetail", listDetail);		
 		
 		return "checkList/update";
@@ -65,15 +68,26 @@ public class checkListController {
 	// 수정
 	@ResponseBody
 	@RequestMapping(value = "update", produces = "application/json;charset=utf-8")
-	public ModelAndView updateAction( String[] contentL, checkList vo, ModelAndView mv) throws Exception{
-		System.out.println("업뎃 :" );
-		System.out.println("idx :" +vo.getIdx());
-		System.out.println("vo :" + vo.getListName());
-		//vo.setIdx(idx);
-		
-		int result = cs.checkListUpdate(vo);
+	public ModelAndView updateAction( String[] contentL, checkList vo, ModelAndView mv , HttpServletRequest req) throws Exception{
 		
 		
+		
+		int updateMaster = service.updateCheckListMaster(vo);
+		if (updateMaster > 0 ) {
+			for(int i=0 ; i < contentL.length ; i++) {
+				vo.setContent(contentL[i]);
+				
+				int updateDetail = service.updateCheckListDetail(vo);
+				
+				if (updateDetail > 0) {
+					
+				}else {
+					mv.setViewName("redirect:" + req.getHeader("referer"));
+				}
+			}
+		}
+		
+		mv.setViewName("redirect:/checkList/index.do");
 		//return "checkList/index";
 		return mv;
 	}
@@ -91,28 +105,57 @@ public class checkListController {
 		
 		vo.setId((String)ss.getAttribute("ssID"));
 		vo.setListName(vo.getListName());
-		
-		System.out.println("Id : " + vo.getId());
-		System.out.println("ListName : " +vo.getListName());
-		
-		
-		int chk = cs.insertCheckList(vo);
+		vo.setmIdx(vo.getIdx());
+		System.out.println("Idx : " + vo.getIdx());
+				
+		int chk = service.insertCheckList(vo);
 		int result = 0;
-		System.out.println("listName : " + vo.getListName());
-		System.out.println("contentL : " + contentL[0]);
+		
 		
 		if (chk > 0) {
 			for (int i=0 ; i< contentL.length; i++) {
 				vo.setContent(contentL[i]);
-				vo.setdIdx(i+1);
-				result = cs.insertCheckListDetail(vo);
+				vo.setmIdx(i+1);
+				result = service.insertCheckListDetail(vo);
 				
-				
+			
 			}
 			
 		}
 		mv.setViewName("redirect:/checkList/index.do");
 		return mv;
+	}
+	
+	// 삭제
+	@RequestMapping("delete/{idx}")
+	public String delete(@PathVariable int idx, RedirectAttributes rdAttr, HttpServletRequest request) throws Exception{
+		int result = service.deleteCheckList(idx);
+		String path;
+		if (result > 0 ) {
+			rdAttr.addFlashAttribute("msg", "삭제되었습니다.");
+			path = request.getHeader("referer");
+		}else {
+			rdAttr.addFlashAttribute("msg", "삭제실패");
+			path = request.getHeader("referer");
+		}
+		
+		return  "redirect:"+path;
+	}
+	
+	// 사용여부 변경
+	@ResponseBody
+	@RequestMapping(value = "updateYN.do", produces = "application/json; charset = utf-8")
+	public String updateYN(int dIdx, String YN) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dIdx", dIdx);
+		map.put("useYN", YN);
+		
+		int result = service.updateYN(map);
+		if (result > 0) {
+			return "true";
+		}else {
+			return "false";
+		}
 	}
 	
 }
