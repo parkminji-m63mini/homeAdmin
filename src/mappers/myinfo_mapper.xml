@@ -13,16 +13,23 @@
 		<id property="birth" column="BIRTH"/>
 		<id property="photo" column="PHOTO"/>
 		<id property="nm" column="NM"/>
-		<id property="nNm" column="N_NM"/>
+		<id property="email" column="EMAIL"/>
+		<id property="tokens" column="TOKENS"/>
+		<id property="profile" column="PROFILE"/>
+		<id property="snsInfo" column="SNS_INFO"/>
 	</resultMap>
+	
+	<select id="idChk" parameterType="Myinfo" resultType="String">
+	SELECT id FROM USER_INFO WHERE ID=#{id}
+	</select>
 	
 	<select id="checkPw" parameterType="Myinfo" resultType="String">
 	SELECT PW FROM USER_INFO WHERE ID=#{id}
 	</select>
 	
 	<insert id="signUp" parameterType="Myinfo">
-		INSERT INTO USER_INFO(ID, PW,  GB,SEX, ADDR, HP, LTYPE,HTYPE, BIRTH, PHOTO, NM, N_NM) VALUES(#{id},#{pw}, #{gb}, #{sex}, #{addr}, #{hp}, 
-		#{ltype},#{htype},#{birth},#{photo}, #{nm}, #{nNm})
+		INSERT INTO USER_INFO(ID, PW,  GB,SEX, ADDR, HP, LTYPE,HTYPE, BIRTH, PHOTO, NM, N_NM, SNS_INFO,TOKENS,EMAIL,PROFILE) VALUES(#{id},#{pw}, #{gb}, #{sex}, #{addr}, #{hp}, 
+		#{ltype},#{htype},#{birth},#{photo}, #{nm}, #{nNm}, #{snsInfo}, #{tokens}, #{email}, #{profile})
 	</insert>
 	
 	<select id="selectUser" parameterType="Myinfo" resultMap="myinfoResultSet">

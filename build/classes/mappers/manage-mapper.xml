@@ -36,6 +36,16 @@
 		<result property="autoHow" column="AUTO_HOW"/>
 		<result property="autoWhen" column="AUTO_WHEN"/>
 		
+		
+		<result property="defM" column="DEF_M"/>
+		<result property="lEm" column="L_EM"/>
+		<result property="woEm" column="WO_EM"/>
+		<result property="miEm" column="MI_EM"/>
+		<result property="aEm" column="A_EM"/>
+		<result property="gyEm" column="GY_EM"/>
+		<result property="jsEm" column="JS_EM"/>
+		<result property="useE" column="USE_E"/>
+		
 	</resultMap>
 
 
@@ -378,7 +388,7 @@
 		order by B.yyyy,B.mm  
 	</select>
 	
-	<!-- 가스 페이지 당월,전년 동월 비교 데이터 -->
+	<!-- 인터넷 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="itPassSame" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
         sum(NVL(A.DEF_M,0)- NVL(A.S_IM,0)- NVL(A.G_IM,0)+ NVL(A.A_GM,0) - NVL(A.S_GM,0) + NVL(A.M_GM,0)	 ) AS SUMA,
@@ -400,4 +410,141 @@
 	
 	
 	<!-- 인터넷 종료 -->
+	
+	
+	<!-- 전기 시작 -->
+	<!-- 가스 상세 데이터 insert(당월) -->
+	<insert id="insertMEL" parameterType="Manage">
+		INSERT INTO MANAGE_EL(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT, EDT) VALUES (#{jidx}, #{uId},
+		( select A.AUTO_HOW From MANAGE_EL A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}),
+        ( select A.AUTO_WHEN From MANAGE_EL A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
+        ,( select A.AUTO_M From MANAGE_EL A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
+        ,( select A.G_NUM From MANAGE_EL A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId})
+        ,( select A.P_NUM From MANAGE_EL A
+        left join MANAGE_MA B on A.JIDX=B.IDX
+        where B.YYYY=#{yyyy} and B.MM=#{mm}-1 AND B.U_ID=#{uId}
+        ),#{gChk},NOW()
+		)
+	</insert>
+	
+	<!-- 전기 상세 데이터 가져오기 (당월분 1) -->
+	<select id="manageElNow" parameterType="Manage" resultMap="manageResultSet">
+		SELECT * ,
+		 SUM(DEF_M + L_EM + WO_EM - MI_EM + A_EM + GY_EM - JS_EM) AS SUMA
+		FROM MANAGE_EL A
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
+	</select>
+	
+	
+	<!--전기 당월,전월 비교 데이터 -->
+	<select id="elNP" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+       SUM(DEF_M + L_EM + WO_EM - MI_EM + A_EM + GY_EM - JS_EM) AS SUMA
+        ,USE_E
+		FROM MANAGE_EL A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,USE_E 	
+        ORDER BY A.WDT
+	</select>
+	
+	<!-- 범디 페이지 당월,전년 동월 비교 데이터 -->
+	<select id="elPassSame" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+       NVL(SUM(DEF_M + L_EM + WO_EM - MI_EM + A_EM + GY_EM - JS_EM),0) AS SUMA,
+        NVL(USE_E,0) AS USE_E
+		FROM MANAGE_EL A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,USE_E 	
+        ORDER BY A.WDT
+	</select>
+	
+		<!--전기 6개월치 비교 데이터 -->
+	<select id="elNP6m" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
+        SUM(DEF_M + L_EM + WO_EM - MI_EM + A_EM + GY_EM - JS_EM) AS SUMA
+		FROM MANAGE_EL A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE  A.U_ID= #{uId} AND TO_CHAR(B.WDT, 'YYYY/MM') BETWEEN #{yyyy2} AND #{yyyy}
+        GROUP BY  A.IDX, B.YYYY,B.MM,B.U_ID,B.WDT
+        ORDER BY B.YYYY,B.MM         
+	</select>
+	
+	<!-- 전기 페이지 1년 비교 데이터 -->
+	<select id="elNP12m" parameterType="Manage" resultMap="manageResultSet">
+		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
+        sum(NVL(A.DEF_M,0) + NVL(A.L_EM,0)
+       + NVL(A.WO_EM,0) 
+       - NVL(A.MI_EM,0) 
+       + NVL(A.A_EM,0) 
+       + NVL(A.GY_EM,0) 
+       - NVL(A.JS_EM,0) 
+       ) AS SUMA
+		FROM MANAGE_EL A
+        LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId}
+        AND DATE_FORMAT(CONCAT(B.YYYY, B.MM,"01"),'%Y%m%d') BETWEEN DATE_FORMAT(CONCAT(${yyyy}-1+ "", #{mm},"01"),'%Y%m%d') AND DATE_FORMAT(CONCAT(#{yyyy}, #{mm},"01"),'%Y%m%d')
+          GROUP BY B.YYYY,B.MM
+		order by B.yyyy,B.mm  
+	</select>
+	
+		<!-- 전기 데이터 있는지 체크 -->
+	<select id="chkDE" parameterType="Manage" resultType="String">
+		select A.IDX from  MANAGE_EL A 
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX 
+		where A.U_ID= #{uId} AND B.YYYY =#{yyyy} AND B.MM = #{mm}	
+	</select>
+	
+	<!--  전기 데이터 update -->
+	<update id="updateEl" parameterType="Manage">
+		UPDATE MANAGE_MA SET EL_M=${defM} + ${lEm} + ${woEm} - ${miEm} + ${aEm} + ${gyEm} - ${jsEm}
+		WHERE IDX=#{idx}
+	</update>
+	
+	<select id="newUpel" parameterType="Manage" resultType="String">
+		 
+		<if test='tp.equals("1")'>
+		SELECT A.P_NUM FROM
+		(select ROW_NUMBER() OVER (ORDER BY P_NUM DESC ) AS RN , P_NUM FROM MANAGE_EL WHERE (U_ID=#{uId} AND P_NUM IS NOT NULL AND TO_CHAR(WDT, 'YYYY/MM') != #{yyyy}) ) A
+		WHERE A.RN = 1
+		</if>
+		<if test='tp.equals("2")'>
+		SELECT A.G_NUM FROM
+		(select ROW_NUMBER() OVER (ORDER BY G_NUM DESC ) AS RN , G_NUM FROM MANAGE_EL WHERE (U_ID=#{uId} AND G_NUM IS NOT NULL AND TO_CHAR(WDT, 'YYYY/MM') != #{yyyy}) ) A
+		WHERE A.RN = 1
+		</if>
+	</select>
+	
+		
+	<!-- 공과금 데이터 update (기본값만) -->
+	<update id="updateTelM" parameterType="Manage">
+		UPDATE MANAGE_EL SET DEF_M=#{defM}, L_EM=#{lEm}, WO_EM=#{woEm}, MI_EM=#{miEm}
+		, A_EM=#{aEm},GY_EM=#{gyEm}, JS_EM=#{jsEm},
+		 USE_E=#{useE}, EDT=NOW()
+		WHERE U_ID=#{uId} AND IDX=#{idx}
+	</update>
+	<!--  전기 종료 -->
+
+	<!--  가스 전체 데이터 update -->
+	<update id="allUpdateEl" parameterType="Manage">
+		UPDATE MANAGE_EL SET 
+		EDT=NOW(), DEF_M=#{defM}, L_EM=#{lEm}, WO_EM=#{woEm}, MI_EM=#{miEm}
+		, A_EM=#{aEm},GY_EM=#{gyEm}, JS_EM=#{jsEm},
+		 USE_E=#{useE},
+		 P_NUM=#{pNum}, G_NUM=#{gNum}, G_CHK=#{gChk},AUTO_M=#{autoM}
+		 ,AUTO_HOW=#{autoHow}, AUTO_WHEN=#{autoWhen}, EDT=NOW()
+		WHERE U_ID=#{uId} AND IDX=#{idx}
+	</update>
+	
+	
 </mapper>

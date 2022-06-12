@@ -38,5 +38,10 @@ public class VisitServiceImpl
 	public List<Visit> visitList(Visit vo) throws Exception {
 		return dao.visitList(vo);
 	}
+
+	@Override
+	public void delete(Visit vo) throws Exception {
+		dao.delete(vo);
+	}
 	
 }

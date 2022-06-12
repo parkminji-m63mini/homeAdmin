@@ -15,6 +15,12 @@ public class MyinfoVo {
 	private String photo;
 	private String nm;
 	private String nNm; // 닉네임
+	private String email; // 이메일
+	
+	// sns 연동 정보
+	private String snsInfo; // 연동 sns 정보
+	private String tokens; // sns 토큰
+	private String profile; // sns 연동시 프로필 사진 주소
 	
 	// 코드
 	private String cd;
@@ -27,6 +33,30 @@ public class MyinfoVo {
 	
 	
 	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getSnsInfo() {
+		return snsInfo;
+	}
+	public void setSnsInfo(String snsInfo) {
+		this.snsInfo = snsInfo;
+	}
+	public String getTokens() {
+		return tokens;
+	}
+	public void setTokens(String Tokens) {
+		this.tokens = tokens;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	public String getScd() {
 		return scd;
 	}

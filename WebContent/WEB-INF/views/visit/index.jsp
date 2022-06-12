@@ -70,14 +70,14 @@
 
             <div class="form">
             
-            <form id='frmReg' name="frmReg" method="post" action="search.do">
+            <form id='frmReg' name="frmReg" method="post" action="javascript:proc('indexProc.do');">
             <select id='key' name='key'>
             	<option value="all">전체</option>
             	<option value="cont">내용</option>
             	<option value="nm">이름</option>
             </select>
             	
-            <input type="text" id='word' name='word'/>
+            <input type="text" id='word' name='word' />
             <a onclick="proc('indexProc.do');">검색</a> 
             
             

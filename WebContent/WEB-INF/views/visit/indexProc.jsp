@@ -10,13 +10,14 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 <style type="text/css">
 .ellTxt {
-	text-overflow: ellipsis;
-    white-space: nowrap !important;
-    overflow: hidden;
-    -webkit-line-clamp: 4;
+	 overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 라인수 */
     -webkit-box-orient: vertical;
-    word-wrap: break-word;
-    display: -webkit-box;}
+    word-wrap:break-word; 
+    line-height: 1.2em;
+    height: 3.6em;
 </style>
 <script type="text/javascript">
 
@@ -32,6 +33,31 @@ function showAll(index){
 	$("#cont"+ index).attr("class", "ellTxt");	
 	}
 	
+}
+
+function del(idx){
+	
+	if(confirm("정말 삭제하시겠습니까?")){
+		$.ajax({
+			type : "post",
+			dataType : "text", 
+			url : "delete.do",
+			data : {
+				idx: idx
+			},
+			success : function(result){
+				alert("삭제완료");
+				 proc('indexProc.do');
+			},
+			error : function(result){
+				errMsg(result);
+			}
+		});
+		}
+}
+
+function click(){
+	$(".navbar2").off("click");
 }
 </script>
 </head>
@@ -57,26 +83,41 @@ function showAll(index){
 					</colgroup>
 	 			<tbody>
 	 				<tr>
-	 					<th style="padding-top: 1%;padding-left: 1%;">
+	 					<th style="padding-left: 1%;">
 	 					<span><img src='${contextPath}/resources/img/profile/${arr.pNo}.jpg' class='profile'></span>
 	 					</th>
 	 					<th style="padding-left: 3%;text-align: left;">
-	 							${arr.vNm } (${arr.vdt})
+	 							<p style="padding-top: 12%;">${arr.vNm }
 	 							<br>
-	 							<p style="font-size: 13px;">작성일 ${arr.wdt}</p>
+	 							<span style="font-size: 13px;">방문일  ${arr.vdt}
+	 							<%--<br>작성일  ${arr.wdt}  --%>
+	 							</span>
+	 							</p>
 	 					</th>
-	 					<th>...</th>
+	 					<th>
+	 					    <nav id="navbar2" class="navbar navbar2">
+							<ul style="display: inline;" >	 					
+	 					 <li class="dropdown navbar2"><a href="javascript:click();" ><span>...</span><i class="bi bi-chevron-down"></i></a>
+				            <ul style="left : -12px;">
+				              <li><a href="#" onclick="del(${arr.idx});">삭제</a></li>
+				            </ul>
+				          </li>
+				          </ul>
+				          </nav>
+	 					</th>
 	 				</tr>
 	 				<tr >
 	 					<th colspan="3" style="padding-top: 2%;padding-bottom: 2%;">
-	 					<img src='${contextPath}/upload/${arr.photo}' style="width: 100%;"> </th>
+	 					<img src='${contextPath}/upload/${arr.photo}' style="width: 100%;" onerror="this.style.display='none'"> </th>
 	 				</tr>
 	 				<tr>
-	 					<th colspan="3" style="padding-left: 2%;">
+	 					<th colspan="3" style="padding-left: 2%;text-align: left;">
 	 				<c:set var="cont" value='${arr.cont}'/>
-	 					<span id='cont${st.index}' class='ellTxt'
+	 					<span id='cont${st.index}' 
+	 						<c:if test="${ arr.cSkip ne '0' }">
+	 					class='ellTxt'
+	 					</c:if>
 	 					style="width: 400px;">
-	 					${fn:length(arr.cont)} //
 	 					${fn:replace(arr.cont,newLine, '<br>')}
 	 					<%-- 
 	 					<c:if test="${ arr.cSkip eq '0' }">

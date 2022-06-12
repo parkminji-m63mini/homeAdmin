@@ -416,6 +416,70 @@ public class ManageM
 
 
 
+	public String getlEm() {
+			return lEm;
+		}
+
+		public void setlEm(String lEm) {
+			this.lEm = lEm;
+		}
+
+		public String getWoEm() {
+			return woEm;
+		}
+
+		public void setWoEm(String woEm) {
+			this.woEm = woEm;
+		}
+
+		public String getMiEm() {
+			return miEm;
+		}
+
+		public void setMiEm(String miEm) {
+			this.miEm = miEm;
+		}
+
+		public String getaEm() {
+			return aEm;
+		}
+
+		public void setaEm(String aEm) {
+			this.aEm = aEm;
+		}
+
+		public String getUseE() {
+			return useE;
+		}
+
+		public void setUseE(String useE) {
+			this.useE = useE;
+		}
+
+
+
+
+
+	public String getGyEm() {
+			return gyEm;
+		}
+
+		public void setGyEm(String gyEm) {
+			this.gyEm = gyEm;
+		}
+
+		public String getJsEm() {
+			return jsEm;
+		}
+
+		public void setJsEm(String jsEm) {
+			this.jsEm = jsEm;
+		}
+
+
+
+
+
 	private int idx;
     private int jidx;
     private String yyyy;
@@ -470,5 +534,13 @@ public class ManageM
     private String sIm;
     private String gIm;
     
+    //전기
+    private String lEm;
+    private String woEm;
+    private String miEm;
+    private String aEm;
+    private String useE;
+    private String gyEm;
+    private String jsEm;
     
 }

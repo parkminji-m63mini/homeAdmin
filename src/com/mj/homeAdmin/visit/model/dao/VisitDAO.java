@@ -29,4 +29,8 @@ public class VisitDAO {
 		return sqlSession.selectList("visitMapper.visitList", vo);
 	}
 
+	public void delete(Visit vo) {
+		sqlSession.delete("visitMapper.delete", vo);
+	}
+
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="helpMapper">
+
+	<resultMap id="helpResultSet" type="Help" >
+		
+		<id property="idx" column="IDX"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="uId" column="U_ID"/>
+		<result property="type" column="TYPE"/>
+		<result property="cont" column="CONT"/>
+		<result property="title" column="TITLE"/>
+		<result property="sta" column="STA"/>
+		
+	</resultMap>
+
+
+
+	<!-- 1:1 문의 insert -->
+	<insert id="submitHelp" parameterType="Help">
+		INSERT INTO HELP(U_ID, WDT,EDT,TYPE, CONT, TITLE, STA) VALUES( #{uId}, NOW(), NOW(),#{type},#{cont},#{title},"0")
+	</insert>
+	
+	
+	
+	<!-- 1:1 문의 리스트 -->
+	<select id="helpList" parameterType="Help" resultMap="helpResultSet">
+	SELECT * FROM (
+	SELECT
+     ROW_NUMBER() OVER (ORDER BY WDT DESC, IDX DESC ) AS RN,
+    A.IDX, B.CNM, U_ID, TITLE, LEFT(WDT, 10) AS WDT,
+    CASE STA WHEN "0" THEN "답변 대기" WHEN "1" THEN "답변 완료" END AS STA 
+    FROM HELP A
+    LEFT JOIN H_CODE_SECOND B ON A.TYPE=B.CD
+    WHERE U_ID=#{uId}
+    ) A
+    WHERE RN BETWEEN ${startPage} +1 AND ${startPage} + ${cntPerPage}
+	</select>
+	
+	<select id="listCnt" parameterType="Help" resultType="_int">
+		SELECT COUNT(*) FROM HELP WHERE U_ID=#{uId}		
+	</select>
+	
+	
+	
+</mapper>

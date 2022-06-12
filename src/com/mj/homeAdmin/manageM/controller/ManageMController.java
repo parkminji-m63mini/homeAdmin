@@ -361,8 +361,98 @@ public class ManageMController
 
     
     @RequestMapping("electric.do")
-    public String electric()throws Exception
+    public String electric(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
     {
+    	
+    	
+    	String flag = "false";
+    	
+		//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    	
+        //System.out.println("값 체크 : " + vo.getYyyy() + " / " + vo.getMm());
+    	
+        String yyyy= vo.getYyyy();
+        String mm= vo.getMm();
+        if(yyyy == null || yyyy.equals("")) {
+        	yyyy= "" + LocalDate.now().getYear();
+        	mm=  JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
+        }else {
+        	yyyy= vo.getYyyy();
+        	mm = JavaUtil.checkMM(vo.getMm(), "0");
+        	flag = "true";
+        }
+        
+        // 체크하는 용도로 사용함
+        vo.setgChk(flag);
+        
+    	String yyyy2 = "";
+    	String yyyy3= "";
+    	String mm2= "" +(LocalDate.now().getMonthValue()-1);
+    	String mm3= "" +(LocalDate.now().getMonthValue()-2);
+
+    	// 당월분만
+	       vo.setYyyy(yyyy);
+	       vo.setMm(mm);
+	       
+	       System.out.println(vo.getuId() + " 1");
+	       System.out.println(vo.getYyyy()+ " 1");
+	       System.out.println(vo.getMm() + " 1");
+       
+	       
+	       // 여기부터 시작
+        // 이번달
+	       List<ManageM> arrViewNow = ms.manageElNow(vo);
+        //-------------------------------//
+        // 이번달, 이전달 비교
+        
+        
+        vo.setMm2(JavaUtil.checkMM(mm, "1"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
+        
+        System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast = ms.elNP(vo);
+        //-------------------------------------//
+        // 작년 동월 값
+        
+        List<ManageM> arrViewPastY = ms.elPassSame(vo);
+        //--------------------------------
+        
+        //12개월 데이터
+        vo.setYyyy(yyyy);
+        vo.setMm(mm);
+        List<ManageM> arrViewPast12 = ms.elNP12m(vo);
+        //--------------------------------  
+        
+        
+    	// 당월에서부터 전 6개월치 가스비
+        vo.setMm2(JavaUtil.checkMM(mm, "6"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
+    	
+        System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast6 = ms.elNP6m(vo);
+        
+      //--------------------------------
+        
+    	// 당월 계절에 맞는 가스비 불러오기
+    	// 봄 3~5
+    	// 여름  6~9
+    	// 가을 10~11
+    	// 겨울 12~2
+        
+        
+        model.addAttribute("arrViewNow", arrViewNow);
+        model.addAttribute("arrViewPast", arrViewPast);
+        model.addAttribute("arrViewPast6", arrViewPast6);
+        model.addAttribute("arrViewPast12", arrViewPast12);
+        model.addAttribute("arrViewPastY", arrViewPastY);
+        model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("type", "gas"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        model.addAttribute("vo", vo);
+    	
         return "manageM/electric";
     }
     @RequestMapping("water.do")
@@ -551,5 +641,61 @@ public class ManageMController
     }
     
    
+    // 전기 계량기, 고객번호 최근 데이터로 업데이트
+    @ResponseBody
+    @RequestMapping(value="newUpel.do", produces = "application/json; charset=utf-8")
+    public String newUpel(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
+    {
+    	
+    	// 세션으로 가져오기
+        vo.setuId((String)ss.getAttribute("ssID"));
+    	
+    	System.out.println(vo.getTp());
+    	System.out.println(vo.getIdx() + "확인");
+    	System.out.println(vo.getYyyy() + "확인");
+    	
+    	// 여기부터
+    	String result = ms.newUpel(vo, ss);
+    	
+    	
+    	
+    	Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    	
+    	System.out.println(result + "확인");
+    	
+    	return  gson.toJson(result); 
+    	
+    }
     
+ // 기본 전기료 업데이트
+    @ResponseBody
+    @RequestMapping(value="allUpdateEl.do", produces = "application/json; charset=utf-8")
+    public String allUpdateEl(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	System.out.println(vo.getElM() + "확인");
+    	ms.allUpdateEl(vo, res);
+    	str ="성공";
+    	return str;
+    }
+    
+    // 전기상세 업데이트 1
+    @ResponseBody
+    @RequestMapping(value="updateTelM.do", produces = "application/json; charset=utf-8")
+    public String updatEl(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+        throws Exception
+    {
+        
+        String str = "";
+        System.out.println(vo.getMode() + "//" + vo.getuId() + "//" + vo.getIdx());
+        
+            ms.updateEl(vo, res);
+            str ="성공";
+          //  String strScript = "alert('\uC5C5\uB370\uC774\uD2B8 \uC644\uB8CC'); location.href = './index.do';";
+        //    myutil.webScript(res, strScript);
+        return str;
+    }
 }

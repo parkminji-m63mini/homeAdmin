@@ -27,6 +27,7 @@
 	<typeAlias type="com.mj.homeAdmin.checkList.vo.checkList" alias="checkList"/>
 	<typeAlias type="com.mj.homeAdmin.visit.vo.Visit" alias="Visit"/>
 	<typeAlias type="com.mj.homeAdmin.alarm.vo.alarm" alias="alarm"/>
+	<typeAlias type="com.mj.homeAdmin.help.vo.Help" alias="Help"/>
 	</typeAliases>
  
 	
@@ -39,5 +40,6 @@
 		<mapper resource="/mappers/checkList_mapper.xml"/>
 		<mapper resource="/mappers/visit_mapper.xml"/>
 		<mapper resource="/mappers/alarm_mapper.xml"/>
+		<mapper resource="/mappers/help_mapper.xml"/>
 	</mappers>
 </configuration>

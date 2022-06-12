@@ -16,4 +16,5 @@ public interface MyinfoService {
 		        throws Exception;
 	public abstract List<MyinfoVo> selectUser(MyinfoVo vo)
 			 throws Exception;
+	public abstract String idChk(MyinfoVo vo) throws Exception;
 }

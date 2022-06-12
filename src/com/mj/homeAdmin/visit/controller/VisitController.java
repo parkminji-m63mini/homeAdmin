@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
+import com.mj.homeAdmin.food.vo.Food;
+import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 import com.mj.homeAdmin.visit.model.service.VisitService;
 import com.mj.homeAdmin.visit.vo.Visit;
 
@@ -89,26 +92,33 @@ public class VisitController {
 	public void insertVisit(MultipartFile[] photo2, Visit vo,HttpSession ss,Model model, RedirectAttributes rdAttr, HttpServletResponse res	) 
 			  throws Exception
 	{
+		int chkFile = 1;
+		for(MultipartFile multipartFile : photo2) {
+ 			if(multipartFile.isEmpty()) chkFile = 0;
+		}
 		
-		 
+		
 		 //----------- 파일 업로드 --------------------
 		 String uploadFolder = "C:\\workspace\\famework\\homeAdmin2\\WebContent\\upload\\visit";
 		 
 		 String fileNm = "";
+		
+		 if(chkFile == 1) {
 		 
-		for(MultipartFile multipartFile : photo2) {
-			System.out.println("name = " + multipartFile.getOriginalFilename());	
-			System.out.println("size = " + multipartFile.getSize());	
-			
-			fileNm = vo.getuId() + multipartFile.getOriginalFilename();
-			File saveFile = new File(uploadFolder, vo.getuId() + multipartFile.getOriginalFilename());
-			
-			try {
-				multipartFile.transferTo(saveFile);
-			}catch (Exception e) {
+			for(MultipartFile multipartFile : photo2) {
+				System.out.println("name = " + multipartFile.getOriginalFilename());	
+				System.out.println("size = " + multipartFile.getSize());	
+				
+				fileNm = vo.getuId() + multipartFile.getOriginalFilename();
+				File saveFile = new File(uploadFolder, vo.getuId() + multipartFile.getOriginalFilename());
+				
+				try {
+					multipartFile.transferTo(saveFile);
+				}catch (Exception e) {
+				}
+				
 			}
-			
-		}
+		 }
 		
 		//---------파일 업로드 끝 ----------------------
 		
@@ -122,11 +132,25 @@ public class VisitController {
 		res.setCharacterEncoding("utf-8");
 		PrintWriter writer = res.getWriter();
 		writer.println("<script type='text/javascript'>");
-		writer.println("alert('등록완료');");
+		writer.println("alert('등록완료');location.href = '/homeAdmin2';");
 		writer.println("</script>");
 		writer.flush();
 		
 		
 	}
+	 
+	 // 방명록 삭제
+	 @ResponseBody
+	 @RequestMapping(value="delete.do", produces = "application/json; charset=utf-8")
+	 public void delete(Visit vo, HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+			 throws Exception
+	 {
+		 System.out.println(vo.getIdx() + " : idx");
+		 vo.setuId((String)ss.getAttribute("ssID")); 
+		 vs.delete(vo);
+		 
+		 
+		 
+	 }
 	
 }

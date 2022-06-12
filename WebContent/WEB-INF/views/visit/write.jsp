@@ -90,7 +90,7 @@
 	 <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
 
-			<h2>${vo.uNm }네</h2>
+			<h2>${vo.uNm }네 방명록</h2>
 			
 			
       </div>
@@ -137,7 +137,7 @@
           <input type="file" name="photo2" id="photo2" onchange="chk();">
           <br><br>
           <h4>방명록</h4>
-		 <textarea name="cont" id="cont" style="width: 100%; height: 200px;" rows="" cols=""></textarea>          
+		 <textarea name="cont" id="cont" style="width: 380px; height: 200px;" rows="" cols=""></textarea>          
           
           
           <a href="#" onclick="insert();">저장</a>

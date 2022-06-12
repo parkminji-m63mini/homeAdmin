@@ -85,5 +85,10 @@
           </if>
         ORDER BY VDT DESC, IDX DESC
 	</select>
+	
+		
+		<delete id="delete" parameterType="Visit">
+		DELETE FROM VISIT WHERE IDX=#{idx} AND U_ID=#{uId}
+		</delete>
 
 </mapper>

@@ -37,4 +37,9 @@ public class MyinfoServiceImpl implements MyinfoService {
 	public List<MyinfoVo> selectCode3(MyinfoVo vo)  throws Exception {
 		return dao.selectCode3(vo);
 	}
+
+	@Override
+	public String idChk(MyinfoVo vo) throws Exception {
+		return dao.idChk(vo);
+	}
 }

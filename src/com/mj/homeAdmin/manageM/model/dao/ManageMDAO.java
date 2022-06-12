@@ -171,5 +171,45 @@ public class ManageMDAO
 	public List<ManageM> itPassSame(ManageM vo) {
 		return sqlSession.selectList("manageMapper.itPassSame", vo);
 	}
+	
+	public List<ManageM> manageElNow(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageElNow", vo);
+	}
+	public void insertMEL(ManageM vo) {
+		sqlSession.insert("manageMapper.insertMEL", vo);
+		
+	}
 
+	public List<ManageM> elNP(ManageM vo) {
+		return sqlSession.selectList("manageMapper.elNP", vo);
+	}
+	public List<ManageM> elPassSame(ManageM vo) {
+		return sqlSession.selectList("manageMapper.elPassSame", vo);
+	}
+	public List<ManageM> elNP6m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.elNP6m", vo);
+	}
+	public List<ManageM> elNP12m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.elNP12m", vo);
+	}
+	public String chkDE(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.chkDE", vo);
+	}
+	public void updateTelM(ManageM vo) {
+		sqlSession.update("manageMapper.updateTelM", vo);
+		
+	}
+	public String newUpel(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.newUpel", vo);
+		
+	}
+
+	public void updateEl(ManageM vo) {
+		sqlSession.update("manageMapper.updateEl", vo);
+		
+	}
+	public void allUpdateEl(ManageM vo) {
+		sqlSession.update("manageMapper.allUpdateEl", vo);
+		
+	}
 }

@@ -77,5 +77,24 @@ public interface ManegeMService
 	  
 	  public abstract List<ManageM> itNP12m(ManageM vo)throws Exception;
 	  public abstract List<ManageM> itPassSame(ManageM vo)throws Exception;
+	  
+	 //-------------------전기------------------------ 
+	    public abstract  List<ManageM> manageElNow(ManageM managem)
+	    		throws Exception;
+	    public abstract  List<ManageM> elNP(ManageM managem)
+	    		throws Exception;
+	    public abstract List<ManageM> elPassSame(ManageM vo)throws Exception;
+	    
+	    public abstract  List<ManageM> elNP6m(ManageM managem)
+	    		throws Exception;
+	    public abstract List<ManageM> elNP12m(ManageM vo)throws Exception;
+
+	    public abstract void updateTelM(ManageM vo, HttpServletResponse httpservletresponse)
+	    		throws Exception;
+	    public abstract String newUpel(ManageM vo, HttpSession ss)throws Exception;
+	    public abstract void updateEl(ManageM managem, HttpServletResponse httpservletresponse)
+	            throws Exception;
+	    public abstract void allUpdateEl(ManageM managem, HttpServletResponse httpservletresponse)
+	    		throws Exception;
 }
 

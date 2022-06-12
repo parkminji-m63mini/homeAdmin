@@ -35,4 +35,8 @@ public class MyinfoDAO {
 	public List<MyinfoVo> selectCode3(MyinfoVo vo) {
 		return sqlSession.selectList("myinfoMapper.selectCode3", vo);
 	}
+
+	public String idChk(MyinfoVo vo) {
+		return sqlSession.selectOne("myinfoMapper.idChk", vo);
+	}
 }
