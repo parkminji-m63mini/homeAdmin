@@ -76,7 +76,8 @@ input:checked + .slider:before {
 <body>
   <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
-
+		<a href = "send.do">이메일발송</a>
+		<i class="bi bi-alarm"></i>
         <ol>
           <li><a href="index.html">알람</a></li>
           <li>전체</li>
@@ -127,7 +128,7 @@ input:checked + .slider:before {
 			  		   
 			  			
               			<h4 class="title"><a href="">${item.alarmName }</a></h4>
-              			  <h4 class="title">주기</h4>
+              			 
                           <div class="d-flex flex-row justify-content-between" id = "cycle${item.idx }" name = "cycle" >
                     
                        <c:set var="cycleArr" value="${fn:split(item.alarmCycle,',')}"></c:set>
@@ -153,6 +154,7 @@ input:checked + .slider:before {
 						
 						</c:forEach>
                          </div>
+                         <br>
               			
               			<h3>${item.alarmTime }</h3>
               			<h5>${item.memo}</h5>
@@ -174,6 +176,8 @@ input:checked + .slider:before {
     
     
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script language = javascript>
 var check = $("input[type='checkbox']");
 var YN = "true";
@@ -182,7 +186,7 @@ check.click(function(e){
 	
 	
 	 idx =e.target.id.substr(5,1); 
-	 alert(idx);
+	
 	$("p").toggle();
 	if (e.target.checked){
 		YN = "Y"
@@ -200,7 +204,7 @@ check.click(function(e){
 			YN : YN
 		},
 		success : function(result){
-			alert("성공")
+			
 		},
 		error : function(result){
 			alert(result);

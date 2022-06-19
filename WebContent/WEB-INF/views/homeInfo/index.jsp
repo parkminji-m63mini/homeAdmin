@@ -12,6 +12,9 @@
 	.petImg { width : 500px; height : auto;}
 	.basic{display : none}
 	.contract{display : none}
+	.basic-group{
+		border: 1px solid gray;
+	}
 </style>
 <title>집정보</title>
 </head>
@@ -51,8 +54,8 @@
 				
 					<div class = "select_homeImg"><img src = "${pageContext.request.contextPath}${selectHome.homeImg }" class = "homeImg" /></div>
 				</div>
-              
-              <p onclick='basicShow()'>기본정보</p>
+         <div class = "basic-group">
+              <h1><p onclick='basicShow()'>기본정보</p></h1>
                <div class="form-group mt-3 basic">
                 <h3 class="section-title ">집이름</h3>  <p> ${selectHome.hnm} </p>
                 </div>
@@ -72,7 +75,7 @@
                
                  <div class="form-inline mb-2">
 				
-					<div class = "select_img"><img src = "${pageContext.request.contextPath}${selectHome.petImg }" /></div>
+					<div class = "select_img"><img class = "petImg" src = "${pageContext.request.contextPath}${selectHome.petImg }" /></div>
 				</div>
                
                 </div>
@@ -90,9 +93,9 @@
               <div class="form-group mt-3 basic">
                      <h3 class="section-title">와이파이 비밀번호  </h3>     <p>${selectHome.wifiPw}</p>
                 </div>
-                
+           </div>
                 <br><br>
-                <p onclick='contractShow()'>계약정보</p>
+                <h1><p onclick='contractShow()'>계약정보</p></h1>
                 
                 <div class="form-group contract">
                	<h3 class="section-title">계약</h3>  <br>
@@ -137,7 +140,7 @@
                 <br><br>
                
               
-                	<div class="text-center"><button type="button" id="updateBtn" title="Send Message" onclick = "location.href = 'updateView/${selectHome.id}'" >수정</button></div>
+                	<div class="text-center"><button class = "btn btn-primary btn-lg" type="button" id="updateBtn" title="Send Message" onclick = "location.href = 'updateView/${selectHome.id}'" >수정</button></div>
                 	
               </form>
         </c:otherwise>
@@ -240,4 +243,6 @@ function selectCode(cd){
 </script>
 
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

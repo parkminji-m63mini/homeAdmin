@@ -88,11 +88,11 @@ function selectCode(cd){
 
               
 
-              <form id='updateHomeForm' name='updateHomeForm' method="post" role="form" class="php-email-form" enctype="multipart/form-data" action="../update.do" >
+              <form id='updateHomeForm' name='updateHomeForm' method="post" role="form" class="form-horizontal" enctype="multipart/form-data" action="../update.do" >
               
               
-              <div class="form-inline mb-2">
-					<label for="homeImg">업로드<br>이미지</label>
+              <div class="form-group mb-2">
+					<label class="control-label for="homeImg">업로드<br>이미지</label>
 					<input type = "file" id = "homeImg" name = "homeImgFile"/>
 					<div class = "select_img"><img src = "${selectHome.homeImg }" /></div>
 				</div>
@@ -123,9 +123,12 @@ function selectCode(cd){
                	계약 <br>
                	<span id='ListContract'></span>
                 </div>              
-                    <div class="form-group mt-3">
-                집주소  <input type="text" class="form-control" name="address" id="address"   value = "${selectHome.address}" >
-                </div>    
+                    <div class="form-group">
+    <label for="address" class="col-sm-2 control-label">집주소</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="address">
+    </div>
+  </div>  
                  <div class="form-group mt-3">
                 오는길  <input type="text" class="form-control" name="direction" id="direction"   value = "${selectHome.direction}" >
                 </div>
@@ -202,8 +205,8 @@ function selectCode(cd){
                 	<div class="text-center">
             
                		
-					<button type = "submit" id = "updateBtn">저장 </button>
-						<button id="deleteBtn"  >삭제</button>
+					<button class="btn btn-primary btn-lg" type = "submit" id = "updateBtn">저장 </button>
+						<button class = "btn btn-primary btn-lg" id="deleteBtn"  >삭제</button>
 
                     </div>
                 
@@ -224,4 +227,6 @@ function selectCode(cd){
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>
