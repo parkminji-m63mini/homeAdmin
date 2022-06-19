@@ -37,4 +37,9 @@ public class HelpServiceImpl implements HelpService{
 	public int listCnt(Help vo) throws Exception {
 		return dao.listCnt(vo);
 	}
+
+	@Override
+	public List<Help> helpView(Help vo) throws Exception {
+		return dao.helpView(vo);
+	}
 }

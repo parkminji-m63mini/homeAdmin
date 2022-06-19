@@ -122,7 +122,26 @@ function kakaoLogin() {
         	  console.log(response.id)
         	  console.log(response.kakao_account.email)
         	  console.log(response.kakao_account.profile.nickname)
-        //	location.href ="naverLogin?data=" + response.kakao_account;
+        	  console.log(response.kakao_account.profile.profile_image_url)
+        	  console.log(response.kakao_account.gender)
+        	  console.log(response.kakao_account.birthday)
+        	  
+        	  var id = response.id;
+        	  var email = response.kakao_account.email;
+        	  var nNm = response.kakao_account.profile.nickname;
+        	  var profile = response.kakao_account.profile.profile_image_url;
+        	  var sex = response.kakao_account.gender;
+        	  var birth = response.kakao_account.birthday;
+        	  
+        	  if(sex == "female"){
+        		  sex = "2";
+        	  }else if(sex == "male"){
+        		  sex = "1";
+        	  }else{
+        		 sex = "3";
+        	  }
+        	  
+        	location.href ="kakaoLogin?id=" + id + "&email=" + email + "&nNm=" + nNm + "&profile=" + profile + "&sex=" + sex + "&birth=" + birth;
         	  // 여기부터
         	  
         	  // 아이디 비교하고 있으면 로그인(메인으로)

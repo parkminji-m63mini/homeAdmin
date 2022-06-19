@@ -38,8 +38,8 @@ public class FoodServiceImpl implements FoodService{
 	}
 
 	@Override
-	public void insertType(Food vo) throws Exception {
-		dao.insertType(vo);
+	public int insertType(Food vo) throws Exception {
+		return dao.insertType(vo);
 	}
 
 	@Override

@@ -45,6 +45,14 @@
 		<result property="gyEm" column="GY_EM"/>
 		<result property="jsEm" column="JS_EM"/>
 		<result property="useE" column="USE_E"/>
+
+
+		<result property="jiT" column="JI_T"/>
+		<result property="jiM" column="JI_M"/>
+		<result property="memo" column="MEMO"/>
+		<result property="suma" column="SUMA"/>
+		
+		
 		
 	</resultMap>
 
@@ -413,7 +421,7 @@
 	
 	
 	<!-- 전기 시작 -->
-	<!-- 가스 상세 데이터 insert(당월) -->
+	<!-- 전기 상세 데이터 insert(당월) -->
 	<insert id="insertMEL" parameterType="Manage">
 		INSERT INTO MANAGE_EL(JIDX,U_ID,AUTO_HOW,AUTO_WHEN,AUTO_M,G_NUM, P_NUM,WDT, EDT) VALUES (#{jidx}, #{uId},
 		( select A.AUTO_HOW From MANAGE_EL A
@@ -533,9 +541,8 @@
 		 USE_E=#{useE}, EDT=NOW()
 		WHERE U_ID=#{uId} AND IDX=#{idx}
 	</update>
-	<!--  전기 종료 -->
 
-	<!--  가스 전체 데이터 update -->
+	<!--  전기 전체 데이터 update -->
 	<update id="allUpdateEl" parameterType="Manage">
 		UPDATE MANAGE_EL SET 
 		EDT=NOW(), DEF_M=#{defM}, L_EM=#{lEm}, WO_EM=#{woEm}, MI_EM=#{miEm}
@@ -545,6 +552,89 @@
 		 ,AUTO_HOW=#{autoHow}, AUTO_WHEN=#{autoWhen}, EDT=NOW()
 		WHERE U_ID=#{uId} AND IDX=#{idx}
 	</update>
+	<!--  전기 종료 -->
+
 	
+	<!-- 관리비 상세 데이터 가져오기 (당월분 1) -->
+	<select id="manageMaNow" parameterType="Manage" resultMap="manageResultSet">
+		SELECT *
+		FROM MANAGE_MAM A
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
+	</select>
+	
+		<!-- 관리 상세 데이터 insert(당월) -->
+	<insert id="insertMMa" parameterType="Manage">
+		INSERT INTO MANAGE_MAM(JIDX,U_ID, WDT, EDT, JI_T, JI_M) VALUES (#{jidx}, #{uId},#{gChk},NOW(), #{jiT}, #{jiM})
+	</insert>
+	
+	
+	<update id="updateMm" parameterType="Manage">
+		UPDATE MANAGE_MAM SET 
+		EDT=NOW(), JI_M=#{jiM}, JI_T=#{jiT}, G_CHK=#{gChk}
+		WHERE U_ID=#{uId} AND IDX=#{idx}
+	</update>
+	
+	<select id="manageMaNowSum"  parameterType="Manage" resultType="String">
+		SELECT SUM(JI_M) AS SUMA
+		FROM MANAGE_MAM A
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+		WHERE A.U_ID=#{uId} AND B.YYYY=#{yyyy} AND B.MM=#{mm}  	
+	</select>
+	
+	<delete id="deleteMm" parameterType="Manage">
+		DELETE FROM MANAGE_MAM
+		WHERE U_ID=#{uId} AND IDX IN 
+		<foreach item="item" collection="idxL"
+      open="(" separator="," close=")">
+        #{item}
+  </foreach>
+	</delete>
+	
+	<!--관리비 당월,전월 비교 데이터 -->
+	<select id="MmNP" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT
+       B.YYYY,B.MM, SUM(JI_M) AS SUMA
+		FROM MANAGE_MAM A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =#{yyyy2} AND B.MM = #{mm2})
+        GROUP BY  B.YYYY,B.MM
+        ORDER BY A.WDT
+	</select>
+	
+	<!-- 관리비 페이지 당월,전년 동월 비교 데이터 -->
+	<select id="mMPassSame" parameterType="Manage" resultMap="manageResultSet">
+		 SELECT B.YYYY,B.MM,B.U_ID, 
+        sum(NVL(A.JI_M,0)) AS SUMA    
+		FROM MANAGE_MAM A
+        LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
+        WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
+        GROUP BY B.YYYY,B.MM,B.U_ID	
+        ORDER BY A.WDT
+	</select>
+	
+	<!-- 관리비 데이터 있는지 체크 -->
+	<select id="chkDM" parameterType="Manage" resultType="String">
+		select COUNT(A.IDX) AS IDX from  MANAGE_MAM A 
+		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX 
+		where A.U_ID= #{uId} AND B.YYYY =#{yyyy} AND B.MM = #{mm}	
+	</select>
+	
+	
+	<!-- 관리 상세 데이터 insert(당월) -->
+	<insert id="insertMMm" parameterType="Manage">
+	INSERT INTO MANAGE_MAM(JIDX,U_ID,WDT, EDT,JI_T)
+	SELECT A.JIDX, B.U_ID ,#{gChk} ,NOW() ,A.JI_T
+I_T  FROM  MANAGE_MAM A
+LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX 
+WHERE B.IDX=#{jidx} AND B.U_ID=#{uId}	
+		)
+	</insert>
+	
+		<!-- 관리  데이터 update -->
+	<update id="updateTMm" parameterType="Manage">
+		UPDATE MANAGE_MA SET MA_M=${jiM}
+		WHERE IDX=#{idx}
+	</update>
 	
 </mapper>

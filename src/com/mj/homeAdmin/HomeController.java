@@ -47,6 +47,58 @@ public class HomeController
 	public String naverLogin() {
 		return "../naverLogin";
 	}
+	@RequestMapping(value = "kakaoLogin", method = RequestMethod.GET)
+	public String kakaoLogin(MyinfoVo vo,  HttpSession ss, Model model, RedirectAttributes rdAttr,HttpServletRequest req)
+			 throws Exception{
+		
+		System.out.println(vo.getId() + "/" + vo.getEmail());
+		
+		
+		 String result ="false";
+			
+			
+		 // 아이디가 존재하는지 확인
+		 String chk = ms.idChk(vo);
+		 
+		 
+		 // 아이디 없다면
+		 if(chk == null || chk.equals("") || chk.isEmpty() == true) {
+		 
+			 // 임의 셋팅
+			 vo.setGb('1');
+			 vo.setLtype("1");
+			 vo.setHtype("1");
+			 vo.setSnsInfo("kakao");
+			 ms.signUp(vo);
+		 }	 
+			 
+			 //세션에 필요한 정보가져오기
+			 // 여기부터
+			 List<MyinfoVo> user = ms.selectUser(vo);
+			 
+			 vo.setId(user.get(0).getId());
+			 vo.setNm(user.get(0).getNm());
+			 vo.setnNm(user.get(0).getnNm());
+			 vo.setGb(user.get(0).getGb());
+			 //	 System.out.println(user.get(0).getNm() + " 리스트 값");
+			 //	 System.out.println(vo.getNm() + " vo값");
+			 
+			 // 세션에 세팅
+			 cm.goSessionChk(vo, ss, req);
+			 cm.getSessionChk(ss);
+			 
+		
+			
+		 
+	result ="true";
+	model.addAttribute("user" ,vo);
+	
+		System.out.println(ss.getAttribute("ssNM") + " 세션 확인");
+	
+	return "../../main" ;
+		
+	}
+	
 	
 	
 	
@@ -56,9 +108,23 @@ public class HomeController
 			 throws Exception{
 			 String result ="false";
 	
-			
+			 System.out.println(vo.getBirth() + "birth");
+			vo.getBirth().replace("-", "");
+			 
+			 
 			 // 아이디가 존재하는지 확인
 			 String chk = ms.idChk(vo);
+			 
+			 // 성별
+			 if(vo.getSex()== 'F') { // 여자
+				 vo.setSex('2');
+				 
+			 }else if(vo.getSex()== 'M') { // 남자
+				 vo.setSex('1');
+				 
+			 }else {
+				 vo.setSex('3');
+			 }
 			 
 			 // 아이디 없다면
 			 if(chk == null || chk.equals("") || chk.isEmpty() == true) {

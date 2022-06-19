@@ -11,7 +11,9 @@ public class Help {
 	private String counId; // 상담사 아이디
 	private String wdt; // 생성일
 	private String edt; // 수정일
+	private String adt; // 답변일
 	private String sta; // 답변상태  // 0:답변 대기 1:답변완료
+	private String cnm; //
 	
 	private int limit; // 페이지당 보여지는 리스트 수
 	
@@ -25,6 +27,18 @@ public class Help {
 	 
 	public int getIdx() {
 		return idx;
+	}
+	public String getAdt() {
+		return adt;
+	}
+	public void setAdt(String adt) {
+		this.adt = adt;
+	}
+	public String getCnm() {
+		return cnm;
+	}
+	public void setCnm(String cnm) {
+		this.cnm = cnm;
 	}
 	public int getRn() {
 		return rn;

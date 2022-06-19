@@ -42,6 +42,17 @@
 		SELECT COUNT(*) FROM HELP WHERE U_ID=#{uId}		
 	</select>
 	
+	<!-- 1:1 문의 리스트 -->
+	<select id="helpView" parameterType="Help" resultMap="helpResultSet">
+		SELECT
+    A.IDX, B.CNM, U_ID, TITLE, LEFT(WDT, 10) AS WDT,
+    CASE STA WHEN "0" THEN "답변 대기" WHEN "1" THEN "답변 완료" END AS STA,
+    STA AS STA2  ,ANSWER,COUN_ID, LEFT(ADT, 10) AS ADT, B.CNM, CONT
+    FROM HELP A
+    LEFT JOIN H_CODE_SECOND B ON A.TYPE=B.CD
+    WHERE U_ID=#{uId} AND A.IDX=#{idx}
+	</select>
+	
 	
 	
 </mapper>

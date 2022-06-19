@@ -66,7 +66,7 @@
               <li><a href="#" onclick="loginchk('/manageM/electric.do');">전기</a></li>
               <li><a href="#" onclick="loginchk('/manageM/water.do');">수도</a></li>
               <li><a href="#" onclick="loginchk('/manageM/it.do');">인터넷</a></li>
-              <li><a href="#" onclick="loginchk('/manageM/ma.do');">관리비</a></li>
+              <li><a href="#" onclick="loginchk('/manageM/manage.do');">관리비</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do?mode=0');">식재료</a></li>

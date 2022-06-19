@@ -12,7 +12,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<script type="text/javascript">
 $(document).ready(function(){
-	
+	console.log("jsp 확인");
 	selectCode();
 });
 

@@ -212,4 +212,45 @@ public class ManageMDAO
 		sqlSession.update("manageMapper.allUpdateEl", vo);
 		
 	}
+	
+	
+	
+	public List<ManageM> manageMaNow(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageMaNow", vo);
+	}
+	public void insertMMa(ManageM vo) {
+		sqlSession.insert("manageMapper.insertMMa", vo);
+		
+	}
+	public void updateMm(ManageM vo) {
+		sqlSession.update("manageMapper.updateMm", vo);
+		
+	}
+
+	public String manageMaNowSum(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.manageMaNowSum", vo);
+	}
+
+	public void deleteMm(ManageM vo) {
+		sqlSession.delete("manageMapper.deleteMm", vo);
+	}
+	public List<ManageM> MmNP(ManageM vo) {
+		return sqlSession.selectList("manageMapper.MmNP", vo);
+	}
+
+	public List<ManageM> mMPassSame(ManageM vo) {
+		return sqlSession.selectList("manageMapper.mMPassSame", vo);
+	}
+	public String chkDM(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.chkDM", vo);
+	}
+
+	public void insertMMm(ManageM vo) {
+		sqlSession.insert("manageMapper.insertMMm", vo);
+	}
+	
+	public void updateTMm(ManageM vo) {
+		sqlSession.update("manageMapper.updateTMm", vo);
+		
+	}
 }

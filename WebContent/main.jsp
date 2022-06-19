@@ -21,7 +21,7 @@ $(document).ready(function() {
 </script>
 
 <body>
-
+<%--
 <section id="profile" style="display: none;">
 
 
@@ -62,7 +62,7 @@ $(document).ready(function() {
 
     </section><!-- End Features Section -->
 </section>
-
+ --%>
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="clearfix">
     <div class="container d-flex h-100">

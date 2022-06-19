@@ -456,27 +456,27 @@ function show(){
       			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arrC.gasM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arrC.gasM}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arrC.elM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arrC.elM}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arrC.wtM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arrC.wtM}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arrC.itM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arrC.itM}" type="number"/>원
       			</span>
       			</th>      			
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arrC.maM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arrC.maM}" type="number"/>원
       			</span>
       			</th>      			
       			</tr>		
@@ -517,27 +517,27 @@ function show(){
       			<th  class='boder-black'>${arr4.yyyy}년 ${arr4.mm}월</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.gasM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arr4.gasM}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.elM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arr4.elM}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.wtM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arr4.wtM}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.itM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arr4.itM}" type="number"/>원
       			</span>
       			</th>    
       			
       			<th  class='boder-black'>
-      			<span class='nomalFrom'><fmt:formatNumber value="${arr4.maM}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arr4.maM}" type="number"/>원
       			</span>
       			</th>     			
       			</tr>	
@@ -576,7 +576,7 @@ function show(){
 			
 			</c:when>
 			<c:when test="${avg < 0}">
-     		<c:set var='avg2' value="${(gas+el+wt+it)* -1}" ></c:set>
+     		<c:set var='avg2' value="${(gas+el+wt+it+ma)* -1}" ></c:set>
      		
 			<div style="text-align: center;" class='savingDiv'>
 			<h4>

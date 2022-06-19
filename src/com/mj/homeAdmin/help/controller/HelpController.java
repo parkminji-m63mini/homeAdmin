@@ -84,7 +84,25 @@ public class HelpController {
 	    public String helpIWrite(Help vo, HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
 	        throws Exception
 	    {
+		 
 		 return "help/write";
+		 
+	    }
+	 
+	 @RequestMapping("view.do")
+	    public String helpView(Help vo, HttpSession ss, Model model, RedirectAttributes rdAttr, HttpServletResponse response)
+	        throws Exception
+	    {
+			//세션으로 가져오기
+			vo.setuId((String)ss.getAttribute("ssID"));
+			
+		 System.out.println(vo.getIdx() + "fff");
+		 
+		 List<Help> arrList = hs.helpView(vo);
+		 
+		 
+		 model.addAttribute("arrList", arrList);
+		 return "help/view";
 		 
 	    }
 	

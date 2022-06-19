@@ -28,4 +28,8 @@ public class HelpDAO {
 	public int listCnt(Help vo) {
 		return sqlSession.selectOne("helpMapper.listCnt", vo);
 	}
+
+	public List<Help> helpView(Help vo) {
+		return sqlSession.selectList("helpMapper.helpView", vo);
+	}
 }

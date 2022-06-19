@@ -9,7 +9,7 @@ public interface FoodService {
 
 	public abstract String frFind(Food vo)  throws Exception;
 
-	public abstract void insertType(Food vo) throws Exception;
+	public abstract int insertType(Food vo) throws Exception;
 
 	public abstract List<Food> selectFr(Food vo)throws Exception;
 

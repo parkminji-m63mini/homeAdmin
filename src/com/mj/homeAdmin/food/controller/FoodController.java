@@ -43,11 +43,14 @@ public class FoodController {
 		//세션으로 가져오기
 			vo.setuId((String)ss.getAttribute("ssID"));
 			
+			System.out.println("check");
+			
 			String url = "food/index";
 			List<Food> arrList = null;
 		 // 냉장고 타입을 선택했는지 데이터 가져오기
 		 String chkF = fs.frFind(vo);
 		 
+		 System.out.println(chkF +  " // chkf 3");
 		 System.out.println(vo.getMode() +  " // mode");
 		 
 		 if(vo.getMode() == null) {
@@ -120,9 +123,18 @@ public class FoodController {
 			vo.setuId((String)ss.getAttribute("ssID"));
 			
 		
-		fs.insertType(vo);
+		int chk = fs.insertType(vo);
+		
+		System.out.println(chk + ": chk 확인");
+		
+		System.out.println("완료");
+		
+		String url ="";
+		if(chk == 1) {
+			url = "redirect:/food/index.do";
+		}
 			
-		 return "food/index";
+		 return url;
 	    }
 	 
 	 @RequestMapping("fr01Insert.do")

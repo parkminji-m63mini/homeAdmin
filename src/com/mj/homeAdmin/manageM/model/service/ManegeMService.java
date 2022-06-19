@@ -96,5 +96,19 @@ public interface ManegeMService
 	            throws Exception;
 	    public abstract void allUpdateEl(ManageM managem, HttpServletResponse httpservletresponse)
 	    		throws Exception;
+//----------------------관리------------------------------------
+		public abstract List<ManageM> manageMaNow(ManageM vo)throws Exception;
+		 public abstract void updateMm(ManageM managem, HttpServletResponse httpservletresponse)
+		            throws Exception;
+
+		public abstract String manageMaNowSum(ManageM vo)  throws Exception;
+
+		public abstract void deleteMm(ManageM vo)throws Exception;
+
+		public abstract List<ManageM> MmNP(ManageM vo)throws Exception;
+
+		public abstract List<ManageM> mMPassSame(ManageM vo)throws Exception;
+		 public abstract void updateTMm(ManageM vo, HttpServletResponse httpservletresponse)
+		    		throws Exception;
 }
 

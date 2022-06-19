@@ -698,4 +698,164 @@ public class ManageMController
         //    myutil.webScript(res, strScript);
         return str;
     }
+    
+    
+    ///------------------------관리비
+    
+    
+    @RequestMapping("manage.do")
+    public String manage(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response)throws Exception
+    {
+    	
+    	String flag = "false";
+    	
+		//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    	
+        //System.out.println("값 체크 : " + vo.getYyyy() + " / " + vo.getMm());
+    	
+        String yyyy= vo.getYyyy();
+        String mm= vo.getMm();
+        if(yyyy == null || yyyy.equals("")) {
+        	yyyy= "" + LocalDate.now().getYear();
+        	mm=  JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
+        }else {
+        	yyyy= vo.getYyyy();
+        	mm = JavaUtil.checkMM(vo.getMm(), "0");
+        	flag = "true";
+        }
+        
+        // 체크하는 용도로 사용함
+        vo.setgChk(flag);
+        
+    	String yyyy2 = "";
+    	String yyyy3= "";
+    	String mm2= "" +(LocalDate.now().getMonthValue()-1);
+    	String mm3= "" +(LocalDate.now().getMonthValue()-2);
+
+    	// 당월분만
+	       vo.setYyyy(yyyy);
+	       vo.setMm(mm);
+	       
+	       System.out.println(vo.getuId() + " 1");
+	       System.out.println(vo.getYyyy()+ " 1");
+	       System.out.println(vo.getMm() + " 1");
+       
+        // 이번달
+        List<ManageM> arrViewNow = ms.manageMaNow(vo);
+        
+        //전체 총합
+        String suma = ms.manageMaNowSum(vo);
+	       
+        //-------------------------------//
+        // 이번달, 이전달 비교
+        
+        
+        vo.setMm2(JavaUtil.checkMM(mm, "1"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
+        
+        System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast = ms.MmNP(vo);
+        
+        //-------------------------------------//
+        // 작년 동월 값
+        
+        List<ManageM> arrViewPastY = ms.mMPassSame(vo);
+        //--------------------------------
+        
+        
+    	// 당월에서부터 전 6개월치 가스비
+        vo.setMm2(JavaUtil.checkMM(mm, "6"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
+    	
+        System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+     //   List<ManageM> arrViewPast6 = ms.gasNP6m(vo);
+        
+      //--------------------------------
+        
+        //12개월 데이터
+        vo.setYyyy(yyyy);
+        	vo.setMm(mm);
+   //     List<ManageM> arrViewPast12 = ms.itNP12m(vo);
+      //--------------------------------  
+    	
+    	// 당월 계절에 맞는 가스비 불러오기
+    	// 봄 3~5
+    	// 여름  6~9
+    	// 가을 10~11
+    	// 겨울 12~2
+        System.out.println(suma + "  suma ");
+        
+       model.addAttribute("arrViewNow", arrViewNow);
+       model.addAttribute("suma", suma);
+       model.addAttribute("arrViewPast", arrViewPast);
+//        model.addAttribute("arrViewPast12", arrViewPast12);
+       model.addAttribute("arrViewPastY", arrViewPastY);
+   //     model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+   //     model.addAttribute("type", "it"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        model.addAttribute("vo", vo);
+    	
+    	
+        return "manageM/manage";
+    }
+    
+    // 관리비 업데이트 1
+    @ResponseBody
+    @RequestMapping(value="allUpMm.do", produces = "application/json; charset=utf-8")
+    public String allUpMm(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    			
+    	String str = "";
+    //	System.out.println(vo.getMode() + "//" + vo.getuId() + "//" + vo.getIdxL());
+    	System.out.println("확인");
+    	System.out.println(vo.getIdxL());
+    	
+    	ms.updateMm(vo, res); // insert, update 둘다 함
+    	str ="성공";
+    	//  String strScript = "alert('\uC5C5\uB370\uC774\uD2B8 \uC644\uB8CC'); location.href = './index.do';";
+    	//    myutil.webScript(res, strScript);
+    	return str;
+    }
+    
+    // 관리비 삭제
+    @ResponseBody
+    @RequestMapping(value="deleteMm.do", produces = "application/json; charset=utf-8")
+    public String deleteMm(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    			
+    	String str = "";
+    //	System.out.println(vo.getMode() + "//" + vo.getuId() + "//" + vo.getIdxL());
+    	System.out.println("확인");
+    	System.out.println(vo.getIdxL());
+    	
+    	ms.deleteMm(vo); // insert, update 둘다 함
+    	str ="성공";
+    	//  String strScript = "alert('\uC5C5\uB370\uC774\uD2B8 \uC644\uB8CC'); location.href = './index.do';";
+    	//    myutil.webScript(res, strScript);
+    	return str;
+    }
+    
+    
+    // 기본 관리비 업데이트
+    @ResponseBody
+    @RequestMapping(value="updateTMm.do", produces = "application/json; charset=utf-8")
+    public String updateTMm(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	System.out.println(vo.getJiML());
+    	
+    	ms.updateTMm(vo, res);
+    	str ="성공";
+    	return str;
+    }
 }

@@ -868,5 +868,172 @@ public class ManageMServiceImpl
 		dao.allUpdateEl(vo);
 		
 	}
+//------------관리----------------
+	@Override
+	public List<ManageM> manageMaNow(ManageM vo) throws Exception {
+		List<ManageM> arrList = dao.manageMaNow(vo);
+		
+		System.out.println(vo.getuId()+ "/" + vo.getYyyy() + "/" + vo.getMm()  + "1");
+		
+		 // 당월 가스 데이터가 없다면 새로 생성
+ 	 if(arrList.isEmpty()|| arrList.get(0) == null) {
+ 		 
+ 		 // 공과금 전체 데이터를 가지고 있는 지 부터 확인
+ 		 List<ManageM> arrListChk = dao.manageList(vo);
 
+ 		 // gChk는 값 담기위해  일시적으로 사용한거임 별 의미없음
+ 		 if(vo.getgChk().equals("true")) {
+ 			 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+ 			 vo.setgChk(dt);
+ 		 }else {
+ 			 vo.setgChk(LocalDate.now() +"");
+ 		 }
+ 		 
+ 		 // 전체 데이터가 없다면 생성
+ 		 if(arrListChk.isEmpty() || arrListChk.get(0) == null) {
+ 			 
+ 			 
+ 			 dao.insertMAll(vo);
+ 		 }
+ 		 int jidx = 0;
+ 		 
+ 		 //가스비 상세 데이터 생성 하기 ------------------
+
+ 		 // 조인idx 가져옴 (새로만든 MANAGE_MA 의 IDX)
+ 		 jidx = dao.manageIndex(vo); // 공과금 전체 데이터 idx 가져오기
+ 		   
+ 		  // 생성 후 다시 인덱스 조회
+ 		   jidx = dao.manageIndex(vo);
+ 		 vo.setJidx(jidx);
+ 		 
+ 		 //관리비 상세 데이터 생성
+ 		 dao.insertMMa(vo);
+ 		 //------------------------
+ 		 System.out.println("넘어옴");
+ 		 
+ 		 // 다시 불러오기
+ 		  arrList = dao.manageMaNow(vo);
+ 	 }
+		
+ 	 System.out.println(vo.getuId()+ "/" + vo.getYyyy() + "/" + vo.getMm()  +  "/2");
+ 	 System.out.println(arrList.size()  + "/" + arrList.get(0).getIdx() );
+		return arrList;
+	}
+	
+	public void updateMm(ManageM vo, HttpServletResponse res)   throws Exception{
+		
+		for (int i=0; i<vo.getIdxL().length; i++) {
+		String[] idxL = vo.getIdxL();
+		String[] jiTL = vo.getJiTL();
+		String[] jiML = vo.getJiML();
+		
+		
+		if(idxL[i] != "") {
+			
+			vo.setIdx(Integer.parseInt(idxL[i]));
+			vo.setJiT(jiTL[i]);
+			vo.setJiM(jiML[i]);
+			
+			if(idxL[i].equals("0")) { // insert
+				System.out.println(vo.getJidx() + " 인서트");
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+				dao.insertMMa(vo);
+				
+			}else { // update
+				System.out.println(vo.getJidx() + "/" + vo.getIdx() + "/ 업데이트" + vo.getJiT());
+				dao.updateMm(vo);
+			}
+			
+		}
+		}
+		
+		// 값 들어가지 않아서 잠시 멈춤
+		// 기본 테이블 가스 컬럼도 수정 (상세값 전부 + 했을 때 값으로) update
+		//dao.updateMGas(vo);
+	}
+
+	@Override
+	public String manageMaNowSum(ManageM vo) throws Exception {
+		return dao.manageMaNowSum(vo);
+	}
+
+	@Override
+	public void deleteMm(ManageM vo) throws Exception {
+		dao.deleteMm(vo);
+		
+	}
+
+	@Override
+	public List<ManageM> MmNP(ManageM vo) throws Exception {
+		List<ManageM> arrList = dao.MmNP(vo);
+		
+		return arrList;
+	}
+
+	@Override
+	public List<ManageM> mMPassSame(ManageM vo) throws Exception {
+		List<ManageM> arrList = dao.mMPassSame(vo);
+
+		System.out.println(vo.getYyyy() + "/" + vo.getMm() + "날짜 확인");
+				
+		System.out.println(arrList.size()  + "크기확인");
+		
+		// 작년 동월 데이터가 있는지 확인 
+		// 당월 데이터는 무조건 있으니 1이라면 전년도 데이터가 없는 것
+		if(arrList.size() == 1) {
+			// 해당 데이터가 있는지 체크
+			String chk = dao.chkDM(vo);
+			
+			// 데이터 없으면 insert
+			if(chk == null || chk.equals("") || chk.isEmpty() == true ||  chk.equals("0")) {
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+	   			 
+	   			 // 전체 공과금 데이터가 있는지 확인
+	   		  String chk2 = dao.manageIndexS(vo);
+	   		
+	   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+	   			System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+	   			// 공과금 데이터 생성
+	   			dao.insertMAll(vo);
+	   			
+	   			//  관리 데이터에 넣을 조인 idx 가져오기
+	   			// jidx 세팅
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			System.out.println("jidx : " + vo.getJidx() );
+	   			// 관리 월 데이터 새로 생성
+	   			dao.insertMMm(vo);
+	   		}else {
+	   			System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			dao.insertMMm(vo);
+	   			System.out.println("jidx : " + vo.getJidx() );
+	   		}
+	   			 
+			}	
+			arrList = dao.mMPassSame(vo);
+		}
+	
+    	
+    	return arrList;
+	}
+	@Override
+	public void updateTMm(ManageM vo, HttpServletResponse httpservletresponse) throws Exception {
+		
+		
+		int suma = 0;
+		
+		
+		for (int i = 0; i < vo.getJiML().length; i++) {
+			System.out.println(vo.getJiML()[i] +  " vo.getJiML()[i]");
+			suma += Integer.parseInt(vo.getJiML()[i]);
+		}
+		
+		vo.setJiM(Integer.toString(suma));
+		
+		dao.updateTMm(vo);
+		
+	}
+	
 }

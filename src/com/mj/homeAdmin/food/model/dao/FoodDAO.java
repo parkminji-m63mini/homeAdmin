@@ -23,8 +23,8 @@ public class FoodDAO {
 		return sqlSession.selectOne("foodMapper.frFind", vo);
 	}
 
-	public void insertType(Food vo) {
-		 sqlSession.insert("foodMapper.insertType", vo);
+	public int insertType(Food vo) {
+		return sqlSession.insert("foodMapper.insertType", vo);
 	}
 
 	public List<Food> selectFr(Food vo) {

@@ -480,7 +480,64 @@ public class ManageM
 
 
 
+	public String getJiT() {
+			return jiT;
+		}
+
+		public void setJiT(String jiT) {
+			this.jiT = jiT;
+		}
+
+		public String getJiM() {
+			return jiM;
+		}
+
+		public void setJiM(String jiM) {
+			this.jiM = jiM;
+		}
+
+		public String getMemo() {
+			return memo;
+		}
+
+		public void setMemo(String memo) {
+			this.memo = memo;
+		}
+
+
+
+
+
+	public String[] getIdxL() {
+			return idxL;
+		}
+
+		public void setIdxL(String[] idxL) {
+			this.idxL = idxL;
+		}
+
+		public String[] getJiTL() {
+			return jiTL;
+		}
+
+		public void setJiTL(String[] jiTL) {
+			this.jiTL = jiTL;
+		}
+
+		public String[] getJiML() {
+			return jiML;
+		}
+
+		public void setJiML(String[] jiML) {
+			this.jiML = jiML;
+		}
+
+
+
+
+
 	private int idx;
+	private String[] idxL;
     private int jidx;
     private String yyyy;
     private String yyyy2;
@@ -542,5 +599,13 @@ public class ManageM
     private String useE;
     private String gyEm;
     private String jsEm;
+    
+    
+    // 관리비
+    private String jiT;
+    private String jiM;
+    private String memo;
+    private String[] jiTL;
+    private String[] jiML;
     
 }

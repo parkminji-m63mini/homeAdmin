@@ -41,7 +41,7 @@
 					     	 <c:forEach var="arr" items = "${list}">
 					     		<tr>
 					     			<th>${arr.rn}</th>
-					     			<th><a href='#'>${arr.title}</a></th>
+					     			<th><a href='view.do?idx=${arr.idx}'>${arr.title}</a></th>
 					     			<th>${arr.wdt}</th>
 					     			<th>
 					     			${arr.sta}

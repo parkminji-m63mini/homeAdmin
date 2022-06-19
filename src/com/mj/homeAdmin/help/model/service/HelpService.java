@@ -12,4 +12,6 @@ public interface HelpService {
 
 	public abstract int listCnt(Help vo)throws Exception;
 
+	public abstract List<Help> helpView(Help vo)throws Exception;
+
 }
