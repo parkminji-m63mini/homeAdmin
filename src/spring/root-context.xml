@@ -73,10 +73,11 @@
        </bean>
        
        <!-- mail -->
-	    <!--    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    
 		    <property name="port" value="465" />
-		    <property name="username" value="testforam3@gmail.com" />
-		    <property name="password" value="iigbtleuuokufknk" />
+		    <property name="username" value="HA.Korea.Choi@gmail.com" />
+		    <property name="password" value="zhrswpgiomnbaher" />
 		    <property name="javaMailProperties">
 		    <props>
 		   	  <prop key="mail.smtp.host">smtp.gmail.com</prop>
@@ -88,21 +89,7 @@
 		      <prop key="mail.smtp.socketFactory.fallback">false</prop>		      
 		    </props>
 		    </property>
-		  </bean> -->
-<!-- 회원가입 메일 인증 -->
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.gmail.com" />
-        <property name="port" value="587" />
-        <property name="username" value="testforam3@gmail.com"/>
-        <property name="password" value="iigbtleuuokufknk"/>
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.transport.protocol">smtp</prop>
-                <prop key="mail.smtp.auth">true</prop>
-                <prop key="mail.smtp.starttls.enable">true</prop>
-                <prop key="mail.debug">true</prop>
-            </props>
-        </property>
-    </bean>
-    
+		  </bean> 
+		  
+	
 </beans>

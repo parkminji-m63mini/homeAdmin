@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mj.homeAdmin.alarm.model.service.alarmService;
 import com.mj.homeAdmin.alarm.vo.alarm;
+import com.mj.homeAdmin.email.model.service.EmailService;
+import com.mj.homeAdmin.email.vo.Email;
 
 @SessionAttributes({"loginMember"})
 
@@ -30,6 +33,10 @@ public class alarmController {
 
 	@Autowired
 	private alarmService service;
+	
+	@Autowired
+	private EmailService emailService;
+
 	
 	// 조회화면
 	@RequestMapping("index.do")
@@ -134,4 +141,22 @@ public class alarmController {
 		
 		return  "redirect:"+path;
 	};
+	
+	@RequestMapping("send.do")
+	public String send(@ModelAttribute Email vo, Model model) {
+		try {
+			vo.setSubject("제목");
+			vo.setFromMail("kljklj28561@gmail.com");
+			vo.setToMail("kljklj2856@naver.com");
+			vo.setMessage("메세지");
+			vo.setFromUser("집");
+			emailService.snedMail(vo);
+			
+			model.addAttribute("message", "성공");
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("message", "실패");
+		}
+		return "alarm/index";
+	}
 }

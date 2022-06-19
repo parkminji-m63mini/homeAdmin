@@ -41,7 +41,11 @@
             <div class="box">
               <a href="#" style="float: right;" onclick = "return insert();" >저장</a>
               <br>
-              <h4 class="title">이름</h4> <input type = "text" id = "alarmName">
+              <h4 class="title">이름</h4> 
+              <div class = "input-group-mb-3">
+              <label class ="form-label" id="alarmName">Name</label>   <input type = "text" class = "form-control" id = "alarmName">
+              </div>
+              
               <h4 class="title">주기</h4>
                  <div class="d-flex flex-row justify-content-between" id = "cycle" name = "cycle" >
            
@@ -55,19 +59,24 @@
                  </div>
              <h4 class="title">시간</h4>
              <input type = "time" id = "time">
-             
+          
              <h4 class="title">메모</h4>
              <input type = "text" id = "memo">
             </div>
           </div>
          </div>
      	</div>
-          
+           
+
+
     </section><!-- End Services Section -->
-    
-    
+     <label for="firstName" class = "form-label">FirstName</label>
    
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script language = javascript>
 	
 

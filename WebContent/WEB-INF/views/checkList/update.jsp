@@ -68,6 +68,8 @@
     
     
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script language = javascript>
 	
 	

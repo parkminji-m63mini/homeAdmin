@@ -219,7 +219,7 @@ function selectCode(cd){
                
                 	<div class="text-center">
                
-					<button type = "submit" id = "insertBtn">저장 </button>
+					<button class = "btn btn-primary btn-lg" type = "submit" id = "insertBtn">저장 </button>
 						
                     </div>
                 
@@ -240,4 +240,6 @@ function selectCode(cd){
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
+<!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>
