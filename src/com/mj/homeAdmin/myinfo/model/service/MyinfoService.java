@@ -2,6 +2,7 @@ package com.mj.homeAdmin.myinfo.model.service;
 
 import java.util.List;
 
+import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 
 public interface MyinfoService {
@@ -17,4 +18,7 @@ public interface MyinfoService {
 	public abstract List<MyinfoVo> selectUser(MyinfoVo vo)
 			 throws Exception;
 	public abstract String idChk(MyinfoVo vo) throws Exception;
+	
+	String getHomeImg(String id);
+	public abstract List<checkList> getCheckList(String id);
 }

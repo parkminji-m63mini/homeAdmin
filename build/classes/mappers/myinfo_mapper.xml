@@ -19,6 +19,34 @@
 		<id property="snsInfo" column="SNS_INFO"/>
 	</resultMap>
 	
+	<resultMap type="HomeInfo" id="homeInfoResultSet">
+		<id property="id" column="ID" />
+		<id property="contract" column="CONTRACT" />
+		<id property="size" column="SIZE" />
+		<id property="room" column="ROOM" />
+		<id property="deposit" column="DEPOSIT" />
+		<id property="rentalFee" column="RENTAL_FEE" />
+		<id property="floor" column="FLOOR" />
+		<id property="building" column="BUILDING" />
+		<id property="manageFee" column="MANAGE_FEE" />
+		<id property="contractDateFr" column="CONTRACT_DATE_FR" />
+		<id property="contractDateTo" column="CONTRACT_DATE_TO" />
+		<id property="hnm" column="HNM" />
+		<id property="wifiNm" column="WIFI_NM" />
+		<id property="petYN" column="PET_YN" />
+		<id property="info" column="INFO" />
+		<id property="notice" column="NOTICE" />
+		<id property="payDate" column="PAY_DATE" />
+		<id property="contractCnm" column="CONTRACT_CNM" />
+		<id property="roomCnm" column="ROOM_CNM" />
+		<id property="wifiPw" column="WIFI_PW" />
+		<id property="address" column="ADDRESS" />
+		<id property="direction" column="DIRECTION" />
+		<id property="homeImg" column="HOME_IMG" />
+		<id property="petImg" column="PET_IMG"/>
+	</resultMap>
+	
+	
 	<select id="idChk" parameterType="Myinfo" resultType="String">
 	SELECT id FROM USER_INFO WHERE ID=#{id}
 	</select>
@@ -48,4 +76,11 @@
 	<select id="selectCode3" parameterType="Myinfo" resultMap="myinfoResultSet">
 		SELECT CD, CNM FROM H_CODE_THIRD WHERE SCD=#{scd}
 	</select>
+	
+	<select id="getHomeImg"  parameterType="Myinfo" resultType="String" >
+		SELECT HOME_IMG FROM HOME WHERE ID = #{id}
+	</select>
+	
+	
+	
 </mapper>

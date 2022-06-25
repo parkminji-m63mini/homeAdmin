@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.myinfo.model.dao.MyinfoDAO;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 
@@ -41,5 +42,17 @@ public class MyinfoServiceImpl implements MyinfoService {
 	@Override
 	public String idChk(MyinfoVo vo) throws Exception {
 		return dao.idChk(vo);
+	}
+	
+	@Override
+	public String getHomeImg(String id) {
+		// TODO Auto-generated method stub
+		return dao.getHomeImg(id);
+	}
+
+	@Override
+	public List<checkList> getCheckList(String id) {
+		// TODO Auto-generated method stub
+		return dao.getCheckList(id);
 	}
 }

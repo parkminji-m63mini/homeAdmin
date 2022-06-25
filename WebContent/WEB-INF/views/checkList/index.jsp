@@ -64,6 +64,8 @@
      	</c:otherwise>
           
  </c:choose> 
+          </div>
+          </div>
           
     </section><!-- End Services Section -->
     
