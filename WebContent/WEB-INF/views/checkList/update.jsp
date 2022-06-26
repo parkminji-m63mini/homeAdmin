@@ -51,7 +51,8 @@
              		  
                      </div>
              
-              <button  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
+              <button class="cta-btn align-middle"  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
+           
             </div>
              </form> 
              
@@ -65,7 +66,7 @@
           
     </section><!-- End Services Section -->
     
-    
+  
     
 </body>
 <!-- ------------------------- header ---------------------------- -->

@@ -57,8 +57,8 @@
 	
 		<!-- 디테일체크리스트 수정 -->
 	<update id = "updateCheckListDetail" parameterType="checkList" >
-		INSERT INTO CHECKLIST_D(IDX, M_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
-	     VALUES((select IFNULL(MAX(A.IDX),0)+1 FROM CHECKLIST_D A), #{idx}, #{content}, NOW(),  NOW(), "N")
+		INSERT INTO CHECKLIST_D( M_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
+	     VALUES( #{idx}, #{content}, NOW(),  NOW(), "N")
 	
 	</update>
 	
@@ -74,8 +74,8 @@
 	
 	<!-- 체크리스트 디테일 추가 -->
 	<insert id ="insertCheckListDetail" parameterType="checkList">
-	INSERT INTO CHECKLIST_D(IDX, M_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
-	VALUES((select IFNULL(MAX(A.IDX),0)+1 FROM CHECKLIST_D A), (SELECT IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE A.ID = #{id}), #{content}, NOW(),  NOW(), "N")
+	INSERT INTO CHECKLIST_D( M_IDX, CONTENT, D_WDT, D_EDT, CHECK_YN) 
+	VALUES( (SELECT IFNULL(MAX(A.IDX),0) FROM CHECKLIST A WHERE A.ID = #{id}), #{content}, NOW(),  NOW(), "N")
 	
 	</insert>
 	

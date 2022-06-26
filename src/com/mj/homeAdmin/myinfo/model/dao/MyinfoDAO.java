@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
 import com.sun.org.apache.regexp.internal.recompile;
 
@@ -38,5 +39,15 @@ public class MyinfoDAO {
 
 	public String idChk(MyinfoVo vo) {
 		return sqlSession.selectOne("myinfoMapper.idChk", vo);
+	}
+
+	public String getHomeImg(String id) {
+		
+		return sqlSession.selectOne("myinfoMapper.getHomeImg", id);
+	}
+
+	public List<checkList> getCheckList(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("checkListMapper.selectCheckList", id);
 	}
 }

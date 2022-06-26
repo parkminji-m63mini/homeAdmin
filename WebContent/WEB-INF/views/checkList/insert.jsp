@@ -36,11 +36,11 @@
             <a href="#" onclick = "return insert();">저장</a>
             <input  type="text" name = "listName" id = "listName">
             <br>
-              		 <div class="about-content detailContent" id ="detailList"  >
+              		 <div class="about-content detailContent"   >
               		 
-            		  <ul>
-              				  <li style="list-style:none;" id="detail"> <input  type="text" name = "content" >
-              				      <button  type = "button" id = "deleteBtn" onclick = "deleteOne();">삭제</button></li>
+            		  <ul id ="detailList">
+              				  <li style="list-style:none;" id="id_0"> <input  type="text" name = "content" >
+              				      <button  type = "button" id = "deleteBtn" onclick = "deleteOne(0);">삭제</button></li>
                  		 
              		 </ul>
                      </div>
@@ -61,16 +61,20 @@
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script language = javascript>
-	function deleteOne(){
-		var obj = document.getElementById("detail"+dIdx);
-		alert(dIdx);
-		obj.remove();
+	function deleteOne(id){
+	   alert(id)
+		$("#id_"+id).remove()
+		//var obj = document.getElementById("detail"+dIdx);
+		//alert(dIdx);
+		//obj.remove();
 	};
 	
 	function addOne(){
-	
-		$("#detailList").append("<li style='list-style:none;'> <input  type='text' name = 'content'  >" +
-	     "<button  type = 'text' id = 'deleteBtn' >삭제</button></li>");
+		
+	    var length = $("#detailList").children().length
+		alert(length)
+	    $("#detailList").append("<li style='list-style:none;' id='id_"+length+"'> <input  type='text' name = 'content'  >" +
+	     "<button  type = 'text' id = 'deleteBtn' onclick = 'deleteOne("+length+");' >삭제</button></li>");
 	};
 	
 	function insert(){
@@ -83,7 +87,7 @@
 		});
 		alert(name);
 		
-		console.log(list);
+		alert(list);
 		$.ajax({
 			type : "post",
 			dataType : "json",

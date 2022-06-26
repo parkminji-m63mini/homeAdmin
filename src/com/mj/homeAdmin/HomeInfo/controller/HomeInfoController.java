@@ -118,7 +118,7 @@ public class HomeInfoController {
 		
 		HomeInfo selectHome = hs.selectHomeInfo(home.getId());
 		
-		System.out.println("계약이름 " + selectHome.getContractCnm());
+		//System.out.println("계약이름 " + selectHome.getContractCnm());
 		
 		  mv.addObject("selectHome", selectHome);
 			mv.setViewName("homeInfo/index");
@@ -189,5 +189,10 @@ public class HomeInfoController {
 		
 		//response.sendRedirect("/homeInfo/index.do");
 		return mv;
+	}
+	
+	@RequestMapping("commonJSP.do")
+	public String commonJSP()throws Exception{
+		return "common/commonJSP";
 	}
 }

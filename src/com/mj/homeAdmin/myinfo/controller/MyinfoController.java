@@ -11,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mj.homeAdmin.checkList.model.service.checkListService;
+import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.comm.BCryptTest;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
+import com.mj.homeAdmin.main.model.service.MainService;
 import com.mj.homeAdmin.myinfo.model.service.MyinfoService;
 import com.mj.homeAdmin.myinfo.model.service.MyinfoServiceImpl;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
@@ -25,6 +28,9 @@ public class MyinfoController {
 
 	@Autowired
 	private MyinfoService ms;
+   
+	@Autowired
+	private checkListService checkListService;
 
 	@Autowired
 	private BCryptTest by;
@@ -60,7 +66,14 @@ public class MyinfoController {
 		//세션에 필요한 정보가져오기
 		// 여기부터
 		 List<MyinfoVo> user = ms.selectUser(vo);
-		
+		 
+		 // 메인에 나타날 것들
+		 // 집 이미지
+		 String homeImg = ms.getHomeImg(user.get(0).getId());
+		 // 체크리스트
+		 List<checkList> checkList = checkListService.selectCheckList(user.get(0).getId());
+		 List<checkList> checkListDetail = checkListService.selectCheckListDetail(user.get(0).getId());
+		 
 		 vo.setId(user.get(0).getId());
 		 vo.setNm(user.get(0).getNm());
 		 vo.setnNm(user.get(0).getnNm());
@@ -72,7 +85,9 @@ public class MyinfoController {
 		cm.goSessionChk(vo, ss, req);
 		cm.getSessionChk(ss);
 		model.addAttribute("user" ,vo);
-		
+		model.addAttribute("homeImg", homeImg);
+		model.addAttribute("checkList", checkList);
+		model.addAttribute("checkListDetail", checkListDetail);
 	//	System.out.println(ss.getAttribute("ssNM") + " 세션 확인");
 	}	
 		

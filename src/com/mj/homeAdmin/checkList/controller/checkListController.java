@@ -105,20 +105,21 @@ public class checkListController {
 		
 		vo.setId((String)ss.getAttribute("ssID"));
 		vo.setListName(vo.getListName());
-		vo.setmIdx(vo.getIdx());
-		System.out.println("Idx : " + vo.getIdx());
+		//vo.setmIdx(vo.getIdx());
+		//System.out.println("Idx : " + vo.getIdx());
 				
 		int chk = service.insertCheckList(vo);
 		int result = 0;
 		
-		
+		System.out.println("0 "+contentL[0]);
+		System.out.println("1 "+contentL[1]);
+		System.out.println("contentLlength" + contentL.length);
 		if (chk > 0) {
 			for (int i=0 ; i< contentL.length; i++) {
 				vo.setContent(contentL[i]);
 				vo.setmIdx(i+1);
+				System.out.println(vo.getmIdx());
 				result = service.insertCheckListDetail(vo);
-				
-			
 			}
 			
 		}
