@@ -97,11 +97,20 @@ function chart1(type, text, text2, xcategories){
 	        data : [${arrC2.gasM}, ${arrC2.elM}, ${arrC2.wtM}, ${arrC2.itM}, ${arrC2.maM}]
 			</c:if>	
     	 	<c:if test="${type == 'gas'}">
-    	 	 data : [${arrC2.suma}, ${arrC2.uGm}, ${arrC2.monGu}, ${arrC2.useG}]
+    	 	 data : [${arrC2.gasM}, ${arrC2.uGm}, ${arrC2.monGu}, ${arrC2.useG}]
     	 	</c:if>	
     	 	<c:if test="${type == 'it'}">
-   		 	 data : [${arrC2.defM}, ${arrC2.aGm}, ${arrC2.sGm}, ${arrC2.mGm}, ${arrC2.suma}]
-   	 	</c:if>	
+   		 	 data : [${arrC2.defM}, ${arrC2.aGm}, ${arrC2.sGm}, ${arrC2.mGm}, ${arrC2.itM}]
+   	 		</c:if>	
+    	 	<c:if test="${type == 'ma'}">
+  		 	 data : [ ${arrC2.maM}]
+  	 		</c:if>	
+    	 	<c:if test="${type == 'wa'}">
+ 		 	 data : [ ${arrC2.wtM},  ${arrC2.sa}]
+ 	 		</c:if>	
+    	 	<c:if test="${type == 'el'}">
+		 	 data : [ ${arrC2.elM}, ${arrC2.useE}]
+	 		</c:if>	
     	 	
 	    },
 	    </c:forEach>
@@ -171,7 +180,7 @@ chart03 = new Highcharts.chart('container3', {
     	 	{
         name: '${arrC2.mm}월',
         <c:if test="${type == 'gas'}">
-        data : [${arrC2.suma}]
+        data : [${arrC2.gasM}]
 		</c:if>
     	<c:if test="${type == 'all'}">
     	  data : [${arrC2.gasM}, ${arrC2.elM}, ${arrC2.wtM}, ${arrC2.itM}, ${arrC2.maM}]
@@ -239,12 +248,17 @@ function chart6(type, text, text2, xcategories){
 		    	 	{
 		        name: '${arrC2.mm}월',
 		        <c:if test="${type == 'gas'}">
-		        data : [${arrC2.suma}]
+		        data : [${arrC2.gasM}]
 				</c:if>
 		    	<c:if test="${type == 'all'}">
 		    	  data : [${arrC2.gasM}, ${arrC2.elM}, ${arrC2.wtM}, ${arrC2.itM}, ${arrC2.maM}]
 		    	</c:if>
-		        
+		    	<c:if test="${type == 'wa'}">
+		        data : [${arrC2.wtM}]
+				</c:if>
+		    	 <c:if test="${type == 'el'}">
+			        data : [${arrC2.elM}]
+					</c:if>
 		    },
 		    </c:forEach>
 		   ]
@@ -329,10 +343,19 @@ function chart12(text, text2,  cList, rList){
 	        </c:forEach>]
 	        </c:if>
 	        <c:if test="${type == 'gas'}">
-	        data : [<c:forEach items="${arrViewPast12}" var="v12"> ${v12.suma }, </c:forEach>]
+	        data : [<c:forEach items="${arrViewPast12}" var="v12"><c:if test="${i == 0}"> ${v12.suma },</c:if> <c:if test="${i == 1}">${v12.useG }+0,</c:if></c:forEach>]
 			</c:if>
 	        <c:if test="${type == 'it'}">
 	        data : [<c:forEach items="${arrViewPast12}" var="v12"> ${v12.suma }, </c:forEach>]
+			</c:if>
+	        <c:if test="${type == 'ma'}">
+	        data : [<c:forEach items="${arrViewPast12}" var="v12"> ${v12.suma }, </c:forEach>]
+			</c:if>
+	        <c:if test="${type == 'wa'}">
+	        data : [<c:forEach items="${arrViewPast12}" var="v12"> <c:if test="${i == 0}"> ${v12.suma },</c:if> <c:if test="${i == 1}">${v12.sa }+0,</c:if> </c:forEach>]
+			</c:if>
+	        <c:if test="${type == 'el'}">
+    data : [<c:forEach items="${arrViewPast12}" var="v12"><c:if test="${i == 0}"> ${v12.suma },</c:if> <c:if test="${i == 1}">${v12.useE }+0,</c:if> </c:forEach>]
 			</c:if>
 	    },
 	    </c:forEach>

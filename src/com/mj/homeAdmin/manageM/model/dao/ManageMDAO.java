@@ -253,4 +253,59 @@ public class ManageMDAO
 		sqlSession.update("manageMapper.updateTMm", vo);
 		
 	}
+	public List<ManageM> mMNP12m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.mMNP12m", vo);
+	}
+	public String sumMa(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.sumMa", vo);
+	}
+	
+	
+	
+	
+	
+	
+	public List<ManageM> manageWaNow(ManageM vo) {
+		return sqlSession.selectList("manageMapper.manageWaNow", vo);
+	}
+	public void insertMWA(ManageM vo) {
+		sqlSession.insert("manageMapper.insertMWA", vo);
+		
+	}
+
+	public List<ManageM> waNP(ManageM vo) {
+		return sqlSession.selectList("manageMapper.waNP", vo);
+	}
+	public List<ManageM> waPassSame(ManageM vo) {
+		return sqlSession.selectList("manageMapper.waPassSame", vo);
+	}
+	public List<ManageM> waNP6m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.waNP6m", vo);
+	}
+	public List<ManageM> waNP12m(ManageM vo) {
+		return sqlSession.selectList("manageMapper.waNP12m", vo);
+	}
+	public String chkDW(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.chkDW", vo);
+	}
+	public void updateTwaM(ManageM vo) {
+		sqlSession.update("manageMapper.updateTwaM", vo);
+		
+	}
+	public String newUpwa(ManageM vo) {
+		return sqlSession.selectOne("manageMapper.newUpwa", vo);
+		
+	}
+
+	public void updateWa(ManageM vo) {
+		sqlSession.update("manageMapper.updateWa", vo);
+		
+	}
+	public void allUpdateWa(ManageM vo) {
+		sqlSession.update("manageMapper.allUpdateWa", vo);
+		
+	}
+
+	
+	
 }

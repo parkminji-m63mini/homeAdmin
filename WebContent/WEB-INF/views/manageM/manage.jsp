@@ -20,12 +20,20 @@
 	<!-- 차트 -->
 	<jsp:include page="/WEB-INF/views/common/chart.jsp"/>
 <body>
-<style>
-.disN{}
-</style>
 
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	
+	//input에  onlyNumber 추가하면 자동으로 숫자만 들어가게 함
+	$('input[onlyNumber]').on('keyup', function () {
+			console.log("들어옴");
+		    $(this).val($(this).val().replace(/[^0-9]/g, ""));
+		});
+	//------------------------------
+	
+	
+	
 	if($("input[name='autoM']:checked").val() == 'Y'){
 		$("#showAuto").css("display", "inline");
 	}
@@ -43,17 +51,11 @@ $("input[name='autoM']").click(function(){
 // 차트 x축 컬럼 이름
 var list;
 
-list =['기본료','할인금액', '부가세','미납금', '총 합계'];
+list =['총 합계'];
 
 // 전월, 당월
 chart1("column", '전월 vs 당월','(전월) ${arrViewPast[0].yyyy}년도 ${arrViewPast[0].mm}월 | (당월) ${arrViewPast[1].yyyy}년도 ${arrViewPast[1].mm}월 ', list ); // ${arrViewPast}
 //차트타입, 타이틀, 서브타이들, x축 컬럼명
-
-list = ['총 금액'];
-// 6개월
-//chart6("column", '최근 6개월',' ', list); // ${arrViewPast6}
-//차트타입, 타이틀, 서브타이들, x축 컬럼명
-
 
 
 var cList = ["line","column"]; 
@@ -123,7 +125,8 @@ var arridx = [] ;
 			 traditional : true,
 			url : "deleteMm.do",
 			data : {
-				idxL: arridx 
+				idxL: arridx ,
+				jidx: $("input:hidden[name='jidx']").val()
 			},
 			success : function(result){
 				alert("삭제완료");
@@ -192,7 +195,7 @@ var arridx = [] ;
                 <div class="swiper-slide" id='form'>
                 	<c:forEach var='arr' items='${arrViewNow}' varStatus="st">
 					</c:forEach>
-                	 <h3>${arrViewNow[0].yyyy}년도 ${arrViewNow[0].mm}월 관리비 상세요금 <c:if test="${suma ne null || suma ne '0'}">  (<span><fmt:formatNumber value="${suma}" type="number"/>원</span>)</c:if> </h3>
+                	 <h3>${arrViewNow[0].yyyy}년도 ${arrViewNow[0].mm}월 관리비 상세요금 <c:if test="${arrViewNow[0].maM ne null || arrViewNow[0].maM ne '0'}">  (<span><fmt:formatNumber value="${my:NVL(arrViewNow[0].maM,0)}" type="number"/>원</span>)</c:if> </h3>
                 	 
                 	 <p class="nomalForm">
                 	 <c:if test="${arrViewNow[0].gChk eq 'Y'}">
@@ -266,10 +269,10 @@ var arridx = [] ;
 						<c:choose>
 						<c:when test="${arr.jiM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.jiM}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="jiM"  value="${arr.jiM}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="jiM"  value="${arr.jiM}"/>원</span>
 						</c:when>
 						<c:otherwise>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="jiM" value="">원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="jiM" value="">원</span>
 						
 						</c:otherwise>
 						</c:choose>
@@ -288,7 +291,7 @@ var arridx = [] ;
 					
 					<tr>
 					<th  colspan="2">
-					<span class='nomalForm'> 총 사용 금액 : <fmt:formatNumber value="${suma}" type="number"/>원 </span>
+					<span class='nomalForm'> 총 사용 금액 : <fmt:formatNumber value="${my:NVL(arrViewNow[0].maM,0)}" type="number"/>원 </span>
 					</th>
 					</tr>
 					<tr  id='addbtn1'>
@@ -312,59 +315,11 @@ var arridx = [] ;
               
               <br><br>
               <div class="swiper-slide">
-               <h3>이번달엔 얼마나 줄였을까? </h3>
+               <h3>작년과 어떻게 달라졌을까? </h3>
       		<table class="tb">
       		<tbody>
       			<tr>
       			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>기본료</th>
-      			<th  class='boder-black'>미납금</th>
-      			<th  class='boder-black'>총합</th>
-      			</tr>
-		      <c:forEach var='arrC' items='${arrViewPast}' varStatus="st">
-      			<tr>
-      			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
-      			
-      			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${my:NVL(arrC.jiT, 0)}" type="number"/>원
-      			</span>
-      			</th>
-      			
-      			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${my:NVL(arrC.sGm,0)}" type="number"/>원
-      			</span>
-      			</th>
-      			
-      			
-      			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${my:NVL(arrC.suma,0)}" type="number"/>원
-      			</span>
-      			</th>      	      			
-      			</tr>	
-      			</c:forEach>
-      			
-      			<c:set var='jiT' value='${arrViewPast[0].jiT - arrViewPast[1].jiT}'/>
-      			<c:set var='sGm' value='${arrViewPast[0].sGm - arrViewPast[1].sGm}' />
-      			<c:set var='suma' value='${arrViewPast[0].suma - arrViewPast[1].suma}' />
-      		
-      			
-      			<tr>
-      				<th>(당월 - 전월)</th>
-      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(jiT,0)}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(sGm,0)}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(suma,0)}" type="number"/>원</th>
-      			</tr>	    
-      		</tbody>
-     		</table>
-     		
-     		<br>
-     		<a id='passY' href='javascript:show();' >>> 작년에는 얼마 썼을까?</a>
-     		<table class="tb disNone" id = 'passYT' style="display: none;">
-      		<tbody>
-      			<tr>
-      			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>기본료</th>
-      			<th  class='boder-black'>할인금액</th>
       			<th  class='boder-black'>총합</th>
       			</tr>
 		      <c:forEach var='arrC' items='${arrViewPastY}' varStatus="st">
@@ -372,41 +327,25 @@ var arridx = [] ;
       			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${my:NVL(arrC.jiT, 0)}" type="number"/>원
-      			</span>
-      			</th>
-      			
-      			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${my:NVL(arrC.sGm,0)}" type="number"/>원
-      			</span>
-      			</th>
-      			
-      			
-      			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${my:NVL(arrC.suma,0)}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${my:NVL(arrC.maM,0)}" type="number"/>원
       			</span>
       			</th>      	      			
       			</tr>	
       			</c:forEach>
       			
-      			<c:set var='jiT2' value='${arrViewPastY[0].jiT - arrViewPastY[1].jiT}'/>
-      			<c:set var='sGm2' value='${arrViewPastY[0].sGm - arrViewPastY[1].sGm}' />
-      			<c:set var='suma2' value='${arrViewPastY[0].suma - arrViewPastY[1].suma}' />
+      			<c:set var='maM' value='${arrViewPastY[0].maM - arrViewPastY[1].maM}' />
       		
       			
       			<tr>
-      				<th>(당월 - 전월)</th>
-      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(jiT2,0)}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(sGm2,0)}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(suma2,0)}" type="number"/>원</th>
+      				<th>(당년 - 전년)</th>
+      				<th class='boder-black'><fmt:formatNumber value="${my:NVL(maM,0)}" type="number"/>원</th>
       			</tr>	    
       		</tbody>
      		</table>
      		
-     		<br>
      		
      		
-      		<c:set var='avg' value="${suma}" ></c:set>
+      		<c:set var='avg' value="${maM}" ></c:set>
 			<c:choose>
 			<c:when test="${avg >= 0}">
 			<div style="text-align: center;" class='savingDiv'>
@@ -518,7 +457,7 @@ var arridx = [] ;
 	// 검색 버튼
 	function schGo(){
 		
-		location.href='it.do?yyyy='+ $("select[name=yyyyC]").val() + '&mm=' + $("select[name=mmC]").val() + '&uId=' + $("input:hidden[name='uId']").val(); 
+		location.href='manage.do?yyyy='+ $("select[name=yyyyC]").val() + '&mm=' + $("select[name=mmC]").val() + '&uId=' + $("input:hidden[name='uId']").val(); 
 		/*
 		$.ajax({
 			type : "post",
@@ -610,14 +549,14 @@ var arridx = [] ;
 					jiML: jiML 
 			},
 			success : function(result){
-				if(confirm("현재 등록한 데이터로 총 인터넷 요금으로 업데이트 하시겠습니까? \n 확인을 누르시면 전체 공과금 페이지에서 작성한 데이터가 업데이트 됩니다")){
+			//	if(confirm("현재 등록한 데이터로 총 인터넷 요금으로 업데이트 하시겠습니까? \n 확인을 누르시면 전체 공과금 페이지에서 작성한 데이터가 업데이트 됩니다")){
 					
 					upMM();
 					
-				alert("등록완료");
-				}else{
-				alert("세부 데이터만 등록완료");
-				}
+			//	alert("등록완료");
+			//	}else{
+			//	alert("세부 데이터만 등록완료");
+			//	}
 				reload();
 			},
 			error : function(result){
@@ -642,35 +581,7 @@ var arridx = [] ;
 	function reload() { (location || window.location || document.location).reload(); }
 	
 	
-	function newUp(yyyy,idx, tp){
-		
-		$.ajax({
-			type : "post",
-			dataType : "JSON", 
-			url : "newUp.do",
-			data : {
-				yyyy : yyyy,
-				idx : idx,
-				tp : tp
-			},
-			success : function(result){
-				if(tp == 1){
-				$("#pNumC").val(result);
-				}else if(tp == 2){
-				$("#gNumC").val(result);
-				}
-				
-				//alert("완료" + result);
-			},
-			error : function(result){
-				errMsg(result);
-			}
-		});
-		
-		return false;
-		
-	}
-
+	
 
 
 	</script>

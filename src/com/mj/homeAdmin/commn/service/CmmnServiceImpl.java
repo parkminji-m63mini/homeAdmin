@@ -50,6 +50,7 @@ public class CmmnServiceImpl
 		ss.setAttribute("ssNM", vo.getNm());
 		ss.setAttribute("ssnNM", vo.getnNm());
 		ss.setAttribute("ssGB", vo.getGb());
+		ss.setAttribute("ssTYPE", vo.getSnsInfo());
 		ss.setAttribute("ssIP", req.getRemoteAddr());
 	}
 	
@@ -74,4 +75,20 @@ public class CmmnServiceImpl
 		return result;
 	}
 
+	public String fielUrl(String type) {
+		
+		String url = "C:\\workspace\\famework\\homeAdmin2\\WebContent\\upload\\";
+		
+		url += type;
+		
+		
+		return url;
+	}
+	
+public String defalutFielUrl() {
+		
+		String url = "C:\\workspace\\famework\\homeAdmin2\\WebContent\\upload\\";
+		
+		return url;
+	}
 }

@@ -110,5 +110,30 @@ public interface ManegeMService
 		public abstract List<ManageM> mMPassSame(ManageM vo)throws Exception;
 		 public abstract void updateTMm(ManageM vo, HttpServletResponse httpservletresponse)
 		    		throws Exception;
+		  
+		  public abstract List<ManageM> mMNP12m(ManageM vo)throws Exception;
+		  
+		  
+//---------------수도-------------------
+		   public abstract  List<ManageM> manageWaNow(ManageM managem)
+		    		throws Exception;
+		    public abstract  List<ManageM> waNP(ManageM managem)
+		    		throws Exception;
+		    public abstract List<ManageM> waPassSame(ManageM vo)throws Exception;
+		    
+		    public abstract  List<ManageM> waNP6m(ManageM managem)
+		    		throws Exception;
+		    public abstract List<ManageM> waNP12m(ManageM vo)throws Exception;
+
+		    public abstract void updateTwaM(ManageM vo, HttpServletResponse httpservletresponse)
+		    		throws Exception;
+		    public abstract String newUpwa(ManageM vo, HttpSession ss)throws Exception;
+		    public abstract void updateWa(ManageM managem, HttpServletResponse httpservletresponse)
+		            throws Exception;
+		    public abstract void allUpdateWa(ManageM managem, HttpServletResponse httpservletresponse)
+		    		throws Exception;
+		  
+		  
+		  
 }
 

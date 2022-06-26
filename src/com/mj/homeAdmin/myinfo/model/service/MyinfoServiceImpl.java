@@ -55,4 +55,13 @@ public class MyinfoServiceImpl implements MyinfoService {
 		// TODO Auto-generated method stub
 		return dao.getCheckList(id);
 	}
+	@Override
+	public MyinfoVo mypage(MyinfoVo vo) throws Exception {
+		return dao.mypage(vo);
+	}
+
+	@Override
+	public void updateMyInfo(MyinfoVo vo) throws Exception {
+		dao.updateMyInfo(vo);
+	}
 }

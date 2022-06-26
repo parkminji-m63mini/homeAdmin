@@ -13,9 +13,14 @@ public class MyinfoVo {
 	private String htype; // 집타입
 	private String birth;
 	private String photo;
+	private String fullPhoto; // 파일 삭제시 쓰는 주소
 	private String nm;
 	private String nNm; // 닉네임
 	private String email; // 이메일
+	private int born; // 생년
+	private String sta; // 직업 상태
+	
+	
 	
 	// sns 연동 정보
 	private String snsInfo; // 연동 sns 정보
@@ -27,12 +32,31 @@ public class MyinfoVo {
 	private String cnm;
 	private String fcd; // 첫번째 코드
 	private String scd; // 두번째 코드
+	private String mcd; // 매칭하는 코드
 	private int idx;
 	
 	
 	
 	
 	
+	public String getMcd() {
+		return mcd;
+	}
+	public void setMcd(String mcd) {
+		this.mcd = mcd;
+	}
+	public int getBorn() {
+		return born;
+	}
+	public void setBorn(int born) {
+		this.born = born;
+	}
+	public String getSta() {
+		return sta;
+	}
+	public void setSta(String sta) {
+		this.sta = sta;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -164,6 +188,12 @@ public class MyinfoVo {
 	}
 	public void setnNm(String nNm) {
 		this.nNm = nNm;
+	}
+	public String getFullPhoto() {
+		return fullPhoto;
+	}
+	public void setFullPhoto(String fullPhoto) {
+		this.fullPhoto = fullPhoto;
 	}
 	
 	

@@ -145,6 +145,7 @@ public class HomeController
 				 vo.setNm(user.get(0).getNm());
 				 vo.setnNm(user.get(0).getnNm());
 				 vo.setGb(user.get(0).getGb());
+				 vo.setSnsInfo(user.get(0).getSnsInfo());
 				 //	 System.out.println(user.get(0).getNm() + " 리스트 값");
 				 //	 System.out.println(vo.getNm() + " vo값");
 				 

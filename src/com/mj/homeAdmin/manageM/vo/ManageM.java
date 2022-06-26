@@ -536,6 +536,46 @@ public class ManageM
 
 
 
+	public String getSa() {
+			return sa;
+		}
+
+		public void setSa(String sa) {
+			this.sa = sa;
+		}
+
+		public String getSaM() {
+			return saM;
+		}
+
+		public void setSaM(String saM) {
+			this.saM = saM;
+		}
+
+
+
+
+
+	public String getTvEm() {
+			return tvEm;
+		}
+
+		public void setTvEm(String tvEm) {
+			this.tvEm = tvEm;
+		}
+
+		public String getEtcEm() {
+			return etcEm;
+		}
+
+		public void setEtcEm(String etcEm) {
+			this.etcEm = etcEm;
+		}
+
+
+
+
+
 	private int idx;
 	private String[] idxL;
     private int jidx;
@@ -599,6 +639,8 @@ public class ManageM
     private String useE;
     private String gyEm;
     private String jsEm;
+    private String tvEm;
+    private String etcEm;
     
     
     // 관리비
@@ -607,5 +649,9 @@ public class ManageM
     private String memo;
     private String[] jiTL;
     private String[] jiML;
+    
+    // 수도
+    private String sa;
+    private String saM;
     
 }

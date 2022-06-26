@@ -450,16 +450,12 @@ public class ManageMController
         model.addAttribute("arrViewPast12", arrViewPast12);
         model.addAttribute("arrViewPastY", arrViewPastY);
         model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
-        model.addAttribute("type", "gas"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        model.addAttribute("type", "el"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
         model.addAttribute("vo", vo);
     	
         return "manageM/electric";
     }
-    @RequestMapping("water.do")
-    public String water()throws Exception
-    {
-        return "manageM/water";
-    }
+  
 
     @RequestMapping("it.do")
     public String it(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response)throws Exception
@@ -548,7 +544,7 @@ public class ManageMController
      //   model.addAttribute("arrViewPast6", arrViewPast6);
         model.addAttribute("arrViewPast12", arrViewPast12);
         model.addAttribute("arrViewPastY", arrViewPastY);
-        model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("repeat", "0"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
         model.addAttribute("type", "it"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
         model.addAttribute("vo", vo);
     	
@@ -600,10 +596,22 @@ public class ManageMController
 	        vo.setgChk("true");
 	        
         List<ManageM> gasV = ms.manageGasNow(vo);
+        List<ManageM> elV = ms.manageElNow(vo);
+        List<ManageM> waV = ms.manageWaNow(vo);
+        List<ManageM> itV = ms.manageItNow(vo);
+        List<ManageM> maV = ms.manageMaNow(vo);
+        
+        //관리비  총합
+        String suma = ms.manageMaNowSum(vo);
     	
         System.out.println("test");
         
         model.addAttribute("gasV", gasV);
+        model.addAttribute("elV", elV);
+        model.addAttribute("waV", waV);
+        model.addAttribute("itV", itV);
+        model.addAttribute("maV", maV);
+        model.addAttribute("suma", suma);
     	return "manageM/detailView";
     }
     
@@ -766,10 +774,10 @@ public class ManageMController
         
         
     	// 당월에서부터 전 6개월치 가스비
-        vo.setMm2(JavaUtil.checkMM(mm, "6"));
-        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
+   //     vo.setMm2(JavaUtil.checkMM(mm, "6"));
+    //    vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
     	
-        System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+     //   System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
         
      //   List<ManageM> arrViewPast6 = ms.gasNP6m(vo);
         
@@ -778,7 +786,7 @@ public class ManageMController
         //12개월 데이터
         vo.setYyyy(yyyy);
         	vo.setMm(mm);
-   //     List<ManageM> arrViewPast12 = ms.itNP12m(vo);
+       List<ManageM> arrViewPast12 = ms.mMNP12m(vo);
       //--------------------------------  
     	
     	// 당월 계절에 맞는 가스비 불러오기
@@ -791,10 +799,10 @@ public class ManageMController
        model.addAttribute("arrViewNow", arrViewNow);
        model.addAttribute("suma", suma);
        model.addAttribute("arrViewPast", arrViewPast);
-//        model.addAttribute("arrViewPast12", arrViewPast12);
+       model.addAttribute("arrViewPast12", arrViewPast12);
        model.addAttribute("arrViewPastY", arrViewPastY);
-   //     model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
-   //     model.addAttribute("type", "it"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+      model.addAttribute("repeat", "0"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("type", "ma"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
         model.addAttribute("vo", vo);
     	
     	
@@ -858,4 +866,160 @@ public class ManageMController
     	str ="성공";
     	return str;
     }
+    
+    
+    
+    //---------------수도
+    
+    @RequestMapping("water.do")
+    public String water(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+     
+	String flag = "false";
+    	
+		//세션으로 가져오기
+		vo.setuId((String)ss.getAttribute("ssID"));
+    	
+        //System.out.println("값 체크 : " + vo.getYyyy() + " / " + vo.getMm());
+    	
+        String yyyy= vo.getYyyy();
+        String mm= vo.getMm();
+        if(yyyy == null || yyyy.equals("")) {
+        	yyyy= "" + LocalDate.now().getYear();
+        	mm=  JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
+        }else {
+        	yyyy= vo.getYyyy();
+        	mm = JavaUtil.checkMM(vo.getMm(), "0");
+        	flag = "true";
+        }
+        
+        // 체크하는 용도로 사용함
+        vo.setgChk(flag);
+        
+    	String yyyy2 = "";
+    	String yyyy3= "";
+    	String mm2= "" +(LocalDate.now().getMonthValue()-1);
+    	String mm3= "" +(LocalDate.now().getMonthValue()-2);
+
+    	// 당월분만
+	       vo.setYyyy(yyyy);
+	       vo.setMm(mm);
+	       
+	       System.out.println(vo.getuId() + " 1");
+	       System.out.println(vo.getYyyy()+ " 1");
+	       System.out.println(vo.getMm() + " 1");
+       
+	       
+	       // 여기부터 시작
+        // 이번달
+	       List<ManageM> arrViewNow = ms.manageWaNow(vo);
+        
+        //-------------------------------------//
+        // 작년 동월 값
+        
+        List<ManageM> arrViewPastY = ms.waPassSame(vo);
+        //--------------------------------
+        
+        //12개월 데이터
+        vo.setYyyy(yyyy);
+        vo.setMm(mm);
+        List<ManageM> arrViewPast12 = ms.waNP12m(vo);
+        //--------------------------------  
+    
+        // 이번달, 이전달 비교
+        
+        
+        vo.setMm2(JavaUtil.checkMM(mm, "1"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
+        
+        System.out.println("함수로 체크 확인  : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast = ms.waNP(vo);
+        //-------------------------------//
+    	// 당월에서부터 전 6개월치 가스비
+        vo.setMm2(JavaUtil.checkMM(mm, "6"));
+        vo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "6"));
+    	
+        System.out.println("함수로 체크 확인 2 : " + vo.getYyyy2() + "년 " + vo.getMm2() + "월 ");
+        
+        List<ManageM> arrViewPast6 = ms.waNP6m(vo);
+        
+      //--------------------------------
+        
+    	// 당월 계절에 맞는 가스비 불러오기
+    	// 봄 3~5
+    	// 여름  6~9
+    	// 가을 10~11
+    	// 겨울 12~2
+        
+        
+        model.addAttribute("arrViewNow", arrViewNow);
+        model.addAttribute("arrViewPast", arrViewPast);
+        model.addAttribute("arrViewPast6", arrViewPast6);
+        model.addAttribute("arrViewPast12", arrViewPast12);
+        model.addAttribute("arrViewPastY", arrViewPastY);
+        model.addAttribute("repeat", "1"); // 1년 차트(x축 컬럼수 만큼) 반복횟수 (원하는 컬럼 수 - 1)
+        model.addAttribute("type", "wa"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
+        model.addAttribute("vo", vo);
+    	
+    	return "manageM/water";
+    }
+    
+ // 기본 수도료 업데이트
+    @ResponseBody
+    @RequestMapping(value="allUpdateWa.do", produces = "application/json; charset=utf-8")
+    public String allUpdateWa(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+    		throws Exception
+    {
+    	
+    	String str = "";
+    	
+    	ms.allUpdateWa(vo, res);
+    	str ="성공";
+    	return str;
+    }
+    
+    // 수도상세 업데이트 1
+    @ResponseBody
+    @RequestMapping(value="updateTwaM.do", produces = "application/json; charset=utf-8")
+    public String updatWa(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse res)
+        throws Exception
+    {
+        
+        String str = "";
+        System.out.println(vo.getMode() + "//" + vo.getuId() + "//" + vo.getIdx());
+        
+            ms.updateWa(vo, res);
+            str ="성공";
+          //  String strScript = "alert('\uC5C5\uB370\uC774\uD2B8 \uC644\uB8CC'); location.href = './index.do';";
+        //    myutil.webScript(res, strScript);
+        return str;
+    }
+    
+    // 가스 계량기, 고객번호 최근 데이터로 업데이트
+    @ResponseBody
+    @RequestMapping(value="newUpwa.do", produces = "application/json; charset=utf-8")
+    public String newUpwa(ManageM vo, Model model, HttpSession ss, RedirectAttributes rdAttr, HttpServletResponse response) throws Exception
+    {
+    	
+    	// 세션으로 가져오기
+        vo.setuId((String)ss.getAttribute("ssID"));
+    	
+    	System.out.println(vo.getTp());
+    	System.out.println(vo.getIdx() + "확인");
+    	System.out.println(vo.getYyyy() + "확인");
+    	
+    	String result = ms.newUpwa(vo, ss);
+    	
+    	
+    	
+    	Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    	
+    	System.out.println(result + "확인");
+    	
+    	return  gson.toJson(result); 
+    	
+    }
+    
 }

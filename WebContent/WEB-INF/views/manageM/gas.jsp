@@ -22,6 +22,16 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	
+	//input에  onlyNumber 추가하면 자동으로 숫자만 들어가게 함
+	$('input[onlyNumber]').on('keyup', function () {
+			console.log("들어옴");
+		    $(this).val($(this).val().replace(/[^0-9]/g, ""));
+		});
+	//------------------------------
+	
+	
 	if($("input[name='autoM']:checked").val() == 'Y'){
 		$("#showAuto").css("display", "inline");
 	}
@@ -53,7 +63,7 @@ chart6("column", '최근 6개월',' ', list); // ${arrViewPast6}
 
 
 var cList = ["line","column"]; 
-var  rList = ["총 가스비", "총 가스비"]; 
+var  rList = ["총 가스비", "사용량"]; 
 
 
 
@@ -134,7 +144,7 @@ function show(){
                 <div class="swiper-slide">
                 	<c:forEach var='arr' items='${arrViewNow}' varStatus="st">
 						<c:set var='addGas' value='${arr.defM + arr.cGm + arr.uGm - arr.sGm + arr.kGm +arr.mGm+ arr.aGm + arr.avgGm - arr.jsGm + arr.enGu}'/>
-                	 <h3>${arr.yyyy}년도 ${arr.mm}월 가스 상세요금 <c:if test="${addGas ne null || addGas ne '0'}">  (<span><fmt:formatNumber value="${addGas}" type="number"/>원</span>)</c:if> </h3>
+                	 <h3>${arr.yyyy}년도 ${arr.mm}월 가스 상세요금 <c:if test="${arr.gasM ne null || arr.gasM ne '0'}">  (<span><fmt:formatNumber value="${arr.gasM}" type="number"/>원</span>)</c:if> </h3>
                 	 
                 	 <p class="nomalForm">
                 	 <c:if test="${arr.gChk eq 'Y'}">
@@ -194,14 +204,14 @@ function show(){
                 	 <c:choose>
                 	 <c:when test="${arr.gNum ne null }">
                 		<span class='nomalForm'>: ${arr.gNum} </span>
-                		<span class='upForm'  style="display: none;"><input id='gNumC' class='manageI' type="text" name='gNum' value="${arr.gNum}"/> 
+                		<span class='upForm'  style="display: none;"><input id='gNumC' onlyNumber class='manageI' type="text" name='gNum' value="${arr.gNum}"/> 
                 		<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" value="최근 데이터 가져오기"/></span>
                 	 <span><input id='copybtn1' onclick="copy(${arr.gNum}, '계량기 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
                 	<span class='nomalForm'>데이터가 없습니다</span>
-                	<span class='upForm'  style="display: none;"><input  id='gNumC' style="width: 15%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/>
+                	<span class='upForm'  style="display: none;"><input  id='gNumC' onlyNumber style="width: 15%;" class='manageI' type="text" name='gNum' value="" placeholder="숫자만 입력"/>
                 	<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 2)" value="최근 데이터 가져오기"/>
                 	</span>
                 	 </c:otherwise>
@@ -214,14 +224,14 @@ function show(){
                 	 <c:choose>
                 	 <c:when test="${arr.pNum ne null }">
                 		<span class='nomalForm'>: ${arr.pNum} </span>
-                		<span class='upForm'  style="display: none;"><input id='pNumC' class='manageI' type="text" name='pNum' value="${arr.pNum}"/>
+                		<span class='upForm'  style="display: none;"><input id='pNumC' onlyNumber class='manageI' type="text" name='pNum' value="${arr.pNum}"/>
                 			<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" value="최근 데이터 가져오기"/> </span>
                 	 <span><input id='copybtn2' onclick="copy(${arr.pNum}, '고객 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> </span>  
                 	 </c:when>
                 	 <c:otherwise>
                 	<span>
                 	<span class='nomalForm'>데이터가 없습니다</span>
-                	<span class='upForm'  style="display: none;"><input  id='pNumC' style="width: 15%;" class='manageI' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
+                	<span class='upForm'  style="display: none;"><input  id='pNumC' onlyNumber style="width: 15%;" class='manageI' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
                 	<input type="button" onclick="newUp('${vo.yyyy}',${arr.idx}, 1)" value="최근 데이터 가져오기"/> </span>
                 	</span>
                 	 </c:otherwise>
@@ -264,11 +274,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.defM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.defM}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name='defM' value="${arr.defM}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name='defM' value="${arr.defM}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name='defM' value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name='defM' value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -277,11 +287,11 @@ function show(){
 						<c:choose>
 						<c:when  test="${arr.cGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.cGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="cGm" value="${arr.cGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="cGm" value="${arr.cGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="cGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="cGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -290,11 +300,11 @@ function show(){
 						<c:choose>
 						<c:when  test="${arr.uGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.uGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="uGm" value="${arr.uGm}""/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="uGm" value="${arr.uGm}""/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="uGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="uGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -303,11 +313,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.aGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.aGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="aGm"  value="${arr.aGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="aGm"  value="${arr.aGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="aGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="aGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -316,11 +326,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.sGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.sGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="sGm"  value="${arr.sGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="sGm"  value="${arr.sGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="sGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="sGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -341,11 +351,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.kGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.kGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="kGm"  value="${arr.kGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="kGm"  value="${arr.kGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="kGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="kGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -354,11 +364,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.mGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.mGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="mGm"  value="${arr.mGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="mGm"  value="${arr.mGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="mGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="mGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -367,11 +377,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.avgGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.avgGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="avgGm"  value="${arr.avgGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="avgGm"  value="${arr.avgGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="avgGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="avgGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -380,11 +390,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.jsGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.jsGm}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="jsGm"  value="${arr.jsGm}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="jsGm"  value="${arr.jsGm}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="jsGm" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="jsGm" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -393,11 +403,11 @@ function show(){
 						<c:choose>
 						<c:when test="${arr.enGu ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.enGu}" type="number"/>원</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="enGu"  value="${arr.enGu}"/>원</span>
+						<span class='upForm' style="display: none;"><input onlyNumber class='manageI' type="text" name="enGu"  value="${arr.enGu}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0원</span>
-						<span class='upForm'  style="display: none;"><input  class='manageI' type="text" name="enGu" value="0"/>원</span>
+						<span class='upForm'  style="display: none;"><input onlyNumber class='manageI' type="text" name="enGu" value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -435,7 +445,7 @@ function show(){
 						</c:when>
 						<c:otherwise>
 						<span class='nomalForm'>0m³</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="useG" value="0"/>m³</span>
+						<span class='upForm' style="display: none;"><input   class='manageI' type="text" name="useG" value="0"/>m³</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
@@ -443,18 +453,18 @@ function show(){
 						<th  class='boder-black'>
 						<c:choose>
 						<c:when  test="${arr.useB ne null}">
-						<span class='nomalForm'><fmt:formatNumber value="${arr.useB}" type="number"/>m³</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="useB" value="${arr.useB}""/>m³</span>
+						<span class='nomalForm'><fmt:formatNumber value="${arr.useB}" type="number"/>MJ</span>
+						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="useB" value="${arr.useB}"/>MJ</span>
 						</c:when>
 						<c:otherwise>
-						<span class='nomalForm'>0m³</span>
-						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="useB" value="0"/>m³</span>
+						<span class='nomalForm'>0MJ</span>
+						<span class='upForm' style="display: none;"><input  class='manageI' type="text" name="useB" value="0"/>MJ</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
 					</tr>
 					<tr>
-					<th colspan="6"> 총 사용 금액 : <fmt:formatNumber value="${arr.suma}" type="number"/>원 </th>
+					<th colspan="6"> 총 사용 금액 : <fmt:formatNumber value="${arr.gasM}" type="number"/>원 </th>
 					</tr>
                 	</tbody>
                 	</table>
@@ -483,22 +493,22 @@ function show(){
       			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.monGu}" type="number"/>m³
+      			<span class=''><fmt:formatNumber value="${my:NVL(arrC.monGu,0)}" type="number"/>m³
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.useG}" type="number"/>m³
+      			<span class=''><fmt:formatNumber value="${my:NVL(arrC.useG,0)}" type="number"/>m³
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.uGm}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${my:NVL(arrC.uGm,0)}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.suma}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${my:NVL(arrC.gasM,0)}" type="number"/>원
       			</span>
       			</th>      			
       			</tr>	
@@ -506,8 +516,8 @@ function show(){
       			
       			<c:set var='monGu' value='${arrViewPast[0].monGu - arrViewPast[1].monGu}'/>
       			<c:set var='useG' value='${arrViewPast[0].useG - arrViewPast[1].useG}' />
-      			<c:set var='uGm' value='${arrViewPast[0].uGm - arrViewPast[1].suma}'/>
-      			<c:set var='suma' value='${arrViewPast[0].suma - arrViewPast[1].suma}' />
+      			<c:set var='uGm' value='${arrViewPast[0].uGm - arrViewPast[1].gasM}'/>
+      			<c:set var='gasM' value='${arrViewPast[0].gasM - arrViewPast[1].gasM}' />
       		
       			
       			<tr>
@@ -515,7 +525,7 @@ function show(){
       				<th class='boder-black'><fmt:formatNumber value="${monGu}" type="number"/>m³</th>
       				<th class='boder-black'><fmt:formatNumber value="${useG}" type="number"/>m³</th>
       				<th class='boder-black'><fmt:formatNumber value="${uGm}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${suma}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${gasM}" type="number"/>원</th>
       			</tr>	    
       		</tbody>
      		</table>
@@ -536,22 +546,22 @@ function show(){
       			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.monGu}" type="number"/>m³
+      			<span class=''><fmt:formatNumber value="${arrC.monGu}" type="number"/>m³
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.useG}" type="number"/>m³
+      			<span class=''><fmt:formatNumber value="${arrC.useG}" type="number"/>m³
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.uGm}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${arrC.uGm}" type="number"/>원
       			</span>
       			</th>
       			
       			<th  class='boder-black'>
-      			<span class='nomalForm'><fmt:formatNumber value="${arrC.suma}" type="number"/>원
+      			<span class=''><fmt:formatNumber value="${my:NVL(arrC.gasM,0)}" type="number"/>원
       			</span>
       			</th>      			
       			</tr>	
@@ -559,8 +569,8 @@ function show(){
       			
       			<c:set var='monGu2' value='${arrViewPastY[0].monGu - arrViewPastY[1].monGu}'/>
       			<c:set var='useG2' value='${arrViewPastY[0].useG - arrViewPastY[1].useG}' />
-      			<c:set var='uGm2' value='${arrViewPastY[0].uGm - arrViewPastY[1].suma}'/>
-      			<c:set var='suma2' value='${arrViewPastY[0].suma - arrViewPastY[1].suma}' />
+      			<c:set var='uGm2' value='${arrViewPastY[0].uGm - arrViewPastY[1].gasM}'/>
+      			<c:set var='gasM2' value='${arrViewPastY[0].gasM - arrViewPastY[1].gasM}' />
       		
       			
       			<tr>
@@ -568,7 +578,7 @@ function show(){
       				<th class='boder-black'><fmt:formatNumber value="${monGu2}" type="number"/>m³</th>
       				<th class='boder-black'><fmt:formatNumber value="${useG2}" type="number"/>m³</th>
       				<th class='boder-black'><fmt:formatNumber value="${uGm2}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${suma2}" type="number"/>원</th>
+      				<th class='boder-black'><fmt:formatNumber value="${gasM2}" type="number"/>원</th>
       			</tr>	    
       		</tbody>
      		</table>
@@ -576,7 +586,7 @@ function show(){
      		<br>
      		
      		
-      		<c:set var='avg' value="${suma}" ></c:set>
+      		<c:set var='avg' value="${gasM}" ></c:set>
 			<c:choose>
 			<c:when test="${avg >= 0}">
 			<div style="text-align: center;" class='savingDiv'>
@@ -650,7 +660,7 @@ function show(){
 	// 데이터 일치 시켜주기 위해서
 	function upGasM(){
 		
-		//DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS SUMA
+		//DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU) AS gasM
 		$.ajax({
 			type : "post",
 			dataType : "text", 
@@ -756,15 +766,15 @@ function show(){
 				
 			},
 			success : function(result){
-				if(confirm("현재 등록한 데이터로 총 가스비를 업데이트 하시겠습니까? \n 확인을 누르시면 전체 공과금 페이지에서 작성한 데이터가 업데이트 됩니다")){
+			//	if(confirm("현재 등록한 데이터로 총 가스비를 업데이트 하시겠습니까? \n 확인을 누르시면 전체 공과금 페이지에서 작성한 데이터가 업데이트 됩니다")){
 			
 					upGasM();
 					
 					alert("등록완료");
 		
-				}else{
-				alert("세부 데이터만 등록완료");
-				}
+	//			}else{
+			//	alert("세부 데이터만 등록완료");
+		//		}
 				reload();
 			},
 			error : function(result){

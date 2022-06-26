@@ -15,7 +15,7 @@ function fn_paging(curPage) {
 <body>
 
 
-  <div>
+  <div style="width: 100%; text-align: center;">
                     <c:if test="${pagination.curRange ne 1 }">
                         <a href="#" onClick="fn_paging(1)">[처음]</a> 
                     </c:if>
@@ -40,7 +40,7 @@ function fn_paging(curPage) {
                     </c:if>
                 </div>
                 
-                <div>
+                <div style="display: none;">
                     총 게시글 수 : ${pagination.listCnt } /    총 페이지 수 : ${pagination.pageCnt } / 현재 페이지 : ${pagination.curPage } / 현재 블럭 : ${pagination.curRange } / 총 블럭 수 : ${pagination.rangeCnt }
                 </div>
 </body>

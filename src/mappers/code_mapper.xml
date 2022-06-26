@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="codeMapper">
+
+	<resultMap id="codeResultSet" type="Code" >
+		
+		<id property="idx" column="IDX"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="uId" column="U_ID"/>
+		<result property="type" column="TYPE"/>
+		<result property="cont" column="CONT"/>
+		<result property="title" column="TITLE"/>
+		<result property="sta" column="STA"/>
+		
+	</resultMap>
+	
+</mapper>

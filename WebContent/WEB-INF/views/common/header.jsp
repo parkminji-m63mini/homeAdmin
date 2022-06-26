@@ -3,6 +3,8 @@
 <%String myId = ""+session.getAttribute("ssID");%>
 <%String myNnm = ""+session.getAttribute("ssnNM");%>
 <%String myNm = ""+session.getAttribute("ssNM");%>
+<%String myGb= ""+session.getAttribute("ssGB");%>
+<%String myType= ""+session.getAttribute("ssTYPE");%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +24,7 @@
   <script type="text/javascript" src="${contextPath}/resources/vendor/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="${contextPath}/resources/vendor/bootstrap/css/bootstrap.css">
   <!-- Favicons -->
-  <!-- <link href="${contextPath}/resources/img/favicon.png" rel="icon">  -->
+   <link href="${contextPath}/resources/img/favicon.png" rel="icon"> 
   <link href="${contextPath}/resources/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -112,12 +114,15 @@
             </ul>
           </li>
          <c:if test="${sessionScope.ssID == null}">
-          <li><a class="nav-link scrollto" href="${contextPath}/my/login.do">로그인</a></li>
+          <li><a class="nav-link scrollto" href="${contextPath}/snsLogin">로그인</a></li>
           </c:if>
             <c:if test="${sessionScope.ssID != null}">
-          <li><a class="nav-link scrollto" href="#" onclick="logout();">로그아웃</a></li>
+          <li><a class="nav-link scrollto" href="#" onclick="logout('<%=myType%>');">로그아웃</a></li>
           </c:if>
-           <li><a class="nav-link scrollto" href="${contextPath}/snsLogin">sns 로그인</a></li>
+          <c:if test="${sessionScope.ssGB eq '9'.charAt(0)}">
+          <li><a class="nav-link scrollto" href="#" onclick="loginchk('/admin/dash/index.do');">관리자 페이지</a></li>
+          </c:if>
+          
            <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
         </ul>
         
@@ -151,8 +156,16 @@
   <script src="${contextPath}/resources/js/main.js"></script>
   
   <script type="text/javascript">
-  function logout(){
+  function logout(type){
 	  if(confirm("로그아웃 하시겠습니까?")){
+		  
+		  if(type == "kakao"){
+				kakaoLogout();
+			}else if(type == "naver"){
+				naverLogout() ;
+			}else{
+				//관리자
+			}
 		  
 		  $.ajax({
 			type : "post",
@@ -189,6 +202,50 @@
 		}
 		
   }
+  
+  
+//카카오로그아웃  
+  function kakaoLogout() {
+      if (Kakao.Auth.getAccessToken()) {
+        Kakao.API.request({
+          url: '/v1/user/unlink',
+          success: function (response) {
+          	console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+        Kakao.Auth.setAccessToken(undefined)
+      }
+    }  
+    
+    
+    
+    // 네이버로그아웃
+    var testPopUp;
+function openPopUp() {
+    testPopUp= window.open("https://nid.naver.com/nidlogin.logout", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=1,height=1");
+}
+function closePopUp(){
+    testPopUp.close();
+}
+
+    
+    
+  function naverLogout() {
+		openPopUp();
+		setTimeout(function() {
+			closePopUp();
+			}, 1000);
+		
+		
+	}  
+
+  
+ 
+  
+  
   </script>
   </body>
   </html>

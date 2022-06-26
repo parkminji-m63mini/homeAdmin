@@ -71,7 +71,7 @@
             <div class="form">
             
             <form id='frmReg' name="frmReg" method="post" action="javascript:proc('indexProc.do');">
-            <select id='key' name='key'>
+            <select id='key' name='key' class="form-control selectInput">
             	<option value="all">전체</option>
             	<option value="cont">내용</option>
             	<option value="nm">이름</option>
@@ -81,17 +81,20 @@
             <a onclick="proc('indexProc.do');">검색</a> 
             
             
-            <div class="none" style="display: none;">
-            <span >방문일</span>
-            <input  type="date" id='sdt' name='sdt'/>
+            <div class="none wi100" style="display: none;">
+            <span class="selectInput">방문일</span>
+            <input  type="date" id='sdt' name='sdt' class="form-control selectInput2"/>
             ~
-            <input type="date" id='edt' name='edt'/>
+            <input type="date" id='edt' name='edt' class="form-control selectInput2"/>
             </div>
             <p class='noneText' onclick="showView()">>날짜로 검색</p>
             
             </form>
             
-            <br><br>
+            
+            <div  class="section-bg" style="width: 100%;">😁친구에게 링크를 보내줘!  
+            <img  onclick="copy('${contextPath}/visit/write.do?id=${sessionScope.ssID}', '방명록 주소 복사 완료');" alt="" src="${contextPath}/resources/img/icon/setting/copy.png"> 
+            </div>
      
 		<%-- 리스트 출력 --%> 		
  		<span id='ListFrm'></span>

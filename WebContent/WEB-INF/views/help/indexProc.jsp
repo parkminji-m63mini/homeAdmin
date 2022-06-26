@@ -21,8 +21,8 @@
 	 				<colgroup>
 						<col style="width: 5%">
 						<col style="width: 40%">
-						<col style="width: 20%">
-						<col style="width: 15%">
+						<col style="width: 23%">
+						<col style="width: 19%">
 					</colgroup>
 	 			<tbody>
 	 				<tr>

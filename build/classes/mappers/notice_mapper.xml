@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="NoticeMapper">
+
+<resultMap id="NoticetResultSet" type="Notice" >
+		
+		<id property="idx" column="IDX"/>
+		<result property="uId" column="U_ID"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="title" column="TITLE"/>
+		<result property="cont" column="CONT"/>
+		<result property="sump" column="SUMP"/>
+	</resultMap>
+
+	<select id="listCnt" parameterType="Notice" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE WHERE U_ID=#{uId}		
+	</select>
+
+	<!--  리스트 -->
+	<select id="NoticeList" parameterType="Notice" resultMap="NoticetResultSet">
+	SELECT * FROM (
+	SELECT
+     ROW_NUMBER() OVER (ORDER BY WDT DESC, IDX DESC ) AS RN,
+    A.IDX, U_ID, TITLE, LEFT(WDT, 10) AS WDT, SUMP
+    FROM NOTICE A
+    WHERE U_ID=#{uId}
+    ) A
+    WHERE RN BETWEEN ${startPage} +1 AND ${startPage} + ${cntPerPage}
+	</select>
+
+
+	</mapper>

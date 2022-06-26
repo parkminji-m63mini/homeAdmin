@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserManageMapper">
+
+	<resultMap id="UserManageResultSet" type="UserManage" >
+		
+	<id property="id" column="ID"/>
+		<id property="pw" column="PW"/>
+		<id property="gb" column="GB"/>
+		<id property="sex" column="SEX"/>
+		<id property="addr" column="ADDR"/>
+		<id property="hp" column="HP"/>
+		<id property="ltype" column="LTYPE"/>
+		<id property="htype" column="HTYPE"/>
+		<id property="birth" column="BIRTH"/>
+		<id property="photo" column="PHOTO"/>
+		<id property="nm" column="NM"/>
+		<id property="nNm" column="N_NM"/>
+		<id property="email" column="EMAIL"/>
+		<id property="tokens" column="TOKENS"/>
+		<id property="profile" column="PROFILE"/>
+		<id property="snsInfo" column="SNS_INFO"/>
+		<id property="born" column="BORN"/>
+		<id property="sta" column="STA"/>
+		<id property="rn" column="RN"/>
+		
+	</resultMap>
+	
+	<select id="listCnt" parameterType="UserManage" resultType="_int">
+		SELECT COUNT(*) FROM USER_INFO		
+	</select>
+	
+		<!--  리스트 -->
+	<select id="userList" parameterType="UserManage" resultMap="UserManageResultSet">
+	  SELECT * FROM (
+	SELECT
+     ROW_NUMBER() OVER (ORDER BY NM, N_NM ) AS RN,
+    A.ID,A.GB,A.SEX,A.ADDR,A.HP,A.LTYPE,A.HTYPE,A.BIRTH,A.NM,A.N_NM,A.EMAIL,A.SNS_INFO,A.BORN,B.CNM AS STA
+    FROM USER_INFO	 A
+    LEFT JOIN H_CODE_SECOND B ON A.STA=B.CD
+    WHERE GB != '9'
+    ) A
+    
+	</select>
+	
+</mapper>

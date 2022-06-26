@@ -28,6 +28,16 @@
 	<typeAlias type="com.mj.homeAdmin.visit.vo.Visit" alias="Visit"/>
 	<typeAlias type="com.mj.homeAdmin.alarm.vo.alarm" alias="alarm"/>
 	<typeAlias type="com.mj.homeAdmin.help.vo.Help" alias="Help"/>
+	<typeAlias type="com.mj.homeAdmin.notice.vo.Notice" alias="Notice"/>
+	
+	
+	
+	<typeAlias type="com.mj.homeAdmin.admin.notice.vo.ANotice" alias="ANotice"/>
+	<typeAlias type="com.mj.homeAdmin.admin.code.vo.Code" alias="Code"/>
+	<typeAlias type="com.mj.homeAdmin.admin.menu.vo.Menu" alias="Menu"/>
+	<typeAlias type="com.mj.homeAdmin.admin.help.vo.AHelp" alias="AHelp"/>
+	<typeAlias type="com.mj.homeAdmin.admin.userManage.vo.UserManage" alias="UserManage"/>
+	<typeAlias type="com.mj.homeAdmin.admin.dash.vo.Dash" alias="Dash"/>
 	
 	</typeAliases>
  
@@ -43,5 +53,13 @@
 		<mapper resource="/mappers/alarm_mapper.xml"/>
 		<mapper resource="/mappers/help_mapper.xml"/>
 		<mapper resource="/mappers/main_mapper.xml"/>
+		<mapper resource="/mappers/notice_mapper.xml"/>
+		
+		<mapper resource="/mappers/adminNotice_mapper.xml"/>
+		<mapper resource="/mappers/adminHelp_mapper.xml"/>
+		<mapper resource="/mappers/code_mapper.xml"/>
+		<mapper resource="/mappers/menu_mapper.xml"/>
+		<mapper resource="/mappers/userManage_mapper.xml"/>
+		<mapper resource="/mappers/dash_mapper.xml"/>
 	</mappers>
 </configuration>

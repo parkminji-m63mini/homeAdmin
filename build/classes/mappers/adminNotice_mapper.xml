@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AnoticeMapper">
+
+	<resultMap id="AnoticeResultSet" type="ANotice" >
+		
+		<id property="idx" column="IDX"/>
+		<result property="uId" column="U_ID"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="title" column="TITLE"/>
+		<result property="cont" column="CONT"/>
+		<result property="sump" column="SUMP"/>
+		
+	</resultMap>
+	
+	
+	<!--  리스트 -->
+	<select id="noticeList" parameterType="ANotice" resultMap="AnoticeResultSet">
+	SELECT * FROM (
+	SELECT
+     ROW_NUMBER() OVER (ORDER BY WDT DESC, IDX DESC ) AS RN,
+    A.IDX, U_ID, TITLE, LEFT(WDT, 10) AS WDT, SUMP, B.N_NM
+    FROM NOTICE A
+    LEFT JOIN USER_INFO B ON A.U_ID=B.ID
+    ) A
+	</select>
+</mapper>

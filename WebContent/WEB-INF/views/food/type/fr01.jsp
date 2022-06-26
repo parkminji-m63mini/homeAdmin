@@ -150,6 +150,7 @@ function chkState(idx){
 		$.ajax({
 			type : "post",
 			dataType : "text", 
+			 traditional : true,
 			url : "updateChk.do",
 			data : {
 				jidx : ${vo.jidx},
@@ -317,6 +318,7 @@ function editM(tp){
 				type : "post",
 				dataType : "text", 
 				 async : false,
+				 traditional : true,
 				url : "update.do",
 				data : {
 					jidx : ${vo.jidx},
@@ -375,6 +377,7 @@ function del(){
 			type : "post",
 			dataType : "text", 
 			 async : false,
+			 traditional : true,
 			url : "delete.do",
 			data : {
 				jidx : ${vo.jidx},
@@ -484,7 +487,7 @@ function usingF(date){
 					<th>사용 완료</th>
 					<th>품명</th>
 					<th>가격</th>
-					<th>구매일</th>
+					<th  class='upFrom' style="display: none;">구매일</th>
 					<th>유통기한</th>
 					<th>개수/용량</th>
 					<th  class='upFrom' style="display: none;">삭제</th>
@@ -497,7 +500,6 @@ function usingF(date){
 						<input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});" <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
 		          	<th><a href='view.do?idx=${arr.idx}&mode=${vo.mode}'>${arr.fnm}</a></th>
 		          	<th>${arr.price}</th>
-		          	<th><c:if test='${arr.bdt ne "0000-00-00"}'>${arr.bdt}</c:if></th>
 		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${arr.fdt}</c:if></th>
 		          	<th>${arr.vm}</th>
 		          	</tr>
@@ -598,7 +600,7 @@ function usingF(date){
 					<th>사용 완료</th>
 					<th>품명</th>
 					<th>가격</th>
-					<th>구매일</th>
+					<th  class='upFrom' style="display: none;">구매일</th>
 					<th>유통기한</th>
 					<th>개수/용량</th>
 					<th  class='upFrom' style="display: none;">삭제</th>
@@ -610,7 +612,6 @@ function usingF(date){
 					<th><input type="hidden"  value="${arr.idx}"/>  <input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});"  <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
 		          	<th><a href='view.do?idx=${arr.idx}&mode=${vo.mode}'>${arr.fnm}</a></th>
 		          	<th>${arr.price}</th>
-		          	<th><c:if test='${arr.bdt ne "0000-00-00"}'>${arr.bdt}</c:if></th>
 		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${arr.fdt}</c:if></th>
 		          	<th>${arr.vm}</th>
 		          	</tr>

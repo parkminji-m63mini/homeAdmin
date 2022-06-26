@@ -77,6 +77,15 @@
 		SELECT CD, CNM FROM H_CODE_THIRD WHERE SCD=#{scd}
 	</select>
 	
+	<select id="mypage" parameterType="Myinfo" resultMap="myinfoResultSet">
+		SELECT * FROM USER_INFO WHERE ID=#{id}
+	</select>
+	
+	<update id="updateMyInfo" parameterType="Myinfo">
+		UPDATE USER_INFO SET N_NM=#{nNm}, BORN=#{born}, BIRTH=#{birth}, STA=#{cd}, PHOTO=#{photo}  WHERE ID=#{id}
+		
+		</update>
+	
 	<select id="getHomeImg"  parameterType="Myinfo" resultType="String" >
 		SELECT HOME_IMG FROM HOME WHERE ID = #{id}
 	</select>

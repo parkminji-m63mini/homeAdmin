@@ -67,8 +67,8 @@
 
             <div class="form">
             
-            	<a href="write.do" style="float: right;">작성하기</a>
-            	<%-- 리스트 출력 --%> 		
+            	<div><a href="write.do" style="position: relative; left: 79%;">작성하기</a></div>
+            	            	<%-- 리스트 출력 --%> 		
  		<span id='ListFrm'></span>
                 <br><br>
             <form id='frmReg' name="frmReg" method="post" action="javascript:proc('indexProc.do');">

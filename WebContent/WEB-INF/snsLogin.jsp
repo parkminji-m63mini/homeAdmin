@@ -25,21 +25,24 @@
         <div class="row  justify-content-center">
           <div class="col-lg-6">
 
-            <div class="form">
+            <div class="form" style="  text-align: center;margin-top: 50%;">
             
       <!-- 아래와같이 아이디를 꼭 써준다. -->
-      <img style="width: 40%;" src="${contextPath}/resources/img/icon/login/naver_nomal.png" id="naverIdLogin_loginButton" >
+      <img class='snsBtn' src="${contextPath}/resources/img/icon/login/naver_nomal.png" id="naverIdLogin_loginButton" >
       <a href="javascript:void(0)"  onclick="naverLogout(); return false;">
-          <span>네이버 로그아웃</span>
+          <span style="display: none;">네이버 로그아웃</span>
       </a>
         
      	
      	<div>
-       <img style="width: 40%;" src="${contextPath}/resources/img/icon/login/kakao_nomal.png" onclick="kakaoLogin();" >
+       <img   class='snsBtn'  src="${contextPath}/resources/img/icon/login/kakao_nomal.png" onclick="kakaoLogin();" >
       <a href="javascript:void(0)" onclick="kakaoLogout();">
-          <span>카카오 로그아웃</span>
+          <span style="display: none;">카카오 로그아웃</span>
       </a>
      	</div>
+     	
+     	
+     	<a href="${contextPath}/my/login.do">관리자 로그인</a>
      	
  		
             </div>

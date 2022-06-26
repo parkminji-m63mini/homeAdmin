@@ -64,7 +64,14 @@ function click(){
 <body>
  <c:choose>
      	<c:when test = "${empty list}">
-     		<p>데이터가 없습니다</p>
+     			<section id="services" class="services section-bg" style="padding-top: 10px;padding-bottom: 10px;">
+     		<div  class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100" style="width: 100%;">
+	 			<%-- 상단 --%>
+	 			<div  class="box">
+     		<span>데이터가 없습니다</span>
+     		</div>
+     		</div>
+     		</section>
      	</c:when>
      	<c:otherwise>
      		
@@ -117,7 +124,7 @@ function click(){
 	 						<c:if test="${ arr.cSkip ne '0' }">
 	 					class='ellTxt'
 	 					</c:if>
-	 					style="width: 400px;">
+	 					style="width: 100%;">
 	 					${fn:replace(arr.cont,newLine, '<br>')}
 	 					<%-- 
 	 					<c:if test="${ arr.cSkip eq '0' }">

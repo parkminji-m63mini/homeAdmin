@@ -21,4 +21,7 @@ public interface MyinfoService {
 	
 	String getHomeImg(String id);
 	public abstract List<checkList> getCheckList(String id);
+	
+	public abstract MyinfoVo mypage(MyinfoVo vo) throws Exception;
+	public abstract void updateMyInfo(MyinfoVo vo) throws Exception;
 }

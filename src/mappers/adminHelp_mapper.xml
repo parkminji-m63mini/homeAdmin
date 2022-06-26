@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AhelpMapper">
+
+	<resultMap id="AhelpResultSet" type="AHelp" >
+		
+				<id property="idx" column="IDX"/>
+		<result property="wdt" column="WDT"/>
+		<result property="edt" column="EDT"/>
+		<result property="uId" column="U_ID"/>
+		<result property="type" column="TYPE"/>
+		<result property="cont" column="CONT"/>
+		<result property="title" column="TITLE"/>
+		<result property="sta" column="STA"/>
+		<result property="nNm" column="N_NM"/>
+		<result property="adt" column="ADT"/>
+		<result property="etc" column="ETC"/>
+		
+	</resultMap>
+	
+	
+		<!--  리스트 -->
+	<select id="helpList" parameterType="AHelp" resultMap="AhelpResultSet">
+	  SELECT * FROM (
+	SELECT
+     ROW_NUMBER() OVER (ORDER BY WDT DESC, IDX DESC ) AS RN,
+    A.IDX, B.CNM, U_ID, TITLE, LEFT(WDT, 10) AS WDT,
+    CASE A.STA WHEN "0" THEN "답변 대기" WHEN "1" THEN "답변 완료" END AS STA 
+    , D.N_NM, C.N_NM AS COUN_ID
+    FROM HELP A
+    LEFT JOIN USER_INFO D ON A.U_ID=D.ID 
+    LEFT JOIN USER_INFO C ON A.COUN_ID=C.ID
+    LEFT JOIN H_CODE_SECOND B ON A.TYPE=B.CD
+    ) A
+	</select>
+	
+	<!--  리스트 -->
+	<select id="viewList" parameterType="AHelp" resultMap="AhelpResultSet">
+	SELECT
+    A.IDX, B.CNM, U_ID, TITLE, CONT,ADT, ANSWER, LEFT(WDT, 10) AS WDT,
+    	A.STA 
+    , D.N_NM, C.N_NM AS COUN_NM, COUN_ID
+    FROM HELP A
+    LEFT JOIN USER_INFO D ON A.U_ID=D.ID 
+    LEFT JOIN USER_INFO C ON A.COUN_ID=C.ID
+    LEFT JOIN H_CODE_SECOND B ON A.TYPE=B.CD
+    WHERE A.IDX=#{idx}
+	</select>
+</mapper>

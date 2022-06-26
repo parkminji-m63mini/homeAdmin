@@ -961,6 +961,15 @@ public class ManageMServiceImpl
 	@Override
 	public void deleteMm(ManageM vo) throws Exception {
 		dao.deleteMm(vo);
+
+		// 메인 공과금 값도 업데이트
+		vo.setJiM(dao.sumMa(vo));
+		vo.setIdx(vo.getJidx());
+				
+		System.out.println(vo.getJiM() + " : " + vo.getIdx());
+		
+		//메인 공과금 값 업데이트
+		dao.updateTMm(vo);
 		
 	}
 
@@ -974,6 +983,7 @@ public class ManageMServiceImpl
 	@Override
 	public List<ManageM> mMPassSame(ManageM vo) throws Exception {
 		List<ManageM> arrList = dao.mMPassSame(vo);
+		
 
 		System.out.println(vo.getYyyy() + "/" + vo.getMm() + "날짜 확인");
 				
@@ -982,8 +992,13 @@ public class ManageMServiceImpl
 		// 작년 동월 데이터가 있는지 확인 
 		// 당월 데이터는 무조건 있으니 1이라면 전년도 데이터가 없는 것
 		if(arrList.size() == 1) {
+			
+			vo.setYyyy(Integer.toString((Integer.parseInt(vo.getYyyy())-1)));
+			
 			// 해당 데이터가 있는지 체크
 			String chk = dao.chkDM(vo);
+			
+			System.out.println(chk + " chk");
 			
 			// 데이터 없으면 insert
 			if(chk == null || chk.equals("") || chk.isEmpty() == true ||  chk.equals("0")) {
@@ -1033,6 +1048,283 @@ public class ManageMServiceImpl
 		vo.setJiM(Integer.toString(suma));
 		
 		dao.updateTMm(vo);
+		
+	}
+	
+	
+	@Override
+	public List<ManageM> mMNP12m(ManageM vo) throws Exception {
+	
+		List<ManageM> arrList = dao.mMNP12m(vo);
+		System.out.println(arrList.size()  +  " ////");
+		// 1년간의 데이터는 13개의 데이터가 나와야함
+		// 그게 아니라면 자리 채우기 데이터 삽입
+		if(arrList.size() != 13) {
+			
+			// 현재 vo있는 yyyy, mm 데이터를 기준함
+			for (int i = 1; i <= 12; i++) {
+				System.out.println("==============================");
+				System.out.println(vo.getYyyy() + "/" + vo.getMm() + "시작");
+				
+				String yy = vo.getYyyy();
+				String mm = vo.getMm();
+				
+			// 현재 데이터는 무조건 있음으로 그 다음월부터 데이터 확인
+			vo.setYyyy(JavaUtil.checkYYYY(vo.getYyyy(),vo.getMm(), i+""));
+			vo.setMm(JavaUtil.checkMM(vo.getMm(), i+""));
+			
+			System.out.println( i + "i 값");
+			System.out.println(vo.getYyyy() + "/" + vo.getMm() + "확인22");
+			// 해당 데이터가 있는지 체크
+			String chk = dao.chkDM(vo);
+			
+			// 데이터 없으면 insert
+			if(chk == null || chk.equals("") || chk.isEmpty() == true ||  chk.equals("0")) {
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+	   			 
+	   			 // 전체 공과금 데이터가 있는지 확인
+	   		  String chk2 = dao.manageIndexS(vo);
+	   		
+	   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+	   			//System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+	   			// 공과금 데이터 생성
+	   			dao.insertMAll(vo);
+	   			
+	   			// 가스 데이터에 넣을 조인 idx 가져오기
+	   			// jidx 세팅
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			//System.out.println("jidx : " + vo.getJidx() );
+	   			// gas 월 데이터 새로 생성
+	   			dao.insertMMm(vo);
+	   		}else {
+	   			//System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			dao.insertMMm(vo);
+	   			//System.out.println("jidx : " + vo.getJidx() );
+	   		}
+	   			 
+			}	
+			
+			// 다시 기본데이터로 값 세팅
+			vo.setMm(mm);
+			vo.setYyyy(yy);
+		}
+			 arrList = dao.mMNP12m(vo);
+		}
+			
+		return arrList;
+	}
+
+	
+	///-------- 수도
+	
+	@Override
+	public List<ManageM> manageWaNow(ManageM vo) throws Exception {
+		List<ManageM> arrList = dao.manageWaNow(vo);
+		
+		 // 당월 가스 데이터가 없다면 새로 생성
+  	 if(arrList.isEmpty()|| arrList.get(0) == null) {
+  		 
+  		 // 공과금 전체 데이터를 가지고 있는 지 부터 확인
+  		 List<ManageM> arrListChk = dao.manageList(vo);
+
+  		 // gChk는 값 담기위해  일시적으로 사용한거임 별 의미없음
+  		 if(vo.getgChk().equals("true")) {
+  			 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+  			 vo.setgChk(dt);
+  		 }else {
+  			 vo.setgChk(LocalDate.now() +"");
+  		 }
+  		 
+  		 // 전체 데이터가 없다면 생성
+  		 if(arrListChk.isEmpty() || arrListChk.get(0) == null) {
+  			 
+  			 
+  			 dao.insertMAll(vo);
+  		 }
+  		 int jidx = 0;
+  		 
+  		 //가스비 상세 데이터 생성 하기 ------------------
+
+  		 // 조인idx 가져옴 (새로만든 MANAGE_MA 의 IDX)
+  		 jidx = dao.manageIndex(vo); // 공과금 전체 데이터 idx 가져오기
+  		   
+  		  // 생성 후 다시 인덱스 조회
+  		   jidx = dao.manageIndex(vo);
+  		 vo.setJidx(jidx);
+  		 
+  		 //가스비 상세 데이터 생성
+  		 dao.insertMWA(vo);
+  		 //------------------------
+  		 System.out.println("넘어옴");
+  		 
+  		 // 다시 불러오기
+  		  arrList = dao.manageWaNow(vo);
+  	 }
+ 	 
+		
+		
+		return arrList;
+	}
+	
+	public List<ManageM> waNP(ManageM vo)  throws Exception{
+		List<ManageM> arrList = dao.waNP(vo);
+	
+	return arrList;
+}
+
+	@Override
+	public List<ManageM> waPassSame(ManageM vo) throws Exception {
+		List<ManageM> arrList = dao.waPassSame(vo);
+
+		System.out.println(vo.getYyyy() + "/" + vo.getMm() + "날짜 확인");
+				
+		System.out.println(arrList.size()  + "크기확인");
+		
+		String yyyy = vo.getYyyy();
+		String mm = vo.getMaM();
+		
+		// 작년 동월 데이터가 있는지 확인 
+		// 당월 데이터는 무조건 있으니 1이라면 전년도 데이터가 없는 것
+		if(arrList.size() == 1) {
+			
+		vo.setYyyy(JavaUtil.checkYYYY(vo.getYyyy(),vo.getMm(),"1"));
+		vo.setMm(JavaUtil.checkMM(vo.getMm(), "1"));
+						
+		
+			// 해당 데이터가 있는지 체크
+			String chk = dao.chkDW(vo);
+			System.out.println(chk + " chk 확인");
+			// 데이터 없으면 insert
+			if(chk == null || chk.equals("") || chk.isEmpty() == true) {
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+	   			 
+	   			 // 전체 공과금 데이터가 있는지 확인
+	   		  String chk2 = dao.manageIndexS(vo);
+	   		
+	   		  System.out.println(chk2 + "chk2 값");
+	   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+	   			System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+	   			// 공과금 데이터 생성
+	   			dao.insertMAll(vo);
+	   			
+	   			// 가스 데이터에 넣을 조인 idx 가져오기
+	   			// jidx 세팅
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			System.out.println("jidx : " + vo.getJidx() );
+	   			// gas 월 데이터 새로 생성
+	   			dao.insertMWA(vo);
+	   		}else {
+	   			System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			dao.insertMWA(vo);
+	   			System.out.println("jidx : " + vo.getJidx() );
+	   		}
+	   			 
+			}	
+			arrList = dao.waPassSame(vo);
+		}
+	
+    	
+    	return arrList;
+	}
+
+	public List<ManageM> waNP6m(ManageM vo)  throws Exception{
+		
+		vo.setYyyy(vo.getYyyy() + "/" + vo.getMm());
+		vo.setYyyy2(vo.getYyyy2() + "/" + vo.getMm2());
+		
+		System.out.println(vo.getYyyy() +  "  : yyyy 확인");
+		System.out.println(vo.getYyyy2() +  "  : yyyy2 확인");
+		
+		List<ManageM> arrList = dao.waNP6m(vo);
+		return arrList;
+	}
+	
+	@Override
+	public List<ManageM> waNP12m(ManageM vo) throws Exception {
+	
+		List<ManageM> arrList = dao.waNP12m(vo);
+		
+		// 1년간의 데이터는 13개의 데이터가 나와야함
+		// 그게 아니라면 자리 채우기 데이터 삽입
+		if(arrList.size() != 13) {
+			
+			// 현재 vo있는 yyyy, mm 데이터를 기준함
+			for (int i = 1; i <= 12; i++) {
+				System.out.println("==============================");
+				System.out.println(vo.getYyyy() + "/" + vo.getMm() + "시작");
+				
+				String yy = vo.getYyyy();
+				String mm = vo.getMm();
+				
+			// 현재 데이터는 무조건 있음으로 그 다음월부터 데이터 확인
+			vo.setYyyy(JavaUtil.checkYYYY(vo.getYyyy(),vo.getMm(), i+""));
+			vo.setMm(JavaUtil.checkMM(vo.getMm(), i+""));
+			
+			System.out.println( i + "i 값");
+			System.out.println(vo.getYyyy() + "/" + vo.getMm() + "확인22");
+			// 해당 데이터가 있는지 체크
+			String chk = dao.chkDW(vo);
+			
+			// 데이터 없으면 insert
+			if(chk == null || chk.equals("") || chk.isEmpty() == true) {
+				 String dt = vo.getYyyy() + "/" + vo.getMm() + "/1";
+	   			 vo.setgChk(dt);
+	   			 
+	   			 // 전체 공과금 데이터가 있는지 확인
+	   		  String chk2 = dao.manageIndexS(vo);
+	   		
+	   		if(chk2 == null || chk2.equals("") || chk2.isEmpty() == true) {
+	   			//System.out.println("chk2 null시 값" + vo.getYyyy() + "/" + vo.getMm());
+	   			// 공과금 데이터 생성
+	   			dao.insertMAll(vo);
+	   			
+	   			// 가스 데이터에 넣을 조인 idx 가져오기
+	   			// jidx 세팅
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			//System.out.println("jidx : " + vo.getJidx() );
+	   			// gas 월 데이터 새로 생성
+	   			dao.insertMWA(vo);
+	   		}else {
+	   			//System.out.println("chk2 null 아님 " + vo.getYyyy() + "/" + vo.getMm());
+	   			vo.setJidx(dao.manageIndex(vo));
+	   			dao.insertMWA(vo);
+	   			//System.out.println("jidx : " + vo.getJidx() );
+	   		}
+	   			 
+			}	
+			
+			// 다시 기본데이터로 값 세팅
+			vo.setMm(mm);
+			vo.setYyyy(yy);
+		}
+			 arrList = dao.waNP12m(vo);
+		}
+			
+		return arrList;
+	}
+	public void updateTwaM(ManageM vo, HttpServletResponse res)  throws Exception{
+		dao.updateTwaM(vo);
+	}
+	
+	public String newUpwa(ManageM vo, HttpSession ss)  throws Exception{
+		String result = dao.newUpwa(vo); 
+		return result; 
+		
+	}
+	public void updateWa(ManageM vo, HttpServletResponse res)   throws Exception{
+		
+		dao.updateWa(vo);
+		
+		// 값 들어가지 않아서 잠시 멈춤
+		// 기본 테이블 가스 컬럼도 수정 (상세값 전부 + 했을 때 값으로) update
+		//dao.updateMGas(vo);
+	}
+	public void allUpdateWa(ManageM vo, HttpServletResponse res)  throws Exception{
+		dao.allUpdateWa(vo);
 		
 	}
 	

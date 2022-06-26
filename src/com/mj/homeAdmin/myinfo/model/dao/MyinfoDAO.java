@@ -50,4 +50,12 @@ public class MyinfoDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("checkListMapper.selectCheckList", id);
 	}
+	public MyinfoVo mypage(MyinfoVo vo) {
+		return sqlSession.selectOne("myinfoMapper.mypage", vo);
+	}
+
+	public void updateMyInfo(MyinfoVo vo) {
+		sqlSession.update("myinfoMapper.updateMyInfo", vo);
+		
+	}
 }

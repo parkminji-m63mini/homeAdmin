@@ -99,7 +99,7 @@ public class VisitController {
 		
 		
 		 //----------- 파일 업로드 --------------------
-		 String uploadFolder = "C:\\workspace\\famework\\homeAdmin2\\WebContent\\upload\\visit";
+		 String uploadFolder = myutil.fielUrl("visit");
 		 
 		 String fileNm = "";
 		
