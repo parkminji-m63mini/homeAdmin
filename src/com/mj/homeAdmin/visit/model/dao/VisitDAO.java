@@ -33,4 +33,9 @@ public class VisitDAO {
 		sqlSession.delete("visitMapper.delete", vo);
 	}
 
+	public List<Visit> mainVistList(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("visitMapper.mainVistList", id);
+	}
+
 }

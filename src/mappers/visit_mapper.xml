@@ -90,5 +90,15 @@
 		<delete id="delete" parameterType="Visit">
 		DELETE FROM VISIT WHERE IDX=#{idx} AND U_ID=#{uId}
 		</delete>
+		
+	<select id="mainVistList" parameterType="Visit" resultMap="visitResultSet">
+		SELECT V_NM, LEFT(VDT, 10) as VDT ,  CASE WHEN LENGTH(CONT) > 50 THEN
+       CONCAT( LEFT(CONT, 50), "...")
+        ELSE
+        CONT 
+        END
+        AS CONT
+        FROM VISIT WHERE U_ID = #{uId}
+	</select>
 
 </mapper>

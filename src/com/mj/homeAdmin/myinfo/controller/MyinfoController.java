@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +24,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mj.homeAdmin.comm.BCryptTest;
+import com.mj.homeAdmin.comm.JavaUtil;
 import com.mj.homeAdmin.commn.service.CmmnServiceImpl;
+import com.mj.homeAdmin.manageM.model.service.ManegeMService;
+import com.mj.homeAdmin.manageM.vo.ManageM;
 import com.mj.homeAdmin.myinfo.model.service.MyinfoService;
 import com.mj.homeAdmin.myinfo.model.service.MyinfoServiceImpl;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.mj.homeAdmin.visit.model.service.VisitService;
+import com.mj.homeAdmin.visit.vo.Visit;
 import com.sun.org.apache.regexp.internal.RE;
 import com.mj.homeAdmin.checkList.model.service.checkListService;
 import com.mj.homeAdmin.checkList.vo.checkList;
@@ -41,6 +47,11 @@ public class MyinfoController {
 	@Autowired
 	private checkListService checkListService;
 
+	@Autowired
+	private ManegeMService manageService;
+	
+	@Autowired
+	private VisitService visitService;
 	@Autowired
 	private BCryptTest by;
 	
@@ -75,17 +86,53 @@ public class MyinfoController {
 			
 	if(chk == true) {
 		result ="true";
+		
 		//세션에 필요한 정보가져오기
 		// 여기부터
 		 List<MyinfoVo> user = ms.selectUser(vo);
 		 
+		 
+		 
+		
 		 // 메인에 나타날 것들
 		 // 집 이미지
 		 String homeImg = ms.getHomeImg(user.get(0).getId());
 		 // 체크리스트
+		 System.out.println("확인");
 		 List<checkList> checkList = checkListService.selectCheckList(user.get(0).getId());
 		 List<checkList> checkListDetail = checkListService.selectCheckListDetail(user.get(0).getId());
+	
+		 // 공과금 전월vs당월
 		 
+		 String flag = "false";
+		 ManageM manageVo = new ManageM();
+		 manageVo.setuId(user.get(0).getId());
+		 String	yyyy= "" + LocalDate.now().getYear();
+         String mm= JavaUtil.checkMM(""+LocalDate.now().getMonthValue(), "0");
+        
+        // 체크하는 용도로 사용함
+        manageVo.setgChk(flag);
+        
+        
+        manageVo.setYyyy(yyyy);
+        manageVo.setMm(mm);
+         System.out.println("manageVo.getuId()  " + manageVo.getuId());
+         System.out.println("manageVo.getuId()  " + manageVo.getYyyy());
+         System.out.println("manageVo.getuId()  " + manageVo.getMm());
+        // 이번달
+        List<ManageM> arrViewNow = manageService.manageIndex(manageVo);
+        
+        //-------------------------------//
+        // 이번달, 이전달 비교
+ 
+        manageVo.setMm2(JavaUtil.checkMM(mm, "1"));
+        manageVo.setYyyy2(JavaUtil.checkYYYY(yyyy, mm, "1"));
+        
+        List<ManageM> arrViewPast = manageService.manageNP(manageVo);
+        
+        // 방명록
+		 List<Visit> visitList = visitService.mainVistList(user.get(0).getId());
+		
 		 vo.setId(user.get(0).getId());
 		 vo.setNm(user.get(0).getNm());
 		 vo.setnNm(user.get(0).getnNm());
@@ -100,6 +147,9 @@ public class MyinfoController {
 		model.addAttribute("homeImg", homeImg);
 		model.addAttribute("checkList", checkList);
 		model.addAttribute("checkListDetail", checkListDetail);
+		model.addAttribute("arrViewNow", arrViewNow);
+        model.addAttribute("arrViewPast", arrViewPast);
+        model.addAttribute("visitList", visitList);
 	//	System.out.println(ss.getAttribute("ssNM") + " 세션 확인");
 	}	
 		

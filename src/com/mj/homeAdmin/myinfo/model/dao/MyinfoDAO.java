@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.mj.homeAdmin.visit.vo.Visit;
 import com.sun.org.apache.regexp.internal.recompile;
 
 @Repository
@@ -58,4 +59,6 @@ public class MyinfoDAO {
 		sqlSession.update("myinfoMapper.updateMyInfo", vo);
 		
 	}
+
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.mj.homeAdmin.visit.vo.Visit;
 
 public interface MyinfoService {
 
@@ -24,4 +25,5 @@ public interface MyinfoService {
 	
 	public abstract MyinfoVo mypage(MyinfoVo vo) throws Exception;
 	public abstract void updateMyInfo(MyinfoVo vo) throws Exception;
+	
 }

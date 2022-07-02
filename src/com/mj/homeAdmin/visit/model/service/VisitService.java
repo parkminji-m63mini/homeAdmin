@@ -16,4 +16,5 @@ public interface VisitService {
 
 	public abstract void delete(Visit vo) throws Exception;
 
+	public abstract List<Visit> mainVistList(String id);
 }
