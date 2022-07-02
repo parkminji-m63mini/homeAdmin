@@ -43,5 +43,9 @@ public class VisitServiceImpl
 	public void delete(Visit vo) throws Exception {
 		dao.delete(vo);
 	}
-	
+	@Override
+	public List<Visit> mainVistList(String id) {
+		// TODO Auto-generated method stub
+		return dao.mainVistList(id);
+	}
 }

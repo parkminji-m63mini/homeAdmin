@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.mj.homeAdmin.checkList.vo.checkList;
 import com.mj.homeAdmin.myinfo.model.dao.MyinfoDAO;
 import com.mj.homeAdmin.myinfo.vo.MyinfoVo;
+import com.mj.homeAdmin.visit.vo.Visit;
 
 @Service
 public class MyinfoServiceImpl implements MyinfoService {
@@ -64,4 +65,6 @@ public class MyinfoServiceImpl implements MyinfoService {
 	public void updateMyInfo(MyinfoVo vo) throws Exception {
 		dao.updateMyInfo(vo);
 	}
+
+	
 }
