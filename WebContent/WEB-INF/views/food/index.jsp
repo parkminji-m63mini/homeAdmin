@@ -10,6 +10,7 @@
 </head>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	 <link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 	<script type="text/javascript">
 $(document).ready(function(){
 	console.log("jsp 확인");
@@ -41,18 +42,6 @@ function selectCode(){
 	
 <body>
 <main>
-<!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="index.html">식재료</a></li>
-          <li>전체</li>
-        </ol>
-        <h2>전체</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
@@ -61,14 +50,17 @@ function selectCode(){
         <div class="">
 
           <div class="">
-          <style>
-          .bodyFR01{
-          border: 1px solid black;
-          width: 100%;
-		  text-align: center;
-		  margin: 0 auto;
-          }
-          </style>
+			<!-- ======= Breadcrumbs ======= -->
+			    <section id="breadcrumbs" class="breadcrumbs">
+			      <div class="container">
+			
+			        <ol>
+			          <li><a href="index.html">식재료</a></li>
+			          <li>전체</li>
+			        </ol>
+			
+			      </div>
+			    </section><!-- End Breadcrumbs -->
           	
           	<span id='ListFrm'></span>
           <div>

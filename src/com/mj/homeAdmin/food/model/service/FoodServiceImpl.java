@@ -109,13 +109,25 @@ public class FoodServiceImpl implements FoodService{
 	
 	@Override
 	public void fr01InsertOne(Food vo) throws Exception {
-		System.out.println(vo.getFdt() + " 확인");
+		System.out.println(vo.getBdt() + " 확인");
 		dao.fr01Insert(vo);
+	}
+	
+	@Override
+	public void fr01InsertOne2(Food vo) throws Exception {
+		System.out.println(vo.getBdt() + " 확인");
+		dao.fr01Insert2(vo);
 	}
 	
 	@Override
 	public void fr01Update(Food vo) throws Exception {
 				dao.fr01Update(vo);
+				
+			}
+	
+	@Override
+	public void fr01Update2(Food vo) throws Exception {
+				dao.fr01Update2(vo);
 				
 			}
 	
@@ -138,7 +150,7 @@ public class FoodServiceImpl implements FoodService{
 	@Override // date 타입 null 일 때 '0000-00-00'로 변경하는 
 	public String dtNullRp(String dt) throws Exception {
 
-		if(dt == null || dt.equals("") || dt.isEmpty() == true) {
+		if(dt == null || dt.equals("") || dt.isEmpty() == true || dt.length() == 0) {
 			dt ="0000-00-00";
 		}
 		

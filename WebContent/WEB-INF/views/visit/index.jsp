@@ -52,22 +52,32 @@
 	 </script>
 <body>
 
-<section id="breadcrumbs" class="breadcrumbs">
+
+     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
 
-        <ol>
-          <li><a href="index.html">마이페이지</a></li>
-          <li>방명록</li>
-        </ol>
-        <h2>방명록</h2>
+		   <div class="">
 
-      </div>
-    </section><!-- End Breadcrumbs -->
-      <div class="container">
-
+          <div class="">
+          
+          
+          			<section id="breadcrumbs" class="breadcrumbs">
+		      <div class="container">
+		
+		        <ol>
+		          <li><a href="index.html">마이페이지</a></li>
+		          <li>방명록</li>
+		        </ol>
+		
+		      </div>
+		    </section><!-- End Breadcrumbs -->
+    
+          
         <div class="row  justify-content-center">
           <div class="col-lg-6">
 
+	
+				
             <div class="form">
             
             <form id='frmReg' name="frmReg" method="post" action="javascript:proc('indexProc.do');">
@@ -77,8 +87,8 @@
             	<option value="nm">이름</option>
             </select>
             	
-            <input type="text" id='word' name='word' />
-            <a onclick="proc('indexProc.do');">검색</a> 
+            <input type="text" id='word' name='word' class='manageI2 form-control showAuto'  />
+            <a class="upbtn btn btn-primary-1" onclick="proc('indexProc.do');">검색</a> 
             
             
             <div class="none wi100" style="display: none;">
@@ -93,7 +103,7 @@
             
             
             <div  class="section-bg" style="width: 100%;">😁친구에게 링크를 보내줘!  
-            <img  onclick="copy('${contextPath}/visit/write.do?id=${sessionScope.ssID}', '방명록 주소 복사 완료');" alt="" src="${contextPath}/resources/img/icon/setting/copy.png"> 
+            <img  onclick="copy('${contextPath}/visit/write.do?uId=${sessionScope.ssID}', '방명록 주소 복사 완료');" alt="" src="${contextPath}/resources/img/icon/setting/copy.png"> 
             </div>
      
 		<%-- 리스트 출력 --%> 		
@@ -106,6 +116,11 @@
         </div>
  
       </div>
+      
+      </div>
+      </div>
+         </section>
+        
       
 </body>
 </html>

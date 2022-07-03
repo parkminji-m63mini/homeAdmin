@@ -19,6 +19,7 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
  <script type="text/javascript" src="${contextPath}/resources/js/loginchk.js"></script>
+
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
@@ -47,7 +48,7 @@ function up(index){
 			
 					frm.action = 'updateMAll.do';
 					frm.target = "frmSys";
-					frm.meth  class='boder-black'od = 'post';
+					frm.meth  class=''od = 'post';
 					frm.submit();
 					
 					
@@ -92,6 +93,7 @@ function up(index){
 	$(".upFrom").css("display", "inline");
 	
 	$("#upbtn").val("등록");
+	$("#upbtn").css("width", "100%");
 	
 }
 
@@ -280,16 +282,27 @@ $(document).ready(function() {
 	  
 
 function show(){
-	if(	$("#passY").text() == "접기"){
+	if(	$("#passY").text() == "▲"){
 	$("#passYT").css("display","none");
 	$("#passYTD").css("display","none");
 	$("#passY").text(">> 작년에는 얼마 썼을까?");
-	$(".savingDiv").css("display","inline");
+	$(".savingDiv").css("display","revert");
 	}else{
 	$("#passYT").css("display","table");
 	$("#passYTD").css("display","inline-block");
-	$("#passY").text("접기");
+	$("#passY").text("▲");
 	$('.savingDiv').css("display","none");
+	}
+}
+
+
+function showMore(){
+	if(	$("#more").text() == "▲"){
+	$("#moreD").css("display","none");
+	$("#more").text("자세히 비교 >>");
+	}else{
+	$("#more").text("▲");
+	$("#moreD").css("display","inline-block");
 	}
 }
 
@@ -300,19 +313,9 @@ function show(){
 </script>
 
 <main id="main">
-
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="index.html">공과금</a></li>
-          <li>전체</li>
-        </ol>
-        <h2>전체</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
+	
+   
+	
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
@@ -322,8 +325,20 @@ function show(){
 
           <div class="">
           
-          <div>
-					<select id='yyyyC' name='yyyyC'>
+           <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="index.html">공과금</a></li>
+          <li>전체</li>
+        </ol>
+      </div>
+    </section><!-- End Breadcrumbs -->
+          
+          
+          <div style="margin-bottom: 10px;">
+					<select class='form-control yymmBtn' id='yyyyC' name='yyyyC'>
 					<option>년도</option>
 					<option value="2022" <c:if test='${arrViewNow[0].yyyy eq "2022"}'>selected="selected"</c:if>>2022</option>
 					<option value="2021" <c:if test='${arrViewNow[0].yyyy eq "2021"}'>selected="selected"</c:if>>2021</option>
@@ -331,14 +346,14 @@ function show(){
 					<option value="2019" <c:if test='${arrViewNow[0].yyyy eq "2019"}'>selected="selected"</c:if>>2019</option>
 					</select>
 					
-					<select id='mmC' name='mmC'>
+					<select class='form-control yymmBtn' id='mmC' name='mmC'>
 					<option>월</option>
 					<c:forEach var="i" begin="1" end="12" step="1">
 					<option value="${i}"<c:if test='${arrViewNow[0].mm eq i}'>selected="selected"</c:if>>${i}</option>
 					</c:forEach>
 					</select>
 					
-					<button onclick="schGo();">검색</button>
+					<button class="btn btn-primary-1-no" onclick="schGo();">검색</button>
 					
 					</div>
 					
@@ -349,9 +364,9 @@ function show(){
                 <div class="swiper-slide">
                 	<c:forEach var='arr' items='${arrViewNow}' varStatus="st">
                 	<!-- !!이건 나중에 고지서 보고 컬럼 더 만들어야함 -->
-                	 <span style="float: right;" ><a href="javascript:detail();" > >> 자세히 보러가기</a></span>
-                	 <h3>${arr.yyyy}년도 ${arr.mm}월 공과금</h3>
-				<form name="frmReg${st.index}"   class='boder-black' method="post">
+                	 <span style="float: right;" ><a href="javascript:detail();" > >></a></span>
+                	 <h3 class="subTitle">${arr.yyyy}년도 ${arr.mm}월 공과금</h3>
+				<form name="frmReg${st.index}"   class='' method="post">
 				
 				
 				<c:set var='mode' value='u'/>
@@ -365,144 +380,171 @@ function show(){
                 <input type="hidden" value="${arr.yyyy}" name='yyyy' id='yyyy'/>
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${arr.uId}" name='uId' id='uId'/>
-                	<table class='tb'>
+                	<table  class='' style="width: 100%;">
+                		<colgroup>
+							<col style="width: 100%">
+						</colgroup>
                 	<tbody>
+                	
 					<tr>
-						<th  class='boder-black'>가스</th>
-						<th  class='boder-black'>전기</th>
-						<th  class='boder-black'>수도</th>
-						<th  class='boder-black'>인터넷</th>
-						<th  class='boder-black'>관리비</th>
+						<th class='ContD'>가스</th>
 					</tr>
 					<tr>
-						<th  class='boder-black'>
+						<th  class='subContCenter '>
 						<c:choose>
 						<c:when test="${arr.gasM ne null}">
 						<span class='nomalFrom'><fmt:formatNumber value="${arr.gasM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name='gasM' value="${arr.gasM}"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name='gasM' value="${arr.gasM}"/>원</span>
 						</c:when>
 						<c:otherwise>
 						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
-						<span class='upFrom' style="display: none;" ><input onlyNumber class='manageI' type="text" name='gasM' value="0"/>원</span>
-						</c:otherwise>
-						</c:choose>
-						</th>
-						
-						<th  class='boder-black'>
-						<c:choose>
-						<c:when  test="${arr.elM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.elM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="elM" value="${arr.elM}"/>원</span>
-						</c:when>
-						<c:otherwise>
-						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="elM" value="0"/>원</span>
-						</c:otherwise>
-						</c:choose>
-						</th>
-						
-						<th  class='boder-black'>
-						<c:choose>
-						<c:when  test="${arr.wtM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.wtM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="wtM" value="${arr.wtM}""/>원</span>
-						</c:when>
-						<c:otherwise>
-						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
-						<span class='upFrom' style="display: none;" ><input onlyNumber class='manageI' type="text" name="wtM" value="0"/>원</span>
-						</c:otherwise>
-						</c:choose>
-						</th>
-						
-						<th  class='boder-black'>
-						<c:choose>
-						<c:when test="${arr.itM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.itM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="itM"  value="${arr.itM}"/>원</span>
-						</c:when>
-						<c:otherwise>
-						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="itM" value="0"/>원</span>
-						</c:otherwise>
-						</c:choose>
-						</th>
-						
-						<th  class='boder-black'>
-						<c:choose>
-						<c:when test="${arr.maM ne null}">
-						<span class='nomalFrom'><fmt:formatNumber value="${arr.maM}" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="maM"  value="${arr.maM}"/>원</span>
-						</c:when>
-						<c:otherwise>
-						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
-						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI' type="text" name="maM" value="0"/>원</span>
+						<span class='upFrom' style="display: none;" ><input onlyNumber class='manageI form-control moneyInputWon' type="text" name='gasM' value="0"/>원</span>
 						</c:otherwise>
 						</c:choose>
 						</th>
 					</tr>
 					<tr>
-					<th colspan="5">
+						
+						<th  class='ContD'>전기</th>
+					</tr>
+					<tr>	
+						<th  class='subContCenter '>
+						<c:choose>
+						<c:when  test="${arr.elM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.elM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="elM" value="${arr.elM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="elM" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+					<tr>
+						<th  class='ContD'>수도</th>	
+					</tr>	
+					<tr>
+						<th  class='subContCenter'>
+						<c:choose>
+						<c:when  test="${arr.wtM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.wtM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="wtM" value="${arr.wtM}""/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;" ><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="wtM" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+					<tr>	
+						<th  class='ContD'>인터넷</th>
+					</tr>
+					<tr>	
+						<th  class='subContCenter'>
+						<c:choose>
+						<c:when test="${arr.itM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.itM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="itM"  value="${arr.itM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="itM" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+					<tr>	
+						<th  class='ContD'>관리비</th>
+					</tr>
+					<tr>	
+						<th  class='subContCenter'>
+						<c:choose>
+						<c:when test="${arr.maM ne null}">
+						<span class='nomalFrom'><fmt:formatNumber value="${arr.maM}" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="maM"  value="${arr.maM}"/>원</span>
+						</c:when>
+						<c:otherwise>
+						<span class='nomalFrom'><fmt:formatNumber value="0" type="number"/>원</span>
+						<span class='upFrom' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="maM" value="0"/>원</span>
+						</c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+					<tr>
+					<th> <hr>
+					</th>
+					</tr>
+					<tr>
+					<th  class='subContCenter-total'>
+						<span class='nomalFrom' >총 지출 :
 						<c:set var='avgNow' value="${(arr.gasM+arr.elM+arr.wtM+arr.itM+arr.maM)}" ></c:set>
-					총 지출 : <fmt:formatNumber value="${avgNow}" type="number"/>원
+					 <fmt:formatNumber value="${avgNow}" type="number"/>원
+					 </span>
+					 <input style="float: none;" id='upbtn' class="btn btn-primary-1" type="button" onclick="up(${st.index});" value="수정"/>
 					</th>
 					</tr>
                 	</tbody>
                 	</table>
-                		<input id='upbtn' class='btn_brown' type="button" onclick="up(${st.index});" value="수정"/> 
 </form>
-<iframe id="frmSys" name="frmSys" allowTransparency="true" width="0" height="0" scrolling="no" frameborder="0"></iframe>
                 		</c:forEach>
                 		
                 </div>
               </div>
-              
-              <br><br>
+              <div class="moreDiv">
+              <a id='more' href='javascript:showMore();' >자세히 비교 >></a>
+              </div>
+              <div  id='moreD' style=" width: 100%; height: 130px; display: none;">
+              <hr>
               <div class="swiper-slide">
-               <h3>이번달엔 얼마나 줄였을까? </h3>
-               <div  style=" width: 100%; height: 130px; overflow: auto;">
-      		<table class="tb" style="font-size: 12px;">
+               <h3 class="subTitle">이번달엔 얼마나 줄였을까? </h3>
+               <div  class="tableDiv">
+      		<table class="tb">
       			<colgroup>	
       				<col style="min-width: 50px;">
-      				<col style="min-width: 70px;">
-      				<col style="min-width: 70px;">
-      				<col style="min-width: 70px;">
-      				<col style="min-width: 70px;">
-      				<col style="min-width: 70px;">
+      				<col style="min-width: 80px;">
+      				<col style="min-width: 80px;">
+      				<col style="min-width: 80px;">
+      				<col style="min-width: 80px;">
+      				<col style="min-width: 80px;">
       			</colgroup>
+      			<thead>
+	      			<tr>
+	      			<th  class=''>년/월</th>
+	      			<th  class=''>가스</th>
+	      			<th  class=''>전기</th>
+	      			<th  class=''>수도</th>
+	      			<th  class=''>인터넷</th>
+	      			<th  class=''>관리비</th>
+	      			</tr>
+      			</thead>
       		<tbody>
-      			<tr>
-      			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>가스</th>
-      			<th  class='boder-black'>전기</th>
-      			<th  class='boder-black'>수도</th>
-      			<th  class='boder-black'>인터넷</th>
-      			<th  class='boder-black'>관리비</th>
-      			</tr>
 		      <c:forEach var='arrC' items='${arrViewPast}' varStatus="st">
       			<tr>
-      			<th  class='boder-black'>${fn:substring(arrC.yyyy,2,4)}/${arrC.mm}</th>
+      			<th  class=''>${fn:substring(arrC.yyyy,2,4)}/${arrC.mm}</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arrC.gasM}" type="number"/>원
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arrC.elM}" type="number"/>원
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arrC.wtM}" type="number"/>원
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arrC.itM}" type="number"/>원
       			</span>
       			</th>      			
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arrC.maM}" type="number"/>원
       			</span>
       			</th>      			
@@ -516,62 +558,67 @@ function show(){
       			<c:set var='ma' value='${arrViewPast[1].maM - arrViewPast[0].maM}' />
       		
       			
+      		</tbody>
+      		<tfoot>
       			<tr>
       				<th>개별 총</th>
-      				<th class='boder-black'><fmt:formatNumber value="${gas}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${el}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${wt}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${it}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${ma}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${gas}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${el}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${wt}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${it}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${ma}" type="number"/>원</th>
       			</tr>	    
-      		</tbody>
+      		</tfoot>
      		</table>
      		</div>
-     		<a id='passY' href='javascript:show();' >>> 작년에는 얼마 썼을까?</a>
-     		 <div  id='passYTD' style=" width: 100%; height: 130px; overflow: auto; display: none;">
+     		<a id='passY' class="fontS" href='javascript:show();' >>> 작년에는 얼마 썼을까?</a>
+     		 <div  id='passYTD' class="tableDiv" style="display: none; ">
      		<table class="tb disNone" id='passYT' style="display: none; ">
-     		<colgroup>	
-      				<col style="min-width: 70px;">
+     			<colgroup>	
+      				<col style="min-width: 50px;">
       				<col style="min-width: 80px;">
       				<col style="min-width: 80px;">
       				<col style="min-width: 80px;">
       				<col style="min-width: 80px;">
       				<col style="min-width: 80px;">
       			</colgroup>
-      		<tbody>
+      		<thead>
       			<tr>
-      			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>가스</th>
-      			<th  class='boder-black'>전기</th>
-      			<th  class='boder-black'>수도</th>
-      			<th  class='boder-black'>인터넷</th>
-      			<th  class='boder-black'>관리비</th>
+      			<th  class=''>년/월</th>
+      			<th  class=''>가스</th>
+      			<th  class=''>전기</th>
+      			<th  class=''>수도</th>
+      			<th  class=''>인터넷</th>
+      			<th  class=''>관리비</th>
       			</tr>
+      		</thead>	
+      		<tbody>
+      		
 		      <c:forEach var='arr4' items='${arrViewPast4}' varStatus="st">
       			<tr>
-      			<th  class='boder-black'>${fn:substring(arr4.yyyy,2,4)}/${arr4.mm}</th>
+      			<th  class=''>${fn:substring(arr4.yyyy,2,4)}/${arr4.mm}</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arr4.gasM}" type="number"/>원
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arr4.elM}" type="number"/>원
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arr4.wtM}" type="number"/>원
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arr4.itM}" type="number"/>원
       			</span>
       			</th>    
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${arr4.maM}" type="number"/>원
       			</span>
       			</th>     			
@@ -585,18 +632,20 @@ function show(){
       			<c:set var='ma2' value='${arrViewPast4[1].maM - arrViewPast4[0].maM}' />
       		
       			
+      			    
+      		</tbody>
+      		<tfoot>
       			<tr>
       				<th>개별 총</th>
-      				<th class='boder-black'><fmt:formatNumber value="${gas2}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${el2}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${wt2}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${it2}" type="number"/>원</th>
-      				<th class='boder-black'><fmt:formatNumber value="${ma2}" type="number"/>원</th>
-      			</tr>	    
-      		</tbody>
+      				<th class=''><fmt:formatNumber value="${gas2}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${el2}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${wt2}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${it2}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${ma2}" type="number"/>원</th>
+      			</tr>	
+      		</tfoot>
      		</table>
      		</div>
-     		<br>
      		
      		<c:set var='avg' value="${(gas+el+wt+it+ma)}" ></c:set>
      		
@@ -604,9 +653,9 @@ function show(){
 			<c:choose>
 			<c:when test="${avg >= 0}">
 			<div style="text-align: center;" class='savingDiv'>
+			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
 			<h4>
-			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
-			이번달엔<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
+			<span>이번 달엔 <fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</span></h4>
 			</div>
 			
 			</c:when>
@@ -614,9 +663,9 @@ function show(){
      		<c:set var='avg2' value="${(gas+el+wt+it+ma)* -1}" ></c:set>
      		
 			<div style="text-align: center;" class='savingDiv'>
+			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 46%">
 			<h4>
-			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
-			<fmt:formatNumber value="${avg2}" type="number"/>원 더 사용했어..</h4>
+			<span><fmt:formatNumber value="${avg2}" type="number"/>원 더 사용했어..</span></h4>
 			</div>
 			</c:when>
 			</c:choose>
@@ -626,7 +675,7 @@ function show(){
       		<hr>
       		<br>
       		
-      		<h3>한눈에 보는 내 공과금</h3>
+      		<h3 class="subTitle">한눈에 보는 내 공과금</h3>
       		<br>
       		<!-- 전원 당월 막대그래프 비교 -->
       		<figure class="highcharts-figure">
@@ -674,7 +723,7 @@ function show(){
 		    </p>
 			</figure>
 
-			
+			</div>
               </div>
             </div>
           </div>
@@ -709,7 +758,7 @@ function show(){
               </ul>
             </div>
             <div class="portfolio-description">
-              <h2>th  class='boder-black'is is an example of portfolio detail</h2>
+              <h2>th  class=''is is an example of portfolio detail</h2>
               <p>
                 Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
               </p>

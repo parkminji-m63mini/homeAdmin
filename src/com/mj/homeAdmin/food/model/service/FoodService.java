@@ -27,4 +27,9 @@ public interface FoodService {
 
 	public abstract void updateChk(Food vo) throws Exception;
 
+	public abstract void fr01InsertOne2(Food vo)throws Exception;
+
+	public abstract void fr01Update2(Food vo)throws Exception;
+
+
 }

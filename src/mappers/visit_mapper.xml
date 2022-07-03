@@ -76,9 +76,9 @@
         
           <if test='sdt.equals("") and edt.equals("") '>
            <![CDATA[
-           AND
-           DATE_FORMAT(WDT,'%Y%m%d') BETWEEN DATE_FORMAT(date_add(now(), interval -1 month),'%Y%m%d')  
-           AND   DATE_FORMAT(now() ,'%Y%m%d')
+       --    AND
+       --    DATE_FORMAT(WDT,'%Y%m%d') BETWEEN DATE_FORMAT(date_add(now(), interval -1 month),'%Y%m%d')  
+       --    AND   DATE_FORMAT(now() ,'%Y%m%d')
        		  
           ]]>
           

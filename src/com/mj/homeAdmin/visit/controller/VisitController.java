@@ -59,6 +59,8 @@ public class VisitController {
 			 
 			 System.out.println(vo.getSdt() + "aaaa");
 			 System.out.println(vo.getEdt() + "bbb");
+			 System.out.println(vo.getWord() + "bbb");
+			 System.out.println(vo.getKey() + "bbb");
 			 
 			 
 			 

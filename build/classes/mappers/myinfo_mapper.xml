@@ -13,6 +13,7 @@
 		<id property="birth" column="BIRTH"/>
 		<id property="photo" column="PHOTO"/>
 		<id property="nm" column="NM"/>
+		<id property="nNm" column="N_NM"/>
 		<id property="email" column="EMAIL"/>
 		<id property="tokens" column="TOKENS"/>
 		<id property="profile" column="PROFILE"/>

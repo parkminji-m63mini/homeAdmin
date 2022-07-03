@@ -205,12 +205,12 @@ public class FoodController {
 		 vo.setuId((String)ss.getAttribute("ssID"));
 		 
 		 System.out.println("ddd/ " + Arrays.toString(vo.getFnmL()));
-		 System.out.println("ddd/ " + Arrays.toString(vo.getBdtL()));
+		// System.out.println("ddd/ " + Arrays.toString(vo.getBdtL()));
 		 System.out.println("ddd/ " + Arrays.toString(vo.getVmL()));
 		 System.out.println("ddd/ " + Arrays.toString(vo.getPriceL()));
 		 System.out.println("ddd/ " + Arrays.toString(vo.getIdxL()));
 		 System.out.println("ddd/ " + Arrays.toString(vo.getChkL()));
-		 System.out.println("ddd/ " + Arrays.toString(vo.getfAreaL()));
+		// System.out.println("ddd/ " + Arrays.toString(vo.getfAreaL()));
 		 System.out.println("ddd/ " + vo.getJidx());
 		 
 		 String idx [] = vo.getIdxL();
@@ -224,26 +224,26 @@ public class FoodController {
 				vo.setArea(vo.getfAreaL()[i]);
 				vo.setPrice(vo.getPriceL()[i]);
 				
-				vo.setBdt(fs.dtNullRp(vo.getBdtL()[i]));
+				//vo.setBdt(fs.dtNullRp(vo.getBdtL()[i]));
 				vo.setFdt(fs.dtNullRp(vo.getFdtL()[i]));
 				vo.setVm(vo.getVmL()[i]);
 				
-				 fs.fr01InsertOne(vo);
+				 fs.fr01InsertOne2(vo);
 				
 			}else {
 				vo.setIdx(Integer.parseInt(vo.getIdxL()[i]));
-				vo.setChk(vo.getChkL()[i].charAt(0));
+				//vo.setChk(vo.getChkL()[i].charAt(0));
 				vo.setFnm(vo.getFnmL()[i]);
 				vo.setFnm(vo.getFnmL()[i]);
 				vo.setPrice(vo.getPriceL()[i]);
 				
 				
-				vo.setBdt(fs.dtNullRp(vo.getBdtL()[i]));
+			//	vo.setBdt(fs.dtNullRp(vo.getBdtL()[i]));
 				vo.setFdt(fs.dtNullRp(vo.getFdtL()[i]));
 				
 				vo.setVm(vo.getVmL()[i]);
 				
-				fs.fr01Update(vo);
+				fs.fr01Update2(vo);
 			}
 		}
 		 

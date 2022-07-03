@@ -39,8 +39,15 @@ public class FoodDAO {
 		 sqlSession.insert("foodMapper.fr01Insert", vo);
 	}
 
+	public void fr01Insert2(Food vo) {
+		 sqlSession.insert("foodMapper.fr01Insert2", vo);
+	}
+
 	public void fr01Update(Food vo) {
 		 sqlSession.update("foodMapper.fr01Update", vo);
+	}
+	public void fr01Update2(Food vo) {
+		 sqlSession.update("foodMapper.fr01Update2", vo);
 	}
 
 	public void fr01delete(Food vo) {

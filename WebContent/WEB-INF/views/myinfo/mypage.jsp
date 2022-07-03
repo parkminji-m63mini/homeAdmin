@@ -9,6 +9,8 @@
 </head>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	
+	<link rel="stylesheet" href="${contextPath}/resources/css/common.css">	
 
 <style>
 table {
@@ -103,17 +105,7 @@ function selectCode(cd){
 
 <main id="main">
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-        <ol>
-          <li><a href="index.html">마이페이지</a></li>
-          <li>내정보</li>
-        </ol>
-        <h2>내정보수정</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
+  
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
@@ -122,6 +114,17 @@ function selectCode(cd){
         <div class="">
 
           <div class="" style="padding-bottom: 11%;">
+          
+            <!-- ======= Breadcrumbs ======= -->
+		    <section id="breadcrumbs" class="breadcrumbs">
+		      <div class="container">
+		        <ol>
+		          <li><a href="index.html">마이페이지</a></li>
+		          <li>내정보수정</li>
+		        </ol>
+		
+		      </div>
+		    </section><!-- End Breadcrumbs -->
           
            <form id='frmReg' name='frmReg' method="post" role="form" class="form-horizontal" enctype="multipart/form-data" action="update.do" >
               
@@ -177,7 +180,7 @@ function selectCode(cd){
               
               </table>
               
-               <a href="#" onclick="update();">수정</a>
+               <a href="#" class="upbtn btn btn-primary-1" style=" width: 100%;" onclick="update();">수정</a>
                 
               </form>
 

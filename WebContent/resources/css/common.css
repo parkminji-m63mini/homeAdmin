@@ -1,8 +1,35 @@
+*{
+		font-family: 'IBM Plex Sans KR', sans-serif !important;
+}
 .tb{
-	border: 1px solid black;
 	width: 100%;
 	text-align: center;
-    height: 93px;
+    height: 102px;
+    font-size: 14px;
+}
+
+.tableDiv{
+	width: 100%; height: 109px; overflow: auto;
+}
+
+thead{
+	background-color: #edf7fc;
+    border-bottom: 1px solid;
+    border-top: 1px solid #a5a5a5;
+    
+}
+
+tfoot{
+   border-top: 2px solid #84cdee;
+   border-bottom: 1px solid #a5a5a5;
+}
+
+.moreDiv{
+	text-align: center;height: 30px;
+}
+
+.fontS{
+	    font-size: 13px;
 }
 
 .boder-black{
@@ -11,6 +38,11 @@
 /*공과금 인풋(수정용) */
 .manageI{
 	width: 75px; 
+}
+
+.manageI2{
+	display: inline;
+	width: 64%;
 }
 
 /* 버튼기본 */
@@ -68,14 +100,22 @@
 .subContCenter{
 	text-align: center;
     font-size: 20px;
-    height: 76px;
+    height: 90px;
+}
+
+.subContCenter-total{
+	text-align: center;
+    font-size: 24px;
+    height: 90px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
 .ContD{
-	background-color: #accbff45;
-    color: #6c6969;
+	 background-color: #edf7fc;
+    color: #525252;
     border-radius: 8% / 30px;
     padding-left: 13px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 
 .moneyInput{
@@ -280,3 +320,66 @@
     -webkit-box-orient: vertical;
     word-wrap: break-word;
     display: -webkit-box;}
+    
+    
+.btn-primary-1{
+  color: #fff;
+    background-color: #50b8e7;
+    float: right;
+} 
+
+.btn-primary-1-no{
+  color: #fff;
+    background-color: #50b8e7;
+} 
+
+.subTitle{
+	font-family: 'IBM Plex Sans KR', sans-serif;
+	padding-bottom: 9px !important;
+	font-size: 22px !important;
+}
+
+.breadcrumbs2{
+padding: 0px 0;
+    min-height: 30px;
+    margin-top: 50px;
+    margin-left: -9px;
+}
+
+.disInBlImpor{
+	display: inline-block !important; 
+}
+
+
+.width85{
+	width: 85%;
+}
+
+
+.wi_1{ width: 100%;}
+.wi_2{ width: 100%; max-width: 80px;}
+.delbtn{ min-width: 33px;}
+.fleft{float: left;}
+
+
+ .bodyFR01{
+          width: 100%;
+		  text-align: center;
+		  margin: 0 auto;
+          }
+          
+.top{
+        background-image: url('img_commn/top2.png');
+        background-position: center center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 0;
+    padding: 0; /* remove any pre-existing padding, just in case */
+    padding-bottom: 75%; /* for a 4:3 aspect ratio */
+}
+
+.bottom{
+	   background-image: url('img_commn/bottom.png');
+        background-repeat : no-repeat;
+        background-size : cover;
+}

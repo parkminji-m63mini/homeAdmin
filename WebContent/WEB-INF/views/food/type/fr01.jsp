@@ -6,6 +6,20 @@
 <meta charset="UTF-8">
 <title>fr01</title>
 </head>
+<style type="text/css">
+.ellTxt {
+	   display: -webkit-box;
+      display: -ms-flexbox;
+      margin-top:1px;
+      max-height:80px;
+      overflow:hidden;
+      vertical-align:top;
+      text-overflow: ellipsis;
+      word-break:break-all;
+      -webkit-box-orient:vertical;
+      -webkit-line-clamp:1
+</style>
+
 <%-- 기능 설명
 데이터가 없는 회원이면 간편 등록 방식으로 여러 개 한번에 등록할 수 있음
 한번 데이터를 등록한 이후에는 한 개씩 등록 할 수 있는 [상세 등록 버튼]이 생성 되며
@@ -17,12 +31,6 @@
  --%>
  <link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 <body>
-<style>
-.wi_1{ width: 100%;}
-.wi_2{ width: 100%; max-width: 80px;}
-.delbtn{ min-width: 33px;}
-.fleft{float: left;}
-</style>
 
 <script type="text/javascript">
 
@@ -43,7 +51,7 @@ function addLineNew(tp){
 	$("#addbtn1").remove();
 	$("#FR01_TOP").append("<tr id='tr_"+ line1 +"'>" +"</th>" +
 			"<th><input class='wi_1' type='text' name='fnmL'></th>" +
-			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	<th><input class='wi_2' type='date' name='bdtL' disabled='disabled'></th>"
+			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	"
 			+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 			+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
 			+"<th><p class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>-</p></th></tr>");
@@ -53,7 +61,7 @@ function addLineNew(tp){
 		$("#addbtn2").remove();
 		$("#FR01_BOTTOM").append("<tr id='br_"+ line2 +"'>" +"</th>" +
 				"<th><input class='wi_1' type='text' name='fnmL'></th>" +
-				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	<th><input class='wi_2' type='date' name='bdtL' disabled='disabled'></th>"
+				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	"
 				+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 				+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
 				+"<th><p class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>-</p></th></tr>");
@@ -68,9 +76,8 @@ function addLine(tp){
 	$("#addbtn1").remove();
 	$("#FR01_TOP").append("<tr id='tr_"+ line1 +"'>" +"</th>"
 			+ "<th><input type='checkbox' disabled='disabled'/></th> "+
-			 "<th><input type='checkbox' name='chk'/></th>"+
 			"<th><input class='wi_1' type='text' name='fnmL'></th>" +
-			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	<th><input class='wi_2' type='date' name='bdtL' disabled='disabled'></th>"
+			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	"
 			+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 			+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
 			+"<th><p class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>-</p></th></tr>");
@@ -79,10 +86,9 @@ function addLine(tp){
 	}else if(tp == 2){
 		$("#addbtn2").remove();
 		$("#FR01_BOTTOM").append("<tr id='br_"+ line2 +"'>" +"</th>"
-				+ "<th><input type='checkbox' disabled='disabled'/></th> "
-				+ "<th><input type='checkbox' name='chk' /></th>"+
+				+ "<th><input type='checkbox' disabled='disabled'/></th> "+
 				"<th><input class='wi_1' type='text' name='fnmL'></th>" +
-				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	<th><input class='wi_2' type='date' name='bdtL' disabled='disabled'></th>"
+				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	"
 				+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 				+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
 				+"<th><p class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>-</p></th></tr>");
@@ -220,7 +226,7 @@ function editM(tp){
 			
 					frm.action = 'updateMAll.do';
 					frm.target = "frmSys";
-					frm.meth  class='boder-black'od = 'post';
+					frm.meth  class=''od = 'post';
 					frm.submit();
 					
 					
@@ -250,7 +256,7 @@ function editM(tp){
 			 var arrchk = [];
 			 var arrfnmL = [];
 			 var arrpriceL = [];
-			 var arrbdtL = [];
+			// var arrbdtL = [];
 			 var arrfdtL = [];
 			 var arrvmL = [];
 			 var arrfAreaL = [];
@@ -286,12 +292,15 @@ function editM(tp){
 			if($(this).attr('disabled') != 'disabled'){
 			arrpriceL.push( $( this ).val() );
 			}
-		} );		 
+		} );	
+		
+		/*
 		$( "input[name='bdtL']").each( function ( i ) {
 			if($(this).attr('disabled') != 'disabled'){
 			arrbdtL.push( $( this ).val() );
 			}
-		} );		 
+		} );
+		*/
 		$( "input[name='fdtL']").each( function ( i ) {
 			if($(this).attr('disabled') != 'disabled'){
 			arrfdtL.push( $( this ).val() );
@@ -323,10 +332,10 @@ function editM(tp){
 				data : {
 					jidx : ${vo.jidx},
 					idxL: arridx, 
-					chkL: arrchk, 
+				//	chkL: arrchk, 
 					fnmL: arrfnmL, 
 					priceL: arrpriceL, 
-					bdtL: arrbdtL, 
+				//	bdtL: arrbdtL, 
 					fdtL: arrfdtL, 
 					vmL: arrvmL, 
 					fAreaL: arrfAreaL
@@ -347,7 +356,7 @@ function editM(tp){
 	}
 	$(".nomalFrom").css("display", "none");
 	$(".upFrom").removeAttr("style");
-	
+	$(".delBtn").css("float", "right");
 	$("#upbtn").text("등록");
 	
 }
@@ -402,16 +411,15 @@ function usingF(date){
 	location.href='index.do?mode=' + date;
 }
 </script>
-
 <c:choose>
 <c:when test="${fn:length(arrListTop) == 0}">
-	<form name="frmReg" class='boder-black' method="post" action="fr01Insert.do">
+	<form name="frmReg" class='' method="post" action="fr01Insert.do">
 <input type="hidden" name='jidx' value='${vo.jidx}'/>
 				
 				<table class="bodyFR01" id='FR01_TOP'>
 					
 					<tr>
-					<th colspan="7">
+					<th colspan="6">
 					<c:if test="${fn:length(arrListBottom) != 0}">
 					<c:if test="${vo.mode eq '0'}">
 					<a href='javascript:usingF(1);' style="float: left;">사용 완료 식재료</a>
@@ -432,31 +440,29 @@ function usingF(date){
 					<tr>
 					<th>품명</th>
 					<th>가격</th>
-					<th>구매일</th>
 					<th>유통기한</th>
-					<th>개수/<br>용량</th>
+					<th>비고</th>
 					<th>수정</th>
 					</tr>
 					<c:choose>
 					<c:when test="${fn:length(arrListBottom) != 0}">
-					<tr><th colspan="7"><div class="nodate">데이터가 없습니다</div></th></tr>
+					<tr><th colspan="6"><div class="nodate">데이터가 없습니다</div></th></tr>
 					</c:when>
 					<c:when test="${fn:length(arrListBottom) == 0}">
 						<c:if test="${vo.mode != '0' }">
-						<tr><th colspan="7"><div class="nodate">데이터가 없습니다</div></th></tr>
+						<tr><th colspan="6"><div class="nodate">데이터가 없습니다</div></th></tr>
 						</c:if>
 						<c:if test="${vo.mode == '0' }">
 						<c:forEach var="i" begin="1" end="5">
 			          	<tr id='tr_${i}'>
 			          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${i}' onchange="chkEpy('fnm${i}', '${i}');"><input class="wi_1" type="hidden" name='fAreaL' value="TP01"></th>
 			          	<th><input class="wi_2" type='text' name='priceL' id='price${i}' disabled="disabled"></th>
-			          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${i}' disabled="disabled"></th>
 			          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${i}' disabled="disabled"></th>
 			          	<th><input class="wi_2" type='text' name='vmL' id='vm${i}' disabled="disabled"></th>
 			          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine1(${i});">-</a></th>
 			          	</tr>
 			          	</c:forEach>
-			          	<tr id='addbtn1'><th colspan="7"><p class='btn_brown' onclick="addLineNew(1)">+</p></th>	</tr>
+			          	<tr id='addbtn1'><th colspan="6"><p class='btn_brown' onclick="addLineNew(1)">+</p></th>	</tr>
 			          	</c:if>
 					</c:when>
 					</c:choose>
@@ -466,7 +472,7 @@ function usingF(date){
 </c:when>
 <c:when test="${fn:length(arrListTop) != 0}">
 
-<form name="frmReg${st.index}" class='boder-black' method="post" action="fr01Insert.do">
+<form name="frmReg${st.index}" class='' method="post" action="fr01Insert.do">
 <input type="hidden" name='jidx' value='${vo.jidx}'/>
 					<c:if test="${vo.mode eq '0'}">
 					<a  class='nomalFrom' href='javascript:usingF(1);' style="float: left;">사용 완료 식재료</a>
@@ -477,19 +483,30 @@ function usingF(date){
 					<a  class='upFrom' href='javascript:usingF(1);' style="float: left; display: none;">돌아가기</a>
 					</c:if>
 					<a class='nomalFrom' href='view.do?jidx=${vo.jidx}&idx=0&area=TP01&tp=FR01&mode=${vo.mode}' style="float: right;">새로 만들기</a>
-				<table class="bodyFR01" id='FR01_TOP'>
+				<table class="bodyFR01" id='FR01_TOP' >
+				<colgroup>
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+					</colgroup>
+					<thead>
 					<tr>
-					<th colspan="7">
-					냉동실 </th>
+					<th colspan="6">
+					냉동실</th>
 					</tr>
+					
+					</thead>
+					<tbody class="top">
 					<tr>
 					<th  class='upFrom' style="display: none;">선택</th>
-					<th>사용 완료</th>
+					<th class='nomalFrom'>사용 완료</th>
 					<th>품명</th>
 					<th>가격</th>
-					<th  class='upFrom' style="display: none;">구매일</th>
 					<th>유통기한</th>
-					<th>개수/용량</th>
+					<th>비고</th>
 					<th  class='upFrom' style="display: none;">삭제</th>
 					</tr>
 					
@@ -500,16 +517,14 @@ function usingF(date){
 						<input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});" <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
 		          	<th><a href='view.do?idx=${arr.idx}&mode=${vo.mode}'>${arr.fnm}</a></th>
 		          	<th>${arr.price}</th>
-		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${arr.fdt}</c:if></th>
+		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${fn:substring(arr.fdt,2,10)}</c:if></th>
 		          	<th>${arr.vm}</th>
 		          	</tr>
 		          	
 		          	<tr id='tr_${st}' class='upFrom' style="display: none;">
 		          	<th><input type="checkbox" name='idx' value="${arr.idx}"/></th>
-					<th><input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});"   name='chk' <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${st}' value='${arr.fnm}' onchange="chkEpy('fnm${st}', '${st}');"/><input class="wi_1" type="hidden" name='fAreaL' value="TP01"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price${st}' value="${arr.price}" ></th>
-		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${st}' value="${arr.bdt}" ></th>
 		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}' value="${arr.fdt}" ></th>
 		          	<th><input class="wi_2" type='text' name='vmL' id='vm${st}' value="${arr.vm}"></th>
 		          	</tr>
@@ -518,10 +533,8 @@ function usingF(date){
 					<c:forEach var="i" begin="1" end="3">
 		          	<tr class='upFrom' style="display: none;" id='tr_${i}'>
 		          	<th><input type="checkbox" name='idx' id='idx${i}' value="0" disabled="disabled"/></th>
-		          	<th><input type="checkbox" name='chk' id='chk${i}' /></th>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${i}' onchange="chkEpy('fnm${i}', '${i}');"><input class="wi_1" type="hidden" name='fAreaL' value="TP01"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price${i}' disabled="disabled"></th>
-		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${i}' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${i}' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='text' name='vmL' id='vm${i}' disabled="disabled"></th>
 		          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine1(${i});">-</a></th>
@@ -529,7 +542,8 @@ function usingF(date){
 		          	</c:forEach>
 		          	<tr id='addbtn1' class='upFrom' style="display: none;"><th colspan="8"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr>
 					
-<!--  		          	<tr id='addbtn1'><th colspan="7"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr> -->
+<!--  		          	<tr id='addbtn1'><th colspan="6"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr> -->
+		          	</tbody>
 		          	</table>
 		          	
 		          	<div>
@@ -548,61 +562,76 @@ function usingF(date){
 
 				<input type="hidden" name='jidx' value='${vo.jidx}'/>
 					 <table class="bodyFR01" id='FR01_BOTTOM'>
+					 <colgroup>
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+					</colgroup>
 					<tr>
-					<th colspan="7">냉장실</th>
+					<th colspan="6">냉장실</th>
 					</tr>
 					<tr>
 					<th>품명</th>
 					<th>가격</th>
-					<th>구매일</th>
 					<th>유통기한</th>
-					<th>개수/<br>용량</th>
+					<th>비고</th>
 					<th>수정</th>
 					</tr>
 					<c:choose>
 					<c:when test="${fn:length(arrListTop) != 0}">
-					<tr><th colspan="7"><div class="nodate">데이터가 없습니다</div></th></tr>
+					<tr><th colspan="6"><div class="nodate">데이터가 없습니다</div></th></tr>
 					</c:when>
 					<c:when test="${fn:length(arrListTop) == 0}">
 					<c:if test="${vo.mode != '0' }">
-					<tr><th colspan="7"><div class="nodate">데이터가 없습니다</div></th></tr>
+					<tr><th colspan="6"><div class="nodate">데이터가 없습니다</div></th></tr>
 					</c:if>
 					<c:if test="${vo.mode == '0' }">
 					<c:forEach var="i" begin="1" end="5">
 		          	<tr id='br_${i}'>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm2${i}' onchange="chkEpy('fnm2${i}', '2${i}');"><input class="wi_1" type="hidden" name='fAreaL' value="TP02"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price2${i}' disabled="disabled" ></th>
-		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt2${i}' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt2${i}' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='text' name='vmL'  id='vm2${i}' disabled="disabled"></th>
 		          	<th><p class='wi_2 btn_brown delbtn' onclick="delLine2(${i});">-</p></th>
 		          	</tr>
 		          	</c:forEach>
-		          	<tr id='addbtn2'><th colspan="7"><p class='btn_brown' onclick="addLineNew(2)">+</p></th>	</tr>
+		          	<tr id='addbtn2'><th colspan="6"><p class='btn_brown' onclick="addLineNew(2)">+</p></th>	</tr>
 		          	</c:if>
 		          	</c:when>
 		          	</c:choose>
 		          	</table>
           	</form>
-          	<a href='#' onclick="insertD();">등록하기</a>
+          	<a href='#'  class="upbtn btn btn-primary-1"  onclick="insertD();">등록하기</a>
 </c:when>
 <c:when test="${fn:length(arrListBottom) != 0}">
 	
-<form name="frmReg${st.index}" class='boder-black' method="post" action="fr01Insert.do">
+<form name="frmReg${st.index}" class='' method="post" action="fr01Insert.do">
 <input type="hidden" name='jidx' value='${vo.jidx}'/>
 				<table class="bodyFR01" id='FR01_BOTTOM'>
+					 <colgroup>
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+					</colgroup>
+					<thead>
 					<tr>
-					<th colspan="7">
+					<th colspan="6">
 					냉장실</th>
 					</tr>
+					
+					</thead>
+					<tbody class="top">
 					<tr>
 					<th  class='upFrom' style="display: none;">선택</th>
-					<th>사용 완료</th>
+					<th class='nomalFrom'>사용 완료</th>
 					<th>품명</th>
 					<th>가격</th>
-					<th  class='upFrom' style="display: none;">구매일</th>
 					<th>유통기한</th>
-					<th>개수/용량</th>
+					<th>비고</th>
 					<th  class='upFrom' style="display: none;">삭제</th>
 					</tr>
 					
@@ -610,18 +639,16 @@ function usingF(date){
 					<c:forEach items="${arrListBottom}" var='arr' varStatus="st">
 					<tr id='tr_${st}' class='nomalFrom'>
 					<th><input type="hidden"  value="${arr.idx}"/>  <input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});"  <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
-		          	<th><a href='view.do?idx=${arr.idx}&mode=${vo.mode}'>${arr.fnm}</a></th>
+		          	<th><p class='ellTxt' style=" margin: 0;"><a href='view.do?idx=${arr.idx}&mode=${vo.mode}' >${arr.fnm}</a></p></th>
 		          	<th>${arr.price}</th>
-		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${arr.fdt}</c:if></th>
+		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${fn:substring(arr.fdt,2,10)}</c:if></th>
 		          	<th>${arr.vm}</th>
 		          	</tr>
 		          	
 		          	<tr id='tr_${st}' class='upFrom' style="display: none;">
 		          	<th><input type="checkbox" name='idx' value="${arr.idx}"/></th>
-					<th><input type="checkbox" name='chk' id="${arr.idx}" onchange="chkState(${arr.idx});"  <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${st}2' value='${arr.fnm}' onchange="chkEpy('fnm${st}2', '${st}2');"/><input class="wi_1" type="hidden" name='fAreaL' value="TP02"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price${st}2' value="${arr.price}" ></th>
-		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${st}2' value="${arr.bdt}" ></th>
 		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}2' value="${arr.fdt}" ></th>
 		          	<th><input class="wi_2" type='text' name='vmL' id='vm${st}2' value="${arr.vm}"></th>
 		          	</tr>
@@ -630,10 +657,8 @@ function usingF(date){
 					<c:forEach var="i" begin="1" end="3">
 		          	<tr class='upFrom' style="display: none;" id='tr_${i}'>
 		          	<th><input type="checkbox" name='idx' id='idx${i}2' value="0" disabled="disabled"/></th>
-		          	<th><input type="checkbox" name='chk' id='chk${i}2' /></th>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${i}2' onchange="chkEpy('fnm${i}2', '${i}2');"><input class="wi_1" type="hidden" name='fAreaL' value="TP02"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price${i}2' disabled="disabled"></th>
-		          	<th><input class="wi_2" type="date" name='bdtL' id='bdt${i}2' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${i}2' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='text' name='vmL' id='vm${i}2' disabled="disabled"></th>
 		          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine1(${i}2);">-</a></th>
@@ -641,12 +666,13 @@ function usingF(date){
 		          	</c:forEach>
 		          	<tr id='addbtn2' class='upFrom' style="display: none;"><th colspan="8"><p class='btn_brown' onclick="addLine(2)">+</p></th>	</tr>
 					
-<!--  		          	<tr id='addbtn1'><th colspan="7"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr> -->
+<!--  		          	<tr id='addbtn1'><th colspan="6"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr> -->
+					</tbody>
 		          	</table>
 		          	
 		          	<div>
-		          	<p class='btn_brown' onclick="editM(1)" id='upbtn'>간편 수정</p>
-		          	<p  class='upFrom btn_brown' style="display: none;"  onclick="del()" id='upBtn'>삭제</p>
+		          	<p class="upbtn btn btn-primary-1" onclick="editM(1)" id='upbtn'>간편 수정</p>
+		          	<p  class='delBtn upFrom  btn btn-danger'style=" display: none; float: none;"  onclick="del()" id='upBtn'>삭제</p>
 		          	</div>
      	</form>		          	
 

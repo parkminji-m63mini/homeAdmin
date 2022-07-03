@@ -29,6 +29,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=IBM+Plex+Sans+KR&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="${contextPath}/resources/vendor/aos/aos.css" rel="stylesheet">
@@ -54,13 +57,13 @@
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="${contextPath}">homeA</a></h1>
+      <h1 class="logo me-auto"><a href="${contextPath}">나만의집🏡</h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="#hero">나만의집🏡</a></li>
             <li class="dropdown"><a href="#"><span>공과금</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#" onclick="loginchk('/manageM/index.do');">전체</a></li>
@@ -196,6 +199,7 @@
 	
 	  if('${sessionScope.ssID}' == null || '${sessionScope.ssID}' == ""){
 			alert('로그인 후 이용 가능합니다.');
+			 location.href='${contextPath}' + "/snsLogin";
 			return false;
 		}else{
 			  location.href='${contextPath}'+ url;

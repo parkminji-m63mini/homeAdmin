@@ -61,8 +61,23 @@
 		
 	</insert>
 	
+	<insert id="fr01Insert2" parameterType="Food">
+		INSERT INTO FOOD_L(JIDX, AREA, WDT, EDT, FNM
+		 ,FDT, VM, PRICE, SORT,CHK) VALUES(#{jidx}, #{area}, NOW(), NOW(),
+		#{fnm},	#{fdt}, #{vm}, #{price}, '0', 
+		<if test='chk ==0'>'0'</if>
+		<if test='chk !=0'>#{chk}</if>
+		)
+		
+	</insert>
+	
 		<update id="fr01Update" parameterType="Food">
-		UPDATE FOOD_L SET EDT=NOW(), FNM=#{fnm}, BDT=#{bdt} ,FDT=#{fdt} , VM=#{vm}, PRICE=#{price}, CHK=#{chk} WHERE IDX=#{idx}
+		UPDATE FOOD_L SET EDT=NOW(), FNM=#{fnm}, BDT=#{bdt} ,FDT=#{fdt} , VM=#{vm}, PRICE=#{price} WHERE IDX=#{idx}
+		
+		</update>
+		
+		<update id="fr01Update2" parameterType="Food">
+		UPDATE FOOD_L SET EDT=NOW(), FNM=#{fnm}, FDT=#{fdt} , VM=#{vm}, PRICE=#{price} WHERE IDX=#{idx}
 		
 		</update>
 		

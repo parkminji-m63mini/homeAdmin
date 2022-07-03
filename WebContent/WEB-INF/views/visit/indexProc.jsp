@@ -75,7 +75,6 @@ function click(){
      	</c:when>
      	<c:otherwise>
      		
-     		
      		<c:forEach var='arr' items="${list}" varStatus="st">
 	
 		<section id="services" class="services section-bg" style="padding-top: 10px;padding-bottom: 10px;">

@@ -19,6 +19,8 @@
 	
 	<!-- 차트 -->
 	<jsp:include page="/WEB-INF/views/common/chart.jsp"/>
+	
+		<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 <body>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -29,11 +31,6 @@ $(document).ready(function(){
 		    $(this).val($(this).val().replace(/[^0-9]/g, ""));
 		});
 	//------------------------------
-	
-	if($("input[name='autoM']:checked").val() == 'Y'){
-		$(".showAuto").css("display", "inline");
-		$(".showAutoT").css("display", "table-row");
-	}
 	
 $("input[name='autoM']").click(function(){
 	
@@ -78,18 +75,40 @@ chart12('최근 12개월','${my:NVL(arrViewPast12[0].yyyy, 0)}년도 ${my:NVL(ar
 
 
 
+
 function show(){
-	if(	$("#passY").text() == "접기"){
+	if(	$("#passY").text() == "▲"){
 	$("#passYT").css("display","none");
+	$("#passYTD").css("display","none");
 	$("#passY").text(">> 작년에는 얼마 썼을까?");
-	$(".savingDiv").css("display","inline");
+	$(".savingDiv").css("display","revert");
 	}else{
 	$("#passYT").css("display","table");
-	$("#passY").text("접기");
+	$("#passYTD").css("display","inline-block");
+	$("#passY").text("▲");
 	$('.savingDiv').css("display","none");
 	}
 }
 
+function showMore(){
+	if(	$("#more").text() == "▲"){
+	$("#moreD").css("display","none");
+	$("#more").text("자세히 비교 >>");
+	}else{
+	$("#more").text("▲");
+	$("#moreD").css("display","inline-block");
+	}
+}
+
+function showMoreD(){
+	if(	$("#moreData").text() == "▲"){
+	$("#moreDData").css("display","none");
+	$("#moreData").text("。。。");
+	}else{
+	$("#moreData").text("▲");
+	$("#moreDData").css("display","inline-block");
+	}
+}
 
 
 
@@ -97,17 +116,7 @@ function show(){
 
 <main id="main">
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-        <ol>
-          <li><a href="index.html">공과금</a></li>
-          <li>수도</li>
-        </ol>
-        <h2>수도</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
+    
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
@@ -117,7 +126,18 @@ function show(){
 
           <div class="">
           
-					<div >
+			          <!-- ======= Breadcrumbs ======= -->
+			    <section id="breadcrumbs" class="breadcrumbs">
+			      <div class="container">
+			        <ol>
+			          <li><a href="index.html">공과금</a></li>
+			          <li>수도</li>
+			        </ol>
+			
+			      </div>
+			    </section><!-- End Breadcrumbs -->
+          
+					<div  style="margin-bottom: 10px;">
 					<select class='form-control yymmBtn' id='yyyyC' name='yyyyC'>
 					<option>년도</option>
 					<option value="2022" <c:if test='${arrViewNow[0].yyyy eq "2022"}'>selected="selected"</c:if>>2022</option>
@@ -133,7 +153,7 @@ function show(){
 					</c:forEach>
 					</select>
 					
-					<button onclick="schGo();">검색</button>
+					<button class="btn btn-primary-1-no" onclick="schGo();">검색</button>
 					
 					</div>
 					
@@ -161,13 +181,13 @@ function show(){
 							 <c:if test="${arr.gChk eq 'Y' }">
 							<tr>
                 	  			<th colspan="3">
-                	  				 <span class="nomalForm">
+                	  				 <span class="nomalForm" style="font-size: 14px;">
 				                	 <c:if test="${arr.gChk eq 'Y'}">
-				                	 이번 달 사용요금을 
-				                	  <c:if test="${arr.autoWhen ne null && arr.autoM eq 'Y'}">
+				                	 * 사용요금을  
+				                	  <c:if test="${my:NVL(arr.autoWhen,0) ne 0 && arr.autoM eq 'Y'}">
 				                	 	${arr.autoWhen}일에
 				                	 </c:if>
-				                	 <c:if test="${arr.autoHow ne null  && arr.autoM eq 'Y'}">${arr.autoHow}로</c:if> 
+				                	 <c:if test="${my:NVL(arr.autoHow,'0') ne '0'  && arr.autoM eq 'Y'}">${arr.autoHow}로</c:if> 
 				                	 납부했습니다.
 				                	
 				                	 </c:if>
@@ -247,7 +267,7 @@ function show(){
                 	  		</tr>
                 	  		
                 	  		<tr class=" showAutoT" style="display: none;">
-                	  			<th colspan="3" class="subContCenter">
+                	  			<th colspan="3" class="subContCenter"  style="height: 60px;">
                 	  				<input  class='manageI form-control showAuto'  style="display: none;" type="text" name='autoHow' value="${arr.autoHow}" placeholder="ex)기업은행,삼성카드.."/>
                 	  			</th>
                 	  		</tr>
@@ -257,7 +277,7 @@ function show(){
                 	  		</tr>
                 	  		
                 	  		<tr class=" showAutoT" style="display: none;">
-                	  			<th colspan="3" class="subContCenter">
+                	  			<th colspan="3" class="subContCenter"  style="height: 60px;">
                 	  				<input  class='manageI form-control showAuto'  style="display: none;" type="text" onlyNumber name='autoWhen' value="${arr.autoWhen}" placeholder="숫자만 작성"/>
                 	  			</th>
                 	  		</tr>
@@ -282,7 +302,7 @@ function show(){
 				                		<input id='copybtn2' onclick="copy(${arr.pNum}, '고객 번호 복사 완료');" class='btn_yellowNfloat copybtn' type="button" value="copy"/> 
 				                		</span>
 				                		</span>
-				                		<span class='upForm'  style="display: none;"><input id='pNumC' onlyNumber class='manageI form-control' type="text" name='pNum' value="${arr.pNum}"/></span>
+				                		<span class='upForm'  style="display: none;"><input id='pNumC' onlyNumber class='form-control' type="text" name='pNum' value="${arr.pNum}"/></span>
 				                	</th>
 				                	<th>
 				                		<span class='upForm'  style="display: none;"><input type="button" onclick="newUpwa('${vo.yyyy}',${arr.idx}, 1)" value="불러오기"/> </span>
@@ -294,7 +314,7 @@ function show(){
 				                	 <c:otherwise>
 				                	<th>
 				                	<span class='upForm'  style="display: none;">
-				                	<input  id='pNumC' onlyNumber  class='manageI form-control' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
+				                	<input  id='pNumC' onlyNumber  class='form-control' type="text" name='pNum' value="" placeholder="숫자만 입력"/>
 				                	</span>
 				                	</th>
 				                	<th>
@@ -338,11 +358,11 @@ function show(){
 							<c:choose>
 							<c:when test="${arr.sa ne null}">
 							<span class='nomalForm'><fmt:formatNumber value="${arr.sa}" type="number"/></span>
-							<span class='upForm' style="display: none;"><input onlyNumber class='manageI form-control ' type="text" name='sa' value="${arr.sa}"/></span>
+							<span class='upForm' style="display: none;"><input onlyNumber class='form-control ' type="text" name='sa' value="${arr.sa}"/></span>
 							</c:when>
 							<c:otherwise>
 							<span class='nomalForm'>0</span>
-							<span class='upForm'  style="display: none;"><input onlyNumber class='manageI form-control ' type="text" name='sa' value="0"/></span>
+							<span class='upForm'  style="display: none;"><input onlyNumber class='form-control ' type="text" name='sa' value="0"/></span>
 							</c:otherwise>
 							</c:choose>
 							</th>
@@ -356,54 +376,64 @@ function show(){
 								<c:choose>
 								<c:when  test="${arr.saM ne null}">
 								<span class='nomalForm'><fmt:formatNumber value="${arr.saM}" type="number"/>원</span>
-								<span class='upForm' style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="saM" value="${arr.saM}"/>원</span>
+								<span class='upForm' style="display: none;"><input onlyNumber class='form-control moneyInputWon' type="text" name="saM" value="${arr.saM}"/>원</span>
 								</c:when>
 								<c:otherwise>
 								<span class='nomalForm'>0원</span>
-								<span class='upForm'  style="display: none;"><input onlyNumber class='manageI form-control moneyInputWon' type="text" name="saM" value="0"/>원</span>
+								<span class='upForm'  style="display: none;"><input onlyNumber class='form-control moneyInputWon' type="text" name="saM" value="0"/>원</span>
 								</c:otherwise>
 								</c:choose>
 								</th>
 						</tr>
 					
-					<%--	
 						<tr>
-					<th colspan="2"> 총 사용 금액 : <fmt:formatNumber value="${my:NVL(arr.wtM,0)}" type="number"/>원 </th>
+					<th class='subContCenter-total'> 
+					<span class='nomalForm' >총 금액 : 
+					<fmt:formatNumber value="${my:NVL(arr.wtM,0)}" type="number"/>원 
+					</span>
+					 <input style="float: none;" id='upbtn' class="upbtn btn btn-primary-1" type="button" onclick="allUpdateWa('${arr.idx}', this.value);" value="수정"/>
+					</th>
 					</tr>
 					
-					--%>
                 	</table>
                 	
                 	
-                	
-                		<input class='btn_brown upbtn' type="button" onclick="allUpdateWa('${arr.idx}', this.value);" value="수정"/> 
 </form>
-<iframe id="frmSys" name="frmSys" allowTransparency="true" width="0" height="0" scrolling="no" frameborder="0"></iframe>
                 		</c:forEach>
                 		
                 </div>
               </div>
               
-              <br><br>
+            <div class="moreDiv">
+              <a id='more' href='javascript:showMore();' >자세히 비교 >></a>
+              </div>
+                <div  id='moreD' style=" width: 100%; height: 130px; display: none;">
+              <hr>
               <div class="swiper-slide">
-               <h3>이번달엔 얼마나 줄였을까? </h3>
+                <h3 class="subTitle">이번달엔 얼마나 줄였을까? </h3>
+                 <div  class="tableDiv">
       		<table class="tb">
+      		<colgroup>	
+      				<col style="min-width: 60px;">
+      				<col style="min-width: 80px;">
+      				<col style="min-width: 80px;">
+      			</colgroup>
       		<tbody>
       			<tr>
-      			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>사용량</th>
-      			<th  class='boder-black'>사용요금</th>
+      			<th  class=''>년/월</th>
+      			<th  class=''>사용량</th>
+      			<th  class=''>사용요금</th>
       			</tr>
 		      <c:forEach var='arrC' items='${arrViewPast}' varStatus="st">
       			<tr>
-      			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
+      			<th  class=''>${fn:substring(arrC.yyyy,2,4)}/${arrC.mm}</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${my:NVL(arrC.sa,0)}" type="number"/>
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${my:NVL(arrC.saM,0)}" type="number"/>원
       			</span>
       			</th>
@@ -413,61 +443,71 @@ function show(){
       			<c:set var='sa' value='${arrViewPast[0].sa - arrViewPast[1].sa}' />
       			<c:set var='saM' value='${arrViewPast[0].saM - arrViewPast[1].saM}'/>
       		
+      		</tbody>
+      		<tfoot>
       			
       			<tr>
       				<th>(당월 - 전월)</th>
-      				<th class='boder-black'><fmt:formatNumber value="${sa}" type="number"/></th>
-      				<th class='boder-black'><fmt:formatNumber value="${saM}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${sa}" type="number"/></th>
+      				<th class=''><fmt:formatNumber value="${saM}" type="number"/>원</th>
       			</tr>	    
-      		</tbody>
+      		</tfoot>
      		</table>
+     		</div>
      		
-     		<br>
-     		<a id='passY' href='javascript:show();' >>> 작년에는 얼마 썼을까?</a>
+     		<a id='passY' class="fontS" href='javascript:show();' >>> 작년에는 얼마 썼을까?</a>
+     			 <div  id='passYTD' class="tableDiv" style="display: none; ">
      		<table class="tb disNone" id = 'passYT' style="display: none;">
-      		<tbody>
+      			<colgroup>	
+      				<col style="min-width: 60px;">
+      				<col style="min-width: 80px;">
+      				<col style="min-width: 80px;">
+      			</colgroup>
+      		<thead>
       			<tr>
-      			<th  class='boder-black'>년/월</th>
-      			<th  class='boder-black'>사용량</th>
-      			<th  class='boder-black'>사용요금</th>
+      			<th  class=''>년/월</th>
+      			<th  class=''>사용량</th>
+      			<th  class=''>사용요금</th>
       			</tr>
+      		</thead>
+      		<tbody>
 		      <c:forEach var='arrC' items='${arrViewPastY}' varStatus="st">
       			<tr>
-      			<th  class='boder-black'>${arrC.yyyy}년 ${arrC.mm}월</th>
+      			<th  class=''>${fn:substring(arrC.yyyy,2,4)}/${arrC.mm}</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${my:NVL(arrC.sa,0)}" type="number"/>
       			</span>
       			</th>
       			
-      			<th  class='boder-black'>
+      			<th  class=''>
       			<span class=''><fmt:formatNumber value="${my:NVL(arrC.saM,0)}" type="number"/>원
       			</span>
       			</th>
       			
       			</c:forEach>
       			
+      		</tbody>
+      		<tfoot>
       			<c:set var='sa2' value='${arrViewPastY[0].sa - arrViewPastY[1].sa}' />
       			<c:set var='saM2' value='${arrViewPastY[0].saM - arrViewPastY[1].saM}'/>
       		
       			
       			<tr>
       				<th>(당년 - 전년)</th>
-      				<th class='boder-black'><fmt:formatNumber value="${sa2}" type="number"/></th>
-      				<th class='boder-black'><fmt:formatNumber value="${saM2}" type="number"/>원</th>
+      				<th class=''><fmt:formatNumber value="${sa2}" type="number"/></th>
+      				<th class=''><fmt:formatNumber value="${saM2}" type="number"/>원</th>
       			</tr>	    
-      		</tbody>
+      		</tfoot>
      		</table>
+     		</div>
      		
-     		<br>
-     		
-     		
-      		<c:set var='avg' value="${wtM}" ></c:set>
+      		<c:set var='avg' value="${my:NVL(wtM,0)}" ></c:set>
 			<c:choose>
 			<c:when test="${avg >= 0}">
 			<div style="text-align: center;" class='savingDiv'>
+			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
 			<h4>
-			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 34%">
 			<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
 			</div>
 			
@@ -475,8 +515,8 @@ function show(){
 			<c:when test="${avg < 0}">
 			<c:set var='avg2' value="${(avg)* -1}" ></c:set>
 			<div style="text-align: center;" class='savingDiv'>
+			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 46%">
 			<h4>
-			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 34%">
 			<fmt:formatNumber value="${avg2}" type="number"/>원 이라니..홀리...마마</h4>
 			</div>
 			</c:when>
@@ -519,7 +559,7 @@ function show(){
 			</figure>
 			
 
-			
+			</div>
               </div>
             </div>
           </div>
@@ -641,8 +681,15 @@ function show(){
 		$(".upForm").css("display", "inline");
 		$(".upFormTable").css("display", "table-row");
 		
-		$(".upbtn").val("등록");
+		if($("input[name='autoM']:checked").val() == 'Y'){
+			$(".showAuto").css("display", "inline");
+			$(".showAuto").css("width", "100%");
+			$(".showAutoT").css("display", "table-row");
+		}
 		
+		
+		$(".upbtn").val("등록");
+		$("#upbtn").css("width", "100%");
 		
 	}
 	

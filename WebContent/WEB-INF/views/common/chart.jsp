@@ -294,12 +294,21 @@ function chart12(text, text2,  cList, rList){
 	        title: {
 	            text: '금액(원)'
 	        },
+	    },
 	    labels : {
 
 			format: '{value:,.0f}',
 
 		},
+		tooltip: {
+	        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	            '<td style="padding:0"><b>{point.y:,0f} </b></td></tr>',
+	        footerFormat: '</table>',
+	        shared: true,
+	        useHTML: true
 	    },
+	    
 	    xAxis: {
 	    	   categories: [<c:forEach items="${arrViewPast12}" var="v12"> '${v12.yyyy}/${v12.mm}', </c:forEach>],
 	    },
@@ -311,10 +320,9 @@ function chart12(text, text2,  cList, rList){
 	    },
 
 	    plotOptions: {
-	        series: {
-	            label: {
-	                connectorAllowed: false
-	            }
+	        column: {
+	            pointPadding: 0.2,
+	            borderWidth: 0
 	        }
 	    },
 

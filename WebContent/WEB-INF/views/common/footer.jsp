@@ -8,7 +8,7 @@
 </head>
 <body>
 
-
+<%--
  <!-- ======= Footer ======= -->
   <footer id="footer" class="section-bg">
     <div class="footer-top">
@@ -129,6 +129,6 @@
   </footer><!-- End  Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+ --%>
 </body>
 </html>
