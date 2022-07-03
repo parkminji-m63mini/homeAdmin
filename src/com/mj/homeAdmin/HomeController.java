@@ -56,6 +56,10 @@ public class HomeController
 		//세션으로 가져오기
 		vo.setId((String)ss.getAttribute("ssID"));
 		
+		String url = "../../main";
+		
+		if(vo.getId() != null ) {
+		
 		//세션에 필요한 정보가져오기
 				// 여기부터
 				 List<MyinfoVo> user = ms.selectUser(vo);
@@ -119,9 +123,12 @@ public class HomeController
 				model.addAttribute("arrViewNow", arrViewNow);
 		        model.addAttribute("arrViewPast", arrViewPast);
 		        model.addAttribute("visitList", visitList);
+		}
+		else {
+			url =  "../snsLogin";
+		}
 		
-		
-		return "../../main";
+		return url;
 	}
 	
 	@RequestMapping(value = "/snsLogin", method = RequestMethod.GET)
