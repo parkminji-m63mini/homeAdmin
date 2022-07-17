@@ -672,7 +672,7 @@ function showMoreD(){
                <div  id='moreD' style=" width: 100%; height: 130px; display: none;">
               <hr>
               <div class="swiper-slide">
-               <h3 class="subTitle">이번달엔 얼마나 줄였을까? </h3>
+               <h3 class="subTitle">이번 달엔 얼마나 줄였을까? </h3>
                 <div  class="tableDiv">
       		<table class="tb">
       				<colgroup>	
