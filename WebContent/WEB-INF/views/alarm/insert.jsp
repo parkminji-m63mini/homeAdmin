@@ -43,7 +43,7 @@
               <br>
               <h4 class="title">이름</h4> 
               <div class = "input-group-mb-3">
-              <label class ="form-label" id="alarmName">Name</label>   <input type = "text" class = "form-control" id = "alarmName">
+                <input type = "text" class = "form-control" id = "alarmName">
               </div>
               
               <h4 class="title">주기</h4>
@@ -70,13 +70,12 @@
 
 
     </section><!-- End Services Section -->
-     <label for="firstName" class = "form-label">FirstName</label>
    
+   <!-- ------------------------- header ---------------------------- -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
-<!-- ------------------------- header ---------------------------- -->
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-<!-- ------------------------- header ---------------------------- -->
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
+
 <script language = javascript>
 	
 
@@ -105,11 +104,10 @@ function insert(){
 	
 	var list = new Array();
 	$("#cycle .check").each(function(){
-		//alert($(this).text());
-		list.push($(this).text());
 		
+		list.push($(this).text());
 	})
-	alert(list)
+	
 	var alarmName = document.getElementById('alarmName').value;
 	var time = document.getElementById('time').value;
 	var memo = document.getElementById('memo').value;
@@ -130,7 +128,8 @@ function insert(){
 			location.href = "index.do";
 		},
 		error : function(result){
-			alert(result);
+			alert("실패")
+			console.log(result)
 		}
 		
 		

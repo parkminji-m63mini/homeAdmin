@@ -114,7 +114,7 @@ function selectCode(cd){
                <div class="form-inline mb-2">
 					<label for="homeImg">업로드<br>이미지</label>
 					<input type = "file" id = "homeImg" name = "file"/>
-					<div class = "select_img"><img src = "${selectHome.homeImg }" /></div>
+					<div class = "home_img"><img src = "${selectHome.homeImg }" /></div>
 				</div>
 				
 				<script>
@@ -125,7 +125,7 @@ function selectCode(cd){
 						var reader = new FileReader;
 						reader.onload = function(data){
 							
-							$(".select_img img").attr("src", data.target.result).width(500);
+							$(".home_img img").attr("src", data.target.result).width(500);
 							
 						}
 						reader.readAsDataURL(this.files[0]);
@@ -156,13 +156,13 @@ function selectCode(cd){
                   <span id='ListRoom'></span>
                 </div>
                 <div class="form-group mt-3">
-                보증금  <input type="text" class="form-control" name="deposit" id="deposit" placeholder="보증금"  >
+                보증금  <input type="number" class="form-control" name="deposit" id="deposit" placeholder="보증금"  >
                 </div>
                 <div class="form-group mt-3">
-                월세  <input type="text" class="form-control" name="rentalFee" id="rentalFee" placeholder="월세"  >
+                월세  <input type="number" class="form-control" name="rentalFee" id="rentalFee" placeholder="월세"  >
                 </div>
                 <div class="form-group mt-3">
-                층수  <input type="text" class="form-control" name="floor" id="floor" placeholder="층수"   >
+                층수  <input type="number" class="form-control" name="floor" id="floor" placeholder="층수"   >
                 </div>
                 <div class="form-group mt-3">
                 계약기간  <input type="date" class="form-control" name="contractDateFr" id="contractDateFr"  >
@@ -170,7 +170,7 @@ function selectCode(cd){
                 </div>
                 
               <div class="form-group mt-3">
-                월세이체일  <input type="text" class="form-control" name="payDate" id="payDate"   >
+                월세이체일  <input type="number" class="form-control" name="payDate" id="payDate"   >
                 
                 </div>
                   <div class="form-group mt-3">
@@ -180,7 +180,7 @@ function selectCode(cd){
                  <div class="form-inline mb-2">
 					<label for="petImg">업로드<br>이미지</label>
 					<input type = "file" id = "petImg" name = "file"/>
-					<div class = "select_img"><img src = "${selectHome.petImg }" /></div>
+					<div class = "pet_img"><img src = "${selectHome.petImg }" /></div>
 				</div>
 				
 				<script>
@@ -191,7 +191,7 @@ function selectCode(cd){
 						var reader = new FileReader;
 						reader.onload = function(data){
 							
-							$(".select_img img").attr("src", data.target.result).width(500);
+							$(".pet_img img").attr("src", data.target.result).width(500);
 							
 						}
 						reader.readAsDataURL(this.files[0]);

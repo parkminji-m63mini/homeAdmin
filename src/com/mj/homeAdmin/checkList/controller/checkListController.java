@@ -101,12 +101,10 @@ public class checkListController {
 	// 입력
 	@ResponseBody
 	@RequestMapping(value = "insert", produces = "application/json;charset=utf-8")
-	public ModelAndView insert( String[] contentL, checkList vo, ModelAndView mv,HttpSession ss) throws Exception{
+	public ModelAndView insert( String[] contentL, checkList vo, ModelAndView mv,HttpSession ss, HttpServletRequest req) throws Exception{
 		
 		vo.setId((String)ss.getAttribute("ssID"));
 		vo.setListName(vo.getListName());
-		//vo.setmIdx(vo.getIdx());
-		//System.out.println("Idx : " + vo.getIdx());
 				
 		int chk = service.insertCheckList(vo);
 		int result = 0;
@@ -114,16 +112,30 @@ public class checkListController {
 		System.out.println("0 "+contentL[0]);
 		System.out.println("1 "+contentL[1]);
 		System.out.println("contentLlength" + contentL.length);
+		
+		String status=null;
+		String msg=null;
 		if (chk > 0) {
 			for (int i=0 ; i< contentL.length; i++) {
 				vo.setContent(contentL[i]);
 				vo.setmIdx(i+1);
 				System.out.println(vo.getmIdx());
 				result = service.insertCheckListDetail(vo);
+				
+				if (result > 0) {
+					status = "success";
+					msg = "성공";
+					mv.setViewName("redirect:/checkList/index.do");
+				}else {
+					status ="error";
+					msg = "실패";
+					mv.setViewName("redirect:" + req.getHeader("referer"));
+				}
+				
 			}
 			
 		}
-		mv.setViewName("redirect:/checkList/index.do");
+		
 		return mv;
 	}
 	

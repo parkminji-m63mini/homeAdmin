@@ -41,7 +41,7 @@
 	position : absolute;
 	top : 50%;
 	left : 50%;
-	transform : translateY(-50%);
+	/*transform : translateY(-50%);*/
 	z-index : 999999;
 	display : inline-block;
 	height : 5em;
@@ -62,6 +62,8 @@
 #next{
 	margin-left : 100px;
 }
+
+
 </style>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -85,9 +87,10 @@
 
 	<main id="main">
 
-		<!-- ======= About Section ======= -->
-		<section id="hero" class="clearfix">
 
+		<!-- ======= Services Section ======= -->
+		<section id="services" class="services section-bg">
+			
 			<div class="container">
 				<div class="row">
                  <p> 집사진</p>
@@ -105,14 +108,6 @@
 
 				</div>
 			</div>
-
-		</section>
-		<!-- End About Section -->
-
-		<!-- ======= Services Section ======= -->
-		<section id="services" class="services section-bg">
-			
-			
 		</section>
 		<!-- End Services Section -->
 
@@ -126,7 +121,7 @@
 				</header>
 
 				<div class="row">
-
+<a href="manageM/index.do" style="text-align:right;" >자세히보기</a>
 					<!-- 전원 당월 막대그래프 비교 -->
       			<figure class="highcharts-figure">
 		    	<div id="container1"></div>
@@ -144,44 +139,65 @@
 
 	
 
-		<!-- ======= Testimonials Section ======= -->
+		<!-- ======= 체크리스트 ======= -->
 		<section id="services" class="services section-bg">
 		
-			<div class= "checkList-container container">
-				<ul class = "slider-container simple-list" id="slider">
-					    <div class="row">
-						<c:forEach var="item" items = "${checkList }">
-						<li class = "slide">
-     						<div class="col-lg-10"  >
-           						 <div class="box">
-            					 
-              						<h4 class="title"><a href="">${item.listName}</a></h4>
-              
-             						<c:forEach var="detail" items = "${checkListDetail }">
-              								<c:if test = "${item.idx == detail.mIdx }">
-              								 <div class="about-content detailContent" >
-            								  <ul>
-            									  <div id="box" >
-              										  <li style="list-style:none;"> 
-              											  <input  id = "${detail.dIdx}" type="checkbox" name = "color" value ="blue" <c:if test = '${detail.checkYN eq "Y" }'>checked = "checked"</c:if>/>
-              													  ${detail.content }
-              				 							 </li>
-                 									 </div>
-             									 </ul>
-                    						 </div>
-              								</c:if>
-             							 </c:forEach>
-               
-           						 </div>
-         					</div>
-     					</c:forEach>
+			<div class= "checkList-container container" >
+			<header class="section-header">
+					<h3>체크리스트</h3>
 					
-				</div>
-				</ul>
+				</header>
 				
+				 <a  href="checkList/index.do"style="text-align:right;" > &gt;&gt;&gt;</a>
+				
+				<ul class = "slider-container simple-list" id="slider">
+					    <c:choose>
+					    	<c:when test = "${empty checkList }">
+					    	<div class="col-md-6 col-lg-4 " >
+					    		<p><a href="checkList/insertView" >체크리스트 만들기</a></p>
+					    	</div>
+					    	</c:when>
+					    	<c:otherwise>
+					    			<c:forEach var="item" items = "${checkList }">
+										<li class = "slide">
+				     						
+				           						 <div class="box">
+				            					
+				            					
+				              						<h4 class="title">${item.listName }</h4>
+				              						<div class = "row">
+				              						<div class="col-4 " ></div>
+				              						 <div class="col-4 " >
+				                               	<table>
+				             						<c:forEach var="detail" items = "${checkListDetail }">
+				              								<c:if test = "${item.idx == detail.mIdx }">
+				              								 
+				            									  		<tr>
+				            									  			<th><input  id = "${detail.dIdx}" type="checkbox" name = "color" value ="blue" <c:if test = '${detail.checkYN eq "Y" }'>checked = "checked"</c:if>/></th>
+				            									  			<th>${detail.content }</th>
+				            									  		</tr>
+				            									 
+				             									 
+				              								</c:if>
+				             							 </c:forEach>
+				             						</table>
+				             						</div>
+				             						<div class="col-4 " ></div>
+				             						</div>
+				           				        </div>
+				         		     </li>
+     							</c:forEach>
+					    	
+					    	</c:otherwise>
+					    </c:choose>
+			
+				
+			
+			
+				</ul>
 				<a href = "#" id="prev">prev</a>
 				<a href = "#" id="next">next</a>
-			
+				
 			
 			</div><!-- end container -->
 		
@@ -191,43 +207,61 @@
 		<!-- End Testimonials Section -->
 
 		
-				
+				<!--  방문자   -->
 	
-		<section id="services" class="services section-bg" style="padding-top: 10px;padding-bottom: 10px;">
+		<section id="services" class="services visit" style="padding-top: 10px;padding-bottom: 10px;">
 		<div class="container">
 		 <div class="row  justify-content-center">
-	 		<div  class="col-lg-6" data-aos="zoom-in" data-aos-delay="100" style="width: 100%;">
-	 			<%-- 상단 --%>
-	 			<div  class="box">
-	 			<table style="width: 100%;">
-	 				<colgroup>
-						<col style="width: 15%">
-						<col style="width: 65%">
-						<col style="width: 10%">
-					</colgroup>
-	 			<tbody>
-	 				<tr>
-	 				    <th>내용	</th>
-	 					<th>작성자	</th>
-	 					<th>방문일	</th>
-	 					
-	 				</tr>
-	 				<c:forEach var='arr' items="${visitList}" varStatus="st">
-	 				<tr>
-	 				    <th>${arr.cont }	</th>
-	 					<th>${arr.vNm }	</th>
-	 					<th>${arr.vdt }	</th>
-	 					
-	 				</tr>
-	 				</c:forEach>	
+	 		<header class="section-header">
+					<h3>방명록</h3>
+					
+				</header>
+	 			<c:choose>
+	 				<c:when test = "${empty visitList }">
+	 				<div  >
+	 					<p><a href="#" >등록된 방문록이 없습니다.</a></p>
+	 				</div>
+	 				</c:when>
 	 				
-	 			</tbody>
-	 			</table>
-	 			</div>
-	 			<%-- 상단 end --%>
+	 				<c:otherwise>
+	 				<div  class="col-lg-6" data-aos="zoom-in" data-aos-delay="100" style="width: 100%;  ">
+			 				<%-- 상단 --%>
+			 			<div  class="box" style = "padding : 10px">
+			 			<table id="visitList" style="width: 100%;">
+			 				<colgroup>
+								<col style="width: 15%">
+								<col style="width: 65%">
+								<col style="width: 10%">
+							</colgroup>
+			 			<tbody>
+			 				<tr style = "background-color : #f5f8fd;">
+			 				    <th>작성자</th>
+			 					<th>내용</th>
+			 					<th>방문일</th>
+			 					
+			 				</tr>
+			 				<c:forEach var='arr' items="${visitList}" varStatus="st">
+			 				<tr onclick="location.href='visit/index.do'" style="cursor:hand">
+			 					<th>${arr.vNm }	</th>
+			 				    <th>${arr.cont }	</th>
+			 					<th>${arr.vdt }	</th>
+			 					
+			 				</tr>
+			 				</c:forEach>	
+			 				
+			 			</tbody>
+			 			</table>
+			 			</div>
+			 			<%-- 상단 end --%>
+			 			</div>
+	 				</c:otherwise>
+	 			
+	 			</c:choose>
+	 		
+	 			
 	 		
 	 		
-	 		</div>
+	 		
 	 		
 	 		</div>
 	 		</div>
@@ -300,7 +334,8 @@
 				}
 				
 			}
-			sliderWrapper[0].style.height = topHeight+'px';
+			
+			sliderWrapper[0].style.height = (topHeight*2)+'px';
 			sliderContainer[0].style.height = topHeight+'px';
 			
 		}
@@ -346,6 +381,7 @@
 		
 		// 버튼을 클릭하면 슬라이드 이동시키기
 		navPrev.addEventListener('click', function(e){
+			console.log("클릭")
 			e.preventDefault();
 			//goToSlide(currentIndex-1);
 			// 처음이 아니라면 goToSlide(currentIndex-1);
@@ -360,6 +396,7 @@
 		});
 		
 		navNext.addEventListener('click', function(e){
+			console.log("클릭")
 			e.preventDefault();
 			//goToSlide(currentIndex+1);
 			if(currentIndex < slideCount -1){
