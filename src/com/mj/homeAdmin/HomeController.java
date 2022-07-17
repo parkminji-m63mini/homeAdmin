@@ -94,7 +94,7 @@ public class HomeController
 		         System.out.println("manageVo.getuId()  " + manageVo.getMm());
 		        // 이번달
 		        List<ManageM> arrViewNow = manageService.manageIndex(manageVo);
-		        
+		        System.out.println("arrViewNow  " + arrViewNow.get(0).getYyyy());
 		        //-------------------------------//
 		        // 이번달, 이전달 비교
 		 
@@ -123,6 +123,7 @@ public class HomeController
 				model.addAttribute("arrViewNow", arrViewNow);
 		        model.addAttribute("arrViewPast", arrViewPast);
 		        model.addAttribute("visitList", visitList);
+		        model.addAttribute("type", "all"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
 		}
 		else {
 			url =  "../snsLogin";

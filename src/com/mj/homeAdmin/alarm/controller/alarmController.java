@@ -61,14 +61,21 @@ public class alarmController {
 	// 입력
 	@ResponseBody
 	@RequestMapping(value = "insert.do", produces = "application/json;charset=utf-8")
-	public ModelAndView insert(alarm vo, ModelAndView mv, HttpSession ss)throws Exception{
+	public ModelAndView insert(alarm vo, ModelAndView mv, HttpSession ss, HttpServletRequest req)throws Exception{
 		
 		vo.setId((String)ss.getAttribute("ssID"));
 		
 		int result = service.insertAlarm(vo);
-		 
+		String status=null;
+		String msg=null;
 		if (result > 0) {
-			
+			status = "success";
+			msg = "성공";
+			mv.setViewName("redirect:/alarm/index.do");
+		}else {
+			status ="error";
+			msg = "실패";
+			mv.setViewName("redirect:" + req.getHeader("referer"));
 		}
 		
 		return mv;

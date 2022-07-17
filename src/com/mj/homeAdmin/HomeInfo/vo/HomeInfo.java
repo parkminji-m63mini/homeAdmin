@@ -8,11 +8,11 @@ public class HomeInfo {
 
 	
 	private String contract;
-	private int size;
+	private String size;
 	private String room;
-	private int deposit;
-	private int rentalFee;
-	private int floor;
+	private String deposit;
+	private String rentalFee;
+	private String floor;
 	private String building;
 	private int manageFee;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -30,7 +30,7 @@ public class HomeInfo {
 	private String homeImg;
 	private String petImg;
 	
-	private int payDate;
+	private String payDate;
 	private String id;
 	private String contractCnm;
 	private String roomCnm;
@@ -111,11 +111,11 @@ public class HomeInfo {
 		
 	}
 	
-	public int getSize() {
+	public String getSize() {
 		return size;
 	}
 	
-	public void setSize(int size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 	
@@ -128,27 +128,27 @@ public class HomeInfo {
 	}
 	
 	
-	public int getDeposit() {
+	public String getDeposit() {
 		return deposit;
 	}
 	
-	public void setDeposit(int deposit) {
+	public void setDeposit(String deposit) {
 		this.deposit = deposit;
 	}
 	
-	public int getRentalFee() {
+	public String getRentalFee() {
 		return rentalFee;
 	}
 	
-	public void setRentalFee(int rentalFee) {
+	public void setRentalFee(String rentalFee) {
 		this.rentalFee = rentalFee;
 	}
 	
-	public int getFloor() {
+	public String getFloor() {
 		return floor;
 	}
 	
-	public void setFloor(int floor) {
+	public void setFloor(String floor) {
 		this.floor = floor;
 	}
 	
@@ -237,11 +237,11 @@ public class HomeInfo {
 		
 	}
 
-	public int getPayDate() {
+	public String getPayDate() {
 		return payDate;
 	}
 	
-	public void setPayDate(int payDate) {
+	public void setPayDate(String payDate) {
 		this.payDate = payDate;
 		
 	}

@@ -126,7 +126,8 @@
                 </div>
                
                 <div class="form-group mt-3 contract">
-                <h3 class="section-title">계약기간</h3>  <p>${selectHome.contractDateFr} ~ ${selectHome.contractDateTo} </p>
+                <h3 class="section-title">계약기간</h3> 
+                 <p><fmt:formatDate pattern="yyyy-MM-dd" value = "${selectHome.contractDateFr}" />~ <fmt:formatDate pattern="yyyy-MM-dd" value = "${selectHome.contractDateTo}" /> </p>
                 </div>
                 
                 

@@ -51,7 +51,7 @@
              		  
                      </div>
              
-              <button class="cta-btn align-middle"  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
+              <button class="btn btn-primary"  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
            
             </div>
              </form> 
