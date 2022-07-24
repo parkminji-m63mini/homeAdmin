@@ -9,6 +9,7 @@
 </head>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/common.css">	
   <script src="${contextPath}/resources/js/common.js"></script>
 	<script type="text/javascript">
 $(document).ready(function(){
@@ -43,18 +44,7 @@ function insertType(){
 <body>
 <main>
 <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="index.html">식재료</a></li>
-          <li>냉장고 타입 설정</li>
-        </ol>
-        <h2>생성 및 수정(최초)</h2>
-			
-			
-      </div>
-    </section><!-- End Breadcrumbs -->
+   
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details"  class="portfolio-details">
@@ -63,12 +53,35 @@ function insertType(){
         <div class="">
 
           <div class="">
+          
+           <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="index.html">식재료</a></li>
+          <li>냉장고 타입 설정</li>
+        </ol>
+			
+			
+      </div>
+    </section><!-- End Breadcrumbs -->
+          <div class="portfolio-info">
           <form name="frmReg" method="post" action="foodTypeInsert.do">
           <input type="hidden" id='cd' name='cd'/> 
-          <h4>냉장고 타입 선택</h4>
+          <h3>냉장고 타입 선택</h3>
+         <br>
+         <select id="cdFR" name="cdFR" class='form-control'>
+		<option value="FR01">일반 투도어</option>
+		</select>
+		         
+		         <br><br>
+         <%-- 현재 투도어 타입밖에 지원하지 않아서 나중에 코드 사용 시 사용 
           <span id='ListFrm'></span>
-          <a href="#" onclick="insertType();">생성</a>
+         --%>
+         
+          <input style="float: none; width: 100%;" class="upbtn btn btn-primary-1" type="button" onclick="insertType();" value="생성"/>
           </form>
+          </div>
           <div>
           </div>
           </div>

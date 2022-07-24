@@ -24,6 +24,7 @@
 		SELECT A.IDX, A.LIST_NAME
 		 FROM CHECKLIST A
 		WHERE A.ID = #{id}
+		ORDER BY WDT DESC
 	</select>
 	
 	

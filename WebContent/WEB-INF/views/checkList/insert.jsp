@@ -10,45 +10,56 @@
 </head>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 
 <body>
-  <section id="breadcrumbs" class="breadcrumbs">
+ 
+     <section id="services" class="services section-bg">
+      <div class="container" >
+        <div class="row">
+     	
+     	  <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
 
         <ol>
           <li><a href="index.html">체크리스트</a></li>
           <li>전체</li>
         </ol>
-        <h2>전체</h2>
 
       </div>
     </section><!-- End Breadcrumbs -->
-    
-     <section id="services" class="services section-bg">
-      <div class="container" >
-        <div class="row">
-     	
-     	 
      	
      		<div class="col-md-6 col-lg-4 "  >
      	    <form id = "insertList" name = "updateList" method = "post"  action = "../insert">  
             <div class="box">
-            <a href="#" onclick = "return insert();">저장</a>
-            <input  type="text" name = "listName" id = "listName">
-            <br>
+            <input class='form-control' type="text" name = "listName" id = "listName">
+            <hr>
               		 <div class="about-content detailContent"   >
               		 
-            		  <ul id ="detailList">
-              				  <li style="list-style:none;" id="id_0"> <input  type="text" name = "content" >
-              				      <button  type = "button" id = "deleteBtn" onclick = "deleteOne(0);">삭제</button></li>
-                 		 
-             		 </ul>
+                     <table id ="detailList">
+                     <colgroup>
+                     	<col style="width: 95%">
+                     	<col style="width: 5%">
+                     </colgroup>
+                     <tr id="id_0">
+                     	<th>
+                     		<input class='form-control' type="text" name = "content" >
+                     	</th>
+                     	<th>
+                     		 <button class='wi_3 btn_brown delbtn'  type = "button" id = "deleteBtn" onclick = "deleteOne(0);">x</button>
+                     	</th>
+                     </tr>
+                     </table>
+            		
                      </div>
                      
-              <button  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
+                     
+                     
+                     <br>
+              <button class="upbtn btn btn-primary-1" style="float: none;" type="button" id = "addBtn"  onclick = "addOne();">+</button>
             </div>
              </form> 
-             
+               <a href="#" style="float: right; width : 100%;" class="upbtn btn btn-primary-1" onclick = "return insert();">저장</a>
           </div>
       </div>
     </div>
@@ -56,13 +67,12 @@
     </section><!-- End Services Section -->
     
     
-    
 </body>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 <script language = javascript>
 	function deleteOne(id){
-	   alert(id)
+	   //alert(id)
 		$("#id_"+id).remove()
 		//var obj = document.getElementById("detail"+dIdx);
 		//alert(dIdx);
@@ -72,10 +82,14 @@
 	function addOne(){
 		
 	    var length = $("#detailList").children().length
-		alert(length)
-	    $("#detailList").append("<li style='list-style:none;' id='id_"+length+"'> <input  type='text' name = 'content'  >" +
-	     "<button  type = 'text' id = 'deleteBtn' onclick = 'deleteOne("+length+");' >삭제</button></li>");
+		//alert(length)
+	    $("#detailList").append(" <tr id='id_"+length+"'><th>	<input class='form-control' type='text' name = 'content' ></th>" +
+	     "<th><button class='wi_3 btn_brown delbtn' type = 'button' id = 'deleteBtn' onclick = 'deleteOne("+length+");'>x</button>	</th> </tr>");
 	};
+	
+	
+	
+  	
 	
 	function insert(){
 		
@@ -85,9 +99,9 @@
 			list.push($(item).val());
 			
 		});
-		alert(name);
+		//alert(name);
 		
-		alert(list);
+		//alert(list);
 		$.ajax({
 			type : "post",
 			dataType : "json",
@@ -103,7 +117,8 @@
 				location.href = 'index.do';
 			},
 			error : function(result){
-				alert(result);
+				alert("실패");
+				
 			}
 		})
 		

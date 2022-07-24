@@ -30,7 +30,8 @@
 	
 	<!-- 냉장고 음식 리스트 -->
 	<select id="selectFr" parameterType="Food" resultMap="foodResultSet">
-		SELECT B.TP,A.*  FROM FOOD_L A
+		SELECT B.TP,A.* ,CONCAT(SUBSTRING(A.FDT,6,2) , "/", SUBSTRING(A.FDT,9,2) ) AS FDT2
+		 FROM FOOD_L A
 		LEFT JOIN FOOD B ON A.JIDX=B.IDX
 		WHERE B.U_ID=#{uId} 
 		<if test='area != null'>

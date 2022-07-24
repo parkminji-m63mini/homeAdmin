@@ -14,6 +14,7 @@ public class Food {
 	private String fnm; // 식재료 이름
 	private String bdt; // 구매날짜
 	private String fdt; // 유통기한
+	private String fdt2; // 유통기한 (가공해서 가져옴)
 	private String vm; // 용량이나 개수
 	private String price; // 가격
 	private char sort; //정렬 순서
@@ -35,6 +36,12 @@ public class Food {
 	
 	
 	
+	public String getFdt2() {
+		return fdt2;
+	}
+	public void setFdt2(String fdt2) {
+		this.fdt2 = fdt2;
+	}
 	public String getMode() {
 		return mode;
 	}

@@ -37,30 +37,42 @@
 		
 		</script>
 <body>
+<main id="main">
 
-<section id="breadcrumbs" class="breadcrumbs">
+ <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
       <div class="container">
 
-        <ol>
-          <li><a href="index.html">공지사항</a></li>
-          <li>공지사항</li>
-        </ol>
-        <h2>공지사항</h2>
+        <div class="">
 
-      </div>
-    </section><!-- End Breadcrumbs -->
-      <div class="container">
+          <div class="">
+				
+				<section id="breadcrumbs" class="breadcrumbs">
+				<div class="container">
+				        <ol>
+				          <li><a href="index.html">공지사항</a></li>
+				          <li>공지사항</li>
+				        </ol>
+				
+				      </div>
+				    </section><!-- End Breadcrumbs -->
 
-        <div class="row  justify-content-center">
-          <div class="col-lg-6">
+   <div class="portfolio-info">
+              <div class="swiper-wrapper align-items-center">
 
-            <div class="form">
+
+					<%--이번달 요금 --%>
+                <div class="swiper-slide">
 
 <span id='ListFrm'></span>
 </div>
 </div>
 </div>
 </div>
+</div>
+</div>
+</section>
+</main>
 
 </body>
 </html>

@@ -10,10 +10,18 @@
 </head>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	
+	<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
   <script src="${contextPath}/resources/js/common.js"></script>
   <script>
   $(document).ready(function(){
 		
+	//input에  onlyNumber 추가하면 자동으로 숫자만 들어가게 함
+		$('input[onlyNumber]').on('keyup', function () {
+				console.log("들어옴");
+			    $(this).val($(this).val().replace(/[^0-9]/g, ""));
+			});
+	  
 	  console.log('${arrList[0].area}' + "ddd");
 	  
 	  	// 냉동실 위치 코드 가져오기 위해 food 테이블의 tp와 food_l 테이블 area 데이터 사용
@@ -132,70 +140,89 @@
   </script>
 <body>
 <main>
-<!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="index.html">식재료</a></li>
-          <li>전체</li>
-          <li>상세보기</li>
-        </ol>
-        <h2>상세보기</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
 
         <div class="">
+        <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="index.html">식재료</a></li>
+          <li>상세보기</li>
+        </ol>
+      </div>
+    </section><!-- End Breadcrumbs -->
+        
+        <br>
 		   <form id='frmReg' name="frmReg" method="post" action="updateAll.do">
 		   <input type="hidden" name='jidx' value="<c:if test='${arrList[0].jidx == null}'>${vo.jidx}</c:if><c:if test='${arrList[0].jidx != null}'>${arrList[0].jidx}</c:if>"/>
 		   <input type="hidden" name='idx' value="${arrList[0].idx}"/>
 		   <input type="hidden" id='chk' name='chk' value="${arrList[0].chk}" />
 		   <input type="hidden" id='mode' name='mode' value="${vo.mode}" />
 		   <input type="hidden" id='area' name='area'/> 
-          <table class="" style="border: 1px solid; width: 100%;" >
+          <table class=""   style="width: 100%;">
+          <colgroup>
+							<col style="width: 100%">
+						</colgroup>
              <tr>
-             <th>품명</th>
-             <th><input type="text" name='fnm' value="${arrList[0].fnm}"></th>
+             <th class='ContD'>품명</th>
              </tr>
              <tr>
-             <th>가격</th>
-             <th><input type="text" name='price' value="${arrList[0].price}"></th>
+             <th class='subContCenter'>
+             <input class='form-control' type="text" name='fnm' value="${arrList[0].fnm}"></th>
              </tr>
              <tr>
-             <th>구매일</th>
-             <th><input type="date" name='bdt' value="${arrList[0].bdt}"></th>
+             <th class='ContD'>가격</th>
              </tr>
              <tr>
-             <th>유통기한</th>
-             <th><input type="date" name='fdt' value="${arrList[0].fdt}"></th>
+             <th class='subContCenter'><input onlyNumber  class='form-control moneyInputWon' type="text" name='price' value="${arrList[0].price}">원</th>
              </tr>
              <tr>
-             <th>개수/용량</th>
-             <th><input type="text" name='vm' value="${arrList[0].vm}"></th>
+             <th class='ContD'>구매일</th>
              </tr>
              <tr>
-             <th>위치</th>
-             <th> <span id='ListFrm'></span></th>
+             <th class='subContCenter'><input class='form-control' type="date" name='bdt' value="${arrList[0].bdt}"></th>
+             </tr>
+             <tr>
+             <th class='ContD'>유통기한</th>
+             </tr>
+             <tr>
+             <th class='subContCenter'><input class='form-control' type="date" name='fdt' value="${arrList[0].fdt}"></th>
+             </tr>
+             <tr>
+             <th class='ContD'>비고</th>
+             </tr>
+             <tr>
+             <th class='subContCenter'><input class='form-control' type="text" name='vm' value="${arrList[0].vm}"></th>
+             </tr>
+             <tr>
+             <th class='ContD'>위치</th>
+             </tr>
+             <tr>
+             <th class='subContCenter'> <span id='ListFrm'></span></th>
              </tr> 
              <tr>
-             <th>사용여부</th>
-             <th><input type="checkbox" name='chkval' <c:if test='${arrList[0].chk eq "1".charAt(0)}'>checked="checked"</c:if>/>
-             * 사용 완료 시 체크
+             <th class='ContD'>사용여부</th>
+             </tr>
+             <tr>
+             <th class='subContCenter'><input  type="checkbox" name='chkval' <c:if test='${arrList[0].chk eq "1".charAt(0)}'>checked="checked"</c:if>/>
+             <span style=" font-size: 15px;">* 사용 완료 시 체크</span>
              </th>
              </tr>         
           </table>
          </form>
-          <a href="#" <c:if test='${vo.idx != "0"}'>onclick="update();"</c:if> <c:if test='${vo.idx == "0"}'>onclick="insert();"</c:if> >저장</a>
+         <hr>
+         <div style="width: 100%;text-align: center;">
+          <a href="#" style="float: none;"  class="upbtn btn btn-primary-1" <c:if test='${vo.idx != "0"}'>onclick="update();"</c:if> <c:if test='${vo.idx == "0"}'>onclick="insert();"</c:if> >저장</a>
           <c:if test='${vo.idx != "0"}'>
-          <a href="#" onclick="del();">삭제</a>
+          <a class="upbtn btn btn-danger" href="#" onclick="del();">삭제</a>
           </c:if>
-          <div>
           </div>
+          <div>
           </div>
           </div>
           </div>

@@ -10,52 +10,58 @@
 </head>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+		<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 
 <body>
-  <section id="breadcrumbs" class="breadcrumbs">
+    <section id="services" class="services section-bg">
+      <div class="container" >
+        <div class="row">
+     	
+     	  <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
 
         <ol>
           <li><a href="index.html">체크리스트</a></li>
           <li>전체</li>
         </ol>
-        <h2>전체</h2>
 
       </div>
     </section><!-- End Breadcrumbs -->
-    
-     <section id="services" class="services section-bg">
-      <div class="container" >
-        <div class="row">
-     	
      	
      	
      		<div class="col-md-6 col-lg-4 "  >
      	    <form id = "updateList" name = "updateList" method = "post"  action = "../update">  
             <div class="box">
-            <a href="#" onclick = "return update();">저장</a>
-            <input  type="text" name = "listName" id = "listName" value = "${checkListDetail[0].listName }">
-           
+            <input class='form-control'  type="text" name = "listName" id = "listName" value = "${checkListDetail[0].listName }">
+           <hr>
               		 <div class="about-content detailContent${detail.idx}"   >
               		  
-            		  <ul id ="detailList" >
+              		   <table id ="detailList">
+                     <colgroup>
+                     	<col style="width: 95%">
+                     	<col style="width: 5%">
+                     </colgroup>
             			  <c:forEach var="detail" items = "${checkListDetail}">
-              				  <li style="list-style:none;" id="detail"><input  type="text" name = "content" id="content" value ="${detail.content }" >
-              				 
-              				      <span class = "del">삭제</span>
-              				      </li>
-              				   
+              				
+              				    <tr id="detail">
+              				    <th>
+              				    <input  class='form-control' type="text" name = "content" id="content" value ="${detail.content }" >
+									</th>
+									<th>              				 
+              				      <span class = "wi_3 btn_brown delbtn del">x</span>
+              				     </th>
+              				  </tr>
                  		 </c:forEach>
+                     </table> 
                  		 
-             		 </ul>
              		  
                      </div>
-             
-              <button class="btn btn-primary"  type="button" id = "addBtn"  onclick = "addOne();">추가</button>
+               <br>
+             <button class="upbtn btn btn-primary-1" style="float: none;" type="button" id = "addBtn"  onclick = "addOne();">+</button>
            
             </div>
              </form> 
-             
+              <a href="#" style="float: right; width : 100%;" class="upbtn btn btn-primary-1" onclick = "return update();">저장</a>
           </div>
       </div>
     </div>
@@ -75,15 +81,19 @@
 	
 	
 	function addOne(){
-		$("#detailList").append("<li style='list-style:none;'> <input  type='text' name = 'content' id = 'content'  >" +
-				  "<span class = 'del'>삭제</span>");
+	 var length = $("#detailList").children().length
+		$("#detailList").append("<tr id='id_"+length+"'> <th> <input  class='form-control' type='text' name = 'content' id='content' value ='${detail.content }' ></th>" +
+"<th><span class = 'wi_3 btn_brown delbtn del' onclick = 'deleteOne("+length+");'>x</span></th></tr>");
 	};
 	
 
+	function deleteOne(id){
+			$("#id_"+id).remove()
+		};
 	
 		jQuery(".del").click(function(){
-			alert("?")
-			jQuery(this).closest("li").remove();
+		//	alert("?")
+			jQuery(this).closest("tr").remove();
 	   });
       function update(){
 			//alert("?");
@@ -95,9 +105,9 @@
 			list.push($(item).val());
 			
 		});
-		alert(list);
-		alert(name);
-		alert(idx);
+		//alert(list);
+		//alert(name);
+		//alert(idx);
 		
 		$.ajax({
 			type : "post",
@@ -112,7 +122,7 @@
 			},
 			success : function(result){
 				alert("저장");
-				location.href = 'index.do';
+				location.href = '../index.do';
 			},
 			error : function(request,status,error){
 				 //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

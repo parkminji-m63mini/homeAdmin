@@ -440,16 +440,18 @@ function showMoreD(){
       			
       			</c:forEach>
       			
-      			<c:set var='sa' value='${arrViewPast[0].sa - arrViewPast[1].sa}' />
-      			<c:set var='saM' value='${arrViewPast[0].saM - arrViewPast[1].saM}'/>
+      			<c:set var='sa' value='${arrViewPast[1].sa - arrViewPast[0].sa}' />
+      			<c:set var='saM' value='${arrViewPast[1].saM - arrViewPast[0].saM}'/>
       		
       		</tbody>
       		<tfoot>
       			
       			<tr>
       				<th>(당월 - 전월)</th>
-      				<th class=''><fmt:formatNumber value="${sa}" type="number"/></th>
-      				<th class=''><fmt:formatNumber value="${saM}" type="number"/>원</th>
+      				<th <c:if test='${sa < 0}'>style="color: green;"</c:if> <c:if test='${sa > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${sa}" type="number"/></th>
+      				<th <c:if test='${saM < 0}'>style="color: green;"</c:if> <c:if test='${saM > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${saM}" type="number"/>원</th>
       			</tr>	    
       		</tfoot>
      		</table>
@@ -489,14 +491,16 @@ function showMoreD(){
       			
       		</tbody>
       		<tfoot>
-      			<c:set var='sa2' value='${arrViewPastY[0].sa - arrViewPastY[1].sa}' />
-      			<c:set var='saM2' value='${arrViewPastY[0].saM - arrViewPastY[1].saM}'/>
+      			<c:set var='sa2' value='${arrViewPastY[1].sa - arrViewPastY[0].sa}' />
+      			<c:set var='saM2' value='${arrViewPastY[1].saM - arrViewPastY[0].saM}'/>
       		
       			
       			<tr>
       				<th>(당년 - 전년)</th>
-      				<th class=''><fmt:formatNumber value="${sa2}" type="number"/></th>
-      				<th class=''><fmt:formatNumber value="${saM2}" type="number"/>원</th>
+      				<th <c:if test='${sa2 < 0}'>style="color: green;"</c:if> <c:if test='${sa2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${sa2}" type="number"/></th>
+      				<th <c:if test='${saM2 < 0}'>style="color: green;"</c:if> <c:if test='${saM2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${saM2}" type="number"/>원</th>
       			</tr>	    
       		</tfoot>
      		</table>
@@ -504,20 +508,20 @@ function showMoreD(){
      		
       		<c:set var='avg' value="${my:NVL(wtM,0)}" ></c:set>
 			<c:choose>
-			<c:when test="${avg >= 0}">
-			<div style="text-align: center;" class='savingDiv'>
-			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
-			<h4>
-			<fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</h4>
-			</div>
-			
-			</c:when>
 			<c:when test="${avg < 0}">
 			<c:set var='avg2' value="${(avg)* -1}" ></c:set>
 			<div style="text-align: center;" class='savingDiv'>
+			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
+			<h4>
+			<fmt:formatNumber value="${avg2}" type="number"/>원 절약했어!</h4>
+			</div>
+			
+			</c:when>
+			<c:when test="${avg >= 0}">
+			<div style="text-align: center;" class='savingDiv'>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 46%">
 			<h4>
-			<fmt:formatNumber value="${avg2}" type="number"/>원 이라니..홀리...마마</h4>
+			<fmt:formatNumber value="${avg}" type="number"/>원 이라니..홀리...마마</h4>
 			</div>
 			</c:when>
 			</c:choose>

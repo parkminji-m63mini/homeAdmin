@@ -4,68 +4,17 @@
 
 		<!-- 차트 -->
 	<jsp:include page="/WEB-INF/views/common/chart.jsp"/>
+	
 <!DOCTYPE html>
 <html lang="kn">
 
 <head>
 <style>
 
-.checkList-container{
-	position:relative;
-	width : 100%;
-	over-flow : hidden;
-}
-
-.slider-container{
-	position : absolute;
-	width:100%;
-	}
-	
-.slide {
-	position : absolute;
-	width : 100%;
-	padding : 0 10%;
-	box-sizing : border-box;
-	top : 50%;
-	transform : translateY(-50%);
-	text-align : center;
-	overflow : hidden;
-}
-
-.slider-container.animated{
-	-webkit-transition : left .3s ease-in;
-	transition : left .3s ease-in;
-}
-
-#prev,#next{
-	position : absolute;
-	top : 50%;
-	left : 50%;
-	/*transform : translateY(-50%);*/
-	z-index : 999999;
-	display : inline-block;
-	height : 5em;
-	width : 5em;
-	border-radius : 50%;
-	background-position : center center;
-	background-repeat : no-repeat;
-	-webkit-transition : all .3s ease-in;
-	transition : all .3s ease-in; 
-}
-
-#prev.disabled, #next.disabled{display:none;}
-
-#prev{
-	margin-left : -100px;
-}
-
-#next{
-	margin-left : 100px;
-}
-
 
 </style>
 </head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -75,6 +24,11 @@
  <script type="text/javascript" src="${contextPath}/resources/js/loginchk.js"></script>
 <!-- ------------------------- header ---------------------------- -->
 <jsp:include page="WEB-INF/views/common/header.jsp" />
+<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
+<script src="${contextPath}/resources/js/common.js"></script>
+
+
+
 
 <script type="text/javascript">
 
@@ -88,67 +42,95 @@
 	<main id="main">
 
 
-		<!-- ======= Services Section ======= -->
-		<section id="services" class="services section-bg">
-			
-			<div class="container">
-				<div class="row">
-                 <p> 집사진</p>
-					<div class="col-lg-5 col-md-6">
-						<div class="about-img" data-aos="fade-right" data-aos-delay="100">
-							<c:if test="${sessionScope.ssID == null}">
-								<img id="homeImg"
-									src="<%=request.getContextPath()%>/resources/img/main_home_img.png" class="img-fluid">
+		<!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details"    style="padding-top: 102px;">
+      <div class="container">
+
+        <div class="">
+
+          <div class="">
+			 <div class="portfolio-info">
+              <div class="swiper-wrapper align-items-center">
+
+
+					<%--이번달 요금 --%>
+                <div class="swiper-slide">
+                 <p></p>
+							<div style="float: right;">
+							<a href="homeInfo/index.do">
+              				 <img  class="main_set_Btn mobile-nav-toggle" alt="" src="${contextPath}/resources/img/icon/setting/settingBtn.png">
+              				 </a>
+              				 </div>
+							<c:if test="${homeImg == null}">
+							<div class="imgW">
+								<img id="homeImg" style="left: 23%;"
+									src="${contextPath}/resources/img/profile/defaultProfile.jpg" class="img">
+								
+								
+								<c:if test="${list.photo ne null}">
+				              	  <img class="img_s" id="preview"   alt="" src="${contextPath}/upload/${list.photo}">
+				              	 </c:if>
+				              	 <c:if test="${list.photo eq null}">
+				              	 	<c:if test="${list.profile ne null}">
+				              	 		<img class="img_s" id="preview"  alt="" src="${list.profile}">
+				              	 	</c:if>
+				              	 	<c:if test="${list.profile eq null}">
+				              	 <img class="img_s" id="preview"  style="border: 4px solid #0000005c;" alt="" src="${contextPath}/resources/img/profile/defaultProfile.jpg">
+				              	 	</c:if>
+				              	 </c:if>
+								
+							</div>
 							</c:if>
-							<c:if test="${sessionScope.ssID != null}">
-							<img id="homeImg" src="${pageContext.request.contextPath}${homeImg }" class="img-fluid">
+							<c:if test="${homeImg != null}">
+							<div class="imgW">
+							<img id="homeImg" style="left: 23%;"
+							 src="${contextPath}${homeImg }" class="img">
+							 
+							 <c:if test="${list.photo ne null}">
+				              	  <img class="img_s" id="preview"   alt="" src="${contextPath}/upload/${list.photo}">
+				              	 </c:if>
+				              	 <c:if test="${list.photo eq null}">
+				              	 	<c:if test="${list.profile ne null}">
+				              	 		<img class="img_s" id="preview"  alt="" src="${list.profile}">
+				              	 	</c:if>
+				              	 	<c:if test="${list.profile eq null}">
+				              	 <img class="img_s" id="preview"  style="border: 4px solid #0000005c;" alt="" src="${contextPath}/resources/img/profile/defaultProfile.jpg">
+				              	 	</c:if>
+				              	 </c:if>
+							</div>
 							</c:if>
-						</div>
-					</div>
 
 				</div>
 			</div>
-		</section>
+			<br>
+			<div style="width: 100%; text-align: center;">
+			<h4 style=" margin: 0 0 4px 0;">${sessionScope.ssnNM} 00 하우스</h4>
+			<a href="#" style="text-decoration: revert;" onclick="copy('${contextPath}/visit/write.do?uId=${sessionScope.ssID}', '방명록 주소 복사 완료! 링크를 친구에게 보내줘!');">방명록 주소 복사</a>
+			</div>
 		<!-- End Services Section -->
+			<hr>
+				<div class="container-fluid" data-aos="fade-up">
 
-		<!-- ======= Why Us Section ======= -->
-		<section id="why-us" class="why-us">
-			<div class="container-fluid" data-aos="fade-up">
-
-				<header class="section-header">
-					<h3>공과금</h3>
+					<p class="main-t">아! 맞다 오늘!</p>
 					
-				</header>
 
 				<div class="row">
-<a href="manageM/index.do" style="text-align:right;" >자세히보기</a>
-					<!-- 전원 당월 막대그래프 비교 -->
-      			<figure class="highcharts-figure">
-		    	<div id="container1"></div>
-		    	<p class="highcharts-description">
-				</figure>
+						<ul>
+							<li>ss</li>
+							<li>ss</li>
+							<li>ss</li>
+						</ul>
 				</div>
 
 			</div>
-
+			<hr>
 			
-		</section>
-		<!-- End Why Us Section -->
-
-
-
-	
-
-		<!-- ======= 체크리스트 ======= -->
-		<section id="services" class="services section-bg">
-		
+			    <section id="services" class="services section-bg service3" style="">
 			<div class= "checkList-container container" >
-			<header class="section-header">
-					<h3>체크리스트</h3>
-					
-				</header>
+				 <span><a  href="checkList/index.do"style="float: right; text-align:right;" > &gt;&gt;&gt;</a></span>
+					<p class="main-t">체크리스트
+					</p>
 				
-				 <a  href="checkList/index.do"style="text-align:right;" > &gt;&gt;&gt;</a>
 				
 				<ul class = "slider-container simple-list" id="slider">
 					    <c:choose>
@@ -160,7 +142,12 @@
 					    	<c:otherwise>
 					    			<c:forEach var="item" items = "${checkList }">
 										<li class = "slide">
-				     						
+				     						<table style="width: 100%;">
+				     							<colgroup>
+				     								<col style="width: 100%;">
+				     							</colgroup>
+				     							<tr>
+				     								<th>
 				           						 <div class="box">
 				            					
 				            					
@@ -185,6 +172,9 @@
 				             						<div class="col-4 " ></div>
 				             						</div>
 				           				        </div>
+				           				        </th>
+				     							</tr>
+				     						</table>
 				         		     </li>
      							</c:forEach>
 					    	
@@ -195,15 +185,41 @@
 			
 			
 				</ul>
-				<a href = "#" id="prev">prev</a>
-				<a href = "#" id="next">next</a>
+				<a href = "#" id="prev">&lt; </a>
+				<a href = "#" id="next">></a>
 				
 			
 			</div><!-- end container -->
+		</section>
+			<hr>
+		<!-- ======= Why Us Section ======= -->
+			<div class="container-fluid" data-aos="fade-up">
+ <span><a  href="manageM/index.do"style="float: right; text-align:right;" > &gt;&gt;&gt;</a></span>
+					<p class="main-t">공과금</p>
+					
+
+				<div class="row">
+					<!-- 전원 당월 막대그래프 비교 -->
+      			<figure class="highcharts-figure">
+		    	<div id="container1"></div>
+		    	<p class="highcharts-description">
+				</figure>
+				</div>
+
+			</div>
+
+			<hr>
+		<!-- End Why Us Section -->
+
+
+
+	
+
+		<!-- ======= 체크리스트 ======= -->
 		
+			
 		
 	
-		</section>
 		<!-- End Testimonials Section -->
 
 		
@@ -211,16 +227,20 @@
 	
 		<section id="services" class="services visit" style="padding-top: 10px;padding-bottom: 10px;">
 		<div class="container">
-		 <div class="row  justify-content-center">
-	 		<header class="section-header">
-					<h3>방명록</h3>
+		 <div class="container-fluid" data-aos="fade-up">
+		 <span><a  href="visit/index.do"style="float: right; text-align:right;" > &gt;&gt;&gt;</a></span>
+					<p class="main-t">방명록</p>
 					
-				</header>
 	 			<c:choose>
 	 				<c:when test = "${empty visitList }">
-	 				<div  >
-	 					<p><a href="#" >등록된 방문록이 없습니다.</a></p>
-	 				</div>
+	 				<section id="services" class="services section-bg" style="padding-top: 10px;padding-bottom: 10px;">
+     		<div  class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100" style="width: 100%;">
+	 			<%-- 상단 --%>
+	 			<div  class="box">
+     		<span>데이터가 없습니다</span>
+     		</div>
+     		</div>
+     		</section>
 	 				</c:when>
 	 				
 	 				<c:otherwise>
@@ -266,9 +286,11 @@
 	 		</div>
 	 		</div>
 	 		</section>
-			
-			
-		
+			</div>
+			</div>
+			</div>
+			</div>
+		</section>
 
 		
 
@@ -414,13 +436,14 @@
 	
 
 	
-
+function prevClick(){
+	console.log($("#prev").val());
+	$("#prev").click();
+}
 
 
 </script>
 
-
-
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </html>

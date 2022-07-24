@@ -720,17 +720,21 @@ function showMoreD(){
       		</tbody>
       			
       			<tfoot>
-      			<c:set var='monGu' value='${arrViewPast[0].monGu - arrViewPast[1].monGu}'/>
-      			<c:set var='useG' value='${arrViewPast[0].useG - arrViewPast[1].useG}' />
-      			<c:set var='uGm' value='${arrViewPast[0].uGm - arrViewPast[1].gasM}'/>
-      			<c:set var='gasM' value='${arrViewPast[0].gasM - arrViewPast[1].gasM}' />
+      			<c:set var='monGu' value='${arrViewPast[1].monGu - arrViewPast[0].monGu}'/>
+      			<c:set var='useG' value='${arrViewPast[1].useG - arrViewPast[0].useG}' />
+      			<c:set var='uGm' value='${arrViewPast[1].uGm - arrViewPast[0].uGm}'/>
+      			<c:set var='gasM' value='${arrViewPast[1].gasM - arrViewPast[0].gasM}' />
       		
       			<tr>
       				<th style="font-size: 11px;">(당월 - 전월)</th>
-      				<th class=''><fmt:formatNumber value="${monGu}" type="number"/>m³</th>
-      				<th class=''><fmt:formatNumber value="${useG}" type="number"/>m³</th>
-      				<th class=''><fmt:formatNumber value="${uGm}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${gasM}" type="number"/>원</th>
+      				<th <c:if test='${monGu < 0}'>style="color: green;"</c:if> <c:if test='${monGu > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${monGu}" type="number"/>m³</th>
+      				<th <c:if test='${useG < 0}'>style="color: green;"</c:if> <c:if test='${useG > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${useG}" type="number"/>m³</th>
+      				<th <c:if test='${uGm < 0}'>style="color: green;"</c:if> <c:if test='${uGm > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${uGm}" type="number"/>원</th>
+      				<th <c:if test='${gasM < 0}'>style="color: green;"</c:if> <c:if test='${gasM > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${gasM}" type="number"/>원</th>
       			</tr>	
       			</tfoot>    
      		</table>
@@ -781,19 +785,23 @@ function showMoreD(){
       			</tr>	
       			</c:forEach>
       			
-      			<c:set var='monGu2' value='${arrViewPastY[0].monGu - arrViewPastY[1].monGu}'/>
-      			<c:set var='useG2' value='${arrViewPastY[0].useG - arrViewPastY[1].useG}' />
-      			<c:set var='uGm2' value='${arrViewPastY[0].uGm - arrViewPastY[1].gasM}'/>
-      			<c:set var='gasM2' value='${arrViewPastY[0].gasM - arrViewPastY[1].gasM}' />
+      			<c:set var='monGu2' value='${arrViewPastY[1].monGu - arrViewPastY[0].monGu}'/>
+      			<c:set var='useG2' value='${arrViewPastY[1].useG - arrViewPastY[0].useG}' />
+      			<c:set var='uGm2' value='${arrViewPastY[1].uGm - arrViewPastY[0].gasM}'/>
+      			<c:set var='gasM2' value='${arrViewPastY[1].gasM - arrViewPastY[0].gasM}' />
       		
       		</tbody>
       		<tfoot>	
       			<tr>
       				<th style="font-size: 11px;">(당년 - 전년)</th>
-      				<th class=''><fmt:formatNumber value="${monGu2}" type="number"/>m³</th>
-      				<th class=''><fmt:formatNumber value="${useG2}" type="number"/>m³</th>
-      				<th class=''><fmt:formatNumber value="${uGm2}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${gasM2}" type="number"/>원</th>
+      				<th <c:if test='${monGu2 < 0}'>style="color: green;"</c:if> <c:if test='${monGu2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${monGu2}" type="number"/>m³</th>
+      				<th <c:if test='${useG2 < 0}'>style="color: green;"</c:if> <c:if test='${useG2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${useG2}" type="number"/>m³</th>
+      				<th <c:if test='${uGm2 < 0}'>style="color: green;"</c:if> <c:if test='${uGm2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${uGm2}" type="number"/>원</th>
+      				<th <c:if test='${gasM2 < 0}'>style="color: green;"</c:if> <c:if test='${gasM2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${gasM2}" type="number"/>원</th>
       			</tr>	
       		</tfoot>    
      		</table>
@@ -801,20 +809,20 @@ function showMoreD(){
      		
       		<c:set var='avg' value="${gasM}" ></c:set>
 			<c:choose>
-			<c:when test="${avg >= 0}">
-			<div style="text-align: center;" class='savingDiv'>
-			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
-			<h4>
-			<span><fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</span></h4>
-			</div>
-			
-			</c:when>
 			<c:when test="${avg < 0}">
 			<c:set var='avg2' value="${(avg)* -1}" ></c:set>
 			<div style="text-align: center;" class='savingDiv'>
+			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
+			<h4>
+			<span><fmt:formatNumber value="${avg2}" type="number"/>원 절약했어!</span></h4>
+			</div>
+			
+			</c:when>
+			<c:when test="${avg >= 0}">
+			<div style="text-align: center;" class='savingDiv'>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 46%">
 			<h4>
-			<span><fmt:formatNumber value="${avg2}" type="number"/>원 이라니..홀리...마마</span></h4>
+			<span><fmt:formatNumber value="${avg}" type="number"/>원 이라니..홀리...마마</span></h4>
 			</div>
 			</c:when>
 			</c:choose>

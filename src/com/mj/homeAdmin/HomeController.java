@@ -113,6 +113,9 @@ public class HomeController
 			//	 System.out.println(user.get(0).getNm() + " 리스트 값");
 			//	 System.out.println(vo.getNm() + " vo값");
 				 
+
+					MyinfoVo list = ms.mypage(vo);
+				 
 				// 세션에 세팅
 				cm.goSessionChk(vo, ss, req);
 				cm.getSessionChk(ss);
@@ -123,6 +126,7 @@ public class HomeController
 				model.addAttribute("arrViewNow", arrViewNow);
 		        model.addAttribute("arrViewPast", arrViewPast);
 		        model.addAttribute("visitList", visitList);
+		        model.addAttribute("list", list);
 		        model.addAttribute("type", "all"); // 차트  메뉴별로 구성 컬럼이 달라서 타입으로 구분
 		}
 		else {

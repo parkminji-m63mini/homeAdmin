@@ -19,6 +19,12 @@ thead{
     
 }
 
+.tableblue{
+	background-color: #edf7fc;
+    
+}
+
+
 tfoot{
    border-top: 2px solid #84cdee;
    border-bottom: 1px solid #a5a5a5;
@@ -47,7 +53,7 @@ tfoot{
 
 /* 버튼기본 */
 .btn_brown{
-	background-color: #8f7662;
+	background-color: #9f9f9f;
     color: white;
     border: 1px;
  	solid white;
@@ -58,7 +64,7 @@ tfoot{
 }
 
 .btn_brownNfloat{
-	background-color: #8f7662;
+	background-color: #9f9f9f;
     color: white;
     border: 1px;
  	solid white;
@@ -89,11 +95,8 @@ tfoot{
 	text-align: center;
 }
 .profile{
+	width: 100%;
 	border-radius: 50%;
-	min-width:80px;
-	min-height:80px;
-	max-width: 80px; 
-	max-height: 80px;
 	object-fit: cover;
 }
 
@@ -153,6 +156,14 @@ tfoot{
     margin-left: -27%;
 }
 
+.settingBtn2{
+      width: 9%;
+    float: right;
+    margin-top: -15%;
+    position: absolute;
+    margin-left: -16%;
+}
+
 
 .imgW{
 	position: relative;
@@ -174,6 +185,16 @@ tfoot{
  
 }
 
+.img_s{
+ position: absolute;
+ object-fit: cover;
+ border-radius: 100%;
+ left: 57%;
+  width: 21%;
+  height: 42%;
+  top: 58%;
+ 
+}
 .snsBtn{
 	width: 60%;    
 	margin-bottom: 4%;
@@ -358,6 +379,7 @@ padding: 0px 0;
 
 .wi_1{ width: 100%;}
 .wi_2{ width: 100%; max-width: 80px;}
+.wi_3{max-width: 80px;  height: 35px;}
 .delbtn{ min-width: 33px;}
 .fleft{float: left;}
 
@@ -382,4 +404,87 @@ padding: 0px 0;
 	   background-image: url('img_commn/bottom.png');
         background-repeat : no-repeat;
         background-size : cover;
+}
+
+.title-c:hover{
+	color : #3191e4 !important;
+}
+
+
+.checkList-container{
+	position:relative;
+	width : 100%;
+	over-flow : hidden;
+}
+
+.slider-container{
+	position : absolute;
+	width:100%;
+	}
+	
+.slide {
+	position : absolute;
+	width : 100%;
+	padding : 0 10%;
+	box-sizing : border-box;
+	top : 50%;
+	transform : translateY(-50%);
+	text-align : center;
+	overflow : hidden;
+}
+
+.slider-container.animated{
+	-webkit-transition : left .3s ease-in;
+	transition : left .3s ease-in;
+}
+
+#prev,#next{
+	position : absolute;
+	top : 32%;
+	left : 45%;
+	/*transform : translateY(-50%);*/
+	z-index : 999999;
+	display : inline-block;
+	height : 5em;
+	width : 5em;
+	border-radius : 50%;
+	background-position : center center;
+	background-repeat : no-repeat;
+	-webkit-transition : all .3s ease-in;
+	transition : all .3s ease-in; 
+}
+
+#prev.disabled, #next.disabled{display:none;}
+
+#prev{
+	margin-left : -132px;
+}
+
+#next{
+	margin-left : 154px;
+}
+
+.main_set_Btn{
+position: absolute;
+    right: 0%;
+    top: 0%;
+}
+
+.main-t{
+	text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+}
+
+.service3{
+	
+ padding-top: 10px !important; height: 296px; width: 100%;
+}
+
+.margin0{
+	margin: 0 0 0px 0;
+}
+.margin10{
+	margin: 0 0 10px 0;
 }

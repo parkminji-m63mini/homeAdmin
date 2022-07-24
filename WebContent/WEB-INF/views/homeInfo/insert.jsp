@@ -10,7 +10,7 @@
 </head>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 <script language=javascript>
 $(document).ready(function(){
 	
@@ -83,145 +83,163 @@ function selectCode(cd){
     		 reader.readAsDataURL(value.files[0])
     	 }
      }
+     
+     function readURL(input) {
+		  if (input.files && input.files[0]) {
+		    var reader = new FileReader();
+		    reader.onload = function(e) {
+		      document.getElementById('preview').src = e.target.result;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+		  } else {
+		    document.getElementById('preview').src = "";
+		  }
+		}
+     function readURL2(input) {
+		  if (input.files && input.files[0]) {
+		    var reader = new FileReader();
+		    reader.onload = function(e) {
+		      document.getElementById('preview2').src = e.target.result;
+		    };
+		    reader.readAsDataURL(input.files[0]);
+		  } else {
+		    document.getElementById('preview2').src = "";
+		  }
+		}
 	
 	
-
 </script>
 
 <body>
- <section id="breadcrumbs" class="breadcrumbs">
+ <main id="main">
+  <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
       <div class="container">
+  		<div class="">
 
-        <ol>
-          <li><a href="index.html">집정보</a></li>
-          <li>전체</li>
-        </ol>
-        <h2>전체</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-      <div class="container">
-
-        <div class="row  justify-content-center">
-          <div class="col-lg-6">
-
-            <div class="form">
-
+          <div class="">
+           <section id="breadcrumbs" class="breadcrumbs">
+	      <div class="container">
+	        <ol>
+	          <li><a href="index.html">집정보</a></li>
+	          <li>전체</li>
+	        </ol>
+	      </div>
+	    </section><!-- End Breadcrumbs -->
+    
+     <div class="portfolio-info">
+              <div class="swiper-wrapper align-items-center">
               
-
-              <form id='insertHomeForm' name='insertHomeForm' method="post" role="form" class="php-email-form"  enctype="multipart/form-data" action="insert.do" >
+  <div class="swiper-slide">
+              <form id='insertHomeForm' name='insertHomeForm' method="post" role="form"  enctype="multipart/form-data" action="insert.do" >
               
-               <div class="form-inline mb-2">
-					<label for="homeImg">업로드<br>이미지</label>
-					<input type = "file" id = "homeImg" name = "file"/>
-					<div class = "home_img"><img src = "${selectHome.homeImg }" /></div>
-				</div>
-				
-				<script>
-				
-				$("#homeImg").change(function(){
-					alert(this.files)
-					if(this.files && this.files[0]){
-						var reader = new FileReader;
-						reader.onload = function(data){
-							
-							$(".home_img img").attr("src", data.target.result).width(500);
-							
-						}
-						reader.readAsDataURL(this.files[0]);
-						
-					}
-				})
-				</script>
               
                <div class="form-group mt-3">
-                집이름  <input type="text" class="form-control" name="hnm" id="hnm" placeholder="집이름"  >
+              <p class='ContD' style="font-weight: bold;"> 우리집 사진  </p>
+             <div style="width: 100%;" class = "home_img">
+             <c:if test="${selectHome.homeImg ne null}">
+             <img  id="preview" style="width: 100%;" src = "${selectHome.homeImg }" />
+             </c:if>
+             <c:if test="${selectHome.homeImg eq null}">
+             <img  id="preview"  style="border: 4px solid #0000005c; width: 100%;" alt="" src="${contextPath}/resources/img/profile/nomal_Home.jpg">
+             </c:if>
+             </div>
+              <input type = "file" id = "homeImg" name = "file"  style="display: none;" onchange="readURL(this);"/>
+              
+              <div style="float: right;">
+              	 <img onclick="chk()" class="settingBtn2 mobile-nav-toggle" alt="" src="${contextPath}/resources/img/icon/setting/settingBtn.png">
+              	 </div>
+              </div>
+			
+              <hr>
+               <div class="form-group mt-3">
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">집이름</p>
+                   <input type="text" class="form-control" name="hnm" id="hnm" placeholder=""  >
                 </div>
                  <div class="form-group mt-3">
-                집주소 <input type="text" class="form-control" name="address" id="address" placeholder="집주소"  >
+                  <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">집주소</p>
+                   <input type="text" class="form-control" name="address" id="address" placeholder=""  >
                 </div>
                  <div class="form-group mt-3">
-                오는길  <input type="text" class="form-control" name="direction" id="direction" placeholder="오는길"  >
+                  <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">오는 길</p>
+                    <input type="text" class="form-control" name="direction" id="direction" placeholder=""  >
                 </div>
-                <div class="form-group">
-               	계약 <br>
+                <div class="form-group mt-3">
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">계약</p> 
                	<span id='ListContract'></span>
                 </div>              
-               
                 <div class="form-group mt-3">
-                 평수  <input type="text" class="form-control" name="size" id="size" placeholder="평수"  >
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">평수</p>
+                   <input type="number" class="form-control" name="size" id="size" placeholder=""  >
                 </div>
+                <hr>
                 <div class="form-group mt-3">
-                  방	<br>
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">방</p>
                   <span id='ListRoom'></span>
                 </div>
                 <div class="form-group mt-3">
-                보증금  <input type="number" class="form-control" name="deposit" id="deposit" placeholder="보증금"  >
+                <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">보증금</p>
+                  <input type="number" class="form-control" name="deposit" id="deposit" placeholder=""  >
                 </div>
                 <div class="form-group mt-3">
-                월세  <input type="number" class="form-control" name="rentalFee" id="rentalFee" placeholder="월세"  >
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">월세날</p>
+                   <input type="number" class="form-control" name="rentalFee" id="rentalFee" placeholder=""  >
                 </div>
                 <div class="form-group mt-3">
-                층수  <input type="number" class="form-control" name="floor" id="floor" placeholder="층수"   >
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">층수</p>
+                  <input type="number" class="form-control" name="floor" id="floor" placeholder=""   >
                 </div>
                 <div class="form-group mt-3">
-                계약기간  <input type="date" class="form-control" name="contractDateFr" id="contractDateFr"  >
-                <input type="date" class="form-control" name="contractDateTo" id="contractDateTo"   >
+                 <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">계약기간</p>
+                  <input type="date" style=" width: 45%; display: inline;" class="form-control" name="contractDateFr" id="contractDateFr"  >
+                  ~
+                <input type="date" style=" width: 45%; display: inline;" class="form-control" name="contractDateTo" id="contractDateTo"   >
                 </div>
-                
               <div class="form-group mt-3">
-                월세이체일  <input type="number" class="form-control" name="payDate" id="payDate"   >
+               <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">월세이체일</p>               
+                 <input type="number" class="form-control" name="payDate" id="payDate"   >
+                </div>
+                <hr>
                 
-                </div>
-                  <div class="form-group mt-3">
-                반려동물  <br>
-              
-                </div>
-                 <div class="form-inline mb-2">
-					<label for="petImg">업로드<br>이미지</label>
-					<input type = "file" id = "petImg" name = "file"/>
-					<div class = "pet_img"><img src = "${selectHome.petImg }" /></div>
-				</div>
-				
-				<script>
-				
-				$("#petImg").change(function(){
-					alert(this.files)
-					if(this.files && this.files[0]){
-						var reader = new FileReader;
-						reader.onload = function(data){
-							
-							$(".pet_img img").attr("src", data.target.result).width(500);
-							
-						}
-						reader.readAsDataURL(this.files[0]);
-						
-					}
-				})
-				</script>
-				
+                 
                 <div class="form-group mt-3">
-              정보     <textarea class="form-control" name="info" rows="5" placeholder="정보" ></textarea>
+                <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">정보</p>
+                  <textarea class="form-control" name="info" rows="5" placeholder="정보" ></textarea>
                 </div>
-                
                 <div class="form-group mt-3">
-           공지사항       <textarea class="form-control" name="notice" rows="5" placeholder="공지사항"   ></textarea>
+                <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">공지사항</p>
+                  <textarea class="form-control" name="notice" rows="5" placeholder="공지사항"   ></textarea>
                 </div>
-
            <div class="form-group mt-3">
-      와이파이 이름  <input type="text" class="form-control" name="wifiNm" id="wifiNm" placeholder="와이파이 이름"   >
+           <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">와이파이 이름</p>
+            <input type="text" class="form-control" name="wifiNm" id="wifiNm" placeholder="와이파이 이름"   >
                  </div>
                     <div class="form-group mt-3">
-                와이파이 비밀번호 <input type="text" class="form-control" name="wifiPw" id="wifiPw" placeholder="와이파이 비밀번호"   >
+                    <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;">와이파이 비밀번호</p>
+                   <input type="text" class="form-control" name="wifiPw" id="wifiPw" placeholder="와이파이 비밀번호"   >
                 </div>
-
-                <br><br>
-               
-                	<div class="text-center">
-               
-					<button class = "btn btn-primary btn-lg" type = "submit" id = "insertBtn">저장 </button>
-						
-                    </div>
+                
+                
+                 <div class="form-group mt-3">
+                   <p class='ContD' style="font-weight: bold;margin: 0 0 10px 0;"> 반려동물 </p>
+                   <div style="width: 100%;" class = "pet_img">
+                   <c:if test="${selectHome.petImg ne null}">
+		             <img  id="preview2" style="width: 100%;" src = "${selectHome.petImg }" />
+		             </c:if>
+		             <c:if test="${selectHome.petImg eq null}">
+		             <img  id="preview2"  style="border: 4px solid #0000005c; width: 100%;" alt="" src="${contextPath}/resources/img/profile/nomal_Home.jpg">
+		             </c:if>
+		             </div>
+		             
+		              <input type = "file" id = "petImg" name = "file"  style="display: none;" onchange="readURL2(this);"/>
+				 <div style="float: right;">
+              	 <img onclick="chk2()" class="settingBtn2 mobile-nav-toggle" alt="" src="${contextPath}/resources/img/icon/setting/settingBtn.png">
+              	 </div>
+              </div>
+				
+				 	<br>
+				 	<br>
+					<button style="float: right; width : 100%;" class="upbtn btn btn-primary-1" type = "submit" id = "insertBtn">저장 </button>
                 
               </form>
 
@@ -230,8 +248,11 @@ function selectCode(cd){
           </div>
 
         </div>
- 
+        </div>
       </div>
+      </div>
+      </section>
+      </main>
   <!--   </div>  -->
 
     
@@ -240,6 +261,49 @@ function selectCode(cd){
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
+
+<script>
+$("#homeImg").change(function(){
+	//alert(this.files)
+	if(this.files && this.files[0]){
+		var reader = new FileReader;
+		reader.onload = function(data){
+			
+			$(".home_img img").attr("src", data.target.result);
+			
+		}
+		reader.readAsDataURL(this.files[0]);
+		
+	}
+})
+
+function chk(){
+		console.log($("#homeImg").val());
+		$("#homeImg").click();
+	}
+	
+function chk2(){
+	console.log($("#petImg").val());
+	$("#petImg").click();
+}
+
+	
+
+$("#petImg").change(function(){
+//	alert(this.files)
+	if(this.files && this.files[0]){
+		var reader = new FileReader;
+		reader.onload = function(data){
+			
+			$(".pet_img img").attr("src", data.target.result);
+			
+		}
+		reader.readAsDataURL(this.files[0]);
+		
+	}
+})
+
+</script>
 <!-- ------------------------- header ---------------------------- -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

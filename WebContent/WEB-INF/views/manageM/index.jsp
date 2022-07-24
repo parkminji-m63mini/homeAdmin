@@ -562,11 +562,16 @@ function showMore(){
       		<tfoot>
       			<tr>
       				<th>개별 총</th>
-      				<th class=''><fmt:formatNumber value="${gas}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${el}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${wt}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${it}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${ma}" type="number"/>원</th>
+      				<th <c:if test='${gas < 0}'>style="color: green;"</c:if> <c:if test='${gas > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${gas}" type="number"/>원</th>
+      				<th<c:if test='${el < 0}'>style="color: green;"</c:if> <c:if test='${el > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${el}" type="number"/>원</th>
+      				<th <c:if test='${wt < 0}'>style="color: green;"</c:if> <c:if test='${wt > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${wt}" type="number"/>원</th>
+      				<th <c:if test='${it < 0}'>style="color: green;"</c:if> <c:if test='${it > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${it}" type="number"/>원</th>
+      				<th <c:if test='${ma < 0}'>style="color: green;"</c:if> <c:if test='${ma > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${ma}" type="number"/>원</th>
       			</tr>	    
       		</tfoot>
      		</table>
@@ -637,11 +642,16 @@ function showMore(){
       		<tfoot>
       			<tr>
       				<th>개별 총</th>
-      				<th class=''><fmt:formatNumber value="${gas2}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${el2}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${wt2}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${it2}" type="number"/>원</th>
-      				<th class=''><fmt:formatNumber value="${ma2}" type="number"/>원</th>
+      				<th <c:if test='${gas2 < 0}'>style="color: green;"</c:if> <c:if test='${gas2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${gas2}" type="number"/>원</th>
+      				<th <c:if test='${el2 < 0}'>style="color: green;"</c:if> <c:if test='${el2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${el2}" type="number"/>원</th>
+      				<th <c:if test='${wt2 < 0}'>style="color: green;"</c:if> <c:if test='${wt2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${wt2}" type="number"/>원</th>
+      				<th <c:if test='${it2 < 0}'>style="color: green;"</c:if> <c:if test='${it2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${it2}" type="number"/>원</th>
+      				<th <c:if test='${ma2 < 0}'>style="color: green;"</c:if> <c:if test='${ma2 > 0}'>style="color: red;"</c:if>>
+      					<fmt:formatNumber value="${ma2}" type="number"/>원</th>
       			</tr>	
       		</tfoot>
      		</table>
@@ -651,21 +661,21 @@ function showMore(){
      		
      		     		
 			<c:choose>
-			<c:when test="${avg >= 0}">
+			<c:when test="${avg < 0}">
+     		<c:set var='avg2' value="${(gas+el+wt+it+ma)* -1}" ></c:set>
 			<div style="text-align: center;" class='savingDiv'>
 			<img alt="" src="${contextPath}/resources/img/feeling/good1.png" style="width: 46%">
 			<h4>
-			<span>이번 달엔 <fmt:formatNumber value="${avg}" type="number"/>원 절약했어!</span></h4>
+			<span>이번 달엔 <fmt:formatNumber value="${avg2}" type="number"/>원 절약했어!</span></h4>
 			</div>
 			
 			</c:when>
-			<c:when test="${avg < 0}">
-     		<c:set var='avg2' value="${(gas+el+wt+it+ma)* -1}" ></c:set>
+			<c:when test="${avg >= 0}">
      		
 			<div style="text-align: center;" class='savingDiv'>
 			<img alt="" src="${contextPath}/resources/img/feeling/bad.png" style="width: 46%">
 			<h4>
-			<span><fmt:formatNumber value="${avg2}" type="number"/>원 더 사용했어..</span></h4>
+			<span><fmt:formatNumber value="${avg}" type="number"/>원 더 사용했어..</span></h4>
 			</div>
 			</c:when>
 			</c:choose>

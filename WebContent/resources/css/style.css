@@ -420,7 +420,7 @@ section {
 /* Section with background
 --------------------------------*/
 .section-bg {
-  background: #f5f8fd;
+  background: white;
 }
 
 /* About Us Section
@@ -495,20 +495,23 @@ section {
 #services {
   padding: 60px 0 40px 0;
 }
+.service2{
+	 padding: 30px 0 40px 0 !important;
+}
 #services .box {
   padding: 30px;
   position: relative;
   overflow: hidden;
   border-radius: 10px;
   margin: 0 10px 40px 10px;
-  background: #fff;
+  background: #edf7fc;
   box-shadow: 0 10px 29px 0 #f5f8fd;
   transition: all 0.3s ease-in-out;
   text-align: center;
 }
 #services .box:hover {
   /*transform: scale(1.1);*/
-   background-color: #fff;
+   background-color: #edf7fc;
 }
 
 

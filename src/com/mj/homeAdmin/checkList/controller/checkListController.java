@@ -68,28 +68,28 @@ public class checkListController {
 	// 수정
 	@ResponseBody
 	@RequestMapping(value = "update", produces = "application/json;charset=utf-8")
-	public ModelAndView updateAction( String[] contentL, checkList vo, ModelAndView mv , HttpServletRequest req) throws Exception{
+	public String updateAction( String[] contentL, checkList vo, ModelAndView mv , HttpServletRequest req) throws Exception{
 		
 		
-		
+		int updateDetail=0;
 		int updateMaster = service.updateCheckListMaster(vo);
 		if (updateMaster > 0 ) {
 			for(int i=0 ; i < contentL.length ; i++) {
 				vo.setContent(contentL[i]);
 				
-				int updateDetail = service.updateCheckListDetail(vo);
+				updateDetail = service.updateCheckListDetail(vo);
 				
 				if (updateDetail > 0) {
 					
 				}else {
-					mv.setViewName("redirect:" + req.getHeader("referer"));
+					//mv.setViewName("redirect:" + req.getHeader("referer"));
 				}
 			}
 		}
 		
-		mv.setViewName("redirect:/checkList/index.do");
+	//	mv.setViewName("redirect:/checkList/index.do");
 		//return "checkList/index";
-		return mv;
+		return updateDetail+"";
 	}
 	
 	// 입력화면

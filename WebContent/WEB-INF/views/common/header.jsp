@@ -57,13 +57,14 @@
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="${contextPath}">나만의집🏡</h1>
+      <h1 class="logo me-auto"><a href="${contextPath}">   <img style="max-height: 70px;" src="${contextPath}/resources/img/sample/logo.png"  alt="" /> </a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+ <c:if test="${sessionScope.ssID != null }">
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">나만의집🏡</a></li>
+          <li><a class="nav-link scrollto active" href="#hero">우리집</a></li>
             <li class="dropdown"><a href="#"><span>공과금</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#" onclick="loginchk('/manageM/index.do');">전체</a></li>
@@ -75,7 +76,7 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/food/index.do?mode=0');">식재료</a></li>
-          <li><a class="nav-link scrollto " href="#" onclick="loginchk('/alarm/index.do');">알람</a></li>
+         <%-- <li><a class="nav-link scrollto " href="#" onclick="loginchk('/alarm/index.do');">알람</a></li>  --%>
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/checkList/index.do');">체크리스트</a></li>
           
           
@@ -110,12 +111,15 @@
          
           
             <li><a class="nav-link scrollto" href="#" onclick="loginchk('/notice/index.do');">공지사항</a></li>
-             <li class="dropdown"><a href="#"><span>고객센터</span> <i class="bi bi-chevron-down"></i></a>
+           
+           <%--
+			 <li class="dropdown"><a href="#"><span>고객센터</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#" onclick="loginchk('/help/qna.do');">자주 묻는 질문</a>
         	  <li><a  href="#" onclick="loginchk('/help/index.do');">1:1 문의</a></li>
             </ul>
           </li>
+           --%>
          <c:if test="${sessionScope.ssID == null}">
           <li><a class="nav-link scrollto" href="${contextPath}/snsLogin">로그인</a></li>
           </c:if>
@@ -126,12 +130,11 @@
           <li><a class="nav-link scrollto" href="#" onclick="loginchk('/admin/dash/index.do');">관리자 페이지</a></li>
           </c:if>
           
-           <li><a class="nav-link scrollto" href="#footer">Contact</a></li>
         </ul>
         
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      
+  </c:if>    
       
 
 <%-- 

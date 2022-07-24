@@ -54,8 +54,8 @@ function addLineNew(tp){
 			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	"
 			+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 			+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
-			+"<th><p class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>-</p></th></tr>");
-	$("#FR01_TOP").append("<tr id='addbtn1'><th colspan='7'><p class='btn_brown' onclick='addLineNew(1)'>+</p></th>	</tr>");	
+			+"<th><a class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>-</a></th></tr>");
+	$("#FR01_TOP").append("<tr id='addbtn1'><th colspan='7'><a style='width: 13%;margin-bottom: 3%;' class='upbtn btn btn-primary-1' onclick='addLineNew(1)'>+</a></th>	</tr>");	
        line1 ++;
 	}else if(tp == 2){
 		$("#addbtn2").remove();
@@ -64,8 +64,8 @@ function addLineNew(tp){
 				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	"
 				+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 				+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
-				+"<th><p class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>-</p></th></tr>");
-		$("#FR01_BOTTOM").append("<tr id='addbtn2'><th colspan='7'><p class='btn_brown' onclick='addLineNew(2)'>+</p></th>	</tr>");	
+				+"<th><a class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>-</a></th></tr>");
+		$("#FR01_BOTTOM").append("<tr id='addbtn2'><th colspan='7'><a style='width: 13%;margin-bottom: 3%;' class='upbtn btn btn-primary-1' onclick='addLineNew(2)'>+</a></th>	</tr>");	
 	       line2 ++;
 	}
 }
@@ -80,8 +80,8 @@ function addLine(tp){
 			"<th><input class='wi_2' type='text' name='priceL'  disabled='disabled'></th>	"
 			+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 			+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
-			+"<th><p class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>-</p></th></tr>");
-	$("#FR01_TOP").append("<tr id='addbtn1'><th colspan='7'><p class='btn_brown' onclick='addLine(1)'>+</p></th>	</tr>");	
+			+"<th><a class='wi_2 btn_brown' onclick='delLine1("+ line1 +")'>-</a></th></tr>");
+	$("#FR01_TOP").append("<tr id='addbtn1'><th colspan='7'><a style='width: 13%;margin-bottom: 3%;' class='upbtn btn btn-primary-1' onclick='addLine(1)'>+</a></th>	</tr>");	
        line1 ++;
 	}else if(tp == 2){
 		$("#addbtn2").remove();
@@ -91,8 +91,8 @@ function addLine(tp){
 				"<th><input class='wi_2' type='text' name='priceL' disabled='disabled'></th>	"
 				+"<th><input class='wi_2' type='date' name='fdtL' disabled='disabled'></th>"
 				+"<th><input class='wi_2' type='text' name='vmL' disabled='disabled'></th>"
-				+"<th><p class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>-</p></th></tr>");
-		$("#FR01_BOTTOM").append("<tr id='addbtn2'><th colspan='7'><p class='btn_brown' onclick='addLine(2)'>+</p></th>	</tr>");	
+				+"<th><a class='wi_2 btn_brown' onclick='delLine2("+ line2 +")''>-</a></th></tr>");
+		$("#FR01_BOTTOM").append("<tr id='addbtn2'><th colspan='7'><a style='width: 13%;margin-bottom: 3%;' class='upbtn btn btn-primary-1' onclick='addLine(2)'>+</a></th>	</tr>");	
 	       line2 ++;
 	}
 }
@@ -157,6 +157,7 @@ function chkState(idx){
 			type : "post",
 			dataType : "text", 
 			 traditional : true,
+			 async : true,
 			url : "updateChk.do",
 			data : {
 				jidx : ${vo.jidx},
@@ -164,8 +165,8 @@ function chkState(idx){
 				chk: chk
 			},
 			success : function(result){
-				alert("수정완료");
-				reload();
+				//alert("수정완료");
+				selectCode();
 			},
 			error : function(result){
 				errMsg(result);
@@ -356,8 +357,9 @@ function editM(tp){
 	}
 	$(".nomalFrom").css("display", "none");
 	$(".upFrom").removeAttr("style");
-	$(".delBtn").css("float", "right");
+	$(".delBtn").css("float", "none");
 	$("#upbtn").text("등록");
+	$("#upbtn").css("float" ,"none");
 	
 }
 
@@ -417,12 +419,20 @@ function usingF(date){
 <input type="hidden" name='jidx' value='${vo.jidx}'/>
 				
 				<table class="bodyFR01" id='FR01_TOP'>
+					<colgroup>
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 20%;">
+						<col style="width: 5%;">
+					</colgroup>
+						
 					
 					<tr>
-					<th colspan="6">
+					<th colspan="6" class='ContD'>
 					<c:if test="${fn:length(arrListBottom) != 0}">
 					<c:if test="${vo.mode eq '0'}">
-					<a href='javascript:usingF(1);' style="float: left;">사용 완료 식재료</a>
+					<a href='javascript:usingF(1);' style="float: right;">>> 사용 완료</a>
 					</c:if>
 					<c:if test="${vo.mode != '0' }">
 					<a href='javascript:usingF(0);' style="float: left;">돌아가기</a>
@@ -437,6 +447,8 @@ function usingF(date){
 					</c:if>
 					</th>
 					</tr>
+					
+						<tbody class="top">
 					<tr>
 					<th>품명</th>
 					<th>가격</th>
@@ -462,47 +474,45 @@ function usingF(date){
 			          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine1(${i});">-</a></th>
 			          	</tr>
 			          	</c:forEach>
-			          	<tr id='addbtn1'><th colspan="6"><p class='btn_brown' onclick="addLineNew(1)">+</p></th>	</tr>
+			          	<tr id='addbtn1'><th colspan="6"><a style="width: 13%;margin-bottom: 3%;" class='upbtn btn btn-primary-1' onclick="addLineNew(1)">+</a></th>	</tr>
 			          	</c:if>
 					</c:when>
 					</c:choose>
-					
+					</tbody>
 		          	</table>
-          	
+          	<br>
 </c:when>
 <c:when test="${fn:length(arrListTop) != 0}">
 
 <form name="frmReg${st.index}" class='' method="post" action="fr01Insert.do">
 <input type="hidden" name='jidx' value='${vo.jidx}'/>
 					<c:if test="${vo.mode eq '0'}">
-					<a  class='nomalFrom' href='javascript:usingF(1);' style="float: left;">사용 완료 식재료</a>
+					<a  class='nomalFrom' href='javascript:usingF(1);' style="float: right;">>> 사용 완료</a>
 					<a  class='upFrom fleft' href='javascript:usingF(0);' style="display: none;">돌아가기</a>
 					</c:if>
 					<c:if test="${vo.mode != '0' }">
 					<a  class='nomalFrom' href='javascript:usingF(0);' style="float: left;">돌아가기</a>
 					<a  class='upFrom' href='javascript:usingF(1);' style="float: left; display: none;">돌아가기</a>
 					</c:if>
-					<a class='nomalFrom' href='view.do?jidx=${vo.jidx}&idx=0&area=TP01&tp=FR01&mode=${vo.mode}' style="float: right;">새로 만들기</a>
+					
 				<table class="bodyFR01" id='FR01_TOP' >
 				<colgroup>
-						<col style="width: 20%;">
-						<col style="width: 20%;">
+						<col style="width: 10%;">
+						<col style="width: 25%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 					</colgroup>
-					<thead>
 					<tr>
-					<th colspan="6">
+					<th colspan="6" class='ContD'>
 					냉동실</th>
 					</tr>
 					
-					</thead>
 					<tbody class="top">
 					<tr>
 					<th  class='upFrom' style="display: none;">선택</th>
-					<th class='nomalFrom'>사용 완료</th>
+					<th class='nomalFrom'></th>
 					<th>품명</th>
 					<th>가격</th>
 					<th>유통기한</th>
@@ -515,17 +525,17 @@ function usingF(date){
 					<tr id='tr_${st}' class='nomalFrom'>
 					<th><input type="hidden"  value="${arr.idx}"/>  
 						<input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});" <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
-		          	<th><a href='view.do?idx=${arr.idx}&mode=${vo.mode}'>${arr.fnm}</a></th>
-		          	<th>${arr.price}</th>
-		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${fn:substring(arr.fdt,2,10)}</c:if></th>
-		          	<th>${arr.vm}</th>
+		          	<th><p class='ellTxt' style=" margin: 0;"><a href='view.do?idx=${arr.idx}&mode=${vo.mode}'>${arr.fnm}</a></p></th>
+		          	<th><fmt:formatNumber value="${arr.price}" type="number"/></th>
+		          	<th><c:if test='${arr.fdt2 ne "00/00"}'>${arr.fdt2}</c:if></th>
+		          	<th><p class='ellTxt' style=" margin: 0;">${arr.vm}</p></th>
 		          	</tr>
 		          	
 		          	<tr id='tr_${st}' class='upFrom' style="display: none;">
 		          	<th><input type="checkbox" name='idx' value="${arr.idx}"/></th>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${st}' value='${arr.fnm}' onchange="chkEpy('fnm${st}', '${st}');"/><input class="wi_1" type="hidden" name='fAreaL' value="TP01"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price${st}' value="${arr.price}" ></th>
-		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}' value="${arr.fdt}" ></th>
+		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}' value="${arr.fdt2}" ></th>
 		          	<th><input class="wi_2" type='text' name='vmL' id='vm${st}' value="${arr.vm}"></th>
 		          	</tr>
 		          	</c:forEach>
@@ -540,20 +550,22 @@ function usingF(date){
 		          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine1(${i});">-</a></th>
 		          	</tr>
 		          	</c:forEach>
-		          	<tr id='addbtn1' class='upFrom' style="display: none;"><th colspan="8"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr>
+		          	<tr id='addbtn1' class='upFrom' style="display: none;"><th colspan="8"><a style="width: 13%;margin-bottom: 3%;" class='upbtn btn btn-primary-1' onclick="addLine(1)">+</a></th>	</tr>
 					
 <!--  		          	<tr id='addbtn1'><th colspan="6"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr> -->
 		          	</tbody>
 		          	</table>
 		          	
-		          	<div>
+		          	<div style="width: 100%;text-align: center;">
 		          	<c:if test="${fn:length(arrListBottom) == 0}">
-		          	<p class='btn_brown' onclick="editM(1)" id='upbtn'>간편 수정</p>
+		          	<!-- <p class='btn_brown' onclick="editM(1)" id='upbtn'>간편 수정</p>  -->
+		          	<br><br>
+		          	<a class='nomalFrom upbtn btn btn-primary-1' href='view.do?jidx=${vo.jidx}&idx=0&area=TP01&tp=FR01&mode=${vo.mode}'>새로 만들기</a>
 		          	<p  class='upFrom btn_brown' style="display: none;"  onclick="del()" id='upBtn'>삭제</p>
 		          	</c:if>
 		          	</div>
      	</form>		          	
-
+		<br>
 
 </c:when>
 </c:choose>
@@ -562,16 +574,17 @@ function usingF(date){
 
 				<input type="hidden" name='jidx' value='${vo.jidx}'/>
 					 <table class="bodyFR01" id='FR01_BOTTOM'>
-					 <colgroup>
+					<colgroup>
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
-						<col style="width: 20%;">
+						<col style="width: 5%;">
 					</colgroup>
 					<tr>
-					<th colspan="6">냉장실</th>
+					<th colspan="6" class='ContD'>냉장실</th>
 					</tr>
+					<tbody class="top">
 					<tr>
 					<th>품명</th>
 					<th>가격</th>
@@ -594,16 +607,17 @@ function usingF(date){
 		          	<th><input class="wi_2" type='text' name='priceL' id='price2${i}' disabled="disabled" ></th>
 		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt2${i}' disabled="disabled"></th>
 		          	<th><input class="wi_2" type='text' name='vmL'  id='vm2${i}' disabled="disabled"></th>
-		          	<th><p class='wi_2 btn_brown delbtn' onclick="delLine2(${i});">-</p></th>
+		          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine2(${i});">-</a>   	</th>
 		          	</tr>
 		          	</c:forEach>
-		          	<tr id='addbtn2'><th colspan="6"><p class='btn_brown' onclick="addLineNew(2)">+</p></th>	</tr>
+		          	<tr id='addbtn2'><th colspan="6"><a style="width: 13%;margin-bottom: 3%;" class='upbtn btn btn-primary-1' onclick="addLineNew(2)">+</a></th>	</tr>
 		          	</c:if>
 		          	</c:when>
 		          	</c:choose>
+		          	</tbody>
 		          	</table>
           	</form>
-          	<a href='#'  class="upbtn btn btn-primary-1"  onclick="insertD();">등록하기</a>
+          	<a href='#' style="float: none; width: 100%;"  class="upbtn btn btn-primary-1"  onclick="insertD();">등록하기</a>
 </c:when>
 <c:when test="${fn:length(arrListBottom) != 0}">
 	
@@ -611,23 +625,21 @@ function usingF(date){
 <input type="hidden" name='jidx' value='${vo.jidx}'/>
 				<table class="bodyFR01" id='FR01_BOTTOM'>
 					 <colgroup>
-						<col style="width: 20%;">
-						<col style="width: 20%;">
+						<col style="width: 10%;">
+						<col style="width: 25%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 						<col style="width: 20%;">
 					</colgroup>
-					<thead>
 					<tr>
-					<th colspan="6">
+					<th colspan="6" class='ContD'>
 					냉장실</th>
 					</tr>
 					
-					</thead>
 					<tbody class="top">
 					<tr>
 					<th  class='upFrom' style="display: none;">선택</th>
-					<th class='nomalFrom'>사용 완료</th>
+					<th class='nomalFrom'></th>
 					<th>품명</th>
 					<th>가격</th>
 					<th>유통기한</th>
@@ -640,16 +652,16 @@ function usingF(date){
 					<tr id='tr_${st}' class='nomalFrom'>
 					<th><input type="hidden"  value="${arr.idx}"/>  <input type="checkbox" id="${arr.idx}" onchange="chkState(${arr.idx});"  <c:if test="${arr.chk eq '1'.charAt(0) }">checked="checked"</c:if>/></th>
 		          	<th><p class='ellTxt' style=" margin: 0;"><a href='view.do?idx=${arr.idx}&mode=${vo.mode}' >${arr.fnm}</a></p></th>
-		          	<th>${arr.price}</th>
-		          	<th><c:if test='${arr.fdt ne "0000-00-00"}'>${fn:substring(arr.fdt,2,10)}</c:if></th>
-		          	<th>${arr.vm}</th>
+		          	<th><fmt:formatNumber value="${arr.price}" type="number"/></th>
+		          	<th><c:if test='${arr.fdt2 ne "00/00"}'>${arr.fdt2}</c:if></th>
+		          	<th><p class='ellTxt' style=" margin: 0;">${arr.vm}</p></th>
 		          	</tr>
 		          	
 		          	<tr id='tr_${st}' class='upFrom' style="display: none;">
 		          	<th><input type="checkbox" name='idx' value="${arr.idx}"/></th>
 		          	<th><input class="wi_1" type='text' name='fnmL' id='fnm${st}2' value='${arr.fnm}' onchange="chkEpy('fnm${st}2', '${st}2');"/><input class="wi_1" type="hidden" name='fAreaL' value="TP02"></th>
 		          	<th><input class="wi_2" type='text' name='priceL' id='price${st}2' value="${arr.price}" ></th>
-		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}2' value="${arr.fdt}" ></th>
+		          	<th><input class="wi_2" type='date' name='fdtL' id='fdt${st}2' value="${arr.fdt2}" ></th>
 		          	<th><input class="wi_2" type='text' name='vmL' id='vm${st}2' value="${arr.vm}"></th>
 		          	</tr>
 		          	</c:forEach>
@@ -664,14 +676,17 @@ function usingF(date){
 		          	<th><a class='wi_2 btn_brown delbtn' onclick="delLine1(${i}2);">-</a></th>
 		          	</tr>
 		          	</c:forEach>
-		          	<tr id='addbtn2' class='upFrom' style="display: none;"><th colspan="8"><p class='btn_brown' onclick="addLine(2)">+</p></th>	</tr>
+		          	<tr id='addbtn2' class='upFrom' style="display: none;"><th colspan="8"><a style="width: 13%;margin-bottom: 3%;" class='upbtn btn btn-primary-1' onclick="addLine(2)">+</a></th>	</tr>
 					
 <!--  		          	<tr id='addbtn1'><th colspan="6"><p class='btn_brown' onclick="addLine(1)">+</p></th>	</tr> -->
 					</tbody>
 		          	</table>
 		          	
-		          	<div>
-		          	<p class="upbtn btn btn-primary-1" onclick="editM(1)" id='upbtn'>간편 수정</p>
+		          	<div style="width: 100%;text-align: center;">
+		          	
+		          	<!-- <p class="upbtn btn btn-primary-1" onclick="editM(1)" id='upbtn'>간편 수정</p>  -->
+		          	<br><br>
+		          	<a class='nomalFrom upbtn btn btn-primary-1' href='view.do?jidx=${vo.jidx}&idx=0&area=TP01&tp=FR01&mode=${vo.mode}'>새로 만들기</a>
 		          	<p  class='delBtn upFrom  btn btn-danger'style=" display: none; float: none;"  onclick="del()" id='upBtn'>삭제</p>
 		          	</div>
      	</form>		          	

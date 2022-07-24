@@ -14,19 +14,21 @@
 	 		<div  style="width: 100%;">
 	 			<%-- 상단 --%>
 	 			<div  class="box">
-	 			<table style="width: 100%;">
+	 			<table class="tb">
 	 				<colgroup>
 						<col style="width: 5%">
 						<col style="width: 40%">
 						<col style="width: 20%">
 						<col style="width: 15%">
 					</colgroup>
-	 			<tbody>
+					<thead>
 	 				<tr>
 	 					<th>no</th>
-	 					<th>제목</th>
+	 					<th colspan="2">제목</th>
 	 					<th>날짜</th>
  					</tr>
+					</thead>
+	 			<tbody>
 	 				<c:choose>
 				     	<c:when test = "${empty list}">
 					     		<tr>

@@ -20,34 +20,42 @@
 </head>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
 
 <body>
- <section id="breadcrumbs" class="breadcrumbs">
+<main id="main">
+  <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
       <div class="container">
+  		<div class="">
 
-        <ol>
-          <li><a href="index.html">집정보</a></li>
-          <li>전체</li>
-        </ol>
-        <h2>전체</h2>
+          <div class="">
+           <section id="breadcrumbs" class="breadcrumbs">
+	      <div class="container">
+	        <ol>
+	          <li><a href="index.html">집정보</a></li>
+	          <li>전체</li>
+	        </ol>
+	      </div>
+	    </section><!-- End Breadcrumbs -->
+    
+     <div class="portfolio-info">
+              <div class="swiper-wrapper align-items-center">
 
-      </div>
-    </section><!-- End Breadcrumbs -->
-      <div class="container">
-
-        <div class="row  justify-content-center">
-          <div class="col-lg-6">
-
-            <div class="form">
         <c:choose>
      	<c:when test = "${empty selectHome}">
+     	 <div class="form" style=" width: 100%; text-align: center; height: 200px;">
+     		<br>
      		<p>등록된 정보가 없습니다.</p>
-     		<a href = "insertView.do" >등록하기</a>
+     		<br>
+     		<a href = "insertView.do" style="float: right; width : 100%;" class="upbtn btn btn-primary-1"  >등록하기</a>
+     		</div>
      	</c:when>
      	<c:otherwise>
      	
               
 
+            <div class="form" style=" width: 100%; text-align: center;">
               <form method="post" role="form" class="php-email-form" name="submit">
               
                <div class="form-inline mb-2">
@@ -132,27 +140,23 @@
                 
                 
             
-                
-            
-                
-
-
-                
-                <br><br>
                
-              
-                	<div class="text-center"><button class = "btn btn-primary btn-lg" type="button" id="updateBtn" title="Send Message" onclick = "location.href = 'updateView/${selectHome.id}'" >수정</button></div>
+               	<a style="float: right; width : 100%;" class="upbtn btn btn-primary-1" id="updateBtn" title="Send Message" onclick = "location.href = 'updateView/${selectHome.id}'" >수정</a>
+                	
                 	
               </form>
+            </div>
         </c:otherwise>
  	</c:choose>
-            </div>
 
           </div>
 
         </div>
- 
-      </div>
+ </div>
+ </div>
+      </div> 
+      </section>
+</main>      
   <!--   </div>  -->
 
     

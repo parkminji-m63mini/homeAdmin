@@ -20,17 +20,7 @@ $(document).ready(function(){
 
 <main id="main">
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-        <ol>
-          <li><a href="index.html">공과금</a></li>
-          <li>전체</li>
-        </ol>
-        <h2>상세보기</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
+  
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
@@ -39,6 +29,17 @@ $(document).ready(function(){
         <div class="">
 
           <div class="">
+          
+          	  <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <ol>
+          <li><a href="index.html">공과금</a></li>
+          <li>전체</li>
+        </ol>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
 					
             <div class="portfolio-info">
               <div class="swiper-wrapper align-items-center">
@@ -50,24 +51,32 @@ $(document).ready(function(){
 						<c:set var='addGas' value='${arr.defM + arr.cGm + arr.uGm - arr.sGm + arr.kGm +arr.mGm+ arr.aGm + arr.avgGm - arr.jsGm + arr.enGu}'/>
                 	  <span style="float: right;" ><a href="javascript:history.back();" > >> 뒤로가기</a></span>
                 	 <h3>${arr.yyyy}년도 ${arr.mm}월  상세요금 </h3>
-                	  <h4>가스     	  	  </h4>
-                	 <p class="nomalForm">
-                	 <c:if test="${arr.gChk eq 'Y'}">
-                	 이번 달 사용요금을 
-                	  <c:if test="${arr.autoWhen ne null}">
-                	 	${arr.autoWhen}일에
-                	 </c:if>
-                	 <c:if test="${arr.autoHow ne null}">${arr.autoHow}로</c:if> 
-                	 납부했습니다.
-                	
-                	 </c:if>
+                	  <h4 class="margin0" >가스  </h4>
+                	   <span style="float : right; font-size: 15px;" ><a href="gas.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
+                	 <p class="nomalForm margin10">
+                	 <c:if test="${arr.gChk eq 'Y' }">
+                	  				 <span class="nomalForm" style="font-size: 14px;">
+				                	 <c:if test="${arr.gChk eq 'Y'}">
+				                	 * 사용요금을  
+				                	  <c:if test="${my:NVL(arr.autoWhen,0) ne 0 && arr.autoM eq 'Y'}">
+				                	 	${arr.autoWhen}일에
+				                	 </c:if>
+				                	 <c:if test="${my:NVL(arr.autoHow,'0') ne '0'  && arr.autoM eq 'Y'}">${arr.autoHow}로</c:if> 
+				                	 납부했습니다.
+				                	
+				                	 </c:if>
+						                	 
+						                	 </span>
+									</c:if>
                 	 
-                	 <c:if test="${arr.gChk eq 'N'}">
-                	 이번 달은 아직 사용요급을 납부하지 않았습니다
-                	 </c:if>
+                	 <c:if test="${arr.gChk eq 'N' || arr.gChk eq null}">
+	                	  			<span class="nomalForm">
+					                	 사용요금을 납부하지 않았습니다
+					                	</span>
+		                			 </c:if>
                 	 </p>
                 	 
-				<form name="frmReg${st.index}" class='boder-black' method="post">
+				<form name="frmReg${st.index}"  method="post">
 				
 				
 				<c:set var='mode' value='u'/>
@@ -83,7 +92,7 @@ $(document).ready(function(){
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${arr.uId}" name='uId' id='uId'/>
                 <input type="hidden" value="${arr.gChk}" name='gChk' id='gChk'/>
-                	 <span style="float : right; font-size: 15px;" ><a href="gas.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
+                	
            	<c:choose>
            		<c:when test="${arr.suma eq null || arr.suma eq '0'}">
            			<table class='tb'>
@@ -109,17 +118,19 @@ $(document).ready(function(){
            		<c:otherwise>
                 		
                 		<table class='tb'>
+                		<thead>
+							<tr>
+								<th  >기본료 </th>
+								<th  >교체비</th>
+								<th  >사용요금</th>
+								<th  >부가세</th>
+								<th  >할인금액</th>
+							</tr>
+                		</thead>
                 	<tbody>
-					<tr>
-						<th  class='boder-black'>기본료 </th>
-						<th  class='boder-black'>교체비</th>
-						<th  class='boder-black'>사용요금</th>
-						<th  class='boder-black'>부가세</th>
-						<th  class='boder-black'>할인금액</th>
-					</tr>
 										
 					<tr>
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.defM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.defM}" type="number"/>원</span>
@@ -130,7 +141,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.cGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.cGm}" type="number"/>원</span>
@@ -141,7 +152,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.uGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.uGm}" type="number"/>원</span>
@@ -152,7 +163,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.aGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.aGm}" type="number"/>원</span>
@@ -163,7 +174,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.sGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.sGm}" type="number"/>원</span>
@@ -175,18 +186,18 @@ $(document).ready(function(){
 						</th>
 						
 					</tr>
-					
-					<tr>
-						<th  class='boder-black'>가산금</th>
-						<th  class='boder-black'>미납금</th>
-						<th  class='boder-black'>정산금액</th>
-						<th  class='boder-black'>절사금액</th>
-						<th  class='boder-black'>에너지바우처</th>
+										
+					<tr class="tableblue">
+						<th  >가산금</th>
+						<th  >미납금</th>
+						<th  >정산금액</th>
+						<th  >절사금액</th>
+						<th  >에너지바우처</th>
 					</tr>
 					
 					<tr>
 					
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.kGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.kGm}" type="number"/>원</span>
@@ -197,7 +208,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.mGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.mGm}" type="number"/>원</span>
@@ -208,7 +219,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.avgGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.avgGm}" type="number"/>원</span>
@@ -219,7 +230,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.jsGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.jsGm}" type="number"/>원</span>
@@ -230,7 +241,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th colspan="2" class='boder-black'>
+							<th colspan="2" >
 						<c:choose>
 						<c:when test="${arr.enGu ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.enGu}" type="number"/>원</span>
@@ -247,13 +258,13 @@ $(document).ready(function(){
                 	<!--  사용량 -->
                 	<table class='tb'>
                 	<tbody>
-					<tr>
-						<th  class='boder-black'>당월지침</th>
-						<th  class='boder-black'>사용량</th>
-						<th  class='boder-black'>사용열량</th>
+					<tr class="tableblue">
+						<th  >당월지침</th>
+						<th  >사용량</th>
+						<th  >사용열량</th>
 					</tr>
 					<tr>
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.monGu ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.monGu}" type="number"/>m³</span>
@@ -264,7 +275,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.useG ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.useG}" type="number"/>m³</span>
@@ -275,7 +286,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.useB ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.useB}" type="number"/>m³</span>
@@ -307,27 +318,33 @@ $(document).ready(function(){
                 	
 </c:forEach>
 						<hr>
-						<h4>전기</h4>
-						
+						<h4 class="margin0">전기</h4>
+						<span style="float : right; font-size: 15px;" ><a href="electric.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
 					<c:forEach var='arr' items='${elV}' varStatus="st">	 
 					<c:set var='add' value='${arr.defM + arr.lEm + arr.woEm -arr.miEm+ arr.aEm + arr.gyEm - arr.jsEm }'/>	
-				 <p class="nomalForm">
-                	 <c:if test="${arr.gChk eq 'Y'}">
-                	 이번 달 사용요금을 
-                	  <c:if test="${arr.autoWhen ne null}">
-                	 	${arr.autoWhen}일에
-                	 </c:if>
-                	 <c:if test="${arr.autoHow ne null}">${arr.autoHow}로</c:if> 
-                	 납부했습니다.
-                	
-                	 </c:if>
+				 <p class="nomalForm margin10">
+                	 <c:if test="${arr.gChk eq 'Y' }">
+                	  				 <span class="nomalForm" style="font-size: 14px;">
+				                	 <c:if test="${arr.gChk eq 'Y'}">
+				                	 * 사용요금을  
+				                	  <c:if test="${my:NVL(arr.autoWhen,0) ne 0 && arr.autoM eq 'Y'}">
+				                	 	${arr.autoWhen}일에
+				                	 </c:if>
+				                	 <c:if test="${my:NVL(arr.autoHow,'0') ne '0'  && arr.autoM eq 'Y'}">${arr.autoHow}로</c:if> 
+				                	 납부했습니다.
+				                	
+				                	 </c:if>
+						                	 
+						                	 </span>
+									</c:if>
                 	 
-                	 <c:if test="${arr.gChk eq 'N'}">
-                	 이번 달은 아직 사용요급을 납부하지 않았습니다
-                	 </c:if>
-                	 
-                	 
+                	 <c:if test="${arr.gChk eq 'N' || arr.gChk eq null}">
+	                	  			<span class="nomalForm">
+					                	 사용요금을 납부하지 않았습니다
+					                	</span>
+		                			 </c:if>
                 	 </p>
+                	 
                 	 
                 	 <div class="upForm" style="display: none;"> 
                 	   <p>이번 달 사용요금 지출을 완료하였나요?
@@ -364,7 +381,7 @@ $(document).ready(function(){
                 
                 
                 	 
-				<form name="frmReg${st.index}" class='boder-black' method="post">
+				<form name="frmReg${st.index}"  method="post">
 				
 				
 				<c:set var='mode' value='u'/>
@@ -380,7 +397,7 @@ $(document).ready(function(){
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${arr.uId}" name='uId' id='uId'/>
                 <input type="hidden" value="${arr.gChk}" name='gChk' id='gChk'/>
-                 <span style="float : right; font-size: 15px;" ><a href="electric.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
+
                 <c:choose>
            		<c:when test="${arr.suma eq null || arr.suma eq '0'}">
            			<table class='tb'>
@@ -407,15 +424,15 @@ $(document).ready(function(){
                 	
                 	<table class='tb'>
                 	<tbody>
-					<tr>
-						<th  class='boder-black'>기본료 </th>
-						<th  class='boder-black'>전력량요금</th>
-						<th  class='boder-black'>기후환경요금</th>
-						<th  class='boder-black'>필수사용공제</th>
+					<tr class="tableblue">
+						<th  >기본료 </th>
+						<th  >전력량요금</th>
+						<th  >기후환경요금</th>
+						<th  >필수사용공제</th>
 					</tr>
 										
 					<tr>
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.defM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.defM}" type="number"/>원</span>
@@ -428,7 +445,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.lEm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.lEm}" type="number"/>원</span>
@@ -441,7 +458,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.woEm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.woEm}" type="number"/>원</span>
@@ -454,7 +471,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.miEm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.miEm}" type="number"/>원</span>
@@ -469,16 +486,16 @@ $(document).ready(function(){
 						
 					</tr>
 					
-					<tr>
-						<th  class='boder-black'>부가가치세</th>
-						<th  class='boder-black'>전력 기금</th>
-						<th  class='boder-black'>원단위 절사</th>
-						<th  class='boder-black'>사용량</th>
+					<tr class="tableblue">
+						<th  >부가가치세</th>
+						<th  >전력 기금</th>
+						<th  >원단위 절사</th>
+						<th  >사용량</th>
 					</tr>
 					
 					<tr>
 					
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.aEm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.aEm}" type="number"/>원</span>
@@ -491,7 +508,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.gyEm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.gyEm}" type="number"/>원</span>
@@ -504,7 +521,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.jsEm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.jsEm}" type="number"/>원</span>
@@ -517,7 +534,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.useE ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.useE}" type="number"/>kWh</span>
@@ -544,28 +561,34 @@ $(document).ready(function(){
                 		
                 	
                 	<hr>
-						<h4>수도</h4>
-						
+						<h4 class="margin0">수도</h4>
+					<span style="float : right; font-size: 15px;" ><a href="water.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>	
 					<c:forEach var='arr' items='${waV}' varStatus="st">
 						<c:set var='addWa' value='${arr.saM}'/>
                 	 
-                	 <p class="nomalForm">
-                	 <c:if test="${arr.gChk eq 'Y'}">
-                	 이번 달 사용요금을 
-                	  <c:if test="${arr.autoWhen ne null}">
-                	 	${arr.autoWhen}일에
-                	 </c:if>
-                	 <c:if test="${arr.autoHow ne null}">${arr.autoHow}로</c:if> 
-                	 납부했습니다.
-                	
-                	 </c:if>
+                	 <p class="nomalForm margin10">
+                	 <c:if test="${arr.gChk eq 'Y' }">
+                	  				 <span class="nomalForm" style="font-size: 14px;">
+				                	 <c:if test="${arr.gChk eq 'Y'}">
+				                	 * 사용요금을  
+				                	  <c:if test="${my:NVL(arr.autoWhen,0) ne 0 && arr.autoM eq 'Y'}">
+				                	 	${arr.autoWhen}일에
+				                	 </c:if>
+				                	 <c:if test="${my:NVL(arr.autoHow,'0') ne '0'  && arr.autoM eq 'Y'}">${arr.autoHow}로</c:if> 
+				                	 납부했습니다.
+				                	
+				                	 </c:if>
+						                	 
+						                	 </span>
+									</c:if>
                 	 
-                	 <c:if test="${arr.gChk eq 'N'}">
-                	 이번 달은 아직 사용요급을 납부하지 않았습니다
-                	 </c:if>
-                	 
-                	 
+                	 <c:if test="${arr.gChk eq 'N' || arr.gChk eq null}">
+	                	  			<span class="nomalForm">
+					                	 사용요금을 납부하지 않았습니다
+					                	</span>
+		                			 </c:if>
                 	 </p>
+                	 
                 	 
                 	 <div class="upForm" style="display: none;"> 
                 	   <p>이번 달 사용요금 지출을 완료하였나요?
@@ -598,7 +621,7 @@ $(document).ready(function(){
 				       
                </div>
                
-				<form name="frmReg${st.index}" class='boder-black' method="post">
+				<form name="frmReg${st.index}"  method="post">
 				
 				
 				<c:set var='mode' value='u'/>
@@ -614,7 +637,7 @@ $(document).ready(function(){
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${arr.uId}" name='uId' id='uId'/>
                 <input type="hidden" value="${arr.gChk}" name='gChk' id='gChk'/>
-                <span style="float : right; font-size: 15px;" ><a href="water.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
+                
                    <c:choose>
            		<c:when test="${arr.suma eq null || arr.suma eq '0'}">
            			<table class='tb'>
@@ -641,13 +664,13 @@ $(document).ready(function(){
                 	
                 	<table class='tb'>
                 	<tbody>
-					<tr>
-						<th  class='boder-black'>사용량 </th>
-						<th  class='boder-black'>사용요금</th>
+					<tr class="tableblue">
+						<th  >사용량 </th>
+						<th  >사용요금</th>
 					</tr>
 										
 					<tr>
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.sa ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.sa}" type="number"/></span>
@@ -660,7 +683,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when  test="${arr.saM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.saM}" type="number"/>원</span>
@@ -688,28 +711,34 @@ $(document).ready(function(){
 				
 				
 					<hr>
-						<h4>인터넷</h4>
-						
+						<h4 class="margin0">인터넷</h4>
+					<span style="float : right; font-size: 15px;" ><a href="it.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>	
 				<c:forEach var='arr' items='${itV}' varStatus="st">
 						<c:set var='addIt' value='${arr.defM - arr.sIm - arr.gIm - arr.sGm + arr.aGm +arr.mGm}'/>
                 	 
-                	 <p class="nomalForm">
-                	 <c:if test="${arr.gChk eq 'Y'}">
-                	 이번 달 사용요금을 
-                	  <c:if test="${arr.autoWhen ne null}">
-                	 	${arr.autoWhen}일에
-                	 </c:if>
-                	 <c:if test="${arr.autoHow ne null}">${arr.autoHow}로</c:if> 
-                	 납부했습니다.
-                	
-                	 </c:if>
+                	 <p class="nomalForm margin10">
+                	 <c:if test="${arr.gChk eq 'Y' }">
+                	  				 <span class="nomalForm" style="font-size: 14px;">
+				                	 <c:if test="${arr.gChk eq 'Y'}">
+				                	 * 사용요금을  
+				                	  <c:if test="${my:NVL(arr.autoWhen,0) ne 0 && arr.autoM eq 'Y'}">
+				                	 	${arr.autoWhen}일에
+				                	 </c:if>
+				                	 <c:if test="${my:NVL(arr.autoHow,'0') ne '0'  && arr.autoM eq 'Y'}">${arr.autoHow}로</c:if> 
+				                	 납부했습니다.
+				                	
+				                	 </c:if>
+						                	 
+						                	 </span>
+									</c:if>
                 	 
-                	 <c:if test="${arr.gChk eq 'N'}">
-                	 이번 달은 아직 사용요급을 납부하지 않았습니다
-                	 </c:if>
-                	 
-                	 
+                	 <c:if test="${arr.gChk eq 'N' || arr.gChk eq null}">
+	                	  			<span class="nomalForm">
+					                	 사용요금을 납부하지 않았습니다
+					                	</span>
+		                			 </c:if>
                 	 </p>
+                	 
                 	 
                 	 <div class="upForm" style="display: none;"> 
                 	   <p>이번 달 사용요금 지출을 완료하였나요?
@@ -745,7 +774,7 @@ $(document).ready(function(){
                 	 
              
                 	
-				<form name="frmReg${st.index}" class='boder-black' method="post">
+				<form name="frmReg${st.index}"  method="post">
 				
 				
 				<c:set var='mode' value='u'/>
@@ -761,7 +790,7 @@ $(document).ready(function(){
                 <input type="hidden" value="${arr.mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${arr.uId}" name='uId' id='uId'/>
                 <input type="hidden" value="${arr.gChk}" name='gChk' id='gChk'/>
-                	<span style="float : right; font-size: 15px;" ><a href="it.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
+                	
                 	 <c:choose>
            		<c:when test="${arr.suma eq null || arr.suma eq '0'}">
            			<table class='tb'>
@@ -789,19 +818,19 @@ $(document).ready(function(){
                 	
                 	<table class='tb'>
                 	<tbody>
-					<tr>
-						<th  class='boder-black'>기본료 </th>
+					<tr class="tableblue">
+						<th  >기본료 </th>
 						<%--
-						<th  class='boder-black'>약정할인</th>
-						<th  class='boder-black'>결합할인</th>
+						<th  >약정할인</th>
+						<th  >결합할인</th>
 						 --%>
-						<th  class='boder-black'>할인금액</th>
-						<th  class='boder-black'>부가세</th>
-						<th  class='boder-black'>미납금</th>
+						<th  >할인금액</th>
+						<th  >부가세</th>
+						<th  >미납금</th>
 					</tr>
 										
 					<tr>
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.defM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.defM}" type="number"/>원</span>
@@ -815,7 +844,7 @@ $(document).ready(function(){
 						</th>
 						
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.sGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.sGm}" type="number"/>원</span>
@@ -829,7 +858,7 @@ $(document).ready(function(){
 						</th>
 						
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.aGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.aGm}" type="number"/>원</span>
@@ -842,7 +871,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.mGm ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.mGm}" type="number"/>원</span>
@@ -872,23 +901,37 @@ $(document).ready(function(){
                
                
                <hr>
-			<h4>관리비</h4>
-			
+			<h4 class="margin0">관리비</h4>
+			<span style="float : right; font-size: 15px;" ><a href="manage.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
 			
 				<c:forEach var='arr' items='${maV}' varStatus="st">
 					</c:forEach>
                 	 
-                	 <p class="nomalForm">
-                	 <c:if test="${maV[0].gChk eq 'Y'}">
-                	 이번 달 사용요금을 
-                	 </c:if>
-                	 
-                	 <c:if test="${maV[0].gChk eq 'N'}">
-                	 이번 달은 아직 사용요금을 납부하지 않았습니다
-                	 </c:if>
                 	 
                 	 
+                	  <p class="nomalForm margin10">
+                	 <c:if test="${maV[0].gChk eq 'Y' }">
+                	  				 <span class="nomalForm" style="font-size: 14px;">
+				                	 <c:if test="${maV[0].gChk eq 'Y'}">
+				                	 * 사용요금을  
+				                	  <c:if test="${my:NVL(maV[0].autoWhen,0) ne 0 && maV[0].autoM eq 'Y'}">
+				                	 	${maV[0].autoWhen}일에
+				                	 </c:if>
+				                	 <c:if test="${my:NVL(maV[0].autoHow,'0') ne '0'  && maV[0].autoM eq 'Y'}">${maV[0].autoHow}로</c:if> 
+				                	 납부했습니다.
+				                	
+				                	 </c:if>
+						                	 
+						                	 </span>
+									</c:if>
+                	 
+                	 <c:if test="${maV[0].gChk eq 'N' || maV[0].gChk eq null}">
+	                	  			<span class="nomalForm"  style="font-size: 14px;">
+					                	* 사용요금을 납부하지 않았습니다
+					                	</span>
+		                			 </c:if>
                 	 </p>
+                	 
                 	 
                 	 <div class="upForm" style="display: none;"> 
                 	   <p>이번 달 사용요금 지출을 완료하였나요?
@@ -916,7 +959,7 @@ $(document).ready(function(){
                 <input type="hidden" value="${maV[0].mm}" name='mm' id='mm'/>
                 <input type="hidden" value="${maV[0].uId}" name='uId' id='uId'/>
                 <input type="hidden" value="${maV[0].gChk}" name='gChk' id='gChk'/>
-                	<span style="float : right; font-size: 15px;" ><a href="manage.do?yyyy=${arr.yyyy}&mm=${arr.mm}" > >> 이동</a></span>
+                	
                  <c:choose>
            		<c:when test="${suma eq null || suma eq '0'}">
            			<table class='tb'>
@@ -943,10 +986,10 @@ $(document).ready(function(){
                 	
                 	<table class='tb' id='table'>
                 	<tbody>
-					<tr>
+					<tr class="tableblue">
 						<th  class='boder-black upForm'  style="display: none;">선택</th>
-						<th  class='boder-black'>항목명 </th>
-						<th  class='boder-black'>사용금액</th>
+						<th  >항목명 </th>
+						<th  >사용금액</th>
 					</tr>
 					
 					
@@ -958,7 +1001,7 @@ $(document).ready(function(){
 						</span>
 						</th>
 						
-						<th  class='boder-black'>
+						<th  >
 						<c:choose>
 						<c:when test="${arr.jiT ne null}">
 						<span class='nomalForm'>${arr.jiT}</span>
@@ -970,7 +1013,7 @@ $(document).ready(function(){
 						</c:choose>
 						</th>
 						
-							<th  class='boder-black'>
+							<th  >
 						<c:choose>
 						<c:when test="${arr.jiM ne null}">
 						<span class='nomalForm'><fmt:formatNumber value="${arr.jiM}" type="number"/>원</span>

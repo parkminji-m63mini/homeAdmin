@@ -7,44 +7,11 @@
 <meta charset="UTF-8">
 <title>방명록 작성</title>
 
-<c:set var="contextPath" value="${pageContext.servletContext.contextPath}" scope="application"/>
-
-<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="text/javascript" src="${contextPath}/resources/vendor/bootstrap/js/bootstrap.js"></script>
-  <link rel="stylesheet" href="${contextPath}/resources/vendor/bootstrap/css/bootstrap.css">
-  <!-- Favicons -->
-  <!-- <link href="${contextPath}/resources/img/favicon.png" rel="icon">  -->
-  <link href="${contextPath}/resources/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="${contextPath}/resources/vendor/aos/aos.css" rel="stylesheet">
-  <link href="${contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="${contextPath}/resources/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="${contextPath}/resources/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="${contextPath}/resources/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="${contextPath}/resources/css/style.css" rel="stylesheet"> 
-  
-  
-   <script src="${contextPath}/resources/vendor/aos/aos.js"></script>
-  <script src="${contextPath}/resources/js/common.js"></script>
-  <script src="${contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="${contextPath}/resources/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="${contextPath}/resources/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="${contextPath}/resources/vendor/php-email-form/validate.js"></script>
-  <script src="${contextPath}/resources/vendor/purecounter/purecounter.js"></script>
-  <script src="${contextPath}/resources/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="${contextPath}/resources/js/main.js"></script>
   
 </head>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<link rel="stylesheet" href="${contextPath}/resources/css/common.css">
+	
 <!-- ------------------------- header ---------------------------- -->
   <script src="${contextPath}/resources/js/common.js"></script>
 	<script type="text/javascript">
@@ -60,6 +27,15 @@
 	
 	function insert(){
 		
+		if($("#vNm").val() == ""){
+			alert("닉네임을 작성해주세요");
+			return;
+		}
+		
+		if($("#cont").val() == ""){
+			alert("방명록을 작성해주세요");
+			return;
+		}
 		$('#cont').val().replace(/\r\n|\n/ , "<br>"); 
 		var frm = document.frmReg;
 
@@ -75,21 +51,23 @@
 	
 <body>
 
-	<header id="header" class="fixed-top d-flex align-items-center header-transparent">
-	    <div class="container d-flex align-items-center">
-	
-	      <h1 class="logo me-auto"><a href="${contextPath}">homeA</a></h1>
-	      <!-- Uncomment below if you prefer to use an image logo -->
-	      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-	</div>
-	</header>
+
 	
 	
 	<main>
+	    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="">
+
+          <div class="">
+          
 	
 	 <section id="breadcrumbs" class="breadcrumbs">
       <div class="container">
 
+	
 			<h2>${vo.uNm }네 방명록</h2>
 			
 			
@@ -97,8 +75,12 @@
     </section>
     
 	  <!-- ======= Portfolio Details Section ======= -->
-    <section id="portfolio-details"  class="portfolio-details">
-      <div class="container">
+    <div class="portfolio-info">
+              <div class="swiper-wrapper align-items-center">
+
+
+					<%--이번달 요금 --%>
+                <div class="swiper-slide">
         <div class="">
 
           <div class="">
@@ -106,14 +88,25 @@
           <input type="hidden" name="photo" id="photo"/>
           <input type="hidden" name="pNo" id="pNo"/>
           <input type="hidden" name="uId" id="uId" value="${vo.uId}"/>
-          <h4>방문일</h4>
-          <input type="date" name="vdt" id="vdt">
-          <br><br>
-          <h4>닉네임</h4>
-          <input type="text" name="vNm" id="vNm" placeholder="닉네임 또는 성함을 입력해주세요">
-          <br><br>
-          <h4>프로필 사진</h4>
-          <table>
+          <p class='ContD' style="font-weight: bold;">방문일</p>
+          <div class='subContCenter'>
+          <input type="date" name="vdt" id="vdt" class='form-control'>
+          </div>
+          <p class='ContD' style="font-weight: bold;">닉네임</p>
+          <div class='subContCenter'>
+          <input type="text" name="vNm" id="vNm" placeholder="닉네임 또는 성함을 입력해주세요" class='form-control' maxlength="100">
+          </div>
+          
+          <p class='ContD' style="font-weight: bold;">프로필 사진</p>
+          <div  style="width: 100%;">
+          <table style="width: 100%;">
+          <colgroup>
+          	<col style="width: 20%;">
+          	<col style="width: 20%;">
+          	<col style="width: 20%;">
+          	<col style="width: 20%;">
+          	<col style="width: 20%;">
+          </colgroup>
           <tbody>
           <tr>
           	<th><label for="pNo1"><img src="${contextPath}/resources/img/profile/1.jpg"  alt="" class="profile"/></label></th>
@@ -123,7 +116,7 @@
           	<th><label for="pNo5"><img src="${contextPath}/resources/img/profile/5.jpg" class="profile" alt="" /></label></th>
           </tr>
           <tr>
-          	<th class="thc"><input type="radio" name="pNo2" id="pNo1" value="1"></th>
+          	<th class="thc"><input type="radio" name="pNo2" id="pNo1" value="1" checked="checked"></th>
           	<th class="thc"><input type="radio" name="pNo2" id="pNo2" value="2"></th>
           	<th class="thc"><input type="radio" name="pNo2" id="pNo3" value="3"></th>
           	<th class="thc"><input type="radio" name="pNo2" id="pNo4" value="4"></th>
@@ -131,18 +124,24 @@
           </tr>
           </tbody>
           </table>
-          
-          <br><br>
-          <h4>사진 업로드</h4>
+          </div>
+          <br>
+          <p  class='ContD' style="font-weight: bold;" >사진 업로드</p>
           <input type="file" name="photo2" id="photo2" onchange="chk();">
           <br><br>
-          <h4>방명록</h4>
-		 <textarea name="cont" id="cont" style="width: 380px; height: 200px;" rows="" cols=""></textarea>          
+          <p  class='ContD' style="font-weight: bold;" >방명록</p>
+		 <textarea  class='form-control' name="cont" id="cont" style="width: 100%; height: 200px;" rows="" cols=""></textarea>          
           
           
-          <a href="#" onclick="insert();">저장</a>
           </form>
+          <br>
+           <input style="float: none; width: 100%;" id='upbtn' onclick="insert();" class="btn-primary-1 upbtn btn " type="button"  value="보내기"/>
           <div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
           </div>
           </div>
           </div>

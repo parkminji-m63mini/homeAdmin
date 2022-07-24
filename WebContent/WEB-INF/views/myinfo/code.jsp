@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<select id='cd${cd}' name='cd${cd}'>
+<select id='cd${cd}' name='cd${cd}' class='form-control'>
 <c:forEach var='arr' items="${list}" varStatus="st">
 
 <option value="${arr.cd}" <c:if test="${arr.cd eq mcd}"> selected="selected"</c:if> >${arr.cnm}</option>

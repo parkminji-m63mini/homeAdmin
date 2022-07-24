@@ -40,7 +40,7 @@
         END
         AS C_SKIP FROM VISIT WHERE U_ID=#{uId}
          <if test='key.equals("all")'>
-        <if test='word != null'>
+        <if test='word!=null and !word.equals("")'>
         AND (CONT LIKE  CONCAT( "%", #{word}, "%")
         OR
         	V_NM LIKE  CONCAT( "%", #{word}, "%")
