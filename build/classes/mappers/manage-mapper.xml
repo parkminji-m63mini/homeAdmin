@@ -74,22 +74,22 @@
 
 	<!-- 공과금 전체 페이지 당월,전월 비교 데이터 -->
 	<select id="manageNP" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M,
-		NVL(MA_M,0) AS MA_M
+		SELECT IDX, YYYY,MM,U_ID, IFNULL(GAS_M,0) as GAS_M, IFNULL(EL_M,0) AS EL_M , IFNULL(WT_M,0) AS WT_M, IFNULL(IT_M,0) AS IT_M,
+		IFNULL(MA_M,0) AS MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2}) 	
 		ORDER BY YYYY, MM
 	</select>
 	
 	<!-- 공과금 전체 페이지 3개월 비교 데이터 -->
 	<select id="manageListP3" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M, NVL(MA_M,0) AS MA_M
+		SELECT IDX, YYYY,MM,U_ID, IFNULL(GAS_M,0) as GAS_M, IFNULL(EL_M,0) AS EL_M , IFNULL(WT_M,0) AS WT_M, IFNULL(IT_M,0) AS IT_M, IFNULL(MA_M,0) AS MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =#{yyyy2} AND MM = #{mm2} or YYYY =#{yyyy3} AND MM = #{mm3})
 		   ORDER BY YYYY, MM 	
 	</select>
 	
 	<!-- 공과금 전체 페이지 1년 비교 데이터 -->
 	<select id="manageListP12" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M, NVL(MA_M,0) AS MA_M
+		SELECT IDX, YYYY,MM,U_ID, IFNULL(GAS_M,0) as GAS_M, IFNULL(EL_M,0) AS EL_M , IFNULL(WT_M,0) AS WT_M, IFNULL(IT_M,0) AS IT_M, IFNULL(MA_M,0) AS MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND DATE_FORMAT(CONCAT(YYYY, MM,"01"),'%Y%m%d') BETWEEN DATE_FORMAT(CONCAT(${yyyy}-1, #{mm},"01"),'%Y%m%d') AND DATE_FORMAT(CONCAT(#{yyyy}, #{mm},"01"),'%Y%m%d')
 		order by yyyy,mm  
 
@@ -98,8 +98,8 @@
 	
 	<!-- 공과금 전체 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="managePassSame" parameterType="Manage" resultMap="manageResultSet">
-		SELECT IDX, YYYY,MM,U_ID, NVL(GAS_M,0) as GAS_M, NVL(EL_M,0) AS EL_M , NVL(WT_M,0) AS WT_M, NVL(IT_M,0) AS IT_M,
-		NVL(MA_M,0) AS MA_M
+		SELECT IDX, YYYY,MM,U_ID, IFNULL(GAS_M,0) as GAS_M, IFNULL(EL_M,0) AS EL_M , IFNULL(WT_M,0) AS WT_M, IFNULL(IT_M,0) AS IT_M,
+		IFNULL(MA_M,0) AS MA_M
 		FROM MANAGE_MA WHERE U_ID= #{uId} AND (YYYY =#{yyyy} AND MM = #{mm} or YYYY =${yyyy}-1 AND MM = #{mm}) 	
 		ORDER BY MM DESC
 	</select>
@@ -273,15 +273,15 @@
 	<!-- 가스  페이지 1년 비교 데이터 -->
 	<select id="gasNP12m" parameterType="Manage" resultMap="manageResultSet">
 		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
-        sum(NVL(A.DEF_M,0) + NVL(A.C_GM,0)
-       + NVL(A.U_GM,0) 
-       + NVL(A.A_GM,0) 
-       + NVL(A.S_GM,0) 
-       + NVL(A.M_GM,0) 
-       + NVL(A.K_GM,0) 
-       + NVL(A.AVG_GM,0) 
-       - NVL(A.JS_GM,0) 
-       + NVL(A.EN_GU,0) ) AS SUMA
+        sum(IFNULL(A.DEF_M,0) + IFNULL(A.C_GM,0)
+       + IFNULL(A.U_GM,0) 
+       + IFNULL(A.A_GM,0) 
+       + IFNULL(A.S_GM,0) 
+       + IFNULL(A.M_GM,0) 
+       + IFNULL(A.K_GM,0) 
+       + IFNULL(A.AVG_GM,0) 
+       - IFNULL(A.JS_GM,0) 
+       + IFNULL(A.EN_GU,0) ) AS SUMA
        , B.GAS_M, A.USE_G
 		FROM MANAGE_GAS A
         LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
@@ -301,10 +301,10 @@
 	<!-- 가스 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="gasPassSame" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
-       NVL(SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU),0) AS SUMA,
-        NVL(U_GM,0) AS U_GM,
-        NVL(MON_GU,0) AS MON_GU, 
-        NVL(USE_G,0) AS USE_G
+       IFNULL(SUM(DEF_M + C_GM + U_GM + A_GM + S_GM + M_GM + K_GM + AVG_GM - JS_GM + EN_GU),0) AS SUMA,
+        IFNULL(U_GM,0) AS U_GM,
+        IFNULL(MON_GU,0) AS MON_GU, 
+        IFNULL(USE_G,0) AS USE_G
          , B.GAS_M
 		FROM MANAGE_GAS A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
@@ -321,12 +321,12 @@
 	<!-- 가스 상세 데이터 가져오기 (당월분 1) -->
 	<select id="manageItNow" parameterType="Manage" resultMap="manageResultSet">
 		SELECT *,
-		  sum(NVL(A.DEF_M,0)
-       - NVL(A.S_IM,0) 
-       - NVL(A.G_IM,0) 
-       + NVL(A.A_GM,0) 
-       - NVL(A.S_GM,0) 
-       + NVL(A.M_GM,0) 
+		  sum(IFNULL(A.DEF_M,0)
+       - IFNULL(A.S_IM,0) 
+       - IFNULL(A.G_IM,0) 
+       + IFNULL(A.A_GM,0) 
+       - IFNULL(A.S_GM,0) 
+       + IFNULL(A.M_GM,0) 
 		 ) AS SUMA
 		FROM MANAGE_IT A
 		LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
@@ -367,11 +367,11 @@
 	<!--인터넷 당월,전월 비교 데이터 -->
 	<select id="itNP" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
-      	  sum(NVL(A.DEF_M,0)- NVL(A.S_IM,0)- NVL(A.G_IM,0) + NVL(A.A_GM,0) - NVL(A.S_GM,0) + NVL(A.M_GM,0) ) AS SUMA
-        ,NVL(DEF_M,0) AS DEF_M 
-        ,NVL(A_GM,0) AS A_GM
-        ,NVL(S_GM,0) AS S_GM
-        ,NVL(M_GM,0) AS M_GM
+      	  sum(IFNULL(A.DEF_M,0)- IFNULL(A.S_IM,0)- IFNULL(A.G_IM,0) + IFNULL(A.A_GM,0) - IFNULL(A.S_GM,0) + IFNULL(A.M_GM,0) ) AS SUMA
+        ,IFNULL(DEF_M,0) AS DEF_M 
+        ,IFNULL(A_GM,0) AS A_GM
+        ,IFNULL(S_GM,0) AS S_GM
+        ,IFNULL(M_GM,0) AS M_GM
         , B.IT_M
 		FROM MANAGE_IT A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
@@ -391,12 +391,12 @@
 	<!-- 인터넷 페이지 1년 비교 데이터 -->
 	<select id="itNP12m" parameterType="Manage" resultMap="manageResultSet">
 		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
-        sum(NVL(A.DEF_M,0)
-       - NVL(A.S_IM,0) 
-       - NVL(A.G_IM,0) 
-       + NVL(A.A_GM,0) 
-       - NVL(A.S_GM,0) 
-       + NVL(A.M_GM,0) 
+        sum(IFNULL(A.DEF_M,0)
+       - IFNULL(A.S_IM,0) 
+       - IFNULL(A.G_IM,0) 
+       + IFNULL(A.A_GM,0) 
+       - IFNULL(A.S_GM,0) 
+       + IFNULL(A.M_GM,0) 
 		 ) AS SUMA
 		  , B.IT_M
 		FROM MANAGE_IT A
@@ -410,13 +410,13 @@
 	<!-- 인터넷 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="itPassSame" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
-        sum(NVL(A.DEF_M,0)- NVL(A.S_IM,0)- NVL(A.G_IM,0)+ NVL(A.A_GM,0) - NVL(A.S_GM,0) + NVL(A.M_GM,0)	 ) AS SUMA,
-       NVL(A.DEF_M,0) AS DEF_M,
-       NVL(A.S_IM,0) AS S_IM, 
-       NVL(A.G_IM,0) AS G_IM,
-       NVL(A.A_GM,0) AS A_GM,
-       NVL(A.S_GM,0) AS S_GM,
-       NVL(A.M_GM,0) AS M_GM 
+        sum(IFNULL(A.DEF_M,0)- IFNULL(A.S_IM,0)- IFNULL(A.G_IM,0)+ IFNULL(A.A_GM,0) - IFNULL(A.S_GM,0) + IFNULL(A.M_GM,0)	 ) AS SUMA,
+       IFNULL(A.DEF_M,0) AS DEF_M,
+       IFNULL(A.S_IM,0) AS S_IM, 
+       IFNULL(A.G_IM,0) AS G_IM,
+       IFNULL(A.A_GM,0) AS A_GM,
+       IFNULL(A.S_GM,0) AS S_GM,
+       IFNULL(A.M_GM,0) AS M_GM 
          , B.IT_M
 		FROM MANAGE_IT A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
@@ -480,8 +480,8 @@
 	<!-- 범디 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="elPassSame" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
-       NVL(SUM(DEF_M + L_EM + WO_EM - MI_EM + A_EM + GY_EM - JS_EM),0) AS SUMA,
-        NVL(USE_E,0) AS USE_E, B.EL_M
+       IFNULL(SUM(DEF_M + L_EM + WO_EM - MI_EM + A_EM + GY_EM - JS_EM),0) AS SUMA,
+        IFNULL(USE_E,0) AS USE_E, B.EL_M
 		FROM MANAGE_EL A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
@@ -503,12 +503,12 @@
 	<!-- 전기 페이지 1년 비교 데이터 -->
 	<select id="elNP12m" parameterType="Manage" resultMap="manageResultSet">
 		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
-        sum(NVL(A.DEF_M,0) + NVL(A.L_EM,0)
-       + NVL(A.WO_EM,0) 
-       - NVL(A.MI_EM,0) 
-       + NVL(A.A_EM,0) 
-       + NVL(A.GY_EM,0) 
-       - NVL(A.JS_EM,0) 
+        sum(IFNULL(A.DEF_M,0) + IFNULL(A.L_EM,0)
+       + IFNULL(A.WO_EM,0) 
+       - IFNULL(A.MI_EM,0) 
+       + IFNULL(A.A_EM,0) 
+       + IFNULL(A.GY_EM,0) 
+       - IFNULL(A.JS_EM,0) 
        ) AS SUMA, A.USE_E , B.EL_M
 		FROM MANAGE_EL A
         LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
@@ -617,7 +617,7 @@
 	<!-- 관리비 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="mMPassSame" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT B.YYYY,B.MM,B.U_ID, 
-        sum(NVL(A.JI_M,0)) AS SUMA , B.MA_M   
+        sum(IFNULL(A.JI_M,0)) AS SUMA , B.MA_M   
 		FROM MANAGE_MAM A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
@@ -651,7 +651,7 @@
 	<!-- 관리자 페이지 1년 비교 데이터 -->
 	<select id="mMNP12m" parameterType="Manage" resultMap="manageResultSet">
 		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
-        sum(NVL(A.JI_M,0)) AS SUMA, B.MA_M
+        sum(IFNULL(A.JI_M,0)) AS SUMA, B.MA_M
 		FROM MANAGE_MAM A
         LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId}
@@ -663,7 +663,7 @@
 	
 	<!-- 관리비 데이터 있는지 체크 -->
 	<select id="sumMa" parameterType="Manage" resultType="String">
-		select NVL(SUM(JI_M),0) AS JI_M from  MANAGE_MAM
+		select IFNULL(SUM(JI_M),0) AS JI_M from  MANAGE_MAM
 		where U_ID= #{uId} AND JIDX = #{jidx} 	
 	</select>
 	
@@ -715,7 +715,7 @@
 	<!-- 범디 페이지 당월,전년 동월 비교 데이터 -->
 	<select id="waPassSame" parameterType="Manage" resultMap="manageResultSet">
 		 SELECT A.IDX, B.YYYY,B.MM,B.U_ID, 
-       NVL(SUM(SA_M),0) AS SA_M, SA, B.WT_M
+       IFNULL(SUM(SA_M),0) AS SA_M, SA, B.WT_M
 		FROM MANAGE_WA A
         LEFT JOIN MANAGE_MA B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId} AND (B.YYYY =#{yyyy} AND B.MM = #{mm} or B.YYYY =${yyyy}-1 AND B.MM = #{mm})
@@ -737,7 +737,7 @@
 	<!-- 수도 페이지 1년 비교 데이터 -->
 	<select id="waNP12m" parameterType="Manage" resultMap="manageResultSet">
 		SELECT A.JIDX, B.IDX,B.YYYY,B.MM,A.U_ID, 
-        sum(NVL(A.SA_M,0)) AS SUMA, SA, B.WT_M
+        sum(IFNULL(A.SA_M,0)) AS SUMA, SA, B.WT_M
 		FROM MANAGE_WA A
         LEFT JOIN MANAGE_MA  B ON A.JIDX=B.IDX
         WHERE A.U_ID= #{uId}

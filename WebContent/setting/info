@@ -10,11 +10,33 @@
 db 정보
 
 db 종류 : mariaDB
+
+
+// 카페 24
+주소 : ourhomeadmin.cafe24.com
+포트 : 3306
+id/pw : ourhomeadmin / asdf092274
+
+
+
+// 아마존
 주소 : database-1.cdw7wjhawdiz.ap-northeast-2.rds.amazonaws.com
 포트 : 3306
 id/pw : m63mini / asdf092274
 
 
+putty 퍼티
+호스트 이름 : ourhomeadmin.cafe24.com
+포트 : 22
+커넥션 종류 : SSH
+id/pw : ourhomeadmin / asdf092274
+서버 셧 다운  ~/tomcat/bin/shutdown.sh
+서버 온 ~/tomcat/bin/startup.sh
+
+filezila 파일질라
+프로토콜 : SFTP - SSH
+호스트 :  ourhomeadmin.cafe24.com
+id/pw : ourhomeadmin / asdf092274
 -------------------------------------------------
 
 * 개발 시 주의
